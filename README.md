@@ -94,13 +94,24 @@ wheatmall-2026/
   - 按服务分类：Product、Order、User等
   - 支持路径参数占位符（如`{id}`）
 
-**修改文件：**
+**第一次优化 - 使用常量类：**
 - `OrderService.java`：使用`ServiceUris.Product.GET_BY_ID_INTERNAL`替换硬编码URI
 - `ProductController.java`：使用`ServiceUris.Product.SERVICE`作为@RequestMapping路径
 
+**第二次优化 - 服务根路径提升到外部类：**
+- 在ServiceUris类顶部统一定义所有服务的根路径：
+  ```java
+  public static final String PRODUCT_SERVICE = "/api/product";
+  public static final String ORDER_SERVICE = "/api/order";
+  public static final String USER_SERVICE = "/api/user";
+  ```
+- 内部类引用外部根路径常量，结构更清晰
+- `ProductController.java`更新为使用`ServiceUris.PRODUCT_SERVICE`
+
 **优势：**
 - 避免魔法字符串，提高代码可维护性
-- 一处修改，全局生效
+- 一眼查看所有服务的根路径，便于管理
+- 修改根路径只需改一处，内部类自动生效
 - 编译期检查，IDE自动补全支持
 - 符合阿里巴巴Java开发手册规范
 
