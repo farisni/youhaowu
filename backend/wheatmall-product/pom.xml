@@ -18,5 +18,11 @@
             <artifactId>wheatmall-common</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <!-- lombok 注解处理器 -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 </project>
