@@ -10,16 +10,20 @@ wheatmall-2026/
 │   ├── pom.xml                    # 父工程POM
 │   ├── wheatmall-common/          # 公共模块
 │   │   ├── pom.xml
-│   │   └── src/main/java/com/wheatmall/common/
-│   │       ├── constant/ServiceUris.java       # 服务URI常量
-│   │       ├── enums/BizCodeEnum.java          # 业务错误码枚举
-│   │       └── utils/R.java                    # 通用响应结果类
+│   │   ├── src/main/java/com/wheatmall/common/
+│   │   │   ├── constant/ServiceUris.java       # 服务URI常量
+│   │   │   ├── enums/BizCodeEnum.java          # 业务错误码枚举
+│   │   │   └── utils/R.java                    # 通用响应结果类
+│   │   └── src/test/java/com/wheatmall/common/
+│   │       └── utils/RTest.java                # R类单元测试
 │   ├── wheatmall-product/         # 商品服务模块 (端口: 8091)
 │   │   ├── src/main/java/com/wheatmall/product/
 │   │   │   ├── ProductApplication.java
 │   │   │   ├── entity/Product.java           # 商品实体类
 │   │   │   └── controller/ProductController.java  # 商品接口
-│   │   └── src/main/resources/application.yml    # Nacos配置
+│   │   ├── src/main/resources/application.yml    # Nacos配置
+│   │   └── src/test/java/com/wheatmall/product/
+│   │       └── controller/ProductControllerTest.java  # Controller单元测试
 │   └── wheatmall-order/           # 订单服务模块 (端口: 8090)
 │       ├── src/main/java/com/wheatmall/order/
 │       │   ├── OrderApplication.java
@@ -302,6 +306,57 @@ curl -X POST "http://localhost:8090/api/order/create?productId=1&quantity=2"
 | Order调用Product(异步) | `GET http://localhost:8090/api/order/product/async/2` | 成功 |
 | 创建订单(Nacos调用) | `POST http://localhost:8090/api/order/create?productId=1&quantity=2` | 成功 |
 
+### 2024-02-17: 整合Mockito单元测试框架
+
+#### 1. 添加Mockito依赖
+**修改文件：**
+- `backend/pom.xml`
+  - 添加 `mockito.version` 属性
+  - 在 `dependencyManagement` 中添加 `mockito-core` 和 `mockito-junit-jupiter`
+
+- `backend/wheatmall-common/pom.xml`
+  - 添加 `spring-boot-starter-test`、`mockito-core`、`mockito-junit-jupiter` 测试依赖
+
+- `backend/wheatmall-product/pom.xml`
+  - 添加 `spring-boot-starter-test`、`mockito-core`、`mockito-junit-jupiter` 测试依赖
+
+**依赖说明：**
+- `mockito-core` - Mockito核心库
+- `mockito-junit-jupiter` - 与JUnit 5集成的扩展
+- `spring-boot-starter-test` - Spring Boot测试启动器（已包含JUnit 5和Mockito）
+
+#### 2. 创建测试类
+**创建文件：**
+- `backend/wheatmall-common/src/test/java/com/wheatmall/common/utils/RTest.java`
+  - R类的单元测试，验证ok/error/setData/put等方法
+  - 测试链式调用和fastjson反序列化
+
+- `backend/wheatmall-product/src/test/java/com/wheatmall/product/controller/ProductControllerTest.java`
+  - ProductController的单元测试
+  - 使用 `@ExtendWith(MockitoExtension.class)` 扩展
+  - 使用 `@InjectMocks` 注入被测对象
+
+**Mockito常用注解：**
+```java
+@ExtendWith(MockitoExtension.class)  // 启用Mockito扩展
+@InjectMocks                         // 注入被测对象
+@Mock                                // 创建模拟对象
+@Spy                                 // 创建部分模拟对象
+@Captor                              // 捕获参数
+```
+
+#### 3. 运行测试
+```bash
+# 运行所有测试
+mvnd test
+
+# 运行指定模块测试
+mvnd test -pl wheatmall-common
+
+# 运行指定测试类
+mvnd test -Dtest=RTest -pl wheatmall-common
+```
+
 ### 2024-02-17: 添加通用响应结果类R
 
 #### 1. 添加依赖
@@ -347,8 +402,9 @@ return R.error(500, "系统错误");
 1. ~~**服务注册发现**：集成Nacos或Eureka，使用服务名而非IP:Port调用~~ ✅ 已完成
 2. ~~**负载均衡**：使用Spring Cloud LoadBalancer实现客户端负载均衡~~ ✅ 已完成（通过@LoadBalanced）
 3. ~~**统一响应格式**：添加通用响应结果类R~~ ✅ 已完成
-4. **配置中心**：使用Nacos Config统一管理配置
-5. **熔断降级**：集成Resilience4j实现服务容错
-6. **链路追踪**：集成Sleuth+Zipkin追踪请求链路
-7. **统一异常处理**：添加全局异常处理器
-8. **参数校验**：集成Spring Validation进行参数校验
+4. ~~**单元测试**：整合Mockito测试框架~~ ✅ 已完成
+5. **配置中心**：使用Nacos Config统一管理配置
+6. **熔断降级**：集成Resilience4j实现服务容错
+7. **链路追踪**：集成Sleuth+Zipkin追踪请求链路
+8. **统一异常处理**：添加全局异常处理器
+9. **参数校验**：集成Spring Validation进行参数校验
