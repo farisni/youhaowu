@@ -87,7 +87,24 @@ wheatmall-2026/
 - `backend/wheatmall-order/src/main/resources/application.yml`
   - 配置服务端口为8080
 
-#### 6. WebClient使用要点
+#### 6. URI统一管理优化
+**创建文件：**
+- `backend/wheatmall-common/src/main/java/com/wheatmall/common/constant/ServiceUris.java`
+  - 统一管理所有服务的API路径常量
+  - 按服务分类：Product、Order、User等
+  - 支持路径参数占位符（如`{id}`）
+
+**修改文件：**
+- `OrderService.java`：使用`ServiceUris.Product.GET_BY_ID_INTERNAL`替换硬编码URI
+- `ProductController.java`：使用`ServiceUris.Product.SERVICE`作为@RequestMapping路径
+
+**优势：**
+- 避免魔法字符串，提高代码可维护性
+- 一处修改，全局生效
+- 编译期检查，IDE自动补全支持
+- 符合阿里巴巴Java开发手册规范
+
+#### 7. WebClient使用要点
 - **同步调用**：使用`.block()`方法阻塞获取结果
 - **异步调用**：返回`Mono<T>`或`Flux<T>`对象，支持响应式编程
 - **错误处理**：可通过`.onErrorResume()`处理异常

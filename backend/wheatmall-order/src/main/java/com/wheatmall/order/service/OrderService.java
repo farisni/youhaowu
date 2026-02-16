@@ -1,5 +1,6 @@
 package com.wheatmall.order.service;
 
+import com.wheatmall.common.constant.ServiceUris;
 import com.wheatmall.order.dto.ProductDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +29,7 @@ public class OrderService {
         log.info("使用WebClient调用Product模块获取商品信息, productId: {}", productId);
         
         return productWebClient.get()
-                .uri("/api/product/get/{id}", productId)
+                .uri(ServiceUris.Product.GET_BY_ID_INTERNAL, productId)
                 .retrieve()
                 .bodyToMono(ProductDTO.class)
                 .block();
@@ -42,7 +43,7 @@ public class OrderService {
         log.info("使用WebClient调用Product模块获取商品列表");
         
         return productWebClient.get()
-                .uri("/api/product/list")
+                .uri(ServiceUris.Product.LIST)
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<List<ProductDTO>>() {})
                 .block();
@@ -57,7 +58,7 @@ public class OrderService {
         log.info("使用WebClient异步调用Product模块获取商品信息, productId: {}", productId);
         
         return productWebClient.get()
-                .uri("/api/product/get/{id}", productId)
+                .uri(ServiceUris.Product.GET_BY_ID_INTERNAL, productId)
                 .retrieve()
                 .bodyToMono(ProductDTO.class);
     }
