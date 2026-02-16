@@ -9,7 +9,11 @@ wheatmall-2026/
 ├── backend/
 │   ├── pom.xml                    # 父工程POM
 │   ├── wheatmall-common/          # 公共模块
-│   │   └── pom.xml
+│   │   ├── pom.xml
+│   │   └── src/main/java/com/wheatmall/common/
+│   │       ├── constant/ServiceUris.java       # 服务URI常量
+│   │       ├── enums/BizCodeEnum.java          # 业务错误码枚举
+│   │       └── utils/R.java                    # 通用响应结果类
 │   ├── wheatmall-product/         # 商品服务模块 (端口: 8091)
 │   │   ├── src/main/java/com/wheatmall/product/
 │   │   │   ├── ProductApplication.java
@@ -298,12 +302,53 @@ curl -X POST "http://localhost:8090/api/order/create?productId=1&quantity=2"
 | Order调用Product(异步) | `GET http://localhost:8090/api/order/product/async/2` | 成功 |
 | 创建订单(Nacos调用) | `POST http://localhost:8090/api/order/create?productId=1&quantity=2` | 成功 |
 
+### 2024-02-17: 添加通用响应结果类R
+
+#### 1. 添加依赖
+**修改文件：**
+- `backend/wheatmall-common/pom.xml`
+  - 添加 `fastjson` 依赖（JSON序列化）
+  - 添加 `httpcore` 依赖（HttpStatus常量）
+
+#### 2. 创建通用响应类
+**创建文件：**
+- `backend/wheatmall-common/src/main/java/com/wheatmall/common/utils/R.java`
+  - 继承HashMap，提供统一的API响应格式
+  - 包含code、msg、data标准字段
+  - 支持链式调用（put、setData等）
+  - 支持fastjson反序列化（getData方法）
+  - 提供ok()和error()静态工厂方法
+
+**使用示例：**
+```java
+// 成功响应
+return R.ok().setData(product);
+
+// 带消息的成功响应
+return R.ok("操作成功");
+
+// 错误响应
+return R.error(BizCodeEnum.PRODUCT_NOT_FOUND);
+
+// 自定义错误
+return R.error(500, "系统错误");
+```
+
+#### 3. 创建业务错误码枚举
+**创建文件：**
+- `backend/wheatmall-common/src/main/java/com/wheatmall/common/enums/BizCodeEnum.java`
+  - 定义常见业务错误码
+  - 系统错误、参数错误、权限错误等
+  - 商品相关错误（不存在、已下架等）
+  - 订单相关错误（库存不足、创建失败等）
+
 ## 后续优化建议
 
 1. ~~**服务注册发现**：集成Nacos或Eureka，使用服务名而非IP:Port调用~~ ✅ 已完成
 2. ~~**负载均衡**：使用Spring Cloud LoadBalancer实现客户端负载均衡~~ ✅ 已完成（通过@LoadBalanced）
-3. **配置中心**：使用Nacos Config统一管理配置
-4. **熔断降级**：集成Resilience4j实现服务容错
-5. **链路追踪**：集成Sleuth+Zipkin追踪请求链路
-6. **统一异常处理**：添加全局异常处理器
-7. **参数校验**：集成Spring Validation进行参数校验
+3. ~~**统一响应格式**：添加通用响应结果类R~~ ✅ 已完成
+4. **配置中心**：使用Nacos Config统一管理配置
+5. **熔断降级**：集成Resilience4j实现服务容错
+6. **链路追踪**：集成Sleuth+Zipkin追踪请求链路
+7. **统一异常处理**：添加全局异常处理器
+8. **参数校验**：集成Spring Validation进行参数校验
