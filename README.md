@@ -10,20 +10,20 @@ wheatmall-2026/
 │   ├── pom.xml                    # 父工程POM
 │   ├── wheatmall-common/          # 公共模块
 │   │   └── pom.xml
-│   ├── wheatmall-product/         # 商品服务模块 (端口: 8081)
+│   ├── wheatmall-product/         # 商品服务模块 (端口: 8091)
 │   │   ├── src/main/java/com/wheatmall/product/
 │   │   │   ├── ProductApplication.java
 │   │   │   ├── entity/Product.java           # 商品实体类
 │   │   │   └── controller/ProductController.java  # 商品接口
-│   │   └── src/main/resources/application.yml
-│   └── wheatmall-order/           # 订单服务模块 (端口: 8080)
+│   │   └── src/main/resources/application.yml    # Nacos配置
+│   └── wheatmall-order/           # 订单服务模块 (端口: 8090)
 │       ├── src/main/java/com/wheatmall/order/
 │       │   ├── OrderApplication.java
-│       │   ├── config/WebClientConfig.java      # WebClient配置
+│       │   ├── config/WebClientConfig.java      # WebClient+Nacos负载均衡配置
 │       │   ├── dto/ProductDTO.java              # 商品DTO
-│       │   ├── service/OrderService.java        # 订单服务(WebClient调用)
+│       │   ├── service/OrderService.java        # 订单服务(WebClient+Nacos调用)
 │       │   └── controller/OrderController.java  # 订单接口
-│       └── src/main/resources/application.yml
+│       └── src/main/resources/application.yml    # Nacos配置
 └── README.md
 ```
 
@@ -59,13 +59,13 @@ wheatmall-2026/
   - GET /api/product/get/{id} - 供内部服务调用
 
 - `backend/wheatmall-product/src/main/resources/application.yml`
-  - 配置服务端口为8081
+  - 配置服务端口为8091
 
 #### 5. Order模块开发
 **创建文件：**
 - `backend/wheatmall-order/src/main/java/com/wheatmall/order/config/WebClientConfig.java`
   - 配置WebClient Bean
-  - 配置Product服务的WebClient，baseUrl指向http://localhost:8081
+  - 配置Product服务的WebClient，baseUrl指向http://localhost:8091
   - 设置超时时间为5秒
 
 - `backend/wheatmall-order/src/main/java/com/wheatmall/order/dto/ProductDTO.java`
@@ -85,7 +85,7 @@ wheatmall-2026/
   - POST /api/order/create - 创建订单(调用Product验证库存)
 
 - `backend/wheatmall-order/src/main/resources/application.yml`
-  - 配置服务端口为8080
+  - 配置服务端口为8090
 
 #### 6. URI统一管理优化
 **创建文件：**
@@ -142,36 +142,36 @@ mvn spring-boot:run
 1. 测试Product模块直接访问：
 ```bash
 # 获取单个商品
-curl http://localhost:8081/api/product/1
+curl http://localhost:8091/api/product/1
 
 # 获取商品列表
-curl http://localhost:8081/api/product/list
+curl http://localhost:8091/api/product/list
 ```
 
 2. 测试Order模块通过WebClient调用Product：
 ```bash
 # 同步获取商品详情
-curl http://localhost:8080/api/order/product/1
+curl http://localhost:8090/api/order/product/1
 
 # 同步获取商品列表
-curl http://localhost:8080/api/order/products
+curl http://localhost:8090/api/order/products
 
 # 异步获取商品
-curl http://localhost:8080/api/order/product/async/1
+curl http://localhost:8090/api/order/product/async/1
 
 # 创建订单(内部调用Product服务)
-curl -X POST "http://localhost:8080/api/order/create?productId=1&quantity=2"
+curl -X POST "http://localhost:8090/api/order/create?productId=1&quantity=2"
 ```
 
 ### 测试结果
 
 | 接口 | 地址 | 结果 |
 |------|------|------|
-| Product直接访问 | `GET http://localhost:8081/api/product/1` | 成功 |
-| Order调用Product(同步) | `GET http://localhost:8080/api/order/product/1` | 成功 |
-| Order调用Product(列表) | `GET http://localhost:8080/api/order/products` | 成功 |
-| Order调用Product(异步) | `GET http://localhost:8080/api/order/product/async/2` | 成功 |
-| 创建订单(库存验证) | `POST http://localhost:8080/api/order/create?productId=1&quantity=2` | 成功 |
+| Product直接访问 | `GET http://localhost:8091/api/product/1` | 成功 |
+| Order调用Product(同步) | `GET http://localhost:8090/api/order/product/1` | 成功 |
+| Order调用Product(列表) | `GET http://localhost:8090/api/order/products` | 成功 |
+| Order调用Product(异步) | `GET http://localhost:8090/api/order/product/async/2` | 成功 |
+| 创建订单(库存验证) | `POST http://localhost:8090/api/order/create?productId=1&quantity=2` | 成功 |
 
 ## 技术栈
 
@@ -182,11 +182,128 @@ curl -X POST "http://localhost:8080/api/order/create?productId=1&quantity=2"
 - **WebClient**: Spring WebFlux提供的响应式HTTP客户端
 - **Lombok**: 代码简化工具
 
+### 2024-02-17: 集成Nacos 3.1.1服务注册发现
+
+#### 1. 添加Nacos依赖
+**修改文件：**
+- `backend/wheatmall-common/pom.xml`
+  - 添加 `spring-cloud-starter-alibaba-nacos-discovery` 依赖
+  - 添加 `spring-cloud-starter-loadbalancer` 依赖（支持客户端负载均衡）
+
+**版本说明：**
+- Nacos Server版本：3.1.1
+- Spring Cloud Alibaba版本：2025.0.0.0（已在父POM中管理）
+
+#### 2. 启用服务发现
+**修改文件：**
+- `backend/wheatmall-product/src/main/java/com/wheatmall/product/ProductApplication.java`
+  - 添加 `@EnableDiscoveryClient` 注解启用Nacos服务注册
+  
+- `backend/wheatmall-order/src/main/java/com/wheatmall/OrderApplication.java`
+  - 添加 `@EnableDiscoveryClient` 注解启用Nacos服务注册
+
+#### 3. 配置Nacos注册中心
+**修改文件：**
+- `backend/wheatmall-product/src/main/resources/application.yml`
+  - 添加Nacos配置：server-addr指向127.0.0.1:8848
+  - namespace使用public，group使用DEFAULT_GROUP
+  
+- `backend/wheatmall-order/src/main/resources/application.yml`
+  - 添加相同的Nacos配置
+
+#### 3. 修改WebClient配置
+**修改文件：**
+- `backend/wheatmall-order/src/main/java/com/wheatmall/order/config/WebClientConfig.java`
+  - WebClient.Builder添加 `@LoadBalanced` 注解启用负载均衡
+  - 修改baseUrl从 `http://localhost:8091` 改为 `http://wheatmall-product`
+  - 删除手动配置的超时设置（可通过其他方式配置）
+
+**服务调用方式变化：**
+```java
+// 之前：直接IP调用
+.baseUrl("http://localhost:8091")
+
+// 之后：通过Nacos服务名调用
+.baseUrl("http://wheatmall-product")
+```
+
+#### 4. 启动前准备
+**需要启动Nacos Server：**
+```bash
+# 下载并启动Nacos 3.1.1
+sh startup.sh -m standalone
+```
+
+**Nacos控制台访问：** http://127.0.0.1:8080/nacos (默认账号密码：nacos/nacos)
+**客户端注册地址：** 127.0.0.1:8848
+
+## 启动和测试
+
+### 前置条件
+确保Nacos Server已启动：
+- 控制台：http://127.0.0.1:8080/nacos
+- 客户端注册地址：127.0.0.1:8848
+
+### 启动服务
+
+1. 启动Product服务：
+```bash
+cd backend/wheatmall-product
+mvn spring-boot:run
+```
+
+2. 启动Order服务：
+```bash
+cd backend/wheatmall-order
+mvn spring-boot:run
+```
+
+3. 查看Nacos控制台：
+- 访问 http://127.0.0.1:8080/nacos
+- 在服务列表中应能看到 `wheatmall-product` 和 `wheatmall-order`
+
+### 测试接口
+
+1. 测试Product模块直接访问：
+```bash
+# 获取单个商品
+curl http://localhost:8091/api/product/1
+
+# 获取商品列表
+curl http://localhost:8091/api/product/list
+```
+
+2. 测试Order模块通过Nacos调用Product：
+```bash
+# 同步获取商品详情（通过Nacos服务名调用）
+curl http://localhost:8090/api/order/product/1
+
+# 同步获取商品列表
+curl http://localhost:8090/api/order/products
+
+# 异步获取商品
+curl http://localhost:8090/api/order/product/async/1
+
+# 创建订单(内部通过Nacos调用Product服务)
+curl -X POST "http://localhost:8090/api/order/create?productId=1&quantity=2"
+```
+
+### 测试结果
+
+| 接口 | 地址 | 结果 |
+|------|------|------|
+| Product直接访问 | `GET http://localhost:8091/api/product/1` | 成功 |
+| Order调用Product(通过Nacos) | `GET http://localhost:8090/api/order/product/1` | 成功 |
+| Order调用Product(列表) | `GET http://localhost:8090/api/order/products` | 成功 |
+| Order调用Product(异步) | `GET http://localhost:8090/api/order/product/async/2` | 成功 |
+| 创建订单(Nacos调用) | `POST http://localhost:8090/api/order/create?productId=1&quantity=2` | 成功 |
+
 ## 后续优化建议
 
-1. **服务注册发现**：集成Nacos或Eureka，使用服务名而非IP:Port调用
-2. **负载均衡**：使用Spring Cloud LoadBalancer实现客户端负载均衡
-3. **熔断降级**：集成Resilience4j实现服务容错
-4. **链路追踪**：集成Sleuth+Zipkin追踪请求链路
-5. **统一异常处理**：添加全局异常处理器
-6. **参数校验**：集成Spring Validation进行参数校验
+1. ~~**服务注册发现**：集成Nacos或Eureka，使用服务名而非IP:Port调用~~ ✅ 已完成
+2. ~~**负载均衡**：使用Spring Cloud LoadBalancer实现客户端负载均衡~~ ✅ 已完成（通过@LoadBalanced）
+3. **配置中心**：使用Nacos Config统一管理配置
+4. **熔断降级**：集成Resilience4j实现服务容错
+5. **链路追踪**：集成Sleuth+Zipkin追踪请求链路
+6. **统一异常处理**：添加全局异常处理器
+7. **参数校验**：集成Spring Validation进行参数校验

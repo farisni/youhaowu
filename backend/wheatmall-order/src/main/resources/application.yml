@@ -1,9 +1,16 @@
 server:
-  port: 8080
+  port: 8090
 
 spring:
   application:
     name: wheatmall-order
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: public
+        group: DEFAULT_GROUP
+        register-enabled: true
 
 logging:
   level:

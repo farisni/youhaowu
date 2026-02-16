@@ -1,41 +1,35 @@
 package com.wheatmall.order.config;
 
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.netty.http.client.HttpClient;
-
-import java.time.Duration;
 
 /**
  * WebClient配置类
+ * 支持Nacos服务发现和负载均衡
  */
 @Configuration
 public class WebClientConfig {
 
     /**
-     * 配置WebClient Bean
-     * @return WebClient实例
+     * 配置支持负载均衡的WebClient.Builder
+     * 使用@LoadBalanced注解启用服务名调用
      */
     @Bean
-    public WebClient.Builder webClientBuilder() {
-        HttpClient httpClient = HttpClient.create()
-                .responseTimeout(Duration.ofSeconds(5));
-
-        return WebClient.builder()
-                .clientConnector(new ReactorClientHttpConnector(httpClient));
+    @LoadBalanced
+    public WebClient.Builder loadBalancedWebClientBuilder() {
+        return WebClient.builder();
     }
 
     /**
      * 配置Product服务的WebClient
-     * @param builder WebClient.Builder
-     * @return 针对Product服务的WebClient
+     * 使用服务名 wheatmall-product 通过Nacos发现和调用
      */
     @Bean
-    public WebClient productWebClient(WebClient.Builder builder) {
-        return builder
-                .baseUrl("http://localhost:8081")
+    public WebClient productWebClient(WebClient.Builder loadBalancedWebClientBuilder) {
+        return loadBalancedWebClientBuilder
+                .baseUrl("http://wheatmall-product")
                 .build();
     }
 }
