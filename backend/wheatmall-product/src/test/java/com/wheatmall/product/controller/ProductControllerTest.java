@@ -30,15 +30,15 @@ class ProductControllerTest {
     @Test
     void testGetProductById() {
         // 执行测试
-        R result = productController.getProductById(1L);
+        R<Product> result = productController.getProductById(1L);
 
         // 验证结果
         assertNotNull(result);
         assertEquals(0, result.getCode());
-        assertEquals("success", result.get("msg"));
-        assertNotNull(result.get("data"));
+        assertEquals("success", result.getMsg());
+        assertNotNull(result.getData());
 
-        Product product = (Product) result.get("data");
+        Product product = result.getData();
         assertEquals(1L, product.getId());
         assertEquals("测试商品-1", product.getName());
     }
@@ -46,15 +46,14 @@ class ProductControllerTest {
     @Test
     void testGetProductList() {
         // 执行测试
-        R result = productController.getProductList();
+        R<List<Product>> result = productController.getProductList();
 
         // 验证结果
         assertNotNull(result);
         assertEquals(0, result.getCode());
-        assertNotNull(result.get("data"));
+        assertNotNull(result.getData());
 
-        @SuppressWarnings("unchecked")
-        List<Product> products = (List<Product>) result.get("data");
+        List<Product> products = result.getData();
         assertEquals(3, products.size());
 
         // 验证第一个商品
@@ -65,13 +64,13 @@ class ProductControllerTest {
     @Test
     void testGetProduct() {
         // 执行测试
-        R result = productController.getProduct(2L);
+        R<Product> result = productController.getProduct(2L);
 
         // 验证结果
         assertNotNull(result);
         assertEquals(0, result.getCode());
 
-        Product product = (Product) result.get("data");
+        Product product = result.getData();
         assertEquals(2L, product.getId());
         assertEquals("测试商品-2", product.getName());
     }

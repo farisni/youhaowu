@@ -23,7 +23,7 @@ public class ProductController {
      * @return 商品信息
      */
     @GetMapping("/{id}")
-    public R getProductById(@PathVariable Long id) {
+    public R<Product> getProductById(@PathVariable Long id) {
         // 模拟返回商品数据
         Product product = new Product(
                 id,
@@ -34,7 +34,7 @@ public class ProductController {
                 LocalDateTime.now(),
                 LocalDateTime.now()
         );
-        return R.ok().setData(product);
+        return R.ok(product);
     }
 
     /**
@@ -42,7 +42,7 @@ public class ProductController {
      * @return 商品列表
      */
     @GetMapping("/list")
-    public R getProductList() {
+    public R<List<Product>> getProductList() {
         List<Product> productList = new ArrayList<>();
         
         productList.add(new Product(
@@ -75,7 +75,7 @@ public class ProductController {
                 LocalDateTime.now()
         ));
         
-        return R.ok().setData(productList);
+        return R.ok(productList);
     }
 
     /**
@@ -84,7 +84,7 @@ public class ProductController {
      * @return 商品信息
      */
     @GetMapping("/get/{id}")
-    public R getProduct(@PathVariable Long id) {
+    public R<Product> getProduct(@PathVariable Long id) {
         return getProductById(id);
     }
 }
