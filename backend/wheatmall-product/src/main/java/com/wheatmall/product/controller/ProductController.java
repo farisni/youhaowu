@@ -1,6 +1,7 @@
 package com.wheatmall.product.controller;
 
 import com.wheatmall.common.constant.ServiceUris;
+import com.wheatmall.common.utils.R;
 import com.wheatmall.product.entity.Product;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,9 +23,9 @@ public class ProductController {
      * @return 商品信息
      */
     @GetMapping("/{id}")
-    public Product getProductById(@PathVariable Long id) {
+    public R getProductById(@PathVariable Long id) {
         // 模拟返回商品数据
-        return new Product(
+        Product product = new Product(
                 id,
                 "测试商品-" + id,
                 new BigDecimal("99.99"),
@@ -33,6 +34,7 @@ public class ProductController {
                 LocalDateTime.now(),
                 LocalDateTime.now()
         );
+        return R.ok().setData(product);
     }
 
     /**
@@ -40,7 +42,7 @@ public class ProductController {
      * @return 商品列表
      */
     @GetMapping("/list")
-    public List<Product> getProductList() {
+    public R getProductList() {
         List<Product> productList = new ArrayList<>();
         
         productList.add(new Product(
@@ -73,7 +75,7 @@ public class ProductController {
                 LocalDateTime.now()
         ));
         
-        return productList;
+        return R.ok().setData(productList);
     }
 
     /**
@@ -82,7 +84,7 @@ public class ProductController {
      * @return 商品信息
      */
     @GetMapping("/get/{id}")
-    public Product getProduct(@PathVariable Long id) {
+    public R getProduct(@PathVariable Long id) {
         return getProductById(id);
     }
 }
