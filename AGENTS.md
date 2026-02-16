@@ -98,6 +98,23 @@
 - 新增依赖后必须验证依赖是否正确引入
 - 单元测试使用 JUnit 5 + Mockito
 
+### Java 对象命名规范
+
+| 缩写 | 全称 | 中文含义 | 使用场景 | 说明 |
+|------|------|----------|----------|------|
+| DTO | Data Transfer Object | 数据传输对象 | Service ↔ Controller | 层间数据传输 |
+| VO | View Object | 视图对象 | Controller ↔ 前端 | 返回给前端展示 |
+| DO/PO | Domain/Persistent Object | 领域/持久化对象 | DAO ↔ Database | 数据库表映射 |
+| BO | Business Object | 业务对象 | Service 层 | 封装业务逻辑 |
+| Query | Query Object | 查询对象 | Controller → Service | 封装查询参数 |
+| POJO | Plain Old Java Object | 简单Java对象 | 任意 | 普通Java对象 |
+
+**使用原则：**
+- Controller 返回前端统一使用 VO
+- Service 层接收参数使用 DTO 或 Query
+- 与数据库交互使用 DO/PO
+- 复杂业务逻辑封装在 BO 中
+
 ## 沟通规范
 
 ### 测试报告格式
@@ -125,6 +142,7 @@
 | 2024-02-17 | 初始版本，添加测试验证规则、Git提交规则 | AI Assistant |
 | 2024-02-17 | 添加文档记录规则 | AI Assistant |
 | 2024-02-17 | 添加需求拆分和步骤记录规则 | AI Assistant |
+| 2024-02-17 | 添加Java对象命名规范 | AI Assistant |
 
 ---
 
