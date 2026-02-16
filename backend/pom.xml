@@ -30,6 +30,7 @@
     <modules>
         <module>wheatmall-common</module>
         <module>wheatmall-product</module>
+        <module>wheatmall-order</module>
         <!--        <module>wheatmall-common</module>-->
         <!--        <module>wheatmall-gateway</module>-->
         <!--        <module>wheatmall-auth</module>-->
