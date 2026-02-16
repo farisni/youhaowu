@@ -190,6 +190,23 @@ curl -X POST "http://localhost:8090/api/order/create?productId=1&quantity=2"
 - **WebClient**: Spring WebFlux提供的响应式HTTP客户端
 - **Lombok**: 代码简化工具
 
+## Java对象命名规范
+
+| 缩写 | 全称 | 中文含义 | 使用场景 | 说明 |
+|------|------|----------|----------|------|
+| DTO | Data Transfer Object | 数据传输对象 | Service ↔ Controller | 层间数据传输 |
+| VO | View Object | 视图对象 | Controller ↔ 前端 | 返回给前端展示 |
+| DO/PO | Domain/Persistent Object | 领域/持久化对象 | DAO ↔ Database | 数据库表映射 |
+| BO | Business Object | 业务对象 | Service 层 | 封装业务逻辑 |
+| Query | Query Object | 查询对象 | Controller → Service | 封装查询参数 |
+| POJO | Plain Old Java Object | 简单Java对象 | 任意 | 普通Java对象 |
+
+**使用原则：**
+- Controller 返回前端统一使用 VO
+- Service 层接收参数使用 DTO 或 Query
+- 与数据库交互使用 DO/PO
+- 复杂业务逻辑封装在 BO 中
+
 ### 2024-02-17: 集成Nacos 3.1.1服务注册发现
 
 #### 1. 添加Nacos依赖
