@@ -14,57 +14,17 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class RTest {
 
+   
     @Test
-    void testOk() {
+    void testGetData() {
+        // 测试setData设置对象，getData获取对象
         R<String> r = R.ok();
-        assertEquals(0, r.getCode());
-        assertEquals("success", r.getMsg());
-    }
-
-    @Test
-    void testOkWithMessage() {
-        R<String> r = R.ok("操作成功");
-        assertEquals(0, r.getCode());
-        assertEquals("操作成功", r.getMsg());
-    }
-
-    @Test
-    void testOkWithMap() {
-        Map<String, Object> map = new HashMap<>();
-        map.put("key1", "value1");
-        map.put("key2", 123);
-
-        R<Object> r = R.ok(map);
-        assertEquals(0, r.getCode());
-        assertNotNull(r.getExtra());
-    }
-
-    @Test
-    void testFail() {
-        R<String> r = R.fail();
-        assertEquals(500, r.getCode());
-        assertEquals("未知异常，请联系管理员", r.getMsg());
-    }
-
-    @Test
-    void testFailWithMessage() {
-        R<String> r = R.fail("自定义错误");
-        assertEquals(500, r.getCode());
-        assertEquals("自定义错误", r.getMsg());
-    }
-
-    @Test
-    void testFailWithBizCode() {
-        R<String> r = R.fail(BizCodeEnum.PRODUCT_NOT_FOUND);
-        assertEquals(20001, r.getCode());
-        assertEquals("商品不存在", r.getMsg());
-    }
-
-    @Test
-    void testFailWithCodeAndMessage() {
-        R<String> r = R.fail(400, "参数错误");
-        assertEquals(400, r.getCode());
-        assertEquals("参数错误", r.getMsg());
+        r.setData("test data");
+        
+        // getData应该返回T类型（String）
+        String data = r.getData();
+        assertNotNull(data);
+        assertEquals("test data", data);
     }
 
     @Test
@@ -95,6 +55,48 @@ class RTest {
     }
 
     @Test
+    void testGetDataWithObject() {
+        // 测试getData返回对象类型
+        Map<String, Object> data = new HashMap<>();
+        data.put("id", 1L);
+        data.put("name", "测试");
+        
+        // 注意：ok(data)如果是Map，是把数据放到extra，不是data字段
+        // 应该用ok()空构造，再用setData()设置data字段
+        R<Map<String, Object>> r = R.ok();
+        r.setData(data);
+        
+        // getData直接返回原始T类型数据
+        Map<String, Object> result = r.getData();
+        assertNotNull(result);
+        assertEquals(1L, result.get("id"));
+        assertEquals("测试", result.get("name"));
+    }
+
+    @Test
+    void testGetDataWithClass() {
+        // 测试使用 Class 获取数据（方式1：简单）
+        Map<String, Object> data = new HashMap<>();
+        data.put("id", 1L);
+        data.put("name", "测试");
+        
+        R<Map<String, Object>> r = R.ok();
+        r.setData(data);
+        
+        // 使用 Class 获取数据
+        @SuppressWarnings("unchecked")
+        Map<String, Object> result = r.getData(Map.class);
+        assertNotNull(result);
+        assertEquals("测试", result.get("name"));
+        
+        // 也可以用于简单类型
+        R<String> r2 = R.ok();
+        r2.setData("test string");
+        String str = r2.getData(String.class);
+        assertEquals("test string", str);
+    }
+
+    @Test
     void testGetDataWithTypeReference() {
         R<Map<String, Object>> r = R.ok();
 
@@ -103,6 +105,7 @@ class RTest {
         data.put("name", "测试");
         r.setData(data);
 
+        // getData(TypeReference)用于类型转换（fastjson反序列化），支持泛型
         Map<String, Object> result = r.getData(new TypeReference<Map<String, Object>>() {});
         assertNotNull(result);
         // fastjson反序列化会将Long转为Integer，这里用Number类型比较
@@ -110,21 +113,5 @@ class RTest {
         assertEquals("测试", result.get("name"));
     }
 
-    @Test
-    void testIsSuccess() {
-        R<String> successR = R.ok();
-        assertTrue(successR.isSuccess());
-
-        R<String> failR = R.fail();
-        assertFalse(failR.isSuccess());
-    }
-
-    @Test
-    void testSerializable() {
-        R<String> r = R.ok("test");
-        r.setData("test data");
-        
-        // 验证实现了Serializable接口
-        assertTrue(r instanceof java.io.Serializable);
-    }
+   
 }

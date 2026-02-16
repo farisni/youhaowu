@@ -75,9 +75,17 @@ public class R<T> implements Serializable {
 	}
 
 	/**
-	 * 利用fastjson进行反序列化
+	 * 利用fastjson进行反序列化，将data转换为指定类型（使用Class）
 	 */
-	public <R> R getData(TypeReference<R> typeReference) {
+	public <E> E getData(Class<E> clazz) {
+		String jsonString = JSON.toJSONString(this.data);
+		return JSON.parseObject(jsonString, clazz);
+	}
+
+	/**
+	 * 利用fastjson进行反序列化，将data转换为指定类型（使用TypeReference，支持泛型）
+	 */
+	public <E> E getData(TypeReference<E> typeReference) {
 		String jsonString = JSON.toJSONString(this.data);
 		return JSON.parseObject(jsonString, typeReference);
 	}
