@@ -1,0 +1,34 @@
+# ==============================
+# 通用系统 & 编辑器
+# ==============================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.Spotlight-V100
+.Trashes
+__MACOSX
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+
+# ==============================
+# IntelliJ IDEA (推荐不提交 .idea)
+# ==============================
+
+.idea/
+*.iml
+*.iws
+out/
+production/
+
+# 例外：如果你团队
