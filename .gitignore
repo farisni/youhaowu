@@ -32,4 +32,6 @@ $RECYCLE.BIN/
 out/
 production/
 
+# Maven
+target/
 # 例外：如果你团队
