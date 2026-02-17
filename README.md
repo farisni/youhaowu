@@ -451,36 +451,24 @@ return R.error(500, "系统错误");
 - 数据库表结构设计（RBAC三表）
 - 预计总工时：约5小时
 
-### 2026-02-17: 添加JWT工具类和假数据模型
+### 2026-02-17: 添加AuthService和JwtUtil测试类
 
 **执行步骤：**
-1. [x] 添加JWT依赖(jjwtt 0.12.3)
-2. [x] 创建JwtUtil工具类
-3. [x] 创建RBAC实体类(SysUser/SysRole/SysPermission)
-4. [x] 创建MockData假数据管理类
-5. [x] 创建TokenInvalidException异常类
+1. [x] 创建DTO/VO对象(LoginRequest/RefreshTokenRequest/LoginResponse/UserInfoVO)
+2. [x] 创建AuthService接口和简单实现
+3. [x] 创建JwtUtilTest测试类(21个测试用例)
+4. [x] 创建AuthServiceTest测试类(10个测试用例)
+5. [x] AuthServiceTest.testLoginSuccess添加详细注释说明
+6. [x] 运行测试验证(31个测试全部通过)
 
 **创建的文件：**
-- `backend/wheatmall-auth-admin/src/main/java/com/wheatmall/authadmin/security/jwt/JwtUtil.java` - JWT工具类
-- `backend/wheatmall-auth-admin/src/main/java/com/wheatmall/authadmin/exception/TokenInvalidException.java` - Token异常类
-- `backend/wheatmall-auth-admin/src/main/java/com/wheatmall/authadmin/entity/SysUser.java` - 用户实体
-- `backend/wheatmall-auth-admin/src/main/java/com/wheatmall/authadmin/entity/SysRole.java` - 角色实体
-- `backend/wheatmall-auth-admin/src/main/java/com/wheatmall/authadmin/entity/SysPermission.java` - 权限实体
-- `backend/wheatmall-auth-admin/src/main/java/com/wheatmall/authadmin/mock/MockData.java` - 假数据管理类
-- `doc/agent-master.md` - AI操作规范文档
+- `backend/wheatmall-auth-admin/src/main/java/com/wheatmall/authadmin/dto/` - DTO对象
+- `backend/wheatmall-auth-admin/src/main/java/com/wheatmall/authadmin/vo/` - VO对象  
+- `backend/wheatmall-auth-admin/src/main/java/com/wheatmall/authadmin/service/` - AuthService
+- `backend/wheatmall-auth-admin/src/test/java/com/wheatmall/authadmin/security/jwt/JwtUtilTest.java` - JwtUtil测试
+- `backend/wheatmall-auth-admin/src/test/java/com/wheatmall/authadmin/service/AuthServiceTest.java` - AuthService测试
 
-**JwtUtil核心功能：**
-- generateAccessToken(userId, username, roles) - 生成访问令牌（30分钟）
-- generateRefreshToken(userId) - 生成刷新令牌（7天）
-- parseToken(token) - 解析Token获取Claims
-- validateToken(token) - 验证Token有效性
-- getUserIdFromToken(token) / getUsernameFromToken(token) / getRolesFromToken(token) - 提取用户信息
-- getExpirationDate(token) / getExpirationTime(token) - 获取过期时间
-- isAccessToken(token) / isRefreshToken(token) - 判断Token类型
-
-**MockData包含：**
-- 3个用户：admin(超管)/user(普通)/test(禁用)，密码均为123456
-- 3个角色：SUPER_ADMIN/USER/TESTER
-- 5个权限：user:view/create/update/delete/admin
-- 关联关系：用户↔角色、角色↔权限
-- 模拟Redis功能：TOKEN_BLACKLIST（黑名单）、REFRESH_TOKEN_MAP（RefreshToken存储）
+**测试覆盖：**
+- JwtUtil: Token生成/解析/验证/类型判断/异常处理
+- AuthService: 登录/登出/刷新Token/参数校验
+- **测试结果：31个测试全部通过** ✓
