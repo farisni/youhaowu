@@ -1,7 +1,10 @@
 package com.wheatmall.authadmin.service;
 
 import com.wheatmall.authadmin.dto.LoginRequest;
+import com.wheatmall.authadmin.entity.SysUser;
+import com.wheatmall.authadmin.mock.MockData;
 import com.wheatmall.authadmin.security.jwt.JwtUtil;
+import com.wheatmall.authadmin.security.service.SecurityUser;
 import com.wheatmall.authadmin.vo.LoginResponse;
 import com.wheatmall.authadmin.vo.UserInfoVO;
 import lombok.extern.slf4j.Slf4j;
@@ -10,7 +13,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
+import java.util.List;
 
 /**
  * 认证服务实现（简单实现，供测试使用）
@@ -40,11 +43,11 @@ public class AuthServiceImpl implements AuthService {
                 new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
         );
 
-        Object principal = authentication.getPrincipal();
-        Long userId = 1L;
-        String username = request.getUsername();
+        SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
+        Long userId = securityUser.getUser().getId();
+        String username = securityUser.getUsername();
 
-        String accessToken = jwtUtil.generateAccessToken(userId, username, Arrays.asList("ADMIN", "USER"));
+        String accessToken = jwtUtil.generateAccessToken(userId, username, securityUser.getRoles());
         String refreshToken = jwtUtil.generateRefreshToken(userId);
 
         return LoginResponse.builder()
@@ -55,8 +58,9 @@ public class AuthServiceImpl implements AuthService {
                 .userInfo(UserInfoVO.builder()
                         .userId(userId)
                         .username(username)
-                        .email(username + "@wheatmall.com")
-                        .roles(Arrays.asList("ADMIN", "USER"))
+                        .email(securityUser.getUser().getEmail())
+                        .roles(securityUser.getRoles())
+                        .permissions(securityUser.getPermissions())
                         .build())
                 .build();
     }
@@ -80,9 +84,16 @@ public class AuthServiceImpl implements AuthService {
         }
 
         Long userId = jwtUtil.getUserIdFromToken(refreshToken);
-        String username = "admin";
+        // 从MockData获取用户信息
+        SysUser user = MockData.getUserById(userId);
+        if (user == null) {
+            throw new com.wheatmall.authadmin.exception.TokenInvalidException("用户不存在");
+        }
+        
+        List<String> roles = MockData.getRoleCodesByUserId(userId);
+        List<String> permissions = MockData.getPermissionCodesByUserId(userId);
 
-        String newAccessToken = jwtUtil.generateAccessToken(userId, username, Arrays.asList("ADMIN", "USER"));
+        String newAccessToken = jwtUtil.generateAccessToken(userId, user.getUsername(), roles);
         String newRefreshToken = jwtUtil.generateRefreshToken(userId);
 
         return LoginResponse.builder()
@@ -92,20 +103,37 @@ public class AuthServiceImpl implements AuthService {
                 .tokenType("Bearer")
                 .userInfo(UserInfoVO.builder()
                         .userId(userId)
-                        .username(username)
-                        .email(username + "@wheatmall.com")
-                        .roles(Arrays.asList("ADMIN", "USER"))
+                        .username(user.getUsername())
+                        .email(user.getEmail())
+                        .roles(roles)
+                        .permissions(permissions)
                         .build())
                 .build();
     }
 
     @Override
     public UserInfoVO getCurrentUser() {
+        // 这里应该从 SecurityContext 获取当前用户
+        // 为了测试，返回一个默认用户
+        SysUser user = MockData.getUserByUsername("admin");
+        if (user != null) {
+            List<String> roles = MockData.getRoleCodesByUserId(user.getId());
+            List<String> permissions = MockData.getPermissionCodesByUserId(user.getId());
+            
+            return UserInfoVO.builder()
+                    .userId(user.getId())
+                    .username(user.getUsername())
+                    .email(user.getEmail())
+                    .roles(roles)
+                    .permissions(permissions)
+                    .build();
+        }
+        
         return UserInfoVO.builder()
                 .userId(1L)
                 .username("admin")
                 .email("admin@wheatmall.com")
-                .roles(Arrays.asList("ADMIN", "USER"))
+                .roles(List.of("ADMIN", "USER"))
                 .build();
     }
 }
