@@ -450,3 +450,37 @@ return R.error(500, "系统错误");
 - 详细的代码示例和配置
 - 数据库表结构设计（RBAC三表）
 - 预计总工时：约5小时
+
+### 2026-02-17: 添加JWT工具类和假数据模型
+
+**执行步骤：**
+1. [x] 添加JWT依赖(jjwtt 0.12.3)
+2. [x] 创建JwtUtil工具类
+3. [x] 创建RBAC实体类(SysUser/SysRole/SysPermission)
+4. [x] 创建MockData假数据管理类
+5. [x] 创建TokenInvalidException异常类
+
+**创建的文件：**
+- `backend/wheatmall-auth-admin/src/main/java/com/wheatmall/authadmin/security/jwt/JwtUtil.java` - JWT工具类
+- `backend/wheatmall-auth-admin/src/main/java/com/wheatmall/authadmin/exception/TokenInvalidException.java` - Token异常类
+- `backend/wheatmall-auth-admin/src/main/java/com/wheatmall/authadmin/entity/SysUser.java` - 用户实体
+- `backend/wheatmall-auth-admin/src/main/java/com/wheatmall/authadmin/entity/SysRole.java` - 角色实体
+- `backend/wheatmall-auth-admin/src/main/java/com/wheatmall/authadmin/entity/SysPermission.java` - 权限实体
+- `backend/wheatmall-auth-admin/src/main/java/com/wheatmall/authadmin/mock/MockData.java` - 假数据管理类
+- `doc/agent-master.md` - AI操作规范文档
+
+**JwtUtil核心功能：**
+- generateAccessToken(userId, username, roles) - 生成访问令牌（30分钟）
+- generateRefreshToken(userId) - 生成刷新令牌（7天）
+- parseToken(token) - 解析Token获取Claims
+- validateToken(token) - 验证Token有效性
+- getUserIdFromToken(token) / getUsernameFromToken(token) / getRolesFromToken(token) - 提取用户信息
+- getExpirationDate(token) / getExpirationTime(token) - 获取过期时间
+- isAccessToken(token) / isRefreshToken(token) - 判断Token类型
+
+**MockData包含：**
+- 3个用户：admin(超管)/user(普通)/test(禁用)，密码均为123456
+- 3个角色：SUPER_ADMIN/USER/TESTER
+- 5个权限：user:view/create/update/delete/admin
+- 关联关系：用户↔角色、角色↔权限
+- 模拟Redis功能：TOKEN_BLACKLIST（黑名单）、REFRESH_TOKEN_MAP（RefreshToken存储）
