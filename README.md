@@ -454,21 +454,13 @@ return R.error(500, "系统错误");
 ### 2026-02-17: 添加AuthService和JwtUtil测试类
 
 **执行步骤：**
-1. [x] 创建DTO/VO对象(LoginRequest/RefreshTokenRequest/LoginResponse/UserInfoVO)
-2. [x] 创建AuthService接口和简单实现
-3. [x] 创建JwtUtilTest测试类(21个测试用例)
-4. [x] 创建AuthServiceTest测试类(10个测试用例)
-5. [x] AuthServiceTest.testLoginSuccess添加详细注释说明
-6. [x] 运行测试验证(31个测试全部通过)
+1. [x] 创建业务对象(DTO/VO)和AuthService接口
+2. [x] 实现AuthService简单逻辑
+3. [x] 创建JwtUtil和AuthService单元测试
+4. [x] 运行测试验证(31个测试全部通过)
 
-**创建的文件：**
-- `backend/wheatmall-auth-admin/src/main/java/com/wheatmall/authadmin/dto/` - DTO对象
-- `backend/wheatmall-auth-admin/src/main/java/com/wheatmall/authadmin/vo/` - VO对象  
-- `backend/wheatmall-auth-admin/src/main/java/com/wheatmall/authadmin/service/` - AuthService
-- `backend/wheatmall-auth-admin/src/test/java/com/wheatmall/authadmin/security/jwt/JwtUtilTest.java` - JwtUtil测试
-- `backend/wheatmall-auth-admin/src/test/java/com/wheatmall/authadmin/service/AuthServiceTest.java` - AuthService测试
-
-**测试覆盖：**
-- JwtUtil: Token生成/解析/验证/类型判断/异常处理
-- AuthService: 登录/登出/刷新Token/参数校验
+**主要变更：**
+- 添加DTO/VO对象用于认证请求/响应
+- 实现AuthService基础功能
+- 完善JwtUtil和AuthService测试覆盖
 - **测试结果：31个测试全部通过** ✓
