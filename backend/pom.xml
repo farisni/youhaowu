@@ -32,12 +32,9 @@
         <module>wheatmall-common</module>
         <module>wheatmall-product</module>
         <module>wheatmall-order</module>
-        <!--        <module>wheatmall-common</module>-->
+        <module>wheatmall-auth-admin</module>
         <!--        <module>wheatmall-gateway</module>-->
-        <!--        <module>wheatmall-auth</module>-->
         <!--        <module>wheatmall-user</module>-->
-        <!--        <module>wheatmall-product</module>-->
-        <!--        <module>wheatmall-order</module>-->
     </modules>
 
     <!-- 依赖版本统一管理（不实际引入依赖） -->

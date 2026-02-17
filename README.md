@@ -421,3 +421,32 @@ return R.error(500, "系统错误");
 3. ~~**统一响应格式**：添加通用响应结果类R~~ ✅ 已完成
 4. ~~**单元测试**：整合Mockito测试框架~~ ✅ 已完成
 5. **配置中心**：使用Nacos Config统一管理配置
+6. **JWT认证**：正在规划中 - wheatmall-auth-admin 模块
+
+### 2026-02-17: 创建 wheatmall-auth-admin 认证模块（空白框架）
+
+**执行步骤：**
+1. [x] 创建模块目录结构
+2. [x] 创建 pom.xml 配置文件
+3. [x] 创建启动类 AuthAdminApplication
+4. [x] 创建 README.md 模块说明
+5. [x] 创建 doc/JWT_AUTH_DEVELOPMENT_PLAN.md 开发规划文档
+6. [x] 更新父工程 pom.xml 添加新模块
+
+**创建的文件：**
+- `backend/wheatmall-auth-admin/pom.xml` - Maven配置（依赖：Spring Security、JWT、Redis、Nacos）
+- `backend/wheatmall-auth-admin/src/main/java/com/wheatmall/authadmin/AuthAdminApplication.java` - 启动类
+- `backend/wheatmall-auth-admin/README.md` - 模块说明文档
+- `backend/wheatmall-auth-admin/doc/JWT_AUTH_DEVELOPMENT_PLAN.md` - JWT认证系统完整开发规划
+
+**模块信息：**
+- 服务名：wheatmall-auth-admin
+- 端口：8092
+- 功能定位：统一认证授权管理（JWT + RBAC）
+
+**开发规划包含：**
+- 8个Phase共25个执行步骤
+- 完整的架构图和流程图
+- 详细的代码示例和配置
+- 数据库表结构设计（RBAC三表）
+- 预计总工时：约5小时
