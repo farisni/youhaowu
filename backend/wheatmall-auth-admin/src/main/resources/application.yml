@@ -1,0 +1,19 @@
+server:
+  port: 8092
+
+spring:
+  application:
+    name: wheatmall-auth-admin
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: public
+        group: DEFAULT_GROUP
+        register-enabled: true
+
+logging:
+  file:
+    path: /tmp
+  level:
+    com.wheatmall.authadmin: debug

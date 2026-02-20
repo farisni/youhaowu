@@ -3,6 +3,8 @@
 # ==============================
 .vscode
 
+logs/
+
 # macOS
 .DS_Store
 .AppleDouble
