@@ -13,5 +13,11 @@ spring:
         register-enabled: true
 
 logging:
+  file:
+    path: /tmp  # 所有日志（包括Nacos）都会输出到 /tmp 目录
   level:
     com.wheatmall.order: debug
+
+nacos:
+  logging:
+    path: /tmp/nacos  # 专门指定nacos日志路径
