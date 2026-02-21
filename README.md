@@ -451,16 +451,19 @@ return R.error(500, "系统错误");
 - 数据库表结构设计（RBAC三表）
 - 预计总工时：约5小时
 
-### 2026-02-17: 添加AuthService和JwtUtil测试类
+### 2026-02-17: 实现Spring Security配置
 
 **执行步骤：**
-1. [x] 创建业务对象(DTO/VO)和AuthService接口
-2. [x] 实现AuthService简单逻辑
-3. [x] 创建JwtUtil和AuthService单元测试
-4. [x] 运行测试验证(31个测试全部通过)
+1. [x] 创建SecurityConfig配置类
+2. [x] 实现JwtAuthenticationFilter过滤器  
+3. [x] 创建UserDetailsServiceImpl用户服务
+4. [x] 创建SecurityUser安全用户封装
+5. [x] 创建DemoController权限演示控制器
+6. [x] 配置RBAC权限控制和无状态认证
 
 **主要变更：**
-- 添加DTO/VO对象用于认证请求/响应
-- 实现AuthService基础功能
-- 完善JwtUtil和AuthService测试覆盖
-- **测试结果：31个测试全部通过** ✓
+- Spring Security 配置支持 JWT 无状态认证
+- JWT 过滤器自动解析和验证 Token
+- RBAC 权限控制（@PreAuthorize 注解）
+- Mock 数据支持（无需真实数据库）
+- 公开接口和受保护接口分离
