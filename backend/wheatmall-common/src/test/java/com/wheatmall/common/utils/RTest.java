@@ -1,7 +1,6 @@
 package com.wheatmall.common.utils;
 
 import com.alibaba.fastjson.TypeReference;
-import com.wheatmall.common.enums.BizCodeEnum;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
