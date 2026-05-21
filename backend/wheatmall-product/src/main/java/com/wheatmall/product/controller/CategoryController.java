@@ -26,7 +26,7 @@ public class CategoryController {
      * 获取分类树
      * 返回三级分类树形结构，一级分类包含子分类，子分类嵌套孙分类
      */
-    @GetMapping(ServiceUris.CATEGORY_LIST_TREE)
+    @GetMapping(ServiceUris.ProductCategory.LIST_TREE)
     public R<List<CategoryVO>> list() {
         return R.ok(categoryService.listWithTree());
     }

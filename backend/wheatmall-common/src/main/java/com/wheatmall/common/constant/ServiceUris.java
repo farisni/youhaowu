@@ -14,9 +14,7 @@ public final class ServiceUris {
     
     /** Product服务根路径 */
     public static final String PRODUCT_SERVICE = "/api/product";
-
-    /** 分类列表树 */
-    public static final String CATEGORY_LIST_TREE = PRODUCT_SERVICE + "/category/list/tree";    
+    
     /** Order服务根路径 */
     public static final String ORDER_SERVICE = "/api/order";
     
@@ -47,6 +45,13 @@ public final class ServiceUris {
         
         /** 扣减库存 */
         public static final String DEDUCT_STOCK = PRODUCT_SERVICE + "/{id}/deduct-stock";
+    }
+
+    /** 商品分类相关URI */
+    public static final class ProductCategory {
+        
+        /** 分类列表树 */
+        public static final String LIST_TREE = PRODUCT_SERVICE + "/category/list/tree";
     }
 
     // ==================== Order服务相关URI ====================
