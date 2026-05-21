@@ -12,8 +12,8 @@ public final class ServiceUris {
 
     // ==================== 服务根路径 ====================
     
-    /** Product服务根路径 */
-    public static final String PRODUCT_SERVICE = "/api/product";
+    /** 商品分类服务根路径 */
+    public static final String PRODUCT_CATEGORY_SERVICE = "/api/product/category";
     
     /** Order服务根路径 */
     public static final String ORDER_SERVICE = "/api/order";
@@ -25,10 +25,10 @@ public final class ServiceUris {
     // ==================== 商品分类相关URI ====================
     public static final class ProductCategory {
         /** 分类列表树 */
-        public static final String LIST_TREE = "/category/list/tree";
+        public static final String LIST_TREE = "/list/tree";
 
         /** 分类分页查询 */
-        public static final String PAGE = "/category/list";
+        public static final String PAGE = "/list";
 
     }
 
@@ -37,25 +37,25 @@ public final class ServiceUris {
     public static final class Product {
         
         /** 根据ID查询商品 */
-        public static final String GET_BY_ID = PRODUCT_SERVICE + "/{id}";
+        public static final String GET_BY_ID = PRODUCT_CATEGORY_SERVICE + "/{id}";
         
         /** 供内部服务调用 - 根据ID查询商品 */
-        public static final String GET_BY_ID_INTERNAL = PRODUCT_SERVICE + "/get/{id}";
+        public static final String GET_BY_ID_INTERNAL = PRODUCT_CATEGORY_SERVICE + "/get/{id}";
         
         /** 查询所有商品列表 */
-        public static final String LIST = PRODUCT_SERVICE + "/list";
+        public static final String LIST = PRODUCT_CATEGORY_SERVICE + "/list";
         
         /** 创建商品 */
-        public static final String CREATE = PRODUCT_SERVICE;
+        public static final String CREATE = PRODUCT_CATEGORY_SERVICE;
         
         /** 更新商品 */
-        public static final String UPDATE = PRODUCT_SERVICE + "/{id}";
+        public static final String UPDATE = PRODUCT_CATEGORY_SERVICE + "/{id}";
         
         /** 删除商品 */
-        public static final String DELETE = PRODUCT_SERVICE + "/{id}";
+        public static final String DELETE = PRODUCT_CATEGORY_SERVICE + "/{id}";
         
         /** 扣减库存 */
-        public static final String DEDUCT_STOCK = PRODUCT_SERVICE + "/{id}/deduct-stock";
+        public static final String DEDUCT_STOCK = PRODUCT_CATEGORY_SERVICE + "/{id}/deduct-stock";
     }
 
 

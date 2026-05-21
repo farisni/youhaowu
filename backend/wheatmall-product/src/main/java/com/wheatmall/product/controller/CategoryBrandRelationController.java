@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
  * 管理品牌与分类的关联关系，提供查询品牌关联分类及获取分类下品牌列表的接口
  */
 @RestController
-@RequestMapping(ServiceUris.PRODUCT_SERVICE)
+@RequestMapping(ServiceUris.PRODUCT_CATEGORY_SERVICE)
 public class CategoryBrandRelationController {
     // TODO: GET /catelog/list 获取分类关联的品牌
     // TODO: GET /brands/list 获取品牌关联的分类

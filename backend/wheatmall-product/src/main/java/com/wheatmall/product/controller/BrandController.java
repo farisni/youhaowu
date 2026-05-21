@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
  * 负责品牌信息管理，支持品牌列表、信息查看、保存及基于JSR303校验的状态更新
  */
 @RestController
-@RequestMapping(ServiceUris.PRODUCT_SERVICE)
+@RequestMapping(ServiceUris.PRODUCT_CATEGORY_SERVICE)
 public class BrandController {
     // TODO: GET /list 品牌列表（分页）
     // TODO: GET /info/{brandId} 品牌详情

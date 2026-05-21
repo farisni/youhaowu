@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
  * 处理SKU信息管理，包括分页查询、价格信息获取以及SKU实体的保存、更新与删除
  */
 @RestController
-@RequestMapping(ServiceUris.PRODUCT_SERVICE)
+@RequestMapping(ServiceUris.PRODUCT_CATEGORY_SERVICE)
 public class SkuInfoController {
     // TODO: GET /list 分页查询SKU
     // TODO: GET /info/{skuId} SKU详情

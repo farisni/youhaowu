@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
  * 提供商品属性管理，支持分类ID查询属性、SPU规格回显以及商品规格参数的更新操作
  */
 @RestController
-@RequestMapping(ServiceUris.PRODUCT_SERVICE)
+@RequestMapping(ServiceUris.PRODUCT_CATEGORY_SERVICE)
 public class AttrController {
     // TODO: GET /list/{catelogId} 查询分类下的属性列表
     // TODO: GET /info/{attrId} 查询属性详情

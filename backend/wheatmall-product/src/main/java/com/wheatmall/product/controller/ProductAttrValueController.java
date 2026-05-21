@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
  * 处理SPU属性值相关操作，包含列表查询、保存、修改及删除等功能
  */
 @RestController
-@RequestMapping(ServiceUris.PRODUCT_SERVICE)
+@RequestMapping(ServiceUris.PRODUCT_CATEGORY_SERVICE)
 public class ProductAttrValueController {
     // TODO: GET /list/{spuId} 查询SPU的属性值列表
     // TODO: POST /save 保存属性值
