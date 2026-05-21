@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.util.ContentCachingRequestWrapper;
 
+import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 
 @Slf4j
@@ -39,6 +41,7 @@ public class ApiLogInterceptor implements HandlerInterceptor {
         entry.put("method", request.getMethod());
         entry.put("path", request.getRequestURI());
         entry.put("query", request.getQueryString());
+        entry.put("body", getRequestBody(request));
         entry.put("status", response.getStatus());
         entry.put("duration", duration);
         entry.put("ip", getClientIp(request));
@@ -49,6 +52,16 @@ public class ApiLogInterceptor implements HandlerInterceptor {
                         log.warn("Kafka 发送失败: {}", throwable.getMessage());
                     }
                 });
+    }
+
+    private String getRequestBody(HttpServletRequest request) {
+        if (request instanceof ContentCachingRequestWrapper wrapper) {
+            byte[] content = wrapper.getContentAsByteArray();
+            if (content.length > 0) {
+                return new String(content, StandardCharsets.UTF_8);
+            }
+        }
+        return null;
     }
 
     private String getClientIp(HttpServletRequest request) {
