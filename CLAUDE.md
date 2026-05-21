@@ -149,6 +149,10 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+    /**
+     * 获取分类树
+     * 返回三级分类树形结构，一级分类包含子分类，子分类嵌套孙分类
+     */
     @GetMapping(ServiceUris.ProductCategory.LIST_TREE)
     public R<List<CategoryVO>> list() {
         return R.ok(categoryService.listWithTree());
@@ -164,6 +168,7 @@ public class CategoryController {
 4. 返回统一用 `R<T>` 包装，不返回裸数据
 5. Controller 极薄，一行转发，不写业务逻辑
 6. 不直接返回 Entity，只接触 VO
+7. 每个方法必须有 Javadoc 注释，说明接口用途和返回值
 
 
 **按需追加：**
