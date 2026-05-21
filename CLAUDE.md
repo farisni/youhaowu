@@ -137,6 +137,35 @@
 - Mapper **不**写业务逻辑
 - **要**有 DTO/VO 分层
 
+### Controller 编码规范
+
+**示例模板（CategoryController）：**
+
+```java
+@RestController
+@RequestMapping(ServiceUris.PRODUCT_SERVICE)
+public class CategoryController {
+
+    @Autowired
+    private CategoryService categoryService;
+
+    @GetMapping(ServiceUris.ProductCategory.LIST_TREE)
+    public R<List<CategoryVO>> list() {
+        return R.ok(categoryService.listWithTree());
+    }
+}
+```
+
+**六条铁律：**
+
+1. 类级路由用 `ServiceUris` 根路径常量，不硬编码字符串
+2. Service 注入用 `@Autowired` 字段注入
+3. 方法路由用具体 `@GetMapping`/`@PostMapping` + `ServiceUris` 内部类常量
+4. 返回统一用 `R<T>` 包装，不返回裸数据
+5. Controller 极薄，一行转发，不写业务逻辑
+6. 不直接返回 Entity，只接触 VO
+
+
 **按需追加：**
 
 | 类 | 包路径 | 场景 |
