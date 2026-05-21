@@ -11,10 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ *
  * 商品控制器 - 提供商品相关的REST接口
  */
 @RestController
 @RequestMapping(ServiceUris.PRODUCT_SERVICE)
+@Deprecated
 public class ProductController {
 
     /**
