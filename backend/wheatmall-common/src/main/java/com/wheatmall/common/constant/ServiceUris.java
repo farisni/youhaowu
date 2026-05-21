@@ -47,7 +47,7 @@ public final class ServiceUris {
         public static final String DEDUCT_STOCK = PRODUCT_SERVICE + "/{id}/deduct-stock";
     }
 
-    /** 商品分类相关URI */
+    // ==================== ProductCategory URLs ====================
     public static final class ProductCategory {
         
         /** 分类列表树 */
