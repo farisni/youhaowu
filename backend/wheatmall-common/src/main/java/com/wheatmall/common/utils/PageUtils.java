@@ -3,9 +3,11 @@ package com.wheatmall.common.utils;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wheatmall.common.dto.BaseQueryDTO;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -38,6 +40,20 @@ public class PageUtils {
             }
             String direction = !Boolean.FALSE.equals(query.getSortAsc()) ? " ASC" : " DESC";
             wrapper.last("ORDER BY " + field + direction);
+        }
+    }
+
+    /**
+     * 应用时间范围条件
+     */
+    public static <T> void applyTimeRange(LambdaQueryWrapper<T> wrapper,
+                                           BaseQueryDTO query,
+                                           SFunction<T, LocalDateTime> column) {
+        if (query.getCreateTimeBegin() != null) {
+            wrapper.ge(column, query.getCreateTimeBegin());
+        }
+        if (query.getCreateTimeEnd() != null) {
+            wrapper.le(column, query.getCreateTimeEnd());
         }
     }
 
