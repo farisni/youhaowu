@@ -11,4 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(ServiceUris.PRODUCT_SERVICE)
 public class AttrAttrgroupRelationController {
+    // TODO: GET /list/{attrgroupId} 查询分组关联的属性
+    // TODO: POST /save 保存关联关系
+    // TODO: POST /delete 删除关联关系
 }

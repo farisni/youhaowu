@@ -11,4 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(ServiceUris.PRODUCT_SERVICE)
 public class CategoryBrandRelationController {
+    // TODO: GET /catelog/list 获取分类关联的品牌
+    // TODO: GET /brands/list 获取品牌关联的分类
 }

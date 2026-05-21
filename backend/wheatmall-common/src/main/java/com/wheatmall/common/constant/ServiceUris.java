@@ -14,7 +14,9 @@ public final class ServiceUris {
     
     /** Product服务根路径 */
     public static final String PRODUCT_SERVICE = "/api/product";
-    
+
+    /** 分类列表树 */
+    public static final String CATEGORY_LIST_TREE = PRODUCT_SERVICE + "/category/list/tree";    
     /** Order服务根路径 */
     public static final String ORDER_SERVICE = "/api/order";
     

@@ -11,4 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(ServiceUris.PRODUCT_SERVICE)
 public class ProductAttrValueController {
+    // TODO: GET /list/{spuId} 查询SPU的属性值列表
+    // TODO: POST /save 保存属性值
+    // TODO: POST /update 修改属性值
+    // TODO: POST /delete 删除属性值
 }

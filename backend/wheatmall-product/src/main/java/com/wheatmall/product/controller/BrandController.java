@@ -11,4 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(ServiceUris.PRODUCT_SERVICE)
 public class BrandController {
+    // TODO: GET /list 品牌列表（分页）
+    // TODO: GET /info/{brandId} 品牌详情
+    // TODO: POST /save 新增品牌（JSR303校验）
+    // TODO: POST /update 更新品牌
+    // TODO: POST /update/status 修改显示状态
 }

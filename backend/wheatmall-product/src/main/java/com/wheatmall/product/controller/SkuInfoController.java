@@ -11,4 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(ServiceUris.PRODUCT_SERVICE)
 public class SkuInfoController {
+    // TODO: GET /list 分页查询SKU
+    // TODO: GET /info/{skuId} SKU详情
+    // TODO: POST /save 新增SKU
+    // TODO: POST /update 更新SKU
+    // TODO: POST /delete 删除SKU
 }

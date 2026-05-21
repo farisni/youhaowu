@@ -11,4 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(ServiceUris.PRODUCT_SERVICE)
 public class SpuInfoController {
+    // TODO: GET /list SPU列表
+    // TODO: POST /save 新增SPU
+    // TODO: POST /delete 删除SPU
+    // TODO: POST /{spuId}/up 商品上架
 }

@@ -11,4 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(ServiceUris.PRODUCT_SERVICE)
 public class AttrController {
+    // TODO: GET /list/{catelogId} 查询分类下的属性列表
+    // TODO: GET /info/{attrId} 查询属性详情
+    // TODO: POST /save 保存属性
+    // TODO: POST /update 修改属性
+    // TODO: POST /delete 删除属性
 }
