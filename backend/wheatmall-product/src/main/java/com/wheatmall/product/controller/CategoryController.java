@@ -2,7 +2,6 @@ package com.wheatmall.product.controller;
 
 import com.wheatmall.common.constant.ServiceUris;
 import com.wheatmall.common.utils.R;
-import com.wheatmall.product.entity.Product;
 import com.wheatmall.product.service.CategoryService;
 import com.wheatmall.product.vo.CategoryVO;
 import org.springframework.beans.factory.annotation.Autowired;
