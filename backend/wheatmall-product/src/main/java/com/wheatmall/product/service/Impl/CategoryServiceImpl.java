@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.wheatmall.common.utils.PageData;
 import com.wheatmall.common.utils.PageUtils;
 import com.wheatmall.product.dto.CategoryQueryDTO;
+import com.wheatmall.product.dto.CategoryUpdateDTO;
 import com.wheatmall.product.entity.CategoryEntity;
 import com.wheatmall.product.mapper.CategoryMapper;
 import com.wheatmall.product.service.CategoryService;
@@ -59,6 +60,27 @@ public class CategoryServiceImpl implements CategoryService {
             wrapper.and(w -> w.like(CategoryEntity::getName, query.getKeyword()));
         }
         return PageUtils.selectPage(categoryMapper, wrapper, query, this::entityToVO);
+    }
+
+    @Override
+    public List<CategoryVO> getChildrenByParentId(Long parentId) {
+        List<CategoryEntity> entities = categoryMapper.selectList(
+                new LambdaQueryWrapper<CategoryEntity>()
+                        .eq(CategoryEntity::getParentCid, parentId)
+                        .orderByAsc(CategoryEntity::getSort));
+        return entities.stream().map(this::entityToVO).collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteBatch(List<Long> ids) {
+        categoryMapper.deleteBatchIds(ids);
+    }
+
+    @Override
+    public void update(CategoryUpdateDTO dto) {
+        CategoryEntity entity = new CategoryEntity();
+        BeanUtils.copyProperties(dto, entity);
+        categoryMapper.updateById(entity);
     }
 
     private CategoryVO entityToVO(CategoryEntity entity) {

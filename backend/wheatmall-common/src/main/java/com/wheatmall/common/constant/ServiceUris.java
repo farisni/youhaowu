@@ -30,6 +30,15 @@ public final class ServiceUris {
         /** 分类分页查询 */
         public static final String PAGE = "/list";
 
+        /** 根据父ID查询子分类 */
+        public static final String PARENT_BY_ID = "/parent/{parentId}";
+
+        /** 批量删除分类 */
+        public static final String DELETE = "/delete";
+
+        /** 修改分类信息 */
+        public static final String UPDATE = "/update";
+
     }
 
     // ==================== Product服务相关URI ====================

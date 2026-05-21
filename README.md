@@ -36,6 +36,23 @@ wheatmall-2026/
 ```
 
 ## 开发记录
+
+### 2024-05-22: CategoryController 新增 parent/{parentId}、delete、update 接口
+
+**执行步骤：**
+1. [x] ServiceUris.ProductCategory 新增 PARENT_BY_ID、DELETE、UPDATE 常量
+2. [x] 创建 CategoryUpdateDTO
+3. [x] CategoryService 接口新增 getChildrenByParentId、deleteBatch、update
+4. [x] CategoryServiceImpl 实现三个方法
+5. [x] CategoryController 新增三个端点
+6. [x] mvn test 验证通过
+
+**主要变更：**
+- ServiceUris - ProductCategory 新增 3 个 URI 常量
+- CategoryUpdateDTO - 分类更新请求体
+- CategoryService / CategoryServiceImpl - 新增子分类查询、批量删除、修改方法
+- CategoryController - 新增 3 个 REST 端点
+
 ### 2024-05-21: Product 模块 API 日志推送 Kafka
 
 **执行步骤：**
