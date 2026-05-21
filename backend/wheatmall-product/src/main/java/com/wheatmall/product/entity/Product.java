@@ -8,11 +8,12 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
- * 商品实体类
+ * 商品实体类 ---- 删
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class Product {
 
     /**

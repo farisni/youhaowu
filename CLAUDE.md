@@ -117,6 +117,36 @@
 - 与数据库交互使用 DO/PO
 - 复杂业务逻辑封装在 BO 中
 
+
+### 模块分层架构规范（阿里手册 + 国内电商经验）
+
+**真正标配：**
+
+| 层 | 类 | 职责 | 说明 |
+|------|------|------|------|
+| Controller | `controller/XxxController.java` | 接收 VO/Query，返回 VO | 不碰 Entity |
+| Service 接口 | `service/XxxService.java` | 接口定义 | 业务契约 |
+| Service 实现 | `service/impl/XxxServiceImpl.java` | 业务实现 + 调用 Mapper | 核心逻辑 |
+| Mapper | `mapper/XxxMapper.java` | `extends BaseMapper<XxxEntity>` | 数据库访问 |
+| Entity | `entity/XxxEntity.java` | 纯表映射，DO | 数据库表一一对应 |
+
+**三不一要：**
+
+- Entity **不**进 Controller
+- Service **不**直接返回 Entity 给 Controller
+- Mapper **不**写业务逻辑
+- **要**有 DTO/VO 分层
+
+**按需追加：**
+
+| 类 | 包路径 | 场景 |
+|------|---------|------|
+| DTO | `dto/XxxDTO.java` | Service ↔ Controller 传输 |
+| VO | `vo/XxxVO.java` | Controller → 前端展示 |
+| Query | `query/XxxQuery.java` | 前端 → Controller 查询参数 |
+| BO | `bo/XxxBO.java` | Service 层复杂业务封装 |
+
+
 ## 沟通规范
 
 ### 测试报告格式
