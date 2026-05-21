@@ -25,7 +25,11 @@ public final class ServiceUris {
     // ==================== 商品分类相关URI ====================
     public static final class ProductCategory {
         /** 分类列表树 */
-        public static final String LIST_TREE = PRODUCT_SERVICE + "/category/list/tree";
+        public static final String LIST_TREE = "/category/list/tree";
+
+        /** 分类分页查询 */
+        public static final String PAGE = "/category/list";
+
     }
 
     // ==================== Product服务相关URI ====================
