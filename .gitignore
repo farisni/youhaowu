@@ -37,3 +37,8 @@ production/
 # Maven
 target/
 # 例外：如果你团队
+# Eclipse / IDE
+.classpath
+.project
+.settings/
+.factorypath
