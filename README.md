@@ -36,6 +36,26 @@ wheatmall-2026/
 ```
 
 ## 开发记录
+### 2024-05-21: Product 模块 API 日志推送 Kafka
+
+**执行步骤：**
+1. [x] 创建 docker-compose.yml（Kafka 3.9 KRaft + Kafka UI :9090）
+2. [x] 父POM + product POM 添加 spring-kafka 依赖
+3. [x] application.yml 配置 Kafka 连接（192.168.8.112:9092）
+4. [x] 创建 KafkaConfig.java（KafkaTemplate Bean）
+5. [x] 创建 ApiLogInterceptor.java（afterCompletion 异步推送 API 日志到 wheatmall.api.log）
+6. [x] 创建 WebMvcConfig.java 注册拦截器
+7. [x] 运行 mvn test 验证
+
+**主要变更：**
+-  - 新增 Kafka + Kafka UI
+-  - dependencyManagement 添加 spring-kafka
+-  - 添加 spring-kafka 依赖
+-  - 添加 Kafka 连接配置
+-  - KafkaTemplate 配置
+-  - API 日志拦截器
+-  - 注册拦截器
+
 
 ### 2024-02-16: 创建WebClient跨模块调用Demo
 
