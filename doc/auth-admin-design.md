@@ -989,7 +989,7 @@ public class OrderSecurityConfig {
 
 ```bash
 # 运行所有测试
-cd /Users/nidazhong/MyWork/wheatmall-2026/backend
+cd /Users/Faris/MyWork/wheatmall-2026/backend
 mvnd test
 
 # 只测试 auth-admin 模块
