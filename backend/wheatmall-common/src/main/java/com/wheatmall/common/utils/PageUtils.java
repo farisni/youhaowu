@@ -2,9 +2,13 @@ package com.wheatmall.common.utils;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wheatmall.common.dto.BaseQueryDTO;
+
+import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * MyBatis-Plus 分页工具
@@ -24,11 +28,9 @@ public class PageUtils {
     }
 
     /**
-     * 应用动态排序：sortField 有值时动态排序，否则使用默认排序列
+     * 应用动态排序：仅当 sortField 有值时生效
      */
-    public static <T> void applySort(LambdaQueryWrapper<T> wrapper,
-                                      BaseQueryDTO query,
-                                      SFunction<T, ?> defaultSortColumn) {
+    public static <T> void applySort(LambdaQueryWrapper<T> wrapper, BaseQueryDTO query) {
         if (StrUtil.isNotBlank(query.getSortField())) {
             String field = query.getSortField().trim();
             if (!field.matches(COLUMN_PATTERN)) {
@@ -36,9 +38,19 @@ public class PageUtils {
             }
             String direction = !Boolean.FALSE.equals(query.getSortAsc()) ? " ASC" : " DESC";
             wrapper.last("ORDER BY " + field + direction);
-        } else {
-            boolean asc = query.getSortAsc() != null ? query.getSortAsc() : true;
-            wrapper.orderBy(true, asc, defaultSortColumn);
         }
+    }
+
+    /**
+     * 执行分页查询并转换为 VO 列表
+     */
+    public static <E, V> PageData<V> selectPage(BaseMapper<E> mapper,
+                                                  LambdaQueryWrapper<E> wrapper,
+                                                  BaseQueryDTO query,
+                                                  Function<E, V> converter) {
+        applySort(wrapper, query);
+        Page<E> result = mapper.selectPage(buildPage(query), wrapper);
+        List<V> voList = result.getRecords().stream().map(converter).collect(Collectors.toList());
+        return PageData.of(result.getTotal(), result.getSize(), result.getCurrent(), voList);
     }
 }

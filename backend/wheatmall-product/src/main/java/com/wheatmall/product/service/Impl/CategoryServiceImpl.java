@@ -1,7 +1,6 @@
 package com.wheatmall.product.service.Impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wheatmall.common.utils.PageData;
 import com.wheatmall.common.utils.PageUtils;
 import com.wheatmall.product.dto.CategoryQueryDTO;
@@ -59,14 +58,7 @@ public class CategoryServiceImpl implements CategoryService {
         if (StrUtil.isNotBlank(query.getKeyword())) {
             wrapper.and(w -> w.like(CategoryEntity::getName, query.getKeyword()));
         }
-        PageUtils.applySort(wrapper, query, CategoryEntity::getSort);
-        Page<CategoryEntity> result = categoryMapper.selectPage(PageUtils.buildPage(query), wrapper);
-
-        List<CategoryVO> voList = result.getRecords().stream()
-                .map(this::entityToVO)
-                .collect(Collectors.toList());
-
-        return PageData.of(result.getTotal(), result.getSize(), result.getCurrent(), voList);
+        return PageUtils.selectPage(categoryMapper, wrapper, query, this::entityToVO);
     }
 
     private CategoryVO entityToVO(CategoryEntity entity) {
