@@ -11,7 +11,7 @@ import com.wheatmall.product.vo.CategoryVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
+import cn.hutool.core.util.StrUtil;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -52,10 +52,10 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public PageData<CategoryVO> page(CategoryQueryDTO query) {
         LambdaQueryWrapper<CategoryEntity> wrapper = new LambdaQueryWrapper<>();
-        if (StringUtils.hasText(query.getName())) {
+        if (StrUtil.isNotBlank(query.getName())) {
             wrapper.like(CategoryEntity::getName, query.getName());
         }
-        if (StringUtils.hasText(query.getKeyword())) {
+        if (StrUtil.isNotBlank(query.getKeyword())) {
             wrapper.and(w -> w.like(CategoryEntity::getName, query.getKeyword()));
         }
         wrapper.orderByAsc(CategoryEntity::getSort);
