@@ -79,10 +79,16 @@
                 <version>${mockito.version}</version>
                 <scope>test</scope>
             </dependency>
-            <!--mybatis-plus-->
+            <!--mybatis-plus (Spring Boot 3.x)-->
             <dependency>
                 <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <!--mybatis-plus jsqlparser (3.5.9+ 分页插件必需)-->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-jsqlparser</artifactId>
                 <version>${mybatis-plus.version}</version>
             </dependency>
         </dependencies>

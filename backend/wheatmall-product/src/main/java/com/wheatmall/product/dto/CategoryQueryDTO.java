@@ -1,18 +1,15 @@
 package com.wheatmall.product.dto;
 
+import com.wheatmall.common.dto.BaseQueryDTO;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 分类查询参数
  */
 @Data
-public class CategoryQueryDTO {
+@EqualsAndHashCode(callSuper = true)
+public class CategoryQueryDTO extends BaseQueryDTO {
     /** 分类名称（模糊） */
     private String name;
-    /** 关键字 */
-    private String keyword;
-    /** 当前页码 */
-    private Long pageNum = 1L;
-    /** 每页条数 */
-    private Long pageSize = 10L;
 }
