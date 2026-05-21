@@ -11,6 +11,11 @@ spring:
         namespace: public
         group: DEFAULT_GROUP
         register-enabled: true
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://192.168.8.112:5432/wheatmall_pms
+    username: faris
+    password: "123456"
 
 logging:
   file:
