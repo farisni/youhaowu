@@ -76,3 +76,4 @@
 - style(admin): header/tags 间距微调对齐
 - feat(admin): 更新 logo（新增 logo.svg，更换 logo.png）
 - style(admin): 调整侧边栏 logo 尺寸为 35×35
+- style(admin): logo 图标与文字增加间距
