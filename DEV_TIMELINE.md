@@ -78,3 +78,4 @@
 - style(admin): 调整侧边栏 logo 尺寸为 35×35
 - style(admin): logo 图标与文字增加间距
 - style(admin): logo 微调右移
+- style(admin): logo 间距改为 logo-text 左侧边距

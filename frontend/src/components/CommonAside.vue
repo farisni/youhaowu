@@ -51,11 +51,11 @@ const handleMenuClick = (item) => {
     .logo {
       width: 35px;
       height: 35px;
-      margin-right: 8px;
       margin-left: 4px;
     }
     .logo-text {
       height: 33px;
+      margin-left: 8px;
       width: 135px;
     }
   }
