@@ -136,7 +136,7 @@ const doLogin = async () => {
   font-size: 64px;
   font-weight: 700;
   color: #333;
-  margin-bottom: 20px; margin-top: -40px;
+  margin-bottom: 20px; margin-top: -70px;
   transform: rotate(-1deg);
   letter-spacing: 2px;
   text-shadow: 2px 2px 0 rgba(0,0,0,0.05);
