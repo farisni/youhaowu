@@ -107,9 +107,11 @@ const doLogin = async () => {
 .login-container {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
+  padding-right: 8vw;
+  padding-right: 8vw;
   height: 100vh;
-  background: url(../assets/images/login-bg2.png) center / cover no-repeat;
+  background: url(../assets/images/login-bg3.png) center / cover no-repeat;
   background-color: #0A1628;
 }
 
