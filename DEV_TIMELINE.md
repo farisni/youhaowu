@@ -71,3 +71,7 @@
 - fix(admin): 注册父级菜单路由，修复面包屑显示英文路径问题
 - feat(admin): sidebar 菜单添加首页置顶项（HomeFilled 图标）
 - feat: admin 前端骨架搭建完毕，标记 v0.1.0
+
+- feat(admin): 搬运 template-vue3 菜单管理（含 commonTable + IconSelect + dateUtils 公共底座）
+
+- refactor(admin): 图标系统切换 UnoCSS + presetIcons（替换 unplugin-icons，对齐 template-vue3）

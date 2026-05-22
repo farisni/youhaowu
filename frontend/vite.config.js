@@ -1,13 +1,11 @@
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
+import UnoCSS from 'unocss/vite'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
-import Icons from 'unplugin-icons/vite'
-import IconsResolver from 'unplugin-icons/resolver'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
-import { FileSystemIconLoader } from 'unplugin-icons/loaders'
 
 export default defineConfig({
   server: {
@@ -17,6 +15,7 @@ export default defineConfig({
     },
   },
   plugins: [
+    UnoCSS(),
     vue(),
     vueDevTools(),
     AutoImport({
@@ -28,22 +27,12 @@ export default defineConfig({
       },
       resolvers: [
         ElementPlusResolver(),
-        IconsResolver({ prefix: 'Icon' }),
       ],
     }),
     Components({
       resolvers: [
         ElementPlusResolver({ importStyle: 'sass' }),
-        IconsResolver({ enabledCollections: ['local'] }),
       ],
-    }),
-    Icons({
-      autoInstall: true,
-      customCollections: {
-        local: FileSystemIconLoader('./src/assets/icons', (svg) =>
-          svg.replace(/^<svg /, '<svg fill="currentColor" ')
-        ),
-      },
     }),
   ],
   resolve: {
