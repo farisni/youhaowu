@@ -57,3 +57,5 @@
 - feat: CategoryController 新增子分类查询、批量删除、修改接口
 - docs: 在 AGENTS.md 中添加 Git 提交信息格式规范
 - docs: 创建 DEV_TIMELINE.md 作为开发时间线记录文件
+
+- feat: 搭建 admin 前端工程骨架（Vue3.5 + Vite7 + ElementPlus2.12 + Pinia3 + auto-import + oxlint）
