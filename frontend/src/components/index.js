@@ -9,5 +9,8 @@ export const componentPlugin = {
     app.component('CommonHeader', CommonHeader)
     app.component('CommonMenu', CommonMenu)
     app.component('CommonTags', CommonTags)
+  app.component('CommonTable', CommonTable)
   },
 }
+
+import CommonTable from '@/components/CommonTable.vue'
