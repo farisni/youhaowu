@@ -112,6 +112,7 @@ const doLogin = async () => {
 .login-container {
   display: flex;
   height: 100vh;
+  background-color: #0A1628;
 }
 
 .login-left {
@@ -123,7 +124,7 @@ const doLogin = async () => {
 .login-right {
   flex: 1;
   min-width: 360px;
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.94);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -135,11 +136,11 @@ const doLogin = async () => {
   font-family: "Caveat", cursive;
   font-size: 64px;
   font-weight: 700;
-  color: #333;
+  color: #32587e;
   margin-bottom: 20px; margin-top: -70px;
   transform: rotate(-1deg);
   letter-spacing: 2px;
-  text-shadow: 2px 2px 0 rgba(0,0,0,0.05);
+  text-shadow: 0 0 20px rgba(184,216,227,0.3);
 }
 
 .login-form {
@@ -148,10 +149,8 @@ const doLogin = async () => {
   padding: 30px 25px;
   border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
   box-shadow:
-    2px 2px 0 0 #333,
-    3px 3px 0 0 #333,
-    2px -2px 0 0 rgba(0,0,0,0.1),
-    -2px 2px 0 0 rgba(0,0,0,0.1);
+    2px 2px 0 0 rgba(184,216,227,0.3),
+    3px 3px 0 0 rgba(184,216,227,0.2);
   background: #fff;
 
   .login-switch {
@@ -159,7 +158,7 @@ const doLogin = async () => {
     width: 100%;
     padding: 10px 0;
     margin-bottom: 20px;
-    border-bottom: 2px dashed #999;
+    border-bottom: 2px dashed #6da1b4;
 
     .switch-item {
       display: inline-block;
@@ -167,16 +166,16 @@ const doLogin = async () => {
       width: 80px;
       margin: 0 5px;
       cursor: pointer;
-      color: gray;
+      color: #999;
       font-weight: 600;
-      &.active { color: #333; }
+      &.active { color: #32587e; }
     }
 
     .indicator {
       position: absolute;
       width: 90px;
       height: 3px;
-      background: #333;
+      background: #6da1b4;
       bottom: -2px;
       transition: all 0.3s ease;
       border-radius: 2px;
@@ -187,15 +186,13 @@ const doLogin = async () => {
 
   :deep(.el-input__wrapper) {
     border-radius: 15px 3px 12px 5px / 4px 14px 3px 13px;
-    border: 2px solid #555;
-    box-shadow:
-      1px 2px 0 0 rgba(0,0,0,0.15),
-      -1px 1px 0 0 rgba(0,0,0,0.1);
-    background: #fafaf7;
+    border: 2px solid rgba(184,216,227,0.5);
+    box-shadow: none;
+    background: #f8fafb;
     transition: border-color 0.2s;
 
     &:hover {
-      border-color: #333;
+      border-color: #32587e;
     }
   }
 
@@ -203,7 +200,7 @@ const doLogin = async () => {
     border-color: #333;
     box-shadow:
       1px 2px 0 0 rgba(0,0,0,0.2),
-      -1px 1px 0 0 rgba(0,0,0,0.15);
+      -1px 1px 0 0 rgba(109,161,180,0.18);
   }
 
   .el-form { margin-top: 20px; }
@@ -217,14 +214,14 @@ const doLogin = async () => {
     font-weight: 700;
     font-size: 16px;
     letter-spacing: 2px;
-    background: #333;
+    background: linear-gradient(135deg, #4A7B8C, #6da1b4);
     border: none;
-    box-shadow: 3px 4px 0 0 rgba(0,0,0,0.2);
+    box-shadow: 3px 4px 0 0 rgba(109,161,180,0.3);
     transition: transform 0.15s, box-shadow 0.15s;
 
     &:hover {
       transform: translate(1px, 1px);
-      box-shadow: 2px 2px 0 0 rgba(0,0,0,0.2);
+      box-shadow: 2px 2px 0 0 rgba(109,161,180,0.3);
     }
     &:active {
       transform: translate(2px, 3px);
@@ -237,7 +234,7 @@ const doLogin = async () => {
     height: 24px;
     font-size: 12px;
     white-space: nowrap;
-    color: #555;
+    color: #6da1b4;
   }
 }
 </style>
