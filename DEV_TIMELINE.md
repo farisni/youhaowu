@@ -74,3 +74,4 @@
 - style(admin): 顶部 header 高度改为 40px
 - style(admin): tags 标签栏 padding 调整更紧凑
 - style(admin): header/tags 间距微调对齐
+- feat(admin): 更新 logo（新增 logo.svg，更换 logo.png）

@@ -52,7 +52,6 @@ const handleMenuClick = (item) => {
       width: 45px;
       height: 45px;
     }
-
     .logo-text {
       height: 33px;
       width: 135px;
