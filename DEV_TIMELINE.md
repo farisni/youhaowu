@@ -70,3 +70,4 @@
 - fix(admin): 修复 CommonTags 关闭逻辑（index 塌缩 + 菜单同步激活）
 - fix(admin): 注册父级菜单路由，修复面包屑显示英文路径问题
 - feat(admin): sidebar 菜单添加首页置顶项（HomeFilled 图标）
+- style(admin): 首页欢迎卡片移至统计卡片上方
