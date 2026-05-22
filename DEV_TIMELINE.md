@@ -69,3 +69,4 @@
 - docs: 补充 frontend README 架构描述和示意图
 - fix(admin): 修复 CommonTags 关闭逻辑（index 塌缩 + 菜单同步激活）
 - fix(admin): 注册父级菜单路由，修复面包屑显示英文路径问题
+- feat(admin): sidebar 菜单添加首页置顶项（HomeFilled 图标）

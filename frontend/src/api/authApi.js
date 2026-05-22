@@ -2,6 +2,7 @@ import http from '@/utils/http.js'
 
 // Mock 数据
 const mockMenu = [
+  { id: '0', name: '首页', path: '/home', icon: 'HomeFilled' },
   { id: '1', name: '商品管理', path: '/product', icon: 'Goods', children: [
     { id: '11', name: '分类管理', path: '/product/category' },
     { id: '12', name: '品牌管理', path: '/product/brand' },
