@@ -79,3 +79,4 @@
 - style(admin): logo 图标与文字增加间距
 - style(admin): logo 微调右移
 - style(admin): logo 间距改为 logo-text 左侧边距
+- style(admin): logo 间距改回右侧边距

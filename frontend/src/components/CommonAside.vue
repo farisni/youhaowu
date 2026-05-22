@@ -55,7 +55,6 @@ const handleMenuClick = (item) => {
     }
     .logo-text {
       height: 33px;
-      margin-left: 8px;
       width: 135px;
     }
   }
