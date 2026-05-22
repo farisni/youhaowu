@@ -3,6 +3,7 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
+import '@/router/guard.js'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
 const app = createApp(App)
