@@ -3,7 +3,7 @@
     <div class="login-card">
       <div class="login-left">
         <div class="left-brand">
-          <img class="left-logo" src="@/assets/images/logo.svg" alt="" />
+          <img class="left-logo" src="@/assets/images/logo.png" alt="" />
           <div class="left-name">WheatMall</div>
           <div class="left-desc">Admin 后台管理系统</div>
         </div>

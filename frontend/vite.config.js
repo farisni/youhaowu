@@ -4,16 +4,16 @@ import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
+import Icons from 'unplugin-icons/vite'
+import IconsResolver from 'unplugin-icons/resolver'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import { FileSystemIconLoader } from 'unplugin-icons/loaders'
 
 export default defineConfig({
   server: {
     port: 8633,
     proxy: {
-      '/api': {
-        target: 'http://localhost:8091',
-        changeOrigin: true,
-      },
+      '/api': { target: 'http://localhost:8091', changeOrigin: true },
     },
   },
   plugins: [
@@ -26,10 +26,24 @@ export default defineConfig({
         filepath: './.eslintrc-auto-import.json',
         globalsPropValue: true,
       },
-      resolvers: [ElementPlusResolver()],
+      resolvers: [
+        ElementPlusResolver(),
+        IconsResolver({ prefix: 'Icon' }),
+      ],
     }),
     Components({
-      resolvers: [ElementPlusResolver({ importStyle: 'sass' })],
+      resolvers: [
+        ElementPlusResolver({ importStyle: 'sass' }),
+        IconsResolver({ enabledCollections: ['local'] }),
+      ],
+    }),
+    Icons({
+      autoInstall: true,
+      customCollections: {
+        local: FileSystemIconLoader('./src/assets/icons', (svg) =>
+          svg.replace(/^<svg /, '<svg fill="currentColor" ')
+        ),
+      },
     }),
   ],
   resolve: {

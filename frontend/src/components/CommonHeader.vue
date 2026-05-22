@@ -1,8 +1,8 @@
 <template>
   <div class="header-container">
-    <div class="left">
-      <el-icon :size="22" @click="appStore.collapseMenu()" class="collapse-btn">
-        <Expand v-if="appStore.isCollapse" />
+    <div class="hamburger">
+      <el-icon :size="25" @click="appStore.collapseMenu">
+        <Expand v-if="!appStore.isCollapse" />
         <Fold v-else />
       </el-icon>
       <el-breadcrumb separator="/">
@@ -80,14 +80,11 @@ const handleCommand = (cmd) => {
   background: #fff;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
 
-  .left {
+  .hamburger {
     display: flex;
     align-items: center;
-    gap: 16px;
-  }
-
-  .collapse-btn {
     cursor: pointer;
+    .el-icon { margin-right: 15px; }
   }
 
   .right {

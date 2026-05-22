@@ -2,17 +2,17 @@ import http from '@/utils/http.js'
 
 // Mock 数据
 const mockMenu = [
-  { id: '1', name: '商品管理', path: '/product', children: [
+  { id: '1', name: '商品管理', path: '/product', icon: 'Goods', children: [
     { id: '11', name: '分类管理', path: '/product/category' },
     { id: '12', name: '品牌管理', path: '/product/brand' },
     { id: '13', name: '属性管理', path: '/product/attr' },
     { id: '14', name: 'SPU管理', path: '/product/spu' },
     { id: '15', name: 'SKU管理', path: '/product/sku' },
   ]},
-  { id: '2', name: '订单管理', path: '/order', children: [
+  { id: '2', name: '订单管理', path: '/order', icon: 'Tickets', children: [
     { id: '21', name: '订单列表', path: '/order/list' },
   ]},
-  { id: '3', name: '系统管理', path: '/system', children: [
+  { id: '3', name: '系统管理', path: '/system', icon: 'Setting', children: [
     { id: '31', name: '用户管理', path: '/system/user' },
     { id: '32', name: '角色管理', path: '/system/role' },
     { id: '33', name: '菜单管理', path: '/system/menu' },

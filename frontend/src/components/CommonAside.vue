@@ -3,14 +3,17 @@
     :default-active="appStore.activePath"
     :collapse="appStore.isCollapse"
     active-text-color="#409eff"
-    background-color="$sidebarBg"
-    text-color="$sidebarText"
+    background-color="#304156"
+    text-color="#BFCBD9"
   >
-    <div class="logo-area">
-      <img class="logo-img" src="@/assets/images/logo.svg" alt="" />
-      <span v-if="!appStore.isCollapse" class="logo-title">WheatMall</span>
+    <div id="title">
+      <img class="logo" src="@/assets/images/logo.png" alt="" />
+      <img v-if="!appStore.isCollapse" class="logo-text" src="@/assets/images/logo-text.png" alt="" />
     </div>
-    <CommonMenu :menu-data="appStore.userInfo.menu" @menu-item-click="handleMenuClick" />
+    <CommonMenu
+      :menu-data="appStore.userInfo.menu"
+      @menu-item-click="handleMenuClick"
+    />
   </el-menu>
 </template>
 
@@ -32,30 +35,28 @@ const handleMenuClick = (item) => {
 <style lang="scss" scoped>
 .el-menu:not(.el-menu--collapse) {
   width: 200px;
+  min-height: 400px;
 }
 
 .el-menu {
   height: 100vh;
-  background-color: $sidebarBg;
   border-right: none;
-}
 
-.logo-area {
-  display: flex;
-  align-items: center;
-  padding: 12px 16px;
-  gap: 10px;
+  #title {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px;
 
-  .logo-img {
-    width: 36px;
-    height: 36px;
-  }
+    .logo {
+      width: 45px;
+      height: 45px;
+    }
 
-  .logo-title {
-    color: #fff;
-    font-size: 16px;
-    font-weight: 600;
-    white-space: nowrap;
+    .logo-text {
+      height: 33px;
+      width: 135px;
+    }
   }
 }
 </style>
