@@ -12,13 +12,50 @@
 
 ## 项目特点
 
-- **微服务架构**：基于 Spring Cloud Alibaba，Nacos 服务注册发现，模块独立部署
-- **跨模块调用**：WebClient + LoadBalancer 实现响应式服务间调用
-- **统一响应**：泛型 R 类封装标准 API 响应格式（code / msg / data）
-- **RBAC 认证**：Spring Security + JWT 无状态认证，角色权限控制
-- **API 可观测**：Kafka 异步推送 API 日志，拦截器记录请求体入参
-- **通用分页**：BaseQueryDTO + PageUtils 封装 MyBatis-Plus 分页，支持时间范围筛选
-- **PostgreSQL 持久化**：PostgreSQL 17 数据源，javax → jakarta 平滑迁移
+### WebClient 跨模块调用
+
+Order 模块通过 `WebClient` + `@LoadBalanced` 以服务名方式调用 Product 模块，Nacos 自动完成服务发现与负载均衡。
+
+**调用链路：**
+
+```
+OrderController → OrderService → WebClient → [Nacos 服务发现] → ProductController
+         ↑                                                              │
+         └────────────────── R<ProductDTO> ←────────────────────────────┘
+```
+
+**关键代码：**
+
+```java
+// 1. 配置支持负载均衡的 WebClient（Order 模块）
+@Bean
+@LoadBalanced
+public WebClient.Builder loadBalancedWebClientBuilder() {
+    return WebClient.builder();
+}
+
+@Bean
+public WebClient productWebClient(WebClient.Builder builder) {
+    return builder.baseUrl("http://wheatmall-product").build();  // 服务名，非 IP
+}
+
+// 2. 同步调用
+public ProductDTO getProductById(Long productId) {
+    return productWebClient.get()
+            .uri("/api/product/get/{id}", productId)
+            .retrieve()
+            .bodyToMono(ProductDTO.class)
+            .block();
+}
+
+// 3. 异步调用
+public Mono<ProductDTO> getProductByIdAsync(Long productId) {
+    return productWebClient.get()
+            .uri("/api/product/get/{id}", productId)
+            .retrieve()
+            .bodyToMono(ProductDTO.class);  // 非阻塞，返回 Mono
+}
+```
 
 ## 项目结构
 
