@@ -116,7 +116,7 @@ const doLogin = async () => {
 
 .login-left {
   flex: 2;
-  background: url(../assets/images/login_bg.png) center / cover no-repeat;
+  background: url(../assets/images/login-bg2.png) center / cover no-repeat;
   min-width: 0;
 }
 
