@@ -10,6 +10,23 @@
 - **Java**: 17
 - **Lombok**: 代码简化工具
 
+## 项目结构
+
+```
+wheatmall-2026/
+├── backend/
+│   ├── pom.xml                    # 父工程POM
+│   ├── wheatmall-common/          # 公共模块
+│   ├── wheatmall-product/         # 商品服务模块 (端口: 8091)
+│   ├── wheatmall-order/           # 订单服务模块 (端口: 8090)
+│   └── wheatmall-auth-admin/      # 认证授权模块 (端口: 8092)
+├── frontend/                      # 前端项目
+├── doc/                           # 文档与配置
+└── README.md
+```
+
+
+
 ## 项目特点
 
 ### WebClient + LoadBalancer 实现响应式服务间调用
@@ -56,21 +73,4 @@ public Mono<ProductDTO> getProductByIdAsync(Long productId) {
             .bodyToMono(ProductDTO.class);  // 非阻塞，返回 Mono
 }
 ```
-
-## 项目结构
-
-```
-wheatmall-2026/
-├── backend/
-│   ├── pom.xml                    # 父工程POM
-│   ├── wheatmall-common/          # 公共模块
-│   ├── wheatmall-product/         # 商品服务模块 (端口: 8091)
-│   ├── wheatmall-order/           # 订单服务模块 (端口: 8090)
-│   └── wheatmall-auth-admin/      # 认证授权模块 (端口: 8092)
-├── frontend/                      # 前端项目
-├── doc/                           # 文档与配置
-└── README.md
-```
-
-
 
