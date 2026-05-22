@@ -49,8 +49,8 @@ const handleMenuClick = (item) => {
     padding: 10px;
 
     .logo {
-      width: 45px;
-      height: 45px;
+      width: 35px;
+      height: 35px;
     }
     .logo-text {
       height: 33px;
