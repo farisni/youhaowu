@@ -80,7 +80,7 @@
                 inline-prompt
                 active-text="启用"
                 inactive-text="停用"
-                style="--el-switch-off-color: gray">
+                style="--el-switch-off-color: gray" @change="handleStatusChange(scope.row)">
             </el-switch>
           </template>
         </el-table-column>
@@ -254,7 +254,7 @@ const initFormData = {
 }
 
 // 菜单表单数据
-const formData = {...initFormData.value };
+const formData = { ...initFormData };
 
 const menuOptions = ref([]);
 const currentRow = ref();
@@ -342,14 +342,11 @@ const getSelectedFullPath = (nodeId) => {
   return path.join(' / ') + ' /'
 }
 
-const add = (id)=>{
-
-  // let parentId = currentRow.value?.id;
+const add = (id) => {
+  state.value.formData = { ...initFormData };
   if (id) {
-    // 从行数据点击的新建
     state.value.formData.parentId = id;
   }
-
   state.value.drawerVisible = true
   state.value.drawerTitle = "新建菜单";
 }
@@ -381,6 +378,13 @@ const saveOrUpdate = async () =>{
   state.value.drawerVisible = false
 }
 
+
+// 状态切换
+const handleStatusChange = async (row) => {
+  row.status = row.status === 1 ? 0 : 1
+  await api.updateById({ id: row.id, status: row.status })
+  ElMessage.success(row.status === 1 ? "已启用" : "已停用")
+}
 
 // 表格引用
 const tableRef = ref()
@@ -448,7 +452,8 @@ $table-area_operation-height:50px;
 @use '@/styles/commonTable.scss'; // 引人公共table样式
 
 .search-area {
-  height: $search-wrapper-height; // 覆盖父类
+  height: $search-wrapper-height;
+  margin-top: 12px; // 覆盖父类
 }
 
 .table-area_operation {
