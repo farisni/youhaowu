@@ -42,7 +42,7 @@ const handleClose = (tag, index) => {
 
 <style lang="scss" scoped>
 .tags {
-  padding: 4px 10px 4px;
+  padding: 2px 14px 8px;
   background: #fff;
   border-bottom: 1px solid #e4e7ed;
 
