@@ -9,29 +9,11 @@ wheatmall-2026/
 ├── backend/
 │   ├── pom.xml                    # 父工程POM
 │   ├── wheatmall-common/          # 公共模块
-│   │   ├── pom.xml
-│   │   ├── src/main/java/com/wheatmall/common/
-│   │   │   ├── constant/ServiceUris.java       # 服务URI常量
-│   │   │   ├── enums/BizCodeEnum.java          # 业务错误码枚举
-│   │   │   └── utils/R.java                    # 通用响应结果类
-│   │   └── src/test/java/com/wheatmall/common/
-│   │       └── utils/RTest.java                # R类单元测试
 │   ├── wheatmall-product/         # 商品服务模块 (端口: 8091)
-│   │   ├── src/main/java/com/wheatmall/product/
-│   │   │   ├── ProductApplication.java
-│   │   │   ├── entity/Product.java           # 商品实体类
-│   │   │   └── controller/ProductController.java  # 商品接口
-│   │   ├── src/main/resources/application.yml    # Nacos配置
-│   │   └── src/test/java/com/wheatmall/product/
-│   │       └── controller/ProductControllerTest.java  # Controller单元测试
-│   └── wheatmall-order/           # 订单服务模块 (端口: 8090)
-│       ├── src/main/java/com/wheatmall/order/
-│       │   ├── OrderApplication.java
-│       │   ├── config/WebClientConfig.java      # WebClient+Nacos负载均衡配置
-│       │   ├── dto/ProductDTO.java              # 商品DTO
-│       │   ├── service/OrderService.java        # 订单服务(WebClient+Nacos调用)
-│       │   └── controller/OrderController.java  # 订单接口
-│       └── src/main/resources/application.yml    # Nacos配置
+│   ├── wheatmall-order/           # 订单服务模块 (端口: 8090)
+│   └── wheatmall-auth-admin/      # 认证授权模块 (端口: 8092)
+├── frontend/                      # 前端项目
+├── doc/                           # 文档与配置
 └── README.md
 ```
 
