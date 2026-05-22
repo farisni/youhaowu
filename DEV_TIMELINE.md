@@ -67,3 +67,4 @@
 - refactor: 移除 guard.js /dev 开发快捷入口，统一走登录页
 - docs: DEV_TIMELINE 新条目必须追加在末尾，禁止插入中间
 - docs: 补充 frontend README 架构描述和示意图
+- fix(admin): 修复 CommonTags 关闭逻辑（index 塌缩 + 菜单同步激活）

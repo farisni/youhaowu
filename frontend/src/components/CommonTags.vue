@@ -1,13 +1,13 @@
 <template>
   <div class="tags">
     <el-tag
-      v-for="tag in appStore.tagsData"
+      v-for="(tag, index) in appStore.tagsData"
       :key="tag.path"
       :closable="tag.path !== '/home'"
       :type="tag.path === route.path ? '' : 'info'"
       :effect="tag.path === route.path ? 'dark' : 'plain'"
       @click="changeRoute(tag)"
-      @close="handleClose(tag)"
+      @close="handleClose(tag, index)"
     >
       {{ tag.name }}
     </el-tag>
@@ -27,15 +27,14 @@ const changeRoute = (tag) => {
   appStore.activePath = tag.path
 }
 
-const handleClose = (tag) => {
+const handleClose = (tag, index) => {
   appStore.removeTag(tag)
   if (tag.path === route.path) {
     const tags = appStore.tagsData
-    const idx = tags.findIndex((t) => t.path === tag.path)
-    if (idx >= tags.length) {
-      router.push(tags[tags.length - 1].path)
-    } else {
-      router.push(tags[idx].path)
+    const next = tags.length === index ? tags[index - 1] : tags[index]
+    if (next) {
+      router.push(next.path)
+      appStore.activePath = next.path
     }
   }
 }
