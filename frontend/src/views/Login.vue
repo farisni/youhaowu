@@ -126,6 +126,8 @@ const doLogin = async () => {
 }
 
 .login-card {
+  border-radius: 16px;
+  overflow: hidden;
   display: flex;
   width: 950px;
   height: 550px;
@@ -140,10 +142,11 @@ const doLogin = async () => {
 
   .left-brand {
     text-align: center;
+    margin-top: -50px;
 
     .left-logo {
-      width: 80px;
-      height: 80px;
+      width: 100px;
+      height: 100px;
       margin-bottom: 20px;
     }
 
