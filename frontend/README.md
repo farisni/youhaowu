@@ -4,6 +4,9 @@
 
 ## 架构思路
 
+RBAC + Dynamic Route Injection 实现中后台
+
+![ChatGPT Image 2026年5月22日 21_33_29.png|250](https://faris-note-picture.oss-cn-guangzhou.aliyuncs.com/ChatGPT%20Image%202026%E5%B9%B45%E6%9C%8822%E6%97%A5%2021_33_29.png)
 结合两个参考项目的优点：
 
 | 来自 | 取什么 | 不取什么 |
