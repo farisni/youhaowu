@@ -12,7 +12,7 @@
 
 ## 项目特点
 
-### WebClient 跨模块调用
+### WebClient + LoadBalancer 实现响应式服务间调用
 
 Order 模块通过 `WebClient` + `@LoadBalanced` 以服务名方式调用 Product 模块，Nacos 自动完成服务发现与负载均衡。
 
