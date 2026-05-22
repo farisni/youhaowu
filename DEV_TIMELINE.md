@@ -65,3 +65,4 @@
 - docs: 明确 DEV_TIMELINE 须与代码同 commit，不分离提交
 - refactor: 移除 guard.js /dev 开发快捷入口，统一走登录页
 - docs: 创建 frontend/README.md、TODO.md 记录架构决策（Vue3.5 + Vite7 + ElementPlus2.12 + Pinia3 + auto-import + oxlint）
+- docs: DEV_TIMELINE 新条目必须追加在末尾，禁止插入中间
