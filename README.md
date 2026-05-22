@@ -1,4 +1,4 @@
-# WheatMall 项目开发记录
+# WheatMall
 
 本项目是一个基于Spring Boot的微服务商城系统，包含订单(order)和商品(product)两个模块。
 
