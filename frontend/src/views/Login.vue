@@ -39,12 +39,11 @@
             <el-button type="primary" :loading="loading" class="login-btn" @click="doLogin">登录</el-button>
           </el-form-item>
         </el-form>
-
-        <div class="tip-msg">* 温馨提示：建议使用谷歌、Microsoft Edge，版本 79.0.1072.62 及以上浏览器，360浏览器请使用极速模式</div>
       </div>
     </div>
   </div>
 </template>
+
 <script setup>
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
@@ -108,6 +107,8 @@ const doLogin = async () => {
 </script>
 
 <style lang="scss" scoped>
+@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap");
+
 .login-container {
   display: flex;
   height: 100vh;
@@ -115,7 +116,7 @@ const doLogin = async () => {
 
 .login-left {
   flex: 2;
-  background: url("@/assets/images/login_bg.png") center / cover no-repeat;
+  background: url(../assets/images/login_bg.png) center / cover no-repeat;
   min-width: 0;
 }
 
@@ -131,22 +132,34 @@ const doLogin = async () => {
 }
 
 .right-title {
-  font-size: 32px;
-  font-weight: 800;
-  color: dodgerblue;
-  margin-bottom: 30px;
+  font-family: "Caveat", cursive;
+  font-size: 64px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 20px; margin-top: -40px;
+  transform: rotate(-1deg);
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 0 rgba(0,0,0,0.05);
 }
 
 .login-form {
   width: 100%;
   max-width: 400px;
+  padding: 30px 25px;
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  box-shadow:
+    2px 2px 0 0 #333,
+    3px 3px 0 0 #333,
+    2px -2px 0 0 rgba(0,0,0,0.1),
+    -2px 2px 0 0 rgba(0,0,0,0.1);
+  background: #fff;
 
   .login-switch {
     position: relative;
     width: 100%;
     padding: 10px 0;
     margin-bottom: 20px;
-    border-bottom: 1px solid #e4e7ed;
+    border-bottom: 2px dashed #999;
 
     .switch-item {
       display: inline-block;
@@ -155,27 +168,76 @@ const doLogin = async () => {
       margin: 0 5px;
       cursor: pointer;
       color: gray;
-      &.active { color: black; }
+      font-weight: 600;
+      &.active { color: #333; }
     }
 
     .indicator {
       position: absolute;
       width: 90px;
-      height: 2px;
-      background: dodgerblue;
-      bottom: 0;
+      height: 3px;
+      background: #333;
+      bottom: -2px;
       transition: all 0.3s ease;
+      border-radius: 2px;
       &.username { left: 0; }
       &.phone { left: 90px; }
     }
   }
 
+  :deep(.el-input__wrapper) {
+    border-radius: 15px 3px 12px 5px / 4px 14px 3px 13px;
+    border: 2px solid #555;
+    box-shadow:
+      1px 2px 0 0 rgba(0,0,0,0.15),
+      -1px 1px 0 0 rgba(0,0,0,0.1);
+    background: #fafaf7;
+    transition: border-color 0.2s;
+
+    &:hover {
+      border-color: #333;
+    }
+  }
+
+  :deep(.el-input.is-focus .el-input__wrapper) {
+    border-color: #333;
+    box-shadow:
+      1px 2px 0 0 rgba(0,0,0,0.2),
+      -1px 1px 0 0 rgba(0,0,0,0.15);
+  }
+
   .el-form { margin-top: 20px; }
-  .el-input { width: 100%; height: 40px; }
-  .login-btn { width: 100%; height: 40px; border-radius: 20px; margin: 20px 0; }
+  .el-input { width: 100%; }
 
-  .sms-btn { padding: 0 8px; height: 24px; font-size: 12px; white-space: nowrap; }
+  .login-btn {
+    width: 100%;
+    height: 45px;
+    border-radius: 20px 8px 18px 6px / 7px 19px 5px 20px;
+    margin: 20px 0;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 2px;
+    background: #333;
+    border: none;
+    box-shadow: 3px 4px 0 0 rgba(0,0,0,0.2);
+    transition: transform 0.15s, box-shadow 0.15s;
 
-  .tip-msg { margin-top: 30px; color: #a8abb2; font-size: 12px; }
+    &:hover {
+      transform: translate(1px, 1px);
+      box-shadow: 2px 2px 0 0 rgba(0,0,0,0.2);
+    }
+    &:active {
+      transform: translate(2px, 3px);
+      box-shadow: none;
+    }
+  }
+
+  .sms-btn {
+    padding: 0 8px;
+    height: 24px;
+    font-size: 12px;
+    white-space: nowrap;
+    color: #555;
+  }
 }
 </style>
