@@ -1,56 +1,61 @@
 <template>
   <div class="menu-page">
-    <!-- 搜索区 -->
-    <div class="search-area">
-      <el-form>
-        <el-row :gutter="10">
-          <el-col :span="5">
-            <el-form-item label="关键字">
-              <el-input placeholder="系统模块/操作人" v-model="state.searchObj.keyword" @keyup.enter="handleSearch" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="5">
-            <el-form-item label="请求路径">
-              <el-input v-model="state.searchObj.operUrl" @keyup.enter="handleSearch" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="7">
-            <el-form-item label="创建时间">
-              <el-date-picker
-                v-model="state.createTimes"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
-                type="daterange"
-                range-separator="至" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="7" class="btn-col">
-            <el-button type="primary" @click="handleSearch">
-              <el-icon><Search /></el-icon><span>搜索</span>
-            </el-button>
-            <el-button @click="reset">
-              <el-icon><Refresh /></el-icon><span>重置</span>
-            </el-button>
-          </el-col>
-        </el-row>
-      </el-form>
-    </div>
-
     <!-- 通用表格 -->
     <CommonTable
       ref="commonTableRef"
       :api="api"
       :columns="columns"
       row-key="id"
+      :search-height="75"
       :tree-props="{ children: 'children', checkStrictly: true }"
       @row-dblclick="(row) => hasChildren(row) && tableRef?.toggleRowExpansion(row, undefined)"
     >
+      <!-- 搜索区 -->
+      <template #search>
+        <div class="search-area">
+          <el-form>
+            <el-row :gutter="10">
+              <el-col :span="5">
+                <el-form-item label="关键字">
+                  <el-input placeholder="系统模块/操作人" v-model="state.searchObj.keyword" @keyup.enter="handleSearch" />
+                </el-form-item>
+              </el-col>
+              <el-col :span="5">
+                <el-form-item label="请求路径">
+                  <el-input v-model="state.searchObj.operUrl" @keyup.enter="handleSearch" />
+                </el-form-item>
+              </el-col>
+              <el-col :span="7">
+                <el-form-item label="创建时间">
+                  <el-date-picker
+                    v-model="state.createTimes"
+                    start-placeholder="开始日期"
+                    end-placeholder="结束日期"
+                    type="daterange"
+                    range-separator="至" />
+                </el-form-item>
+              </el-col>
+              <el-col :span="7" class="btn-col">
+                <el-button type="primary" @click="handleSearch">
+                  <el-icon><Search /></el-icon><span>搜索</span>
+                </el-button>
+                <el-button @click="reset">
+                  <el-icon><Refresh /></el-icon><span>重置</span>
+                </el-button>
+              </el-col>
+            </el-row>
+          </el-form>
+        </div>
+      </template>
+
+      <!-- 操作按钮 -->
       <template #operation-buttons>
         <el-button type="success" @click="add()">
           <el-icon><Plus /></el-icon><span>新建</span>
         </el-button>
       </template>
 
+      <!-- 行操作 -->
       <template #actions="{ row }">
         <el-button v-if="row.type === 0 || row.type === 1" type="primary" size="small" link icon="plus" @click="add(row.id)">新建</el-button>
         <el-button type="primary" size="small" link icon="edit" @click="edit(row.id)">编辑</el-button>
@@ -77,6 +82,7 @@
           style="--el-switch-off-color: gray"
           @change="handleStatusChange(row)" />
       </template>
+
     </CommonTable>
 
     <!-- 抽屉编辑 -->
@@ -264,23 +270,10 @@ const handleSearch = () => fetchData(state.value.searchObj)
 }
 
 .search-area {
-  flex-shrink: 0;
-  margin-bottom: 10px;
-  padding: 10px;
-  border: 1px solid #EBEEF5;
-  border-radius: 4px;
-
   .el-form-item { margin: 0; }
   .el-form-item__label { color: #54565a; font-weight: 600; }
-
   .el-row { padding: 5px 0; }
-
-  .btn-col {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 8px;
-  }
+  .btn-col { display: flex; justify-content: flex-end; align-items: center; gap: 8px; }
 }
 
 :deep(.el-drawer__header) {

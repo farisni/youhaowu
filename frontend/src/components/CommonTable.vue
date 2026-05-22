@@ -1,7 +1,7 @@
 <template>
   <div class="common-table-wrapper">
     <!-- 搜索区（slot） -->
-    <div v-if="$slots.search" class="common-table-search">
+    <div v-if="$slots.search" class="common-table-search" :style="typeof searchHeight === 'number' ? { height: searchHeight + 'px', overflow: 'auto' } : {}">
       <slot name="search" />
     </div>
 
@@ -85,6 +85,8 @@ const props = defineProps({
   actionsWidth: { type: [String, Number], default: 160 },
   /** 默认每页条数 */
   defaultPageSize: { type: Number, default: 20 },
+  /** 搜索区高度（auto = 自适应内容） */
+  searchHeight: { type: [String, Number], default: 'auto' },
   /** 隐藏分页 */
   hidePagination: { type: Boolean, default: false },
   /** 初始时不自动加载 */
@@ -179,6 +181,10 @@ defineExpose({ refresh, reset, getTableRef, fetchData })
 .common-table-data {
   flex: 1;
   overflow: hidden;
+
+  :deep(.el-table) {
+    height: 100%;
+  }
 }
 
 .common-table-pagination {
