@@ -2,21 +2,6 @@
 
 本项目是一个基于Spring Boot的微服务商城系统，包含订单(order)和商品(product)两个模块。
 
-## 项目结构
-
-```
-wheatmall-2026/
-├── backend/
-│   ├── pom.xml                    # 父工程POM
-│   ├── wheatmall-common/          # 公共模块
-│   ├── wheatmall-product/         # 商品服务模块 (端口: 8091)
-│   ├── wheatmall-order/           # 订单服务模块 (端口: 8090)
-│   └── wheatmall-auth-admin/      # 认证授权模块 (端口: 8092)
-├── frontend/                      # 前端项目
-├── doc/                           # 文档与配置
-└── README.md
-```
-
 ## 技术栈
 
 - **Spring Boot**: 3.4.2
@@ -35,6 +20,21 @@ wheatmall-2026/
 | DO/PO | Domain/Persistent Object | 领域/持久化对象 | DAO ↔ Database | 数据库表映射 |
 | BO | Business Object | 业务对象 | Service 层 | 封装业务逻辑 |
 | Query | Query Object | 查询对象 | Controller → Service | 封装查询参数 |
+## 项目结构
+
+```
+wheatmall-2026/
+├── backend/
+│   ├── pom.xml                    # 父工程POM
+│   ├── wheatmall-common/          # 公共模块
+│   ├── wheatmall-product/         # 商品服务模块 (端口: 8091)
+│   ├── wheatmall-order/           # 订单服务模块 (端口: 8090)
+│   └── wheatmall-auth-admin/      # 认证授权模块 (端口: 8092)
+├── frontend/                      # 前端项目
+├── doc/                           # 文档与配置
+└── README.md
+```
+
 | POJO | Plain Old Java Object | 简单Java对象 | 任意 | 普通Java对象 |
 
 **使用原则：**
