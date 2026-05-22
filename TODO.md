@@ -2,19 +2,20 @@
 
 ## 安全
 
-- [ ] JWT 密钥通过环境变量或配置中心注入，不硬编码
-- [ ] 密码加密使用 BCrypt 等强哈希算法
+- [x] 密码加密使用 BCrypt（SecurityConfig 已配置 BCryptPasswordEncoder）
+- [ ] JWT 密钥通过环境变量注入（当前 `@Value` 有硬编码默认值）
 - [ ] 前端 Token 存储 httpOnly cookie 或内存，避免 XSS
 - [ ] 生产环境强制 HTTPS
 - [ ] 登录失败次数限制（防暴力破解）
 
 ## 认证
 
-- [ ] 无感刷新 Token 续期机制
+- [x] Token 续期（refreshToken 机制已实现）
+- [x] Spring Security + JWT 无状态认证
 
 ## 性能
 
-- [ ] 用户权限缓存到 Redis，减少数据库查询
+- [ ] 用户权限缓存到 Redis
 - [ ] Token 解析优化（JWT 缓存 / 本地线程缓存）
 - [ ] username、role_code、perm_code 字段加索引
 
