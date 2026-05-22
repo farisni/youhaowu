@@ -60,4 +60,5 @@
 
 - feat: 搭建 admin 前端工程骨架
 - feat: HTTP 封装、Pinia Store、动态路由守卫（业内标准 getUserInfo 恢复菜单）
+- feat: Layout 布局（CommonAside/Header/Menu/Tags）+ 登录页（对齐 template-vue3 风格，用户名+短信双模式）
 - docs: 创建 frontend/README.md、TODO.md 记录架构决策（Vue3.5 + Vite7 + ElementPlus2.12 + Pinia3 + auto-import + oxlint）
