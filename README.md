@@ -8,8 +8,17 @@
 - **Spring Cloud**: 2025.0.1
 - **Spring Cloud Alibaba**: 2025.0.0.0
 - **Java**: 17
-- **WebClient**: Spring WebFlux提供的响应式HTTP客户端
 - **Lombok**: 代码简化工具
+
+## 项目特点
+
+- **微服务架构**：基于 Spring Cloud Alibaba，Nacos 服务注册发现，模块独立部署
+- **跨模块调用**：WebClient + LoadBalancer 实现响应式服务间调用
+- **统一响应**：泛型 R 类封装标准 API 响应格式（code / msg / data）
+- **RBAC 认证**：Spring Security + JWT 无状态认证，角色权限控制
+- **API 可观测**：Kafka 异步推送 API 日志，拦截器记录请求体入参
+- **通用分页**：BaseQueryDTO + PageUtils 封装 MyBatis-Plus 分页，支持时间范围筛选
+- **PostgreSQL 持久化**：PostgreSQL 17 数据源，javax → jakarta 平滑迁移
 
 ## 项目结构
 
