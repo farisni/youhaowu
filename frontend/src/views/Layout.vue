@@ -31,7 +31,7 @@ import CommonTags from '@/components/CommonTags.vue'
 
 .el-main {
   padding: 0 10px;
-  height: calc(100vh - $headerHeight - 42px);
+  height: calc(100vh - $headerHeight - 34px);
   overflow: auto;
 }
 </style>

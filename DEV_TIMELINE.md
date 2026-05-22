@@ -72,3 +72,4 @@
 - feat(admin): sidebar 菜单添加首页置顶项（HomeFilled 图标）
 - style(admin): 首页欢迎卡片移至统计卡片上方
 - style(admin): 顶部 header 高度改为 40px
+- style(admin): tags 标签栏 padding 调整更紧凑
