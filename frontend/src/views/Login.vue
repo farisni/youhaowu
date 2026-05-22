@@ -124,7 +124,7 @@ const doLogin = async () => {
 .login-right {
   flex: 1;
   min-width: 360px;
-  background-color: rgba(255, 255, 255, 0.94);
+  background-color: #f4f9fb;
   display: flex;
   flex-direction: column;
   align-items: center;
