@@ -58,4 +58,6 @@
 - docs: 在 AGENTS.md 中添加 Git 提交信息格式规范
 - docs: 创建 DEV_TIMELINE.md 作为开发时间线记录文件
 
-- feat: 搭建 admin 前端工程骨架（Vue3.5 + Vite7 + ElementPlus2.12 + Pinia3 + auto-import + oxlint）
+- feat: 搭建 admin 前端工程骨架
+- feat: HTTP 封装、Pinia Store、动态路由守卫（业内标准 getUserInfo 恢复菜单）
+- docs: 创建 frontend/README.md、TODO.md 记录架构决策（Vue3.5 + Vite7 + ElementPlus2.12 + Pinia3 + auto-import + oxlint）
