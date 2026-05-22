@@ -9,7 +9,7 @@
 ## 后端接口依赖
 
 - [ ] `POST /api/auth/login` — 返回 `{ token, userInfo: { username, roles[], menu[] } }`
-- [ ] `GET /api/auth/userInfo` — 返回当前用户信息含菜单（guard 刷新时调用）
+- [ ] `GET /api/auth/userInfo` — **返回当前用户信息含菜单（guard 刷新时调用）
 - [ ] `POST /api/auth/refresh` — Token 续期
 
 ## Phase 3 — 布局组件（来自 template-vue3）
@@ -22,7 +22,7 @@
 
 ## Phase 4 — 登录对接
 
-- [ ] `Login.vue`：对接 auth-admin 登录接口，返回 `{ token, userInfo: { menu[] } }`
+- [ ] `Login.vue`：对接 auth**-admin 登录接口，返回 `{ token, userInfo: { menu[] } }`
 - [ ] 登录成功后：`setToken` → `setUserInfo` → `addDynamicFLatRoutes` → 跳 `/home`
 
 ## Phase 5 — 业务页面
