@@ -37,7 +37,7 @@ wheatmall-2026/
 
 ## 开发记录
 
-### 2024-05-22: CategoryController 新增 parent/{parentId}、delete、update 接口
+### 2026-05-22: CategoryController 新增 parent/{parentId}、delete、update 接口
 
 **执行步骤：**
 1. [x] ServiceUris.ProductCategory 新增 PARENT_BY_ID、DELETE、UPDATE 常量
@@ -53,7 +53,7 @@ wheatmall-2026/
 - CategoryService / CategoryServiceImpl - 新增子分类查询、批量删除、修改方法
 - CategoryController - 新增 3 个 REST 端点
 
-### 2024-05-21: Product 模块 API 日志推送 Kafka
+### 2026-05-21: Product 模块 API 日志推送 Kafka
 
 **执行步骤：**
 1. [x] 创建 docker-compose.yml（Kafka 3.9 KRaft + Kafka UI :9090）
@@ -74,7 +74,7 @@ wheatmall-2026/
 -  - 注册拦截器
 
 
-### 2024-02-16: 创建WebClient跨模块调用Demo
+### 2026-02-16: 创建WebClient跨模块调用Demo
 
 #### 1. 项目分析
 - 分析了项目结构，确认使用Spring Boot 3.4.2 + Spring Cloud 2025.0.1
@@ -244,7 +244,7 @@ curl -X POST "http://localhost:8090/api/order/create?productId=1&quantity=2"
 - 与数据库交互使用 DO/PO
 - 复杂业务逻辑封装在 BO 中
 
-### 2024-02-17: 集成Nacos 3.1.1服务注册发现
+### 2026-02-17: 集成Nacos 3.1.1服务注册发现
 
 #### 1. 添加Nacos依赖
 **修改文件：**
@@ -360,7 +360,7 @@ curl -X POST "http://localhost:8090/api/order/create?productId=1&quantity=2"
 | Order调用Product(异步) | `GET http://localhost:8090/api/order/product/async/2` | 成功 |
 | 创建订单(Nacos调用) | `POST http://localhost:8090/api/order/create?productId=1&quantity=2` | 成功 |
 
-### 2024-02-17: 整合Mockito单元测试框架
+### 2026-02-17: 整合Mockito单元测试框架
 
 #### 1. 添加Mockito依赖
 **修改文件：**
@@ -411,7 +411,7 @@ mvnd test -pl wheatmall-common
 mvnd test -Dtest=RTest -pl wheatmall-common
 ```
 
-### 2024-02-17: 添加通用响应结果类R
+### 2026-02-17: 添加通用响应结果类R
 
 #### 1. 添加依赖
 **修改文件：**
