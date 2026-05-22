@@ -59,6 +59,25 @@ export const addDynamicFLatRoutes = (menuArr) => {
 
   const routes = flatten(menuArr)
 
+  // 为父级菜单注册路由（用于面包屑匹配），重定向到第一个子菜单
+  const registerParents = (items) => {
+    items.forEach((item) => {
+      if (item.children && item.children.length && item.path !== '/product' && item.path !== '/order' && item.path !== '/system') return // skip root
+      if (item.children && item.children.length) {
+        if (!router.hasRoute(item.path)) {
+          router.addRoute('Layout', {
+            path: item.path,
+            name: item.path,
+            redirect: item.children[0].path,
+            meta: { title: item.name },
+          })
+        }
+        registerParents(item.children)
+      }
+    })
+  }
+  registerParents(menuArr)
+
   // 先添加 /home
   if (!router.hasRoute('/home')) {
     router.addRoute('Layout', {
