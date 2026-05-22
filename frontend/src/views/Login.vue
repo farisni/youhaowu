@@ -1,7 +1,6 @@
 <template>
   <div class="login-container">
-    <div class="login-left" />
-    <div class="login-right">
+    <div class="login-card">
       <div class="right-title">Login</div>
       <div class="login-form">
         <div class="login-switch">
@@ -9,7 +8,6 @@
           <span class="switch-item" :class="{ active: loginType === 'phone' }" @click="loginType = 'phone'">短信登录</span>
           <div class="indicator" :class="loginType" />
         </div>
-
         <el-form v-if="loginType === 'username'" ref="userFormRef" :model="form" :rules="userRules">
           <el-form-item prop="username">
             <el-input v-model="form.username" placeholder="请输入账号" prefix-icon="User" />
@@ -21,7 +19,6 @@
             <el-button type="primary" :loading="loading" class="login-btn" @click="doLogin">登录</el-button>
           </el-form-item>
         </el-form>
-
         <el-form v-if="loginType === 'phone'" ref="phoneFormRef" :model="form" :rules="phoneRules">
           <el-form-item prop="phone">
             <el-input v-model="form.phone" placeholder="请输入手机号" prefix-icon="Phone" />
@@ -29,9 +26,7 @@
           <el-form-item prop="smsCode">
             <el-input v-model="form.smsCode" placeholder="请输入验证码" prefix-icon="Message">
               <template #suffix>
-                <el-button link type="primary" :disabled="countdown > 0" @click="getSMS" class="sms-btn">
-                  {{ countdown > 0 ? `${countdown}s后重新获取` : '获取验证码' }}
-                </el-button>
+                <el-button link type="primary" :disabled="countdown > 0" @click="getSMS" class="sms-btn">{{ countdown > 0 ? countdown + 's后重新获取' : '获取验证码' }}</el-button>
               </template>
             </el-input>
           </el-form-item>
@@ -111,54 +106,45 @@ const doLogin = async () => {
 
 .login-container {
   display: flex;
+  align-items: center;
+  justify-content: center;
   height: 100vh;
+  background: url(../assets/images/login-bg2.png) center / cover no-repeat;
   background-color: #0A1628;
 }
 
-.login-left {
-  flex: 2;
-  background: url(../assets/images/login-bg2.png) center / cover no-repeat;
-  min-width: 0;
-}
-
-.login-right {
-  flex: 1;
-  min-width: 360px;
-  background-color: #f4f9fb;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 40px;
+.login-card {
+  width: 420px;
+  padding: 50px 40px;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .right-title {
   font-family: "Caveat", cursive;
   font-size: 64px;
   font-weight: 700;
-  color: #32587e;
-  margin-bottom: 20px; margin-top: -70px;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 24px;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.4);
   transform: rotate(-1deg);
   letter-spacing: 2px;
-  text-shadow: 0 0 20px rgba(184,216,227,0.3);
 }
 
 .login-form {
   width: 100%;
-  max-width: 400px;
-  padding: 30px 25px;
-  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
-  box-shadow:
-    2px 2px 0 0 rgba(184,216,227,0.3),
-    3px 3px 0 0 rgba(184,216,227,0.2);
-  background: #fff;
 
   .login-switch {
     position: relative;
     width: 100%;
     padding: 10px 0;
     margin-bottom: 20px;
-    border-bottom: 2px dashed #6da1b4;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
 
     .switch-item {
       display: inline-block;
@@ -166,42 +152,48 @@ const doLogin = async () => {
       width: 80px;
       margin: 0 5px;
       cursor: pointer;
-      color: #999;
+      color: rgba(255,255,255,0.6);
       font-weight: 600;
-      &.active { color: #32587e; }
+      transition: color 0.2s;
+      &.active { color: #fff; }
     }
 
     .indicator {
       position: absolute;
       width: 90px;
-      height: 3px;
-      background: #6da1b4;
-      bottom: -2px;
+      height: 2px;
+      background: #fff;
+      bottom: -1px;
       transition: all 0.3s ease;
-      border-radius: 2px;
+      border-radius: 1px;
       &.username { left: 0; }
       &.phone { left: 90px; }
     }
   }
 
   :deep(.el-input__wrapper) {
-    border-radius: 15px 3px 12px 5px / 4px 14px 3px 13px;
-    border: 2px solid rgba(184,216,227,0.5);
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.25);
+    background: rgba(255,255,255,0.1);
     box-shadow: none;
-    background: #f8fafb;
-    transition: border-color 0.2s;
-
+    transition: border-color 0.2s, background 0.2s;
     &:hover {
-      border-color: #32587e;
+      border-color: rgba(255,255,255,0.5);
+      background: rgba(255,255,255,0.15);
     }
   }
 
   :deep(.el-input.is-focus .el-input__wrapper) {
-    border-color: #333;
-    box-shadow:
-      1px 2px 0 0 rgba(0,0,0,0.2),
-      -1px 1px 0 0 rgba(109,161,180,0.18);
+    border-color: rgba(255,255,255,0.6);
+    background: rgba(255,255,255,0.18);
   }
+
+  :deep(.el-input__inner) {
+    color: #fff;
+    &::placeholder { color: rgba(255,255,255,0.5); }
+  }
+
+  :deep(.el-input__prefix) { color: rgba(255,255,255,0.6); }
 
   .el-form { margin-top: 20px; }
   .el-input { width: 100%; }
@@ -209,24 +201,18 @@ const doLogin = async () => {
   .login-btn {
     width: 100%;
     height: 45px;
-    border-radius: 20px 8px 18px 6px / 7px 19px 5px 20px;
+    border-radius: 22px;
     margin: 20px 0;
     font-weight: 700;
     font-size: 16px;
     letter-spacing: 2px;
-    background: linear-gradient(135deg, #4A7B8C, #6da1b4);
-    border: none;
-    box-shadow: 3px 4px 0 0 rgba(109,161,180,0.3);
-    transition: transform 0.15s, box-shadow 0.15s;
-
-    &:hover {
-      transform: translate(1px, 1px);
-      box-shadow: 2px 2px 0 0 rgba(109,161,180,0.3);
-    }
-    &:active {
-      transform: translate(2px, 3px);
-      box-shadow: none;
-    }
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: #fff;
+    box-shadow: none;
+    transition: background 0.2s;
+    &:hover { background: rgba(255,255,255,0.35); }
+    &:active { background: rgba(255,255,255,0.25); }
   }
 
   .sms-btn {
@@ -234,7 +220,7 @@ const doLogin = async () => {
     height: 24px;
     font-size: 12px;
     white-space: nowrap;
-    color: #6da1b4;
+    color: rgba(255,255,255,0.7);
   }
 }
 </style>
