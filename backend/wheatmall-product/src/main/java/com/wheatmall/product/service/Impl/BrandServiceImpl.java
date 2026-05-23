@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Transactional(rollbackFor = Exception.class)
 @Service
 public class BrandServiceImpl implements BrandService {
 

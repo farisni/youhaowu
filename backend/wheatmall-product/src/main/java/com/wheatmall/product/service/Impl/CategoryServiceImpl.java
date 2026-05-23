@@ -13,6 +13,7 @@ import com.wheatmall.product.vo.CategoryVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import cn.hutool.core.util.StrUtil;
 
 import java.util.ArrayList;
@@ -21,24 +22,32 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Transactional(rollbackFor = Exception.class)
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
     @Autowired
     private CategoryMapper categoryMapper;
 
+    /**
+     * 获取三级分类树（非递归 O(n) 实现）
+     * 一级分类嵌二级，二级嵌三级
+     */
     @Override
     public List<CategoryVO> listWithTree() {
+        // 1. 查询所有分类，按 sort 排序后转为 VO
         List<CategoryEntity> allCategories = categoryMapper.selectList(
                 new LambdaQueryWrapper<CategoryEntity>().orderByAsc(CategoryEntity::getSort));
         List<CategoryVO> allVOs = allCategories.stream()
                 .map(this::entityToVO)
                 .collect(Collectors.toList());
 
+        // 2. 按 parentCid 分组
         Map<Long, List<CategoryVO>> parentMap = allVOs.stream()
                 .collect(Collectors.groupingBy(
                         vo -> vo.getParentCid() != null ? vo.getParentCid() : 0L));
 
+        // 3. 将子分类挂到父分类上，子分类内部按 sort 排序
         for (CategoryVO vo : allVOs) {
             List<CategoryVO> children = parentMap.get(vo.getCatId());
             if (children != null && !children.isEmpty()) {
@@ -47,6 +56,7 @@ public class CategoryServiceImpl implements CategoryService {
             }
         }
 
+        // 4. 返回一级分类（parentCid=0）
         List<CategoryVO> level1 = parentMap.get(0L);
         return level1 != null ? level1 : new ArrayList<>();
     }

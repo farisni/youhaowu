@@ -91,3 +91,5 @@
 - test: 添加 CategoryController pytest + requests 接口测试 (16 个用例，覆盖 5 个接口)
 - refactor: 12 个 ServiceImpl 的 save/updateById/removeById 方法从 void 改为返回 Integer（pass-through mapper 调用）
 - refactor: vo 包 7 个类统一更名为 VO 后缀（BrandVo→BrandVO 等），IDEA 重构自动更新所有引用
+- refactor: 16 个 ServiceImpl 添加类级别 @Transactional
+- docs: 注释规则阈值从 40 行收紧为 15 行，AttrServiceImpl 全部方法补注释

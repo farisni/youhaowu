@@ -11,10 +11,12 @@ import com.wheatmall.product.vo.SkuInfoVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Transactional(rollbackFor = Exception.class)
 @Service
 public class SkuInfoServiceImpl implements SkuInfoService {
 

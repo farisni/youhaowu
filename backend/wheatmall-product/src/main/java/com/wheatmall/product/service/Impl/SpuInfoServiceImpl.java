@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
+@Transactional(rollbackFor = Exception.class)
 @Service
 public class SpuInfoServiceImpl implements SpuInfoService {
 

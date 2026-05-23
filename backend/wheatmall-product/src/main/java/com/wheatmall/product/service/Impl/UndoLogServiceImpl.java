@@ -10,11 +10,13 @@ import com.wheatmall.product.mapper.UndoLogMapper;
 import com.wheatmall.product.service.UndoLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 /**
  * UndoLog Service 实现
  */
+@Transactional(rollbackFor = Exception.class)
 @Service
 public class UndoLogServiceImpl implements UndoLogService {
 

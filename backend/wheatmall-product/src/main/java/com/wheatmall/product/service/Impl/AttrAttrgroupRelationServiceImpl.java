@@ -13,11 +13,13 @@ import com.wheatmall.product.mapper.AttrAttrgroupRelationMapper;
 import com.wheatmall.product.service.AttrAttrgroupRelationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 /**
  * AttrAttrgroupRelation Service 实现
  */
+@Transactional(rollbackFor = Exception.class)
 @Service
 public class AttrAttrgroupRelationServiceImpl implements AttrAttrgroupRelationService {
 
