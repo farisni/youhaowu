@@ -1,0 +1,82 @@
+package com.wheatmall.coupon.service.Impl;
+
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.wheatmall.common.utils.PageData;
+import com.wheatmall.coupon.entity.UndoLogEntity;
+import com.wheatmall.coupon.mapper.UndoLogMapper;
+import com.wheatmall.coupon.dto.UndoLogQueryDTO;
+import com.wheatmall.coupon.service.UndoLogService;
+import com.wheatmall.coupon.vo.UndoLogVO;
+import com.wheatmall.common.utils.PageUtils;
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.StrUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Transactional(rollbackFor = Exception.class)
+@Service
+public class UndoLogServiceImpl implements UndoLogService {
+
+    @Autowired
+    private UndoLogMapper undoLogMapper;
+
+    @Override
+    public PageData<UndoLogVO> page(UndoLogQueryDTO query) {
+        LambdaQueryWrapper<UndoLogEntity> wrapper = new LambdaQueryWrapper<>();
+        if (StrUtil.isNotBlank(query.getKeyword())) {
+            //  关键字搜索按需扩展
+        }
+        return PageUtils.selectPage(undoLogMapper, wrapper, query, this::entityToVO);
+    }
+
+    @Override
+    public UndoLogVO getById(Long id) {
+        UndoLogEntity e = undoLogMapper.selectById(id);
+        return entityToVO(e);
+    }
+
+    @Override
+    public Integer save(UndoLogVO vo) {
+        UndoLogEntity e = new UndoLogEntity();
+        BeanUtil.copyProperties(vo, e);
+        return undoLogMapper.insert(e);
+    }
+
+    @Override
+    public Integer saveBatch(List<UndoLogVO> list) {
+        List<UndoLogEntity> entities = list.stream().map(vo -> {
+            UndoLogEntity e = new UndoLogEntity();
+            BeanUtil.copyProperties(vo, e);
+            return e;
+        }).collect(Collectors.toList());
+        return undoLogMapper.insert(entities).size();
+    }
+
+    @Override
+    public Integer updateById(Long id, UndoLogVO vo) {
+        UndoLogEntity e = new UndoLogEntity();
+        BeanUtil.copyProperties(vo, e);
+        e.setId(id);
+        return undoLogMapper.updateById(e);
+    }
+
+    @Override
+    public Integer removeById(Long id) {
+        return undoLogMapper.deleteById(id);
+    }
+
+    @Override
+    public Integer removeByIds(List<Long> ids) {
+        return undoLogMapper.deleteBatchIds(ids);
+    }
+
+    private UndoLogVO entityToVO(UndoLogEntity e) {
+        UndoLogVO v = new UndoLogVO();
+        BeanUtil.copyProperties(e, v);
+        return v;
+    }
+}
