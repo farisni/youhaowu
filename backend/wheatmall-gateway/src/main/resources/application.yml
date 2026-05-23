@@ -10,40 +10,6 @@ spring:
         server-addr: 192.168.8.112:8848
         namespace: public
         group: DEFAULT_GROUP
-    gateway:
-      routes:
-        - id: product_route
-          uri: lb://wheatmall-product
-          predicates:
-            - Path=/api/product/**
-        - id: order_route
-          uri: lb://wheatmall-order
-          predicates:
-            - Path=/api/order/**
-        - id: ware_route
-          uri: lb://wheatmall-ware
-          predicates:
-            - Path=/api/ware/**
-        - id: coupon_route
-          uri: lb://wheatmall-coupon
-          predicates:
-            - Path=/api/coupon/**
-        - id: member_route
-          uri: lb://wheatmall-member
-          predicates:
-            - Path=/api/member/**
-        - id: thirdparty_route
-          uri: lb://wheatmall-thirdparty
-          predicates:
-            - Path=/api/thirdparty/**
-        - id: search_route
-          uri: lb://wheatmall-search
-          predicates:
-            - Path=/api/search/**
-        - id: auth_route
-          uri: lb://wheatmall-auth
-          predicates:
-            - Path=/api/user/**
 
 logging:
   level:
