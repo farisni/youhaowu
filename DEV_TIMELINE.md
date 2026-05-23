@@ -117,3 +117,4 @@
 - feat(search): 从 wheatmall-2022 搬迁 Search 模块（ES 索引 + 搜索服务）
 - feat(thirdparty): 搬迁 Thirdparty 模块（OSS 签名 + 短信发送），手动创建 OssConfig 替代废弃的 spring-cloud-starter-alicloud-oss
 - feat(thirdparty): 新增 OssConfig 配置类，手动装配 OSS Bean（Spring Cloud Alibaba 2025.x 已移除 alicloud-oss-starter）
+- refactor(auth): wheatmall-auth-admin 重命名为 wheatmall-auth（目录/pom/包名/yml 统一更名，端口 8092→8096 避免与 order 冲突）
