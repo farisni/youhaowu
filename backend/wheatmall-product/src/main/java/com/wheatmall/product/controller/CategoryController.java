@@ -1,6 +1,6 @@
 package com.wheatmall.product.controller;
 
-import com.wheatmall.common.constant.ServiceUris;
+import com.wheatmall.common.constant.ProductServiceUris;
 import com.wheatmall.common.utils.PageData;
 import com.wheatmall.common.utils.R;
 import com.wheatmall.product.dto.CategoryQueryDTO;
@@ -23,7 +23,7 @@ import java.util.List;
  * 实现商品三级分类管理，支持树形结构获取、分类信息查询、修改以及逻辑删除功能
  */
 @RestController
-@RequestMapping(ServiceUris.PRODUCT_CATEGORY_SERVICE)
+@RequestMapping(ProductServiceUris.PRODUCT_CATEGORY_SERVICE)
 public class CategoryController {
 
     @Autowired
@@ -33,7 +33,7 @@ public class CategoryController {
      * 获取分类树
      * 返回三级分类树形结构，一级分类包含子分类，子分类嵌套孙分类
      */
-    @GetMapping(ServiceUris.ProductCategory.LIST_TREE)
+    @GetMapping(ProductServiceUris.ProductCategory.LIST_TREE)
     public R<List<CategoryVO>> list() {
         return R.ok(categoryService.listWithTree());
     }
@@ -42,7 +42,7 @@ public class CategoryController {
      * 分页查询分类
      * 支持按名称模糊查询和关键字搜索
      */
-    @PostMapping(ServiceUris.ProductCategory.PAGE)
+    @PostMapping(ProductServiceUris.ProductCategory.PAGE)
     public R<PageData<CategoryVO>> page(@Valid CategoryQueryDTO query) {
         return R.ok(categoryService.page(query));
     }
@@ -51,7 +51,7 @@ public class CategoryController {
      * 根据父ID查询子分类
      * 返回指定父分类下的直接子分类列表，按排序字段升序
      */
-    @GetMapping(ServiceUris.ProductCategory.PARENT_BY_ID)
+    @GetMapping(ProductServiceUris.ProductCategory.PARENT_BY_ID)
     public R<List<CategoryVO>> children(@PathVariable Long parentId) {
         return R.ok(categoryService.getChildrenByParentId(parentId));
     }
@@ -60,7 +60,7 @@ public class CategoryController {
      * 批量删除分类
      * 接收分类ID列表，执行逻辑删除
      */
-    @PostMapping(ServiceUris.ProductCategory.DELETE)
+    @PostMapping(ProductServiceUris.ProductCategory.DELETE)
     public R<Void> delete(@RequestBody List<Long> ids) {
         categoryService.deleteBatch(ids);
         return R.ok();
@@ -70,7 +70,7 @@ public class CategoryController {
      * 修改分类信息
      * 更新分类的名称、图标、排序、显示状态等信息
      */
-    @PostMapping(ServiceUris.ProductCategory.UPDATE)
+    @PostMapping(ProductServiceUris.ProductCategory.UPDATE)
     public R<Void> update(@Valid @RequestBody CategoryUpdateDTO dto) {
         categoryService.update(dto);
         return R.ok();

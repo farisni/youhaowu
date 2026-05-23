@@ -1,6 +1,6 @@
 package com.wheatmall.product.controller;
 
-import com.wheatmall.common.constant.ServiceUris;
+import com.wheatmall.common.constant.ProductServiceUris;
 import com.wheatmall.common.utils.PageData;
 import com.wheatmall.common.utils.R;
 import com.wheatmall.product.query.BrandQueryDTO;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
  * 品牌管理控制器
  */
 @RestController
-@RequestMapping(ServiceUris.PRODUCT_BRAND_SERVICE)
+@RequestMapping(ProductServiceUris.PRODUCT_BRAND_SERVICE)
 public class BrandController {
 
     @Autowired
@@ -22,7 +22,7 @@ public class BrandController {
     /**
      * 分页查询品牌列表
      */
-    @GetMapping(ServiceUris.ProductBrand.PAGE)
+    @GetMapping(ProductServiceUris.ProductBrand.PAGE)
     public R<PageData<BrandVO>> list(BrandQueryDTO query) {
         return R.ok(brandService.page(query));
     }
@@ -30,7 +30,7 @@ public class BrandController {
     /**
      * 根据ID查询品牌信息
      */
-    @GetMapping(ServiceUris.ProductBrand.INFO)
+    @GetMapping(ProductServiceUris.ProductBrand.INFO)
     public R<BrandVO> info(@PathVariable Long brandId) {
         return R.ok(brandService.getById(brandId));
     }
@@ -38,7 +38,7 @@ public class BrandController {
     /**
      * 保存品牌
      */
-    @PostMapping(ServiceUris.ProductBrand.SAVE)
+    @PostMapping(ProductServiceUris.ProductBrand.SAVE)
     public R<Integer> save(@RequestBody BrandVO vo) {
         return R.ok(brandService.save(vo));
     }
@@ -46,7 +46,7 @@ public class BrandController {
     /**
      * 更新品牌信息
      */
-    @PostMapping(ServiceUris.ProductBrand.UPDATE)
+    @PostMapping(ProductServiceUris.ProductBrand.UPDATE)
     public R<Void> update(@PathVariable Long id, @RequestBody BrandVO vo) {
         brandService.updateDetail(id, vo);
         return R.ok();
@@ -55,7 +55,7 @@ public class BrandController {
     /**
      * 删除品牌
      */
-    @PostMapping(ServiceUris.ProductBrand.DELETE)
+    @PostMapping(ProductServiceUris.ProductBrand.DELETE)
     public R<Integer> delete(@PathVariable Long id) {
         return R.ok(brandService.removeById(id));
     }

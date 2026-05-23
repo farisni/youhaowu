@@ -4,9 +4,9 @@ package com.wheatmall.common.constant;
  * 服务URI常量类
  * 统一管理所有服务的API路径，便于维护和修改
  */
-public final class ServiceUris {
+public final class ProductServiceUris {
 
-    private ServiceUris() {
+    private ProductServiceUris() {
         // 私有构造器，防止实例化
     }
 
@@ -14,9 +14,9 @@ public final class ServiceUris {
     
     /** 商品分类服务根路径 */
     public static final String PRODUCT_CATEGORY_SERVICE = "/api/product/category";
-    
+
     /** Product 商品服务根路径 */
-    public static final String PRODUCT_ROOT = "/product";
+    public static final String PRODUCT_ROOT = "/api/product";
 
     /** Order服务根路径 */
     public static final String ORDER_SERVICE = "/api/order";
@@ -60,17 +60,6 @@ public final class ServiceUris {
         public static final String UPDATE = "/update/{id}";
     }
 
-    // ==================== Product服务相关URI（已弃用） ====================
-    @Deprecated
-    public static final class Product {
-        public static final String GET_BY_ID = PRODUCT_CATEGORY_SERVICE + "/{id}";
-        public static final String GET_BY_ID_INTERNAL = PRODUCT_CATEGORY_SERVICE + "/get/{id}";
-        public static final String LIST = PRODUCT_CATEGORY_SERVICE + "/list";
-        public static final String CREATE = PRODUCT_CATEGORY_SERVICE;
-        public static final String UPDATE = PRODUCT_CATEGORY_SERVICE + "/{id}";
-        public static final String DELETE = PRODUCT_CATEGORY_SERVICE + "/{id}";
-        public static final String DEDUCT_STOCK = PRODUCT_CATEGORY_SERVICE + "/{id}/deduct-stock";
-    }
 
     // ==================== Order服务相关URI ====================
     public static final class Order {

@@ -97,3 +97,5 @@
 - refactor: Spring BeanUtils 统一替换为 Hutool BeanUtil
 - refactor: 10 个 Service 的 save/saveBatch/updateById 参数从 Entity 改为 VO
 - refactor: 12 个 removeByIds 和 9 个 getById 改为返回 Integer/VO，Service 层零 Entity 暴露
+- refactor: ServiceUris PRODUCT_ROOT 统一加 /api 前缀
+- test: 添加 BrandController pytest 接口测试（13 个用例）

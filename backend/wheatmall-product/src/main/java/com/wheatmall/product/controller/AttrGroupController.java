@@ -1,6 +1,6 @@
 package com.wheatmall.product.controller;
 
-import com.wheatmall.common.constant.ServiceUris;
+import com.wheatmall.common.constant.ProductServiceUris;
 import com.wheatmall.common.utils.PageData;
 import com.wheatmall.common.utils.R;
 import com.wheatmall.product.query.AttrGroupQueryDTO;
@@ -16,7 +16,7 @@ import java.util.List;
  * 属性分组控制器
  */
 @RestController
-@RequestMapping(ServiceUris.PRODUCT_ATTRGROUP_SERVICE)
+@RequestMapping(ProductServiceUris.PRODUCT_ATTRGROUP_SERVICE)
 public class AttrGroupController {
 
     @Autowired
@@ -25,7 +25,7 @@ public class AttrGroupController {
     /**
      * 分页查询属性分组
      */
-    @GetMapping(ServiceUris.ProductAttrGroup.PAGE)
+    @GetMapping(ProductServiceUris.ProductAttrGroup.PAGE)
     public R<PageData<AttrGroupVO>> list(AttrGroupQueryDTO query, @PathVariable Long catelogId) {
         return R.ok(attrGroupService.page(query, catelogId));
     }
@@ -33,7 +33,7 @@ public class AttrGroupController {
     /**
      * 查询属性分组详情
      */
-    @GetMapping(ServiceUris.ProductAttrGroup.INFO)
+    @GetMapping(ProductServiceUris.ProductAttrGroup.INFO)
     public R<AttrGroupVO> info(@PathVariable Long attrGroupId) {
         return R.ok(attrGroupService.getById(attrGroupId));
     }
@@ -41,7 +41,7 @@ public class AttrGroupController {
     /**
      * 保存属性分组
      */
-    @PostMapping(ServiceUris.ProductAttrGroup.SAVE)
+    @PostMapping(ProductServiceUris.ProductAttrGroup.SAVE)
     public R<Integer> save(@RequestBody AttrGroupVO vo) {
         return R.ok(attrGroupService.save(vo));
     }
@@ -49,7 +49,7 @@ public class AttrGroupController {
     /**
      * 更新属性分组
      */
-    @PostMapping(ServiceUris.ProductAttrGroup.UPDATE)
+    @PostMapping(ProductServiceUris.ProductAttrGroup.UPDATE)
     public R<Integer> update(@PathVariable Long id, @RequestBody AttrGroupVO vo) {
         return R.ok(attrGroupService.updateById(id, vo));
     }
@@ -57,7 +57,7 @@ public class AttrGroupController {
     /**
      * 删除属性分组
      */
-    @PostMapping(ServiceUris.ProductAttrGroup.DELETE)
+    @PostMapping(ProductServiceUris.ProductAttrGroup.DELETE)
     public R<Integer> delete(@PathVariable Long id) {
         return R.ok(attrGroupService.removeById(id));
     }
@@ -65,7 +65,7 @@ public class AttrGroupController {
     /**
      * 查询分组及关联属性
      */
-    @GetMapping(ServiceUris.ProductAttrGroup.WITH_ATTRS)
+    @GetMapping(ProductServiceUris.ProductAttrGroup.WITH_ATTRS)
     public R<List<AttrGroupWithAttrsVO>> withAttrs(@PathVariable Long catelogId) {
         return R.ok(attrGroupService.getAttrGroupWithAttrsByCatelogId(catelogId));
     }

@@ -2,7 +2,7 @@ package com.wheatmall.product.controller;
 
 import com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wheatmall.common.constant.ServiceUris;
+import com.wheatmall.common.constant.ProductServiceUris;
 import com.wheatmall.common.utils.PageData;
 import com.wheatmall.product.dto.CategoryQueryDTO;
 import com.wheatmall.product.dto.CategoryUpdateDTO;
@@ -82,7 +82,7 @@ class CategoryControllerTest {
     void testListTree() throws Exception {
         when(categoryService.listWithTree()).thenReturn(Collections.singletonList(cat1));
 
-        mockMvc.perform(get(ServiceUris.PRODUCT_CATEGORY_SERVICE + ServiceUris.ProductCategory.LIST_TREE))
+        mockMvc.perform(get(ProductServiceUris.PRODUCT_CATEGORY_SERVICE + ProductServiceUris.ProductCategory.LIST_TREE))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(0))
                 .andExpect(jsonPath("$.data", hasSize(1)))
@@ -99,7 +99,7 @@ class CategoryControllerTest {
     void testListTreeEmpty() throws Exception {
         when(categoryService.listWithTree()).thenReturn(Collections.emptyList());
 
-        mockMvc.perform(get(ServiceUris.PRODUCT_CATEGORY_SERVICE + ServiceUris.ProductCategory.LIST_TREE))
+        mockMvc.perform(get(ProductServiceUris.PRODUCT_CATEGORY_SERVICE + ProductServiceUris.ProductCategory.LIST_TREE))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(0))
                 .andExpect(jsonPath("$.data", hasSize(0)));
@@ -119,7 +119,7 @@ class CategoryControllerTest {
 
         when(categoryService.page(any(CategoryQueryDTO.class))).thenReturn(pageData);
 
-        mockMvc.perform(post(ServiceUris.PRODUCT_CATEGORY_SERVICE + ServiceUris.ProductCategory.PAGE)
+        mockMvc.perform(post(ProductServiceUris.PRODUCT_CATEGORY_SERVICE + ProductServiceUris.ProductCategory.PAGE)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(query)))
                 .andExpect(status().isOk())
@@ -141,7 +141,7 @@ class CategoryControllerTest {
 
         when(categoryService.page(any(CategoryQueryDTO.class))).thenReturn(pageData);
 
-        mockMvc.perform(post(ServiceUris.PRODUCT_CATEGORY_SERVICE + ServiceUris.ProductCategory.PAGE)
+        mockMvc.perform(post(ProductServiceUris.PRODUCT_CATEGORY_SERVICE + ProductServiceUris.ProductCategory.PAGE)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(query)))
                 .andExpect(status().isOk())
@@ -157,7 +157,7 @@ class CategoryControllerTest {
         when(categoryService.page(any(CategoryQueryDTO.class)))
                 .thenReturn(PageData.of(0L, 10L, 1L, Collections.emptyList()));
 
-        mockMvc.perform(post(ServiceUris.PRODUCT_CATEGORY_SERVICE + ServiceUris.ProductCategory.PAGE)
+        mockMvc.perform(post(ProductServiceUris.PRODUCT_CATEGORY_SERVICE + ProductServiceUris.ProductCategory.PAGE)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{}"))
                 .andExpect(status().isOk())
@@ -173,7 +173,7 @@ class CategoryControllerTest {
 
         when(categoryService.getChildrenByParentId(1L)).thenReturn(children);
 
-        mockMvc.perform(get(ServiceUris.PRODUCT_CATEGORY_SERVICE + "/parent/1"))
+        mockMvc.perform(get(ProductServiceUris.PRODUCT_CATEGORY_SERVICE + "/parent/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(0))
                 .andExpect(jsonPath("$.data", hasSize(2)))
@@ -189,7 +189,7 @@ class CategoryControllerTest {
     void testChildrenEmpty() throws Exception {
         when(categoryService.getChildrenByParentId(999L)).thenReturn(Collections.emptyList());
 
-        mockMvc.perform(get(ServiceUris.PRODUCT_CATEGORY_SERVICE + "/parent/999"))
+        mockMvc.perform(get(ProductServiceUris.PRODUCT_CATEGORY_SERVICE + "/parent/999"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(0))
                 .andExpect(jsonPath("$.data", hasSize(0)));
@@ -202,7 +202,7 @@ class CategoryControllerTest {
         List<Long> ids = Arrays.asList(10L, 11L, 12L);
         doNothing().when(categoryService).deleteBatch(anyList());
 
-        mockMvc.perform(post(ServiceUris.PRODUCT_CATEGORY_SERVICE + "/delete/1")
+        mockMvc.perform(post(ProductServiceUris.PRODUCT_CATEGORY_SERVICE + "/delete/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(ids)))
                 .andExpect(status().isOk())
@@ -216,7 +216,7 @@ class CategoryControllerTest {
         List<Long> ids = Collections.singletonList(10L);
         doNothing().when(categoryService).deleteBatch(anyList());
 
-        mockMvc.perform(post(ServiceUris.PRODUCT_CATEGORY_SERVICE + "/delete/1")
+        mockMvc.perform(post(ProductServiceUris.PRODUCT_CATEGORY_SERVICE + "/delete/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(ids)))
                 .andExpect(status().isOk())
@@ -236,7 +236,7 @@ class CategoryControllerTest {
 
         doNothing().when(categoryService).update(any(CategoryUpdateDTO.class));
 
-        mockMvc.perform(post(ServiceUris.PRODUCT_CATEGORY_SERVICE + "/update/1")
+        mockMvc.perform(post(ProductServiceUris.PRODUCT_CATEGORY_SERVICE + "/update/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isOk())
@@ -250,7 +250,7 @@ class CategoryControllerTest {
         CategoryUpdateDTO dto = new CategoryUpdateDTO();
         dto.setName("电子产品(已更新)");
 
-        mockMvc.perform(post(ServiceUris.PRODUCT_CATEGORY_SERVICE + "/update/1")
+        mockMvc.perform(post(ProductServiceUris.PRODUCT_CATEGORY_SERVICE + "/update/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isBadRequest());
@@ -262,7 +262,7 @@ class CategoryControllerTest {
     void testServiceThrowsException() throws Exception {
         when(categoryService.listWithTree()).thenThrow(new RuntimeException("数据库连接异常"));
 
-        mockMvc.perform(get(ServiceUris.PRODUCT_CATEGORY_SERVICE + ServiceUris.ProductCategory.LIST_TREE))
+        mockMvc.perform(get(ProductServiceUris.PRODUCT_CATEGORY_SERVICE + ProductServiceUris.ProductCategory.LIST_TREE))
                 .andExpect(status().isInternalServerError());
 
         verify(categoryService, times(1)).listWithTree();

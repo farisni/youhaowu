@@ -1,6 +1,6 @@
 package com.wheatmall.product.controller;
 
-import com.wheatmall.common.constant.ServiceUris;
+import com.wheatmall.common.constant.ProductServiceUris;
 import com.wheatmall.common.utils.PageData;
 import com.wheatmall.common.utils.R;
 import com.wheatmall.product.query.SkuQueryDTO;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
  * SKU信息控制器
  */
 @RestController
-@RequestMapping(ServiceUris.PRODUCT_SKU_SERVICE)
+@RequestMapping(ProductServiceUris.PRODUCT_SKU_SERVICE)
 public class SkuInfoController {
 
     @Autowired
@@ -22,7 +22,7 @@ public class SkuInfoController {
     /**
      * 分页条件查询SKU
      */
-    @GetMapping(ServiceUris.ProductSku.PAGE)
+    @GetMapping(ProductServiceUris.ProductSku.PAGE)
     public R<PageData<SkuInfoVO>> list(SkuQueryDTO query) {
         return R.ok(skuInfoService.page(query));
     }
@@ -30,7 +30,7 @@ public class SkuInfoController {
     /**
      * 根据ID查询SKU信息
      */
-    @GetMapping(ServiceUris.ProductSku.INFO)
+    @GetMapping(ProductServiceUris.ProductSku.INFO)
     public R<SkuInfoVO> info(@PathVariable Long skuId) {
         return R.ok(skuInfoService.getVOById(skuId));
     }
@@ -38,7 +38,7 @@ public class SkuInfoController {
     /**
      * 保存SKU信息
      */
-    @PostMapping(ServiceUris.ProductSku.SAVE)
+    @PostMapping(ProductServiceUris.ProductSku.SAVE)
     public R<Void> save(@RequestBody SkuInfoVO vo) {
         skuInfoService.saveSkuInfo(vo);
         return R.ok();

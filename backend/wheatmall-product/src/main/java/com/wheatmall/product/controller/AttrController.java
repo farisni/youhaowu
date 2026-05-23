@@ -1,6 +1,6 @@
 package com.wheatmall.product.controller;
 
-import com.wheatmall.common.constant.ServiceUris;
+import com.wheatmall.common.constant.ProductServiceUris;
 import com.wheatmall.common.utils.PageData;
 import com.wheatmall.common.utils.R;
 import com.wheatmall.product.query.AttrQueryDTO;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
  * 商品属性控制器
  */
 @RestController
-@RequestMapping(ServiceUris.PRODUCT_ATTR_SERVICE)
+@RequestMapping(ProductServiceUris.PRODUCT_ATTR_SERVICE)
 public class AttrController {
 
     @Autowired
@@ -24,7 +24,7 @@ public class AttrController {
     /**
      * 分页查询基本属性
      */
-    @GetMapping(ServiceUris.ProductAttr.BASE_PAGE)
+    @GetMapping(ProductServiceUris.ProductAttr.BASE_PAGE)
     public R<PageData<AttrRespVO>> baseAttrList(AttrQueryDTO query, @PathVariable Long catelogId) {
         return R.ok(attrService.queryBaseAttrPage(query, catelogId, "base"));
     }
@@ -32,7 +32,7 @@ public class AttrController {
     /**
      * 分页查询销售属性
      */
-    @GetMapping(ServiceUris.ProductAttr.SALE_PAGE)
+    @GetMapping(ProductServiceUris.ProductAttr.SALE_PAGE)
     public R<PageData<AttrRespVO>> saleAttrList(AttrQueryDTO query, @PathVariable Long catelogId) {
         return R.ok(attrService.queryBaseAttrPage(query, catelogId, "sale"));
     }
@@ -40,7 +40,7 @@ public class AttrController {
     /**
      * 查询属性详情
      */
-    @GetMapping(ServiceUris.ProductAttr.INFO)
+    @GetMapping(ProductServiceUris.ProductAttr.INFO)
     public R<AttrRespVO> info(@PathVariable Long attrId) {
         return R.ok(attrService.getAttrInfo(attrId));
     }
@@ -48,7 +48,7 @@ public class AttrController {
     /**
      * 保存属性
      */
-    @PostMapping(ServiceUris.ProductAttr.SAVE)
+    @PostMapping(ProductServiceUris.ProductAttr.SAVE)
     public R<Integer> save(@RequestBody AttrVO attr) {
         return R.ok(attrService.saveAttr(attr));
     }
@@ -56,7 +56,7 @@ public class AttrController {
     /**
      * 更新属性
      */
-    @PostMapping(ServiceUris.ProductAttr.UPDATE)
+    @PostMapping(ProductServiceUris.ProductAttr.UPDATE)
     public R<Void> update(@PathVariable Long id, @RequestBody AttrVO attr) {
         attrService.updateAttrById(id, attr);
         return R.ok();
@@ -65,7 +65,7 @@ public class AttrController {
     /**
      * 删除属性
      */
-    @PostMapping(ServiceUris.ProductAttr.DELETE)
+    @PostMapping(ProductServiceUris.ProductAttr.DELETE)
     public R<Integer> delete(@PathVariable Long id) {
         return R.ok(attrService.removeById(id));
     }
@@ -73,7 +73,7 @@ public class AttrController {
     /**
      * 查询属性关联关系
      */
-    @GetMapping(ServiceUris.ProductAttr.RELATION_PAGE)
+    @GetMapping(ProductServiceUris.ProductAttr.RELATION_PAGE)
     public R<List<AttrRespVO>> relation(@PathVariable Long attrgroupId) {
         return R.ok(attrService.getRelationAttr(attrgroupId));
     }
@@ -81,7 +81,7 @@ public class AttrController {
     /**
      * 查询未关联属性
      */
-    @GetMapping(ServiceUris.ProductAttr.NO_RELATION_PAGE)
+    @GetMapping(ProductServiceUris.ProductAttr.NO_RELATION_PAGE)
     public R<PageData<?>> noRelation(AttrQueryDTO query, @PathVariable Long attrgroupId) {
         return R.ok(attrService.getNoRelationAttr(query, attrgroupId));
     }
