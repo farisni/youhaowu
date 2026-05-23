@@ -79,3 +79,11 @@
 ## 2026-05-23
 
 - style: 重构登录页左侧海报区排版与配色（Poppins 字体、深蓝配色体系、watermark 效果）
+- feat(product): 从 wheatmall-2022 搬迁 Product 模块（15 Service+15 Impl+15 Mapper+10 Controller+22 VO+8 QueryDTO）
+- refactor(product): 全部 Controller 路由改用 ServiceUris 常量，update/delete 走 @PathVariable {id}
+- refactor(product): Controller 查询入参统一用专属 XxxQueryDTO extends BaseQueryDTO（8 个）
+- refactor(product): Service 接口不暴露 Entity（saveSkuInfo 改 VO，VO 不引用 Entity）
+- fix(product): 修复 18 个 ServiceImpl 孤儿 @Autowired（注解在方法上导致启动失败）
+- refactor(product): Feign 替换为 WebClient 占位 Service（Coupon/Ware/Search 三个 RemoteService）
+- docs: 新增规则——方法超过 40 行必须加 Javadoc + 行内注释
+- docs: saveSupInfo 补 Javadoc + 8 处步骤注释
