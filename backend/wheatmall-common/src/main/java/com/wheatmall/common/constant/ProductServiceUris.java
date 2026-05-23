@@ -19,15 +19,6 @@ public final class ProductServiceUris {
         public static final String UPDATE = BASE_URL + "/update/{id}";
     }
 
-    // ==================== Product服务相关URI（已弃用） ====================
-    @Deprecated
-    public static final class Product {
-        public static final String GET_BY_ID = ProductCategory.BASE_URL + "/{id}";
-        public static final String CREATE = ProductCategory.BASE_URL;
-        public static final String UPDATE = ProductCategory.BASE_URL + "/{id}";
-        public static final String DELETE = ProductCategory.BASE_URL + "/{id}";
-        public static final String DEDUCT_STOCK = ProductCategory.BASE_URL + "/{id}/deduct-stock";
-    }
 
     // ==================== 品牌管理 ====================
     public static final class ProductBrand {
