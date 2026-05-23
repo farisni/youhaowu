@@ -107,11 +107,4 @@ public final class ProductServiceUris {
         public static final String LIST_BY_SPU = BASE_URL + "/{spuId}";
     }
 
-    // ==================== User服务（预留） ====================
-    public static final String USER_SERVICE = "/api/user";
-
-    public static final class User {
-        public static final String GET_BY_ID = USER_SERVICE + "/{id}";
-        public static final String GET_CURRENT = USER_SERVICE + "/current";
-    }
 }
