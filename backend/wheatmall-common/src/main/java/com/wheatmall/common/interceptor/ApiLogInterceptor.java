@@ -1,4 +1,4 @@
-package com.wheatmall.product.interceptor;
+package com.wheatmall.common.interceptor;
 
 import com.alibaba.fastjson.JSONObject;
 import com.wheatmall.common.constant.ApiLogConstants;
@@ -7,7 +7,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.util.ContentCachingRequestWrapper;
 
@@ -15,7 +14,6 @@ import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 
 @Slf4j
-@Component
 public class ApiLogInterceptor implements HandlerInterceptor {
 
     private static final String TOPIC = ApiLogConstants.TOPIC;
