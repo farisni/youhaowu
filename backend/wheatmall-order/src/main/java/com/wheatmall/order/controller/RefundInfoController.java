@@ -3,7 +3,7 @@ package com.wheatmall.order.controller;
 import com.wheatmall.common.constant.OrderServiceUris;
 import com.wheatmall.common.utils.PageData;
 import com.wheatmall.common.utils.R;
-import com.wheatmall.order.query.RefundInfoQueryDTO;
+import com.wheatmall.order.dto.RefundInfoQueryDTO;
 import com.wheatmall.order.service.RefundInfoService;
 import com.wheatmall.order.vo.RefundInfoVO;
 import org.springframework.beans.factory.annotation.Autowired;

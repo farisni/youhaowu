@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.wheatmall.common.utils.PageData;
 import com.wheatmall.ware.entity.WareOrderTaskEntity;
 import com.wheatmall.ware.mapper.WareOrderTaskMapper;
-import com.wheatmall.ware.query.WareOrderTaskQueryDTO;
+import com.wheatmall.ware.dto.WareOrderTaskQueryDTO;
 import com.wheatmall.ware.service.WareOrderTaskService;
 import com.wheatmall.ware.vo.WareOrderTaskVO;
 import com.wheatmall.common.utils.PageUtils;

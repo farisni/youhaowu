@@ -1,13 +1,13 @@
-package com.wheatmall.order.query;
+package com.wheatmall.order.dto;
 
 import com.wheatmall.common.dto.BaseQueryDTO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * PaymentInfo 查询参数
+ * OrderItem 查询参数
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class PaymentInfoQueryDTO extends BaseQueryDTO {
+public class OrderItemQueryDTO extends BaseQueryDTO {
 }

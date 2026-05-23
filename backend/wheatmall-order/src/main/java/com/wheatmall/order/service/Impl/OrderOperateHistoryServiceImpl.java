@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.wheatmall.common.utils.PageData;
 import com.wheatmall.order.entity.OrderOperateHistoryEntity;
 import com.wheatmall.order.mapper.OrderOperateHistoryMapper;
-import com.wheatmall.order.query.OrderOperateHistoryQueryDTO;
+import com.wheatmall.order.dto.OrderOperateHistoryQueryDTO;
 import com.wheatmall.order.service.OrderOperateHistoryService;
 import com.wheatmall.order.vo.OrderOperateHistoryVO;
 import com.wheatmall.common.utils.PageUtils;

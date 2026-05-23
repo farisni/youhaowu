@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.wheatmall.common.utils.PageData;
 import com.wheatmall.order.entity.MqMessageEntity;
 import com.wheatmall.order.mapper.MqMessageMapper;
-import com.wheatmall.order.query.MqMessageQueryDTO;
+import com.wheatmall.order.dto.MqMessageQueryDTO;
 import com.wheatmall.order.service.MqMessageService;
 import com.wheatmall.order.vo.MqMessageVO;
 import com.wheatmall.common.utils.PageUtils;

@@ -1,7 +1,7 @@
 package com.wheatmall.order.service;
 
 import com.wheatmall.common.utils.PageData;
-import com.wheatmall.order.query.MqMessageQueryDTO;
+import com.wheatmall.order.dto.MqMessageQueryDTO;
 import com.wheatmall.order.vo.MqMessageVO;
 
 import java.util.List;

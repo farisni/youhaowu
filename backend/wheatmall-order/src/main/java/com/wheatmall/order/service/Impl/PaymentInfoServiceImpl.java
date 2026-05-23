@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.wheatmall.common.utils.PageData;
 import com.wheatmall.order.entity.PaymentInfoEntity;
 import com.wheatmall.order.mapper.PaymentInfoMapper;
-import com.wheatmall.order.query.PaymentInfoQueryDTO;
+import com.wheatmall.order.dto.PaymentInfoQueryDTO;
 import com.wheatmall.order.service.PaymentInfoService;
 import com.wheatmall.order.vo.PaymentInfoVO;
 import com.wheatmall.common.utils.PageUtils;

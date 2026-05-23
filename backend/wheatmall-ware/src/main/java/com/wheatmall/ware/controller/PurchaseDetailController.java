@@ -3,7 +3,7 @@ package com.wheatmall.ware.controller;
 import com.wheatmall.common.constant.WareServiceUris;
 import com.wheatmall.common.utils.PageData;
 import com.wheatmall.common.utils.R;
-import com.wheatmall.ware.query.PurchaseDetailQueryDTO;
+import com.wheatmall.ware.dto.PurchaseDetailQueryDTO;
 import com.wheatmall.ware.service.PurchaseDetailService;
 import com.wheatmall.ware.vo.PurchaseDetailVO;
 import org.springframework.beans.factory.annotation.Autowired;

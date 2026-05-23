@@ -1,7 +1,7 @@
 package com.wheatmall.order.service;
 
 import com.wheatmall.common.utils.PageData;
-import com.wheatmall.order.query.RefundInfoQueryDTO;
+import com.wheatmall.order.dto.RefundInfoQueryDTO;
 import com.wheatmall.order.vo.RefundInfoVO;
 
 import java.util.List;

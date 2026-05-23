@@ -1,7 +1,7 @@
 package com.wheatmall.order.service;
 
 import com.wheatmall.common.utils.PageData;
-import com.wheatmall.order.query.OrderQueryDTO;
+import com.wheatmall.order.dto.OrderQueryDTO;
 import com.wheatmall.order.vo.OrderVO;
 
 import java.util.List;

@@ -3,7 +3,7 @@ package com.wheatmall.ware.controller;
 import com.wheatmall.common.constant.WareServiceUris;
 import com.wheatmall.common.utils.PageData;
 import com.wheatmall.common.utils.R;
-import com.wheatmall.ware.query.WareSkuQueryDTO;
+import com.wheatmall.ware.dto.WareSkuQueryDTO;
 import com.wheatmall.ware.service.WareSkuService;
 import com.wheatmall.common.vo.SkuHasStockVO;
 import com.wheatmall.ware.vo.WareSkuVO;

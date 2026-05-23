@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.wheatmall.common.utils.PageData;
 import com.wheatmall.ware.entity.PurchaseEntity;
 import com.wheatmall.ware.mapper.PurchaseMapper;
-import com.wheatmall.ware.query.PurchaseQueryDTO;
+import com.wheatmall.ware.dto.PurchaseQueryDTO;
 import com.wheatmall.ware.service.PurchaseService;
 import com.wheatmall.ware.vo.PurchaseVO;
 import com.wheatmall.common.utils.PageUtils;

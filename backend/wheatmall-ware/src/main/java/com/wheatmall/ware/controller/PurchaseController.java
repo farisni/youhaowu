@@ -3,7 +3,7 @@ package com.wheatmall.ware.controller;
 import com.wheatmall.common.constant.WareServiceUris;
 import com.wheatmall.common.utils.PageData;
 import com.wheatmall.common.utils.R;
-import com.wheatmall.ware.query.PurchaseQueryDTO;
+import com.wheatmall.ware.dto.PurchaseQueryDTO;
 import com.wheatmall.ware.service.PurchaseService;
 import com.wheatmall.ware.vo.MergeVo;
 import com.wheatmall.ware.vo.PurchaseDoneVo;

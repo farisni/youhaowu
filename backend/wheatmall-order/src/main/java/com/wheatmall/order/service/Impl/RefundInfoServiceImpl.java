@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.wheatmall.common.utils.PageData;
 import com.wheatmall.order.entity.RefundInfoEntity;
 import com.wheatmall.order.mapper.RefundInfoMapper;
-import com.wheatmall.order.query.RefundInfoQueryDTO;
+import com.wheatmall.order.dto.RefundInfoQueryDTO;
 import com.wheatmall.order.service.RefundInfoService;
 import com.wheatmall.order.vo.RefundInfoVO;
 import com.wheatmall.common.utils.PageUtils;

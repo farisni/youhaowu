@@ -1,7 +1,7 @@
 package com.wheatmall.order.service;
 
 import com.wheatmall.common.utils.PageData;
-import com.wheatmall.order.query.OrderReturnReasonQueryDTO;
+import com.wheatmall.order.dto.OrderReturnReasonQueryDTO;
 import com.wheatmall.order.vo.OrderReturnReasonVO;
 
 import java.util.List;

@@ -1,7 +1,7 @@
 package com.wheatmall.ware.service;
 
 import com.wheatmall.common.utils.PageData;
-import com.wheatmall.ware.query.WareOrderTaskQueryDTO;
+import com.wheatmall.ware.dto.WareOrderTaskQueryDTO;
 import com.wheatmall.ware.vo.WareOrderTaskVO;
 
 import java.util.List;

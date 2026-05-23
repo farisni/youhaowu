@@ -3,7 +3,7 @@ package com.wheatmall.order.controller;
 import com.wheatmall.common.constant.OrderServiceUris;
 import com.wheatmall.common.utils.PageData;
 import com.wheatmall.common.utils.R;
-import com.wheatmall.order.query.OrderOperateHistoryQueryDTO;
+import com.wheatmall.order.dto.OrderOperateHistoryQueryDTO;
 import com.wheatmall.order.service.OrderOperateHistoryService;
 import com.wheatmall.order.vo.OrderOperateHistoryVO;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package com.wheatmall.ware.service;
 
 import com.wheatmall.common.utils.PageData;
-import com.wheatmall.ware.query.PurchaseQueryDTO;
+import com.wheatmall.ware.dto.PurchaseQueryDTO;
 import com.wheatmall.ware.vo.PurchaseVO;
 import com.wheatmall.ware.vo.MergeVo;
 import com.wheatmall.ware.vo.PurchaseDoneVo;

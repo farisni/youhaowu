@@ -1,13 +1,13 @@
-package com.wheatmall.order.query;
+package com.wheatmall.order.dto;
 
 import com.wheatmall.common.dto.BaseQueryDTO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * MqMessage 查询参数
+ * OrderSetting 查询参数
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class MqMessageQueryDTO extends BaseQueryDTO {
+public class OrderSettingQueryDTO extends BaseQueryDTO {
 }
