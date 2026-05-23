@@ -1,6 +1,7 @@
 package com.wheatmall.product.interceptor;
 
 import com.alibaba.fastjson.JSONObject;
+import com.wheatmall.common.constant.ApiLogConstants;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -17,8 +18,8 @@ import java.time.Instant;
 @Component
 public class ApiLogInterceptor implements HandlerInterceptor {
 
-    private static final String TOPIC = "wheatmall.api.log";
-    private static final String START_TIME_ATTR = "apiLogStartTime";
+    private static final String TOPIC = ApiLogConstants.TOPIC;
+    private static final String START_TIME_ATTR = ApiLogConstants.START_TIME_ATTR;
 
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
@@ -37,7 +38,7 @@ public class ApiLogInterceptor implements HandlerInterceptor {
 
         JSONObject entry = new JSONObject();
         entry.put("timestamp", Instant.now().toString());
-        entry.put("service", "wheatmall-product");
+        entry.put("service", ApiLogConstants.SERVICE_NAME);
         entry.put("method", request.getMethod());
         entry.put("path", request.getRequestURI());
         entry.put("query", request.getQueryString());
