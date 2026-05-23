@@ -120,3 +120,6 @@
 - refactor(auth): wheatmall-auth-admin 重命名为 wheatmall-auth（目录/pom/包名/yml 统一更名，端口 8092→8096 避免与 order 冲突）
 - feat(coupon): 从 wheatmall-2022 搬迁 Coupon 模块（16 Entity + 16 Mapper + 16 VO + 16 QueryDTO + 16 Service + 16 Controller + 16 XML）
 - feat(common): 新增 CouponServiceUris 常量类 + Query/Constant 工具类 + SkuReductionTo/MemberPrice TO 类
+- feat(member): 从 wheatmall-2022 搬迁 Member 模块（10 Entity + 10 Mapper + 13 VO + 10 QueryDTO + 10 Service + 10 Controller）
+- feat(member): 保留会员注册/密码登录/Gitee OAuth 登录逻辑，Feign→CouponRemoteService 占位
+- refactor(common): 新增 MemberServiceUris + UserLoginVO + UserRegisterVO + HttpUtils(RestTemplate)

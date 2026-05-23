@@ -12,7 +12,10 @@ public enum BizCodeEnum {
 	 * 系统错误
 	 */
 	SYSTEM_ERROR(500, "系统错误"),
-	
+
+	LOGINACCT_PASSWORD_EXCEPTION(10001, "账号或密码错误"),
+	PHONE_EXIST_EXCEPTION(10002, "手机号已存在"),
+	USER_EXIST_EXCEPTION(10003, "用户名已存在"),	
 	/**
 	 * 参数错误
 	 */
