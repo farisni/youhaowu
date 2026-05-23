@@ -10,6 +10,4 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class PaymentInfoQueryDTO extends BaseQueryDTO {
-    /** 关键字搜索 */
-    private String keyword;
 }
