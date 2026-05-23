@@ -87,3 +87,7 @@
 - refactor(product): Feign 替换为 WebClient 占位 Service（Coupon/Ware/Search 三个 RemoteService）
 - docs: 新增规则——方法超过 40 行必须加 Javadoc + 行内注释
 - docs: saveSupInfo 补 Javadoc + 8 处步骤注释
+
+## 2026-05-23
+
+- test: 添加 CategoryController pytest + requests 接口测试 (16 个用例，覆盖 5 个接口)
