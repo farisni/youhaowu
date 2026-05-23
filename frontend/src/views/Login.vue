@@ -12,18 +12,39 @@
         <h2 class="right-title">你好！</h2>
         <p class="right-desc">欢迎使用 Wheatmall 管理后台，请输入账号密码登录系统。</p>
         <div class="login-form">
-          <div class="field-group">
-            <label class="field-label">账号</label>
-            <el-input v-model="form.email" placeholder="admin@wheatmall.com">
-              <template #suffix>
-                <span class="check-icon"><el-icon><Check /></el-icon></span>
-              </template>
-            </el-input>
+          <div class="login-switch">
+            <span class="switch-item" :class="{ active: loginType === 'username' }" @click="loginType = 'username'">账号登录</span>
+            <span class="switch-item" :class="{ active: loginType === 'phone' }" @click="loginType = 'phone'">短信登录</span>
+            <div class="indicator" :class="loginType" />
           </div>
-          <div class="field-group">
-            <label class="field-label">密码</label>
-            <el-input v-model="form.password" type="password" placeholder="········" show-password />
-          </div>
+          <template v-if="loginType === 'username'">
+            <div class="field-group">
+              <label class="field-label">账号</label>
+              <el-input v-model="form.email" placeholder="admin@wheatmall.com" :prefix-icon="Message">
+                <template #suffix>
+                  <span class="check-icon"><el-icon><Check /></el-icon></span>
+                </template>
+              </el-input>
+            </div>
+            <div class="field-group">
+              <label class="field-label">密码</label>
+              <el-input v-model="form.password" type="password" placeholder="········" show-password :prefix-icon="Lock" />
+            </div>
+          </template>
+          <template v-if="loginType === 'phone'">
+            <div class="field-group">
+              <label class="field-label">手机号</label>
+              <el-input v-model="form.phone" placeholder="请输入手机号" :prefix-icon="Phone" />
+            </div>
+            <div class="field-group">
+              <label class="field-label">验证码</label>
+              <el-input v-model="form.smsCode" placeholder="请输入验证码" :prefix-icon="Message">
+                <template #suffix>
+                  <el-button link type="primary" :disabled="countdown > 0" @click="getSMS" class="sms-btn">{{ countdown > 0 ? countdown + 's' : '获取验证码' }}</el-button>
+                </template>
+              </el-input>
+            </div>
+          </template>
           <div class="form-row">
             <el-checkbox v-model="rememberMe">
               <span class="remember-text">记住我</span>
@@ -44,24 +65,37 @@ import { useRouter } from 'vue-router'
 import { useAppStore } from '@/stores/app.js'
 import { addDynamicFLatRoutes } from '@/router/index.js'
 import { ElMessage } from 'element-plus'
-import { Check } from '@element-plus/icons-vue'
+import { Check, Message, Lock, Phone } from '@element-plus/icons-vue'
 import authApi from '@/api/authApi.js'
 
 const router = useRouter()
 const appStore = useAppStore()
 
+const loginType = ref('username')
 const loading = ref(false)
 const rememberMe = ref(false)
+const countdown = ref(0)
 
 const form = reactive({
   email: 'admin@wheatmall.com',
   password: '',
+  phone: '',
+  smsCode: '',
 })
+
+const getSMS = () => {
+  ElMessage.success('验证码已发送（Mock: 000000）')
+  countdown.value = 60
+  const timer = setInterval(() => { countdown.value--; if (countdown.value <= 0) clearInterval(timer) }, 1000)
+}
 
 const doLogin = async () => {
   try {
     loading.value = true
-    const res = await authApi.login({ username: 'admin', password: form.password || '123456' })
+    const loginData = loginType.value === 'username'
+      ? { username: 'admin', password: form.password || '123456' }
+      : { phone: form.phone, smsCode: form.smsCode }
+    const res = await authApi.login(loginData)
     appStore.setToken(res.data.token)
     appStore.setUserInfo(res.data.userInfo)
     addDynamicFLatRoutes(res.data.userInfo.menu)
@@ -142,6 +176,40 @@ const doLogin = async () => {
 
 .login-form {
   width: 100%;
+
+  .login-switch {
+    position: relative;
+    display: flex;
+    gap: 24px;
+    margin-bottom: 28px;
+    border-bottom: 1px solid #e8e8e8;
+    padding-bottom: 10px;
+
+    .switch-item {
+      cursor: pointer;
+      color: #999;
+      font-size: 15px;
+      font-weight: 600;
+      transition: color 0.2s;
+      &.active { color: #1a1a2e; }
+    }
+
+    .indicator {
+      position: absolute;
+      bottom: -1px;
+      height: 2px;
+      background: #1a1a2e;
+      transition: all 0.3s ease;
+      border-radius: 1px;
+      &.username { left: 0; width: 60px; }
+      &.phone { left: 84px; width: 60px; }
+    }
+  }
+
+  .sms-btn {
+    font-size: 13px;
+    color: #409EFF;
+  }
 
   .field-group {
     margin-bottom: 14px;
@@ -233,13 +301,15 @@ const doLogin = async () => {
   }
 
   .signin-btn {
-    width: 100%;
-    height: 56px;
-    border-radius: 10px;
+    width: auto;
+    min-width: 140px;
+    height: 48px;
+    border-radius: 8px;
+    padding: 0 40px;
     font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 700;
-    letter-spacing: 1px;
+    letter-spacing: 6px;
     background: #409EFF;
     border: none;
     color: #fff;
