@@ -9,39 +9,28 @@
     </div>
     <div class="login-right">
       <div class="login-card">
-        <div class="right-title">Login</div>
+        <h2 class="right-title">Hello!</h2>
+        <p class="right-desc">Etiam pretium dapibus congue. Praesent a lorem erat. Morbi mollis posuere lacus, vel semper risus.</p>
         <div class="login-form">
-          <div class="login-switch">
-            <span class="switch-item" :class="{ active: loginType === 'username' }" @click="loginType = 'username'">用户名登录</span>
-            <span class="switch-item" :class="{ active: loginType === 'phone' }" @click="loginType = 'phone'">短信登录</span>
-            <div class="indicator" :class="loginType" />
+          <div class="field-group">
+            <label class="field-label">Email Address</label>
+            <el-input v-model="form.email" placeholder="mtpiatek@gmail.com">
+              <template #suffix>
+                <span class="check-icon"><el-icon><Check /></el-icon></span>
+              </template>
+            </el-input>
           </div>
-          <el-form v-if="loginType === 'username'" ref="userFormRef" :model="form" :rules="userRules">
-            <el-form-item prop="username">
-              <el-input v-model="form.username" placeholder="请输入账号" prefix-icon="User" />
-            </el-form-item>
-            <el-form-item prop="password">
-              <el-input v-model="form.password" type="password" placeholder="请输入密码" prefix-icon="Lock" show-password @keyup.enter="doLogin" />
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" :loading="loading" class="login-btn" @click="doLogin">登录</el-button>
-            </el-form-item>
-          </el-form>
-          <el-form v-if="loginType === 'phone'" ref="phoneFormRef" :model="form" :rules="phoneRules">
-            <el-form-item prop="phone">
-              <el-input v-model="form.phone" placeholder="请输入手机号" prefix-icon="Phone" />
-            </el-form-item>
-            <el-form-item prop="smsCode">
-              <el-input v-model="form.smsCode" placeholder="请输入验证码" prefix-icon="Message">
-                <template #suffix>
-                  <el-button link type="primary" :disabled="countdown > 0" @click="getSMS" class="sms-btn">{{ countdown > 0 ? countdown + 's后重新获取' : '获取验证码' }}</el-button>
-                </template>
-              </el-input>
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" :loading="loading" class="login-btn" @click="doLogin">登录</el-button>
-            </el-form-item>
-          </el-form>
+          <div class="field-group">
+            <label class="field-label">Password</label>
+            <el-input v-model="form.password" type="password" placeholder="········" show-password />
+          </div>
+          <div class="form-row">
+            <el-checkbox v-model="rememberMe">
+              <span class="remember-text">Remember me</span>
+            </el-checkbox>
+            <a class="forgot-link" href="#">Forgot password?</a>
+          </div>
+          <el-button type="primary" :loading="loading" class="signin-btn" @click="doLogin">Sign In</el-button>
         </div>
       </div>
     </div>
@@ -54,49 +43,24 @@ import { useRouter } from 'vue-router'
 import { useAppStore } from '@/stores/app.js'
 import { addDynamicFLatRoutes } from '@/router/index.js'
 import { ElMessage } from 'element-plus'
+import { Check } from '@element-plus/icons-vue'
 import authApi from '@/api/authApi.js'
 
 const router = useRouter()
 const appStore = useAppStore()
 
-const loginType = ref('username')
-const countdown = ref(0)
 const loading = ref(false)
-const userFormRef = ref(null)
-const phoneFormRef = ref(null)
+const rememberMe = ref(false)
 
 const form = reactive({
-  username: 'admin',
-  password: '123456',
-  phone: '',
-  smsCode: '',
+  email: 'mtpiatek@gmail.com',
+  password: '',
 })
-
-const userRules = {
-  username: [{ required: true, message: '请输入账号', trigger: 'blur' }],
-  password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
-}
-const phoneRules = {
-  phone: [
-    { required: true, message: '请输入手机号', trigger: 'blur' },
-    { pattern: /^1[3-9]\d{9}$/, message: '手机号格式不正确', trigger: 'blur' },
-  ],
-  smsCode: [{ required: true, message: '请输入验证码', trigger: 'blur' }],
-}
-
-const getSMS = () => {
-  ElMessage.success('验证码已发送（Mock: 000000）')
-  countdown.value = 60
-  const timer = setInterval(() => { countdown.value--; if (countdown.value <= 0) clearInterval(timer) }, 1000)
-}
 
 const doLogin = async () => {
   try {
-    const formRef = loginType.value === 'username' ? userFormRef : phoneFormRef
-    await formRef.value.validate()
     loading.value = true
-    const loginData = loginType.value === 'username' ? { username: form.username, password: form.password } : { phone: form.phone, smsCode: form.smsCode }
-    const res = await authApi.login(loginData)
+    const res = await authApi.login({ username: 'admin', password: form.password || '123456' })
     appStore.setToken(res.data.token)
     appStore.setUserInfo(res.data.userInfo)
     addDynamicFLatRoutes(res.data.userInfo.menu)
@@ -111,7 +75,7 @@ const doLogin = async () => {
 </script>
 
 <style lang="scss" scoped>
-@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Poppins:wght@400;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap");
 
 .login-container { display: flex; height: 100vh; }
 
@@ -148,113 +112,125 @@ const doLogin = async () => {
   flex: 1;
   background-color: #fff;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding-top: 10vh;
+  padding-left: 80px;
 }
 
 .login-card {
-  width: 380px;
-  padding: 50px 40px;
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 20px;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  width: 520px;
+  padding: 0 40px;
 }
 
 .right-title {
-  font-family: "Caveat", cursive;
-  font-size: 40px;
-  font-weight: 700;
+  font-family: "Poppins", sans-serif;
+  font-size: 52px;
+  font-weight: 800;
   color: #1a1a2e;
-  text-align: center;
-  margin-bottom: 24px;
-  text-shadow: none;
-  transform: rotate(-1deg);
-  letter-spacing: 2px;
+  margin: 0 0 10px;
+}
+
+.right-desc {
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #aaa;
+  margin: 0 0 36px;
 }
 
 .login-form {
   width: 100%;
-  .login-switch {
-    position: relative;
-    width: 100%;
-    padding: 10px 0;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #e8e8e8;
-    .switch-item {
-      display: inline-block;
-      text-align: center;
-      width: 80px;
-      margin: 0 5px;
-      cursor: pointer;
-      color: #999;
-      font-weight: 600;
-      transition: color 0.2s;
-      &.active { color: #1a1a2e; }
-    }
-    .indicator {
-      position: absolute;
-      width: 90px;
-      height: 2px;
-      background: #1a1a2e;
-      bottom: -1px;
-      transition: all 0.3s ease;
-      border-radius: 1px;
-      &.username { left: 0; }
-      &.phone { left: 90px; }
-    }
+
+  .field-group {
+    margin-bottom: 14px;
+  }
+
+  .field-label {
+    display: block;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #aaa;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
   }
 
   :deep(.el-input__wrapper) {
-    border-radius: 10px;
-    border: 1px solid #dcdcdc;
-    background: #f8f8f8;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    background: #fff;
     box-shadow: none;
-    transition: border-color 0.2s, background 0.2s;
-    &:hover { border-color: #aaa; background: #f0f0f0; }
+    padding: 0 14px;
+    height: 56px;
+    transition: border-color 0.2s;
+    &:hover { border-color: #bbb; }
   }
 
   :deep(.el-input.is-focus .el-input__wrapper) {
-    border-color: #999;
-    background: #fff;
+    border-color: #213b6a;
   }
 
   :deep(.el-input__inner) {
     color: #333;
-    &::placeholder { color: #bbb; }
-  }
-
-  :deep(.el-input__prefix) { color: #999; }
-
-  .el-form { margin-top: 20px; }
-  .el-input { width: 100%; }
-
-  .login-btn {
-    width: 100%;
-    height: 45px;
-    border-radius: 22px;
-    margin: 20px 0;
-    font-weight: 700;
     font-size: 16px;
-    letter-spacing: 2px;
-    background: #1a1a2e;
-    border: 1px solid #1a1a2e;
-    color: #fff;
-  font-family: "Poppins", sans-serif;
-    box-shadow: none;
-    transition: background 0.2s;
-    &:hover { background: #2d2d44; }
-    &:active { background: #0d0d1a; }
+    &::placeholder { color: #ccc; }
   }
 
-  .sms-btn {
-    padding: 0 8px;
-    height: 24px;
-    font-size: 12px;
-    white-space: nowrap;
-    color: #999;
+  .check-icon {
+    color: #4caf50;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+  }
+
+  .form-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  :deep(.el-checkbox__inner) {
+    border-radius: 4px;
+    border-color: #ccc;
+  }
+
+  :deep(.el-checkbox.is-checked .el-checkbox__inner) {
+    background-color: #4caf50;
+    border-color: #4caf50;
+  }
+
+  .remember-text {
+    font-family: "Poppins", sans-serif;
+    color: #555;
+    font-size: 15px;
+  }
+
+  .forgot-link {
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    color: #aaa;
+    text-decoration: none;
+    &:hover { color: #213b6a; }
+  }
+
+  .signin-btn {
+    width: 100%;
+    height: 56px;
+    border-radius: 10px;
+    font-family: "Poppins", sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    background: #213b6a;
+    border: none;
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(33, 59, 106, 0.3);
+    transition: background 0.2s, transform 0.1s;
+    &:hover { background: #1a2f56; }
+    &:active { transform: scale(0.98); }
   }
 }
 </style>
