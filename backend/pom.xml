@@ -35,6 +35,7 @@
         <module>wheatmall-product</module>
         <module>wheatmall-order</module>
         <module>wheatmall-ware</module>
+        <module>wheatmall-search</module>
         <module>wheatmall-auth-admin</module>
         <!--        <module>wheatmall-gateway</module>-->
         <!--        <module>wheatmall-user</module>-->

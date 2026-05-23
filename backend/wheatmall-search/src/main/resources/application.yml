@@ -1,0 +1,27 @@
+server:
+  port: 8094
+
+spring:
+  application:
+    name: wheatmall-search
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.8.112:8848
+        namespace: public
+        group: DEFAULT_GROUP
+        register-enabled: true
+  thymeleaf:
+    cache: false
+  session:
+    store-type: redis
+
+ES:
+  host: 192.168.8.112
+  port: 9200
+
+logging:
+  file:
+    path: /tmp
+  level:
+    com.wheatmall.search: debug

@@ -36,6 +36,7 @@ public enum BizCodeEnum {
 	/**
 	 * 操作失败
 	 */
+	PRODUCT_UP_EXCEPTION(11000, "商品上架异常"),
 	OPERATION_FAILED(10001, "操作失败"),
 	
 	/**
