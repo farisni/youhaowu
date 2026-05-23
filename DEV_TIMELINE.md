@@ -123,3 +123,4 @@
 - feat(member): 从 wheatmall-2022 搬迁 Member 模块（10 Entity + 10 Mapper + 13 VO + 10 QueryDTO + 10 Service + 10 Controller）
 - feat(member): 保留会员注册/密码登录/Gitee OAuth 登录逻辑，Feign→CouponRemoteService 占位
 - refactor(common): 新增 MemberServiceUris + UserLoginVO + UserRegisterVO + HttpUtils(RestTemplate)
+- feat(gateway): 搬迁 Gateway 模块（Spring Cloud Gateway + Nacos 发现 + CORS + 8 条路由）

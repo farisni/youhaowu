@@ -42,6 +42,7 @@
         <!--        <module>wheatmall-user</module>-->
         <module>wheatmall-coupon</module>
         <module>wheatmall-member</module>
+        <module>wheatmall-gateway</module>
     </modules>
 
     <!-- 依赖版本统一管理（不实际引入依赖） -->
