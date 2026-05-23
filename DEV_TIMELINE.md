@@ -111,3 +111,6 @@
 - refactor(common): OrderServiceUris 补充 9 个内部类完整 URI 常量
 - test: 添加 OrderController pytest 接口验证
 - build: Order 模块添加 application.yml（PostgreSQL + Nacos + Kafka）
+- feat(ware): 从 wheatmall-2022 搬迁 Ware 模块（6 Entity + 6 Mapper + 6 Service + 6 Impl + 6 VO + 3 business VO + 6 QueryDTO + 6 Controller）
+- refactor(ware): 统一 2026 规范——Controller 路由常量/VO 入参，Service void→Integer，Feign→预留 RemoteService
+- refactor(common): 新增 WareServiceUris 常量类 + SkuHasStockVO
