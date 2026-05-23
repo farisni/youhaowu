@@ -15,7 +15,6 @@ import java.util.List;
  * 品牌分类关联控制器
  */
 @RestController
-@RequestMapping(ProductServiceUris.PRODUCT_CATEGORY_BRAND_RELATION_SERVICE)
 public class CategoryBrandRelationController {
 
     @Autowired

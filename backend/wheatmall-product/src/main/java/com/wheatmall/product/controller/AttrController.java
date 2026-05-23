@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
  * 商品属性控制器
  */
 @RestController
-@RequestMapping(ProductServiceUris.PRODUCT_ATTR_SERVICE)
 public class AttrController {
 
     @Autowired

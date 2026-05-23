@@ -7,147 +7,111 @@ package com.wheatmall.common.constant;
 public final class ProductServiceUris {
 
     private ProductServiceUris() {
-        // 私有构造器，防止实例化
     }
 
-    // ==================== 服务根路径 ====================
-    
-    /** 商品分类服务根路径 */
-    public static final String PRODUCT_CATEGORY_SERVICE = "/api/product/category";
-
-    /** Order服务根路径 */
-    public static final String ORDER_SERVICE = "/api/order";
-
-    /** User服务根路径 */
-    public static final String USER_SERVICE = "/api/user";
-
-    // ==================== 各模块根路径 ====================
-
-    /** 品牌管理根路径 */
-    public static final String PRODUCT_BRAND_SERVICE = "/api/product/brand";
-
-    /** 属性管理根路径 */
-    public static final String PRODUCT_ATTR_SERVICE = "/api/product/attr";
-
-    /** 属性分组根路径 */
-    public static final String PRODUCT_ATTRGROUP_SERVICE = "/api/product/attrgroup";
-
-    /** SPU 信息根路径 */
-    public static final String PRODUCT_SPU_SERVICE = "/api/product/spuinfo";
-
-    /** SKU 信息根路径 */
-    public static final String PRODUCT_SKU_SERVICE = "/api/product/skuinfo";
-
-    /** 分类品牌关联根路径 */
-    public static final String PRODUCT_CATEGORY_BRAND_RELATION_SERVICE = "/api/product/categorybrandrelation";
-
-    /** 评论回复根路径 */
-    public static final String PRODUCT_COMMENT_REPLAY_SERVICE = "/api/product/commentreplay";
-
-    /** 商品属性值根路径 */
-    public static final String PRODUCT_ATTR_VALUE_SERVICE = "/api/product/productattrvalue";
-
-
-    // ==================== 商品分类相关URI ====================
+    // ==================== 商品分类 ====================
     public static final class ProductCategory {
-        public static final String LIST_TREE = "/list/tree";
-        public static final String PAGE = "/list";
-        public static final String PARENT_BY_ID = "/parent/{parentId}";
-        public static final String DELETE = "/delete/{id}";
-        public static final String UPDATE = "/update/{id}";
+        public static final String BASE_URL = "/api/product/category";
+        public static final String LIST_TREE = BASE_URL + "/list/tree";
+        public static final String PAGE = BASE_URL + "/list";
+        public static final String PARENT_BY_ID = BASE_URL + "/parent/{parentId}";
+        public static final String DELETE = BASE_URL + "/delete/{id}";
+        public static final String UPDATE = BASE_URL + "/update/{id}";
     }
 
     // ==================== Product服务相关URI（已弃用） ====================
     @Deprecated
     public static final class Product {
-        public static final String GET_BY_ID = PRODUCT_CATEGORY_SERVICE + "/{id}";
-        public static final String GET_BY_ID_INTERNAL = PRODUCT_CATEGORY_SERVICE + "/get/{id}";
-        public static final String LIST = PRODUCT_CATEGORY_SERVICE + "/list";
-        public static final String CREATE = PRODUCT_CATEGORY_SERVICE;
-        public static final String UPDATE = PRODUCT_CATEGORY_SERVICE + "/{id}";
-        public static final String DELETE = PRODUCT_CATEGORY_SERVICE + "/{id}";
-        public static final String DEDUCT_STOCK = PRODUCT_CATEGORY_SERVICE + "/{id}/deduct-stock";
-    }
-
-    // ==================== Order服务相关URI ====================
-    public static final class Order {
-        public static final String GET_PRODUCT = ORDER_SERVICE + "/product/{productId}";
-        public static final String GET_PRODUCT_ASYNC = ORDER_SERVICE + "/product/async/{productId}";
-        public static final String GET_PRODUCT_LIST = ORDER_SERVICE + "/products";
-        public static final String CREATE = ORDER_SERVICE + "/create";
-    }
-
-    // ==================== User服务相关URI（预留） ====================
-    public static final class User {
-        public static final String GET_BY_ID = USER_SERVICE + "/{id}";
-        public static final String GET_CURRENT = USER_SERVICE + "/current";
+        public static final String GET_BY_ID = ProductCategory.BASE_URL + "/{id}";
+        public static final String GET_BY_ID_INTERNAL = ProductCategory.BASE_URL + "/get/{id}";
+        public static final String LIST = ProductCategory.BASE_URL + "/list";
+        public static final String CREATE = ProductCategory.BASE_URL;
+        public static final String UPDATE = ProductCategory.BASE_URL + "/{id}";
+        public static final String DELETE = ProductCategory.BASE_URL + "/{id}";
+        public static final String DEDUCT_STOCK = ProductCategory.BASE_URL + "/{id}/deduct-stock";
     }
 
     // ==================== 品牌管理 ====================
     public static final class ProductBrand {
-        public static final String PAGE = "/list";
-        public static final String INFO = "/info/{brandId}";
-        public static final String SAVE = "/save";
-        public static final String UPDATE = "/update/{id}";
-        public static final String DELETE = "/delete/{id}";
+        public static final String BASE_URL = "/api/product/brand";
+        public static final String PAGE = BASE_URL + "/list";
+        public static final String INFO = BASE_URL + "/info/{brandId}";
+        public static final String SAVE = BASE_URL + "/save";
+        public static final String UPDATE = BASE_URL + "/update/{id}";
+        public static final String DELETE = BASE_URL + "/delete/{id}";
     }
 
     // ==================== 属性管理 ====================
     public static final class ProductAttr {
-        public static final String BASE_PAGE = "/base/list/{catelogId}";
-        public static final String SALE_PAGE = "/sale/list/{catelogId}";
-        public static final String INFO = "/info/{attrId}";
-        public static final String SAVE = "/save";
-        public static final String UPDATE = "/update/{id}";
-        public static final String DELETE = "/delete/{id}";
-        public static final String RELATION_PAGE = "/{attrgroupId}/attr/relation";
-        public static final String NO_RELATION_PAGE = "/{attrgroupId}/no/relation";
-        public static final String DELETE_RELATION = "/relation/delete";
-        public static final String SAVE_RELATION = "/relation";
+        public static final String BASE_URL = "/api/product/attr";
+        public static final String BASE_PAGE = BASE_URL + "/base/list/{catelogId}";
+        public static final String SALE_PAGE = BASE_URL + "/sale/list/{catelogId}";
+        public static final String INFO = BASE_URL + "/info/{attrId}";
+        public static final String SAVE = BASE_URL + "/save";
+        public static final String UPDATE = BASE_URL + "/update/{id}";
+        public static final String DELETE = BASE_URL + "/delete/{id}";
+        public static final String RELATION_PAGE = BASE_URL + "/{attrgroupId}/attr/relation";
+        public static final String NO_RELATION_PAGE = BASE_URL + "/{attrgroupId}/no/relation";
+        public static final String DELETE_RELATION = BASE_URL + "/relation/delete";
+        public static final String SAVE_RELATION = BASE_URL + "/relation";
     }
 
     // ==================== 属性分组 ====================
     public static final class ProductAttrGroup {
-        public static final String PAGE = "/list/{catelogId}";
-        public static final String INFO = "/info/{attrGroupId}";
-        public static final String SAVE = "/save";
-        public static final String UPDATE = "/update/{id}";
-        public static final String DELETE = "/delete/{id}";
-        public static final String WITH_ATTRS = "/{catelogId}/withattr";
+        public static final String BASE_URL = "/api/product/attrgroup";
+        public static final String PAGE = BASE_URL + "/list/{catelogId}";
+        public static final String INFO = BASE_URL + "/info/{attrGroupId}";
+        public static final String SAVE = BASE_URL + "/save";
+        public static final String UPDATE = BASE_URL + "/update/{id}";
+        public static final String DELETE = BASE_URL + "/delete/{id}";
+        public static final String WITH_ATTRS = BASE_URL + "/{catelogId}/withattr";
     }
 
     // ==================== SPU 管理 ====================
     public static final class ProductSpu {
-        public static final String PAGE = "/list";
-        public static final String INFO = "/info/{spuId}";
-        public static final String SAVE = "/save";
-        public static final String UPDATE = "/update/{id}";
-        public static final String DELETE = "/delete/{id}";
-        public static final String UP = "/{spuId}/up";
+        public static final String BASE_URL = "/api/product/spuinfo";
+        public static final String PAGE = BASE_URL + "/list";
+        public static final String INFO = BASE_URL + "/info/{spuId}";
+        public static final String SAVE = BASE_URL + "/save";
+        public static final String UPDATE = BASE_URL + "/update/{id}";
+        public static final String DELETE = BASE_URL + "/delete/{id}";
+        public static final String UP = BASE_URL + "/{spuId}/up";
     }
 
     // ==================== SKU 管理 ====================
     public static final class ProductSku {
-        public static final String PAGE = "/list";
-        public static final String INFO = "/info/{skuId}";
-        public static final String SAVE = "/save";
+        public static final String BASE_URL = "/api/product/skuinfo";
+        public static final String PAGE = BASE_URL + "/list";
+        public static final String INFO = BASE_URL + "/info/{skuId}";
+        public static final String SAVE = BASE_URL + "/save";
     }
 
     // ==================== 分类品牌关联 ====================
     public static final class ProductCategoryBrandRelation {
-        public static final String PAGE = "/list";
-        public static final String BRANDS_BY_CAT = "/catelog/{catId}";
-        public static final String SAVE = "/save";
+        public static final String BASE_URL = "/api/product/categorybrandrelation";
+        public static final String PAGE = BASE_URL + "/list";
+        public static final String BRANDS_BY_CAT = BASE_URL + "/catelog/{catId}";
+        public static final String SAVE = BASE_URL + "/save";
     }
 
     // ==================== 评论回复 ====================
     public static final class ProductCommentReplay {
-        public static final String PAGE = "/list";
+        public static final String BASE_URL = "/api/product/commentreplay";
+        public static final String PAGE = BASE_URL + "/list";
     }
 
     // ==================== 商品属性值 ====================
     public static final class ProductAttrValue {
-        public static final String PAGE = "/list";
-        public static final String LIST_BY_SPU = "/{spuId}";
+        public static final String BASE_URL = "/api/product/productattrvalue";
+        public static final String PAGE = BASE_URL + "/list";
+        public static final String LIST_BY_SPU = BASE_URL + "/{spuId}";
+    }
+
+    // ==================== User服务（预留） ====================
+    public static final String USER_SERVICE = "/api/user";
+
+    public static final class User {
+        public static final String GET_BY_ID = USER_SERVICE + "/{id}";
+        public static final String GET_CURRENT = USER_SERVICE + "/current";
     }
 }

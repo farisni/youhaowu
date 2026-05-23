@@ -15,7 +15,6 @@ import java.util.List;
  * SPU属性值控制器
  */
 @RestController
-@RequestMapping(ProductServiceUris.PRODUCT_ATTR_VALUE_SERVICE)
 public class ProductAttrValueController {
 
     @Autowired

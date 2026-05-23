@@ -16,7 +16,6 @@ import java.util.List;
  * 属性&属性分组关联控制器
  */
 @RestController
-@RequestMapping(ProductServiceUris.PRODUCT_ATTRGROUP_SERVICE)
 public class AttrAttrgroupRelationController {
 
     @Autowired

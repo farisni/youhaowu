@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
  * SPU信息控制器
  */
 @RestController
-@RequestMapping(ProductServiceUris.PRODUCT_SPU_SERVICE)
 public class SpuInfoController {
 
     @Autowired

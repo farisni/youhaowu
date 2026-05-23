@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
  * 商品评价回复控制器
  */
 @RestController
-@RequestMapping(ProductServiceUris.PRODUCT_COMMENT_REPLAY_SERVICE)
 public class CommentReplayController {
 
     @Autowired

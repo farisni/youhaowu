@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -23,7 +22,6 @@ import java.util.List;
  * 实现商品三级分类管理，支持树形结构获取、分类信息查询、修改以及逻辑删除功能
  */
 @RestController
-@RequestMapping(ProductServiceUris.PRODUCT_CATEGORY_SERVICE)
 public class CategoryController {
 
     @Autowired

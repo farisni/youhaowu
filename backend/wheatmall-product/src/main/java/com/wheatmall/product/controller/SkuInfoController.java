@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
  * SKU信息控制器
  */
 @RestController
-@RequestMapping(ProductServiceUris.PRODUCT_SKU_SERVICE)
 public class SkuInfoController {
 
     @Autowired

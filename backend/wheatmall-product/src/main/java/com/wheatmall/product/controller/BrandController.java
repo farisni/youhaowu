@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
  * 品牌管理控制器
  */
 @RestController
-@RequestMapping(ProductServiceUris.PRODUCT_BRAND_SERVICE)
 public class BrandController {
 
     @Autowired
