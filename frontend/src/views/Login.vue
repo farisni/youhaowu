@@ -115,7 +115,7 @@ const doLogin = async () => {
   align-items: flex-start;
   justify-content: flex-start;
   padding-top: 10vh;
-  padding-left: 80px;
+  padding-left: 50px;
 }
 
 .login-card {
@@ -224,12 +224,12 @@ const doLogin = async () => {
     font-size: 18px;
     font-weight: 700;
     letter-spacing: 1px;
-    background: #213b6a;
+    background: #409EFF;
     border: none;
     color: #fff;
-    box-shadow: 0 4px 14px rgba(33, 59, 106, 0.3);
+    box-shadow: 0 4px 14px rgba(64, 158, 255, 0.3);
     transition: background 0.2s, transform 0.1s;
-    &:hover { background: #1a2f56; }
+    &:hover { background: #66b1ff; }
     &:active { transform: scale(0.98); }
   }
 }
