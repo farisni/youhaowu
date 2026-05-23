@@ -2,7 +2,6 @@ package com.wheatmall.product.config;
 
 import com.wheatmall.common.config.KafkaConfig;
 import com.wheatmall.common.interceptor.ApiLogInterceptor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -21,12 +20,9 @@ public class InfraConfig implements WebMvcConfigurer {
         return new ApiLogInterceptor();
     }
 
-    @Autowired
-    private ApiLogInterceptor apiLogInterceptor;
-
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(apiLogInterceptor)
+        registry.addInterceptor(apiLogInterceptor())
                 .addPathPatterns("/**");
     }
 }
