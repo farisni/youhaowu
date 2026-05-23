@@ -40,8 +40,7 @@
 
 ## 未迁移模块（对标 wheatmall-2022）
 
-### wheatmall-member（用户模块）⚠️ 高优先级
-2022 有 11 组完整 CRUD + 注册登录，2026 完全缺失
+### ✅ wheatmall-member（用户模块）— 已迁移
 
 - [ ] 10 Entity + 10 Mapper + 10 Service + 10 Controller（Member/Level/Address/LoginLog/CollectSpu/CollectSubject 等）
 - [ ] MemberService — 注册、登录（普通+社交）、手机号唯一校验
@@ -51,7 +50,7 @@
 - [ ] exception: PhoneException / UsernameException
 - [ ] application.yml + DB: wheatmall_ums
 
-### wheatmall-gateway（网关）
+### ✅ wheatmall-gateway（网关）— 已迁移
 - [ ] Spring Cloud Gateway 路由配置
 - [ ] CORS 跨域配置
 - [ ] 统一前缀 /api 路由转发
@@ -127,3 +126,21 @@
 ### Docker / 部署
 - [ ] docker-compose.yml 补充 PostgreSQL、ES、Nacos、Kafka 完整编排
 - [ ] 各模块 Dockerfile
+
+---
+
+## 新模块（2022 规划但未实现）
+
+### wheatmall-cart（购物车服务）
+- [ ] 购物车 Entity + Mapper + Service + Controller
+- [ ] 添加商品到购物车、修改数量、删除商品
+- [ ] 购物车关联 SKU 实时价格查询
+- [ ] 购物车选中结算（生成订单前确认页）
+- [ ] 支持登录/未登录购物车合并
+
+### wheatmall-seckill（秒杀服务）
+- [ ] 独立秒杀微服务（当前秒杀逻辑在 coupon 模块内）
+- [ ] 秒杀商品预热 + Redis 库存扣减 + 消息队列异步下单
+- [ ] 秒杀接口地址隐藏 + 验证码防刷
+- [ ] 秒杀倒计时 + 限流（Sentinel）
+- [ ] 秒杀订单创建 + 支付超时取消
