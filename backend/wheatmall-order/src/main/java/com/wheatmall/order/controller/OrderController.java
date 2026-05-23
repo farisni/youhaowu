@@ -1,75 +1,62 @@
 package com.wheatmall.order.controller;
 
-import com.wheatmall.order.dto.ProductDTO;
+import com.wheatmall.common.constant.OrderServiceUris;
+import com.wheatmall.common.utils.PageData;
+import com.wheatmall.common.utils.R;
+import com.wheatmall.order.query.OrderQueryDTO;
 import com.wheatmall.order.service.OrderService;
-import lombok.RequiredArgsConstructor;
+import com.wheatmall.order.vo.OrderVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import reactor.core.publisher.Mono;
 
 import java.util.List;
 
 /**
- * 订单控制器 - 演示使用WebClient调用Product模块
+ * Order 控制器
  */
 @RestController
-@RequestMapping("/api/order")
-@RequiredArgsConstructor
 public class OrderController {
 
-    private final OrderService orderService;
+    @Autowired
+    private OrderService orderService;
 
     /**
-     * 根据商品ID获取商品信息（同步调用）
-     * @param productId 商品ID
-     * @return 商品信息
+     * 分页查询
      */
-    @GetMapping("/product/{productId}")
-    public ProductDTO getProductById(@PathVariable Long productId) {
-        return orderService.getProductById(productId);
+    @GetMapping(OrderServiceUris.Order.PAGE)
+    public R<PageData<OrderVO>> list(OrderQueryDTO query) {
+        return R.ok(orderService.page(query));
     }
 
     /**
-     * 获取所有商品列表（同步调用）
-     * @return 商品列表
+     * 根据ID查询
      */
-    @GetMapping("/products")
-    public List<ProductDTO> getProductList() {
-        return orderService.getProductList();
+    @GetMapping(OrderServiceUris.Order.INFO)
+    public R<OrderVO> info(@PathVariable Long id) {
+        return R.ok(orderService.getById(id));
     }
 
     /**
-     * 根据商品ID获取商品信息（异步调用）
-     * @param productId 商品ID
-     * @return 商品信息的Mono对象
+     * 保存
      */
-    @GetMapping("/product/async/{productId}")
-    public Mono<ProductDTO> getProductByIdAsync(@PathVariable Long productId) {
-        return orderService.getProductByIdAsync(productId);
+    @PostMapping(OrderServiceUris.Order.SAVE)
+    public R<Integer> save(@RequestBody OrderVO vo) {
+        return R.ok(orderService.save(vo));
     }
 
     /**
-     * 创建订单 - 演示调用Product模块获取商品信息
-     * @param productId 商品ID
-     * @param quantity 数量
-     * @return 订单信息
+     * 更新
      */
-    @PostMapping("/create")
-    public String createOrder(@RequestParam Long productId, @RequestParam Integer quantity) {
-        ProductDTO product = orderService.getProductById(productId);
-        
-        if (product == null) {
-            return "商品不存在";
-        }
-        
-        if (product.getStock() < quantity) {
-            return "库存不足";
-        }
-        
-        // 模拟创建订单逻辑
-        return String.format("订单创建成功！商品：%s，单价：%s，数量：%d，总价：%s",
-                product.getName(),
-                product.getPrice(),
-                quantity,
-                product.getPrice().multiply(new java.math.BigDecimal(quantity)));
+    @PostMapping(OrderServiceUris.Order.UPDATE)
+    public R<Integer> update(@PathVariable Long id, @RequestBody OrderVO vo) {
+        return R.ok(orderService.updateById(id, vo));
+    }
+
+    /**
+     * 删除
+     */
+    @PostMapping(OrderServiceUris.Order.DELETE)
+    public R<Integer> delete(@RequestBody List<Long> ids) {
+        return R.ok(orderService.removeByIds(ids));
     }
 }

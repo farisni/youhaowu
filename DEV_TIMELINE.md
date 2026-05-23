@@ -105,3 +105,7 @@
 - refactor(product): 10 个 void Service 方法统一改为返回 Integer（delete/update/save 全链路透传影响行数）
 - refactor(product): SpuInfoService.saveBaseSpuInfo 参数 Entity→VO，消除 Service 接口最后一处 Entity 暴露
 - refactor(product): 2 个 Mapper 自定义方法 void→Integer（updateCategory/updaSpuStatus）
+
+- feat(order): 从 wheatmall-2022 搬迁 Order 模块（9 Entity + 9 Mapper + 9 Service + 9 Impl + 9 VO + 9 QueryDTO + 9 Controller）
+- refactor(order): 统一 2026 规范——Controller 路由常量/极薄转发/VO 入参出参，Service void→Integer，ServiceImpl @Transactional+BeanUtil 转换
+- refactor(common): OrderServiceUris 补充 9 个内部类完整 URI 常量
