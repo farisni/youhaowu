@@ -11,6 +11,7 @@ import com.wheatmall.product.utils.PageUtils;
 import com.wheatmall.product.vo.AttrGroupVO;
 import com.wheatmall.product.vo.AttrGroupWithAttrsVO;
 import cn.hutool.core.bean.BeanUtil;
+import org.apache.ibatis.executor.BatchResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -62,10 +63,13 @@ public class AttrGroupServiceImpl implements AttrGroupService {
     }
 
     @Override
-    public void saveBatch(List<AttrGroupVO> list) {
-        for (AttrGroupVO vo : list) {
-            save(vo);
-        }
+    public Integer saveBatch(List<AttrGroupVO> list) {
+        List<AttrGroupEntity> entities = list.stream().map(vo -> {
+            AttrGroupEntity e = new AttrGroupEntity();
+            BeanUtil.copyProperties(vo, e);
+            return e;
+        }).collect(java.util.stream.Collectors.toList());
+        return attrGroupMapper.insert(entities).size();
     }
 
     @Override

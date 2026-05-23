@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import cn.hutool.core.bean.BeanUtil;
+import org.apache.ibatis.executor.BatchResult;
 /**
  * SpuInfoDesc Service 实现
  */
@@ -37,18 +40,27 @@ public class SpuInfoDescServiceImpl implements SpuInfoDescService {
     }
 
     @Override
-    public Integer save(SpuInfoDescEntity entity) {
-        return spuInfoDescMapper.insert(entity);
+    public Integer save(SpuInfoDescVO vo) {
+        SpuInfoDescEntity e = new SpuInfoDescEntity();
+        BeanUtil.copyProperties(vo, e);
+        return spuInfoDescMapper.insert(e);
     }
 
     @Override
-    public void saveBatch(List<SpuInfoDescEntity> list) {
-        spuInfoDescMapper.insert(list);
+    public Integer saveBatch(List<SpuInfoDescVO> list) {
+        List<SpuInfoDescEntity> entities = list.stream().map(vo -> {
+            SpuInfoDescEntity e = new SpuInfoDescEntity();
+            BeanUtil.copyProperties(vo, e);
+            return e;
+        }).collect(Collectors.toList());
+        return spuInfoDescMapper.insert(entities).size();
     }
 
     @Override
-    public Integer updateById(SpuInfoDescEntity entity) {
-        return spuInfoDescMapper.updateById(entity);
+    public Integer updateById(SpuInfoDescVO vo) {
+        SpuInfoDescEntity e = new SpuInfoDescEntity();
+        BeanUtil.copyProperties(vo, e);
+        return spuInfoDescMapper.updateById(e);
     }
 
     @Override
@@ -56,7 +68,9 @@ public class SpuInfoDescServiceImpl implements SpuInfoDescService {
         spuInfoDescMapper.deleteBatchIds(ids);
     }
     @Override
-    public void saveSpuInfoDesc(SpuInfoDescEntity descEntity) {
-        spuInfoDescMapper.insert(descEntity);
+    public Integer saveSpuInfoDesc(SpuInfoDescVO descVO) {
+        SpuInfoDescEntity e = new SpuInfoDescEntity();
+        BeanUtil.copyProperties(descVO, e);
+        return spuInfoDescMapper.insert(e);
     }
 }

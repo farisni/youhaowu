@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import org.apache.ibatis.executor.BatchResult;
 
 @Transactional(rollbackFor = Exception.class)
 @Service
@@ -34,18 +35,27 @@ public class ProductAttrValueServiceImpl implements ProductAttrValueService {
     }
 
     @Override
-    public Integer save(ProductAttrValueEntity entity) {
-        return attrValueMapper.insert(entity);
+    public Integer save(ProductAttrValueVO vo) {
+        ProductAttrValueEntity e = new ProductAttrValueEntity();
+        BeanUtil.copyProperties(vo, e);
+        return attrValueMapper.insert(e);
     }
 
     @Override
-    public void saveBatch(List<ProductAttrValueEntity> list) {
-        attrValueMapper.insert(list);
+    public Integer saveBatch(List<ProductAttrValueVO> list) {
+        List<ProductAttrValueEntity> entities = list.stream().map(vo -> {
+            ProductAttrValueEntity e = new ProductAttrValueEntity();
+            BeanUtil.copyProperties(vo, e);
+            return e;
+        }).collect(Collectors.toList());
+        return attrValueMapper.insert(entities).size();
     }
 
     @Override
-    public Integer updateById(ProductAttrValueEntity entity) {
-        return attrValueMapper.updateById(entity);
+    public Integer updateById(ProductAttrValueVO vo) {
+        ProductAttrValueEntity e = new ProductAttrValueEntity();
+        BeanUtil.copyProperties(vo, e);
+        return attrValueMapper.updateById(e);
     }
 
     @Override
@@ -54,8 +64,13 @@ public class ProductAttrValueServiceImpl implements ProductAttrValueService {
     }
 
     @Override
-    public void saveProductAttr(List<ProductAttrValueEntity> collect) {
-        attrValueMapper.insert(collect);
+    public Integer saveProductAttr(List<ProductAttrValueVO> collect) {
+        List<ProductAttrValueEntity> entities = collect.stream().map(vo -> {
+            ProductAttrValueEntity e = new ProductAttrValueEntity();
+            BeanUtil.copyProperties(vo, e);
+            return e;
+        }).collect(Collectors.toList());
+        return attrValueMapper.insert(entities).size();
     }
 
     @Override

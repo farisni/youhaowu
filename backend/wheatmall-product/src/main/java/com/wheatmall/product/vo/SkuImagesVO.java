@@ -10,5 +10,10 @@ import java.io.Serializable;
 @Data
 public class SkuImagesVO implements Serializable {
     private static final long serialVersionUID = 1L;
-    // 字段与 SkuImagesEntity 一致，通过 BeanUtil.copyProperties 转换
+
+    private Long id;
+    private Long skuId;
+    private String imgUrl;
+    private Integer imgSort;
+    private Integer defaultImg;
 }

@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import cn.hutool.core.bean.BeanUtil;
+import org.apache.ibatis.executor.BatchResult;
 /**
  * CommentReplay Service 实现
  */
@@ -38,18 +41,27 @@ public class CommentReplayServiceImpl implements CommentReplayService {
     }
 
     @Override
-    public Integer save(CommentReplayEntity entity) {
-        return commentReplayMapper.insert(entity);
+    public Integer save(CommentReplayVO vo) {
+        CommentReplayEntity e = new CommentReplayEntity();
+        BeanUtil.copyProperties(vo, e);
+        return commentReplayMapper.insert(e);
     }
 
     @Override
-    public void saveBatch(List<CommentReplayEntity> list) {
-        commentReplayMapper.insert(list);
+    public Integer saveBatch(List<CommentReplayVO> list) {
+        List<CommentReplayEntity> entities = list.stream().map(vo -> {
+            CommentReplayEntity e = new CommentReplayEntity();
+            BeanUtil.copyProperties(vo, e);
+            return e;
+        }).collect(Collectors.toList());
+        return commentReplayMapper.insert(entities).size();
     }
 
     @Override
-    public Integer updateById(CommentReplayEntity entity) {
-        return commentReplayMapper.updateById(entity);
+    public Integer updateById(CommentReplayVO vo) {
+        CommentReplayEntity e = new CommentReplayEntity();
+        BeanUtil.copyProperties(vo, e);
+        return commentReplayMapper.updateById(e);
     }
 
     @Override

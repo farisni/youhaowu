@@ -18,7 +18,7 @@ public interface AttrService {
     AttrRespVO getVOById(Long id);
     Integer save(AttrVO vo);
     Integer saveAttr(AttrVO vo);
-    void saveBatch(List<AttrVO> list);
+    Integer saveBatch(List<AttrVO> list);
     Integer removeById(Long id);
     void removeByIds(List<Long> ids);
     void updateAttrById(Long id, AttrVO attr);

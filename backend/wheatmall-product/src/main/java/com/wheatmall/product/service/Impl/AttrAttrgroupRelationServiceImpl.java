@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import org.apache.ibatis.executor.BatchResult;
 import java.util.List;
 /**
  * AttrAttrgroupRelation Service 实现
@@ -42,20 +43,27 @@ public class AttrAttrgroupRelationServiceImpl implements AttrAttrgroupRelationSe
     }
 
     @Override
-    public Integer save(AttrAttrgroupRelationEntity entity) {
-        return attrAttrgroupRelationMapper.insert(entity);
+    public Integer save(AttrAttrgroupRelationVO vo) {
+        AttrAttrgroupRelationEntity e = new AttrAttrgroupRelationEntity();
+        BeanUtil.copyProperties(vo, e);
+        return attrAttrgroupRelationMapper.insert(e);
     }
 
     @Override
-    public void saveBatch(List<AttrAttrgroupRelationEntity> list) {
-        for (AttrAttrgroupRelationEntity e : list) {
-            attrAttrgroupRelationMapper.insert(e);
-        }
+    public Integer saveBatch(List<AttrAttrgroupRelationVO> list) {
+        List<AttrAttrgroupRelationEntity> entities = list.stream().map(vo -> {
+            AttrAttrgroupRelationEntity e = new AttrAttrgroupRelationEntity();
+            BeanUtil.copyProperties(vo, e);
+            return e;
+        }).collect(Collectors.toList());
+        return attrAttrgroupRelationMapper.insert(entities).size();
     }
 
     @Override
-    public Integer updateById(AttrAttrgroupRelationEntity entity) {
-        return attrAttrgroupRelationMapper.updateById(entity);
+    public Integer updateById(AttrAttrgroupRelationVO vo) {
+        AttrAttrgroupRelationEntity e = new AttrAttrgroupRelationEntity();
+        BeanUtil.copyProperties(vo, e);
+        return attrAttrgroupRelationMapper.updateById(e);
     }
 
     @Override
@@ -63,14 +71,12 @@ public class AttrAttrgroupRelationServiceImpl implements AttrAttrgroupRelationSe
         attrAttrgroupRelationMapper.deleteBatchIds(ids);
     }
     @Override
-    public void saveRelationBatch(List<AttrGroupRelationVO> vos) {
+    public Integer saveRelationBatch(List<AttrGroupRelationVO> vos) {
         List<AttrAttrgroupRelationEntity> list = vos.stream().map(item -> {
             AttrAttrgroupRelationEntity e = new AttrAttrgroupRelationEntity();
             BeanUtil.copyProperties(item, e);
             return e;
         }).collect(Collectors.toList());
-        for (AttrAttrgroupRelationEntity e : list) {
-            relationMapper.insert(e);
-        }
+        return relationMapper.insert(list).size();
     }
 }

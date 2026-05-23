@@ -10,5 +10,9 @@ import java.io.Serializable;
 @Data
 public class SpuInfoDescVO implements Serializable {
     private static final long serialVersionUID = 1L;
-    // 字段与 SpuInfoDescEntity 一致，通过 BeanUtil.copyProperties 转换
+
+    /** 商品id */
+    private Long spuId;
+    /** 商品介绍 */
+    private String decript;
 }

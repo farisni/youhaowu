@@ -13,7 +13,7 @@ public interface CategoryBrandRelationService {
     CategoryBrandRelationVO getById(Long id);
     CategoryBrandRelationVO getVOById(Long id);
     Integer save(CategoryBrandRelationVO vo);
-    void saveBatch(java.util.List<CategoryBrandRelationVO> list);
+    Integer saveBatch(java.util.List<CategoryBrandRelationVO> list);
     Integer updateById(CategoryBrandRelationVO vo);
     void removeByIds(java.util.List<Long> ids);    void saveDetail(CategoryBrandRelationVO vo);
     void updateBrand(Long brandId, String name);

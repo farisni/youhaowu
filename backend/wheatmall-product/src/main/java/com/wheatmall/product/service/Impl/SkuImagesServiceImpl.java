@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import cn.hutool.core.bean.BeanUtil;
+import org.apache.ibatis.executor.BatchResult;
 /**
  * SkuImages Service 实现
  */
@@ -37,18 +40,27 @@ public class SkuImagesServiceImpl implements SkuImagesService {
     }
 
     @Override
-    public Integer save(SkuImagesEntity entity) {
-        return skuImagesMapper.insert(entity);
-    } 
-
-    @Override
-    public void saveBatch(List<SkuImagesEntity> list) {
-        skuImagesMapper.insert(list);
+    public Integer save(SkuImagesVO vo) {
+        SkuImagesEntity e = new SkuImagesEntity();
+        BeanUtil.copyProperties(vo, e);
+        return skuImagesMapper.insert(e);
     }
 
     @Override
-    public Integer updateById(SkuImagesEntity entity) {
-        return skuImagesMapper.updateById(entity);
+    public Integer saveBatch(List<SkuImagesVO> list) {
+        List<SkuImagesEntity> entities = list.stream().map(vo -> {
+            SkuImagesEntity e = new SkuImagesEntity();
+            BeanUtil.copyProperties(vo, e);
+            return e;
+        }).collect(Collectors.toList());
+        return skuImagesMapper.insert(entities).size();
+    }
+
+    @Override
+    public Integer updateById(SkuImagesVO vo) {
+        SkuImagesEntity e = new SkuImagesEntity();
+        BeanUtil.copyProperties(vo, e);
+        return skuImagesMapper.updateById(e);
     }
 
     @Override

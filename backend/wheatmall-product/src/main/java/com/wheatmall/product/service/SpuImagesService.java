@@ -18,15 +18,15 @@ public interface SpuImagesService {
     SpuImagesEntity getById(Long id);
 
     /** 保存 */
-    Integer save(SpuImagesEntity entity);
+    Integer save(SpuImagesVO vo);
 
     /** 批量保存 */
-    void saveBatch(List<SpuImagesEntity> list);
+    Integer saveBatch(List<SpuImagesVO> list);
 
     /** 根据ID更新 */
-    Integer updateById(SpuImagesEntity entity);
+    Integer updateById(SpuImagesVO vo);
 
     /** 批量删除 */
     void removeByIds(java.util.List<Long> ids);
-    void saveImages(Long spuId, List<String> images);
+    Integer saveImages(Long spuId, List<String> images);
 }

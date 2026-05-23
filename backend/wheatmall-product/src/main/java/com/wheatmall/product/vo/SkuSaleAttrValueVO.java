@@ -10,5 +10,11 @@ import java.io.Serializable;
 @Data
 public class SkuSaleAttrValueVO implements Serializable {
     private static final long serialVersionUID = 1L;
-    // 字段与 SkuSaleAttrValueEntity 一致，通过 BeanUtil.copyProperties 转换
+
+    private Long id;
+    private Long skuId;
+    private Long attrId;
+    private String attrName;
+    private String attrValue;
+    private Integer attrSort;
 }

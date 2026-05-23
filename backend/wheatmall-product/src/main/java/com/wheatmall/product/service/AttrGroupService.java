@@ -16,7 +16,7 @@ public interface AttrGroupService {
     AttrGroupVO getById(Long id);
     AttrGroupVO getVOById(Long id);
     Integer save(AttrGroupVO vo);
-    void saveBatch(List<AttrGroupVO> list);
+    Integer saveBatch(List<AttrGroupVO> list);
     Integer updateById(Long id, AttrGroupVO vo);
     Integer removeById(Long id);
     void removeByIds(List<Long> ids);

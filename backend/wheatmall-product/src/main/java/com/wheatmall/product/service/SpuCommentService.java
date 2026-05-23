@@ -17,13 +17,13 @@ public interface SpuCommentService {
     SpuCommentEntity getById(Long id);
 
     /** 保存 */
-    Integer save(SpuCommentEntity entity);
+    Integer save(SpuCommentVO vo);
 
     /** 批量保存 */
-    void saveBatch(java.util.List<SpuCommentEntity> list);
+    Integer saveBatch(java.util.List<SpuCommentVO> list);
 
     /** 根据ID更新 */
-    void updateById(SpuCommentEntity entity);
+    Integer updateById(SpuCommentVO vo);
 
     /** 批量删除 */
     void removeByIds(java.util.List<Long> ids);

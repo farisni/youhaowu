@@ -18,13 +18,13 @@ public interface CommentReplayService {
     CommentReplayEntity getById(Long id);
 
     /** 保存 */
-    Integer save(CommentReplayEntity entity);
+    Integer save(CommentReplayVO vo);
 
     /** 批量保存 */
-    void saveBatch(List<CommentReplayEntity> list);
+    Integer saveBatch(List<CommentReplayVO> list);
 
     /** 根据ID更新 */
-    Integer updateById(CommentReplayEntity entity);
+    Integer updateById(CommentReplayVO vo);
 
     /** 批量删除 */
     void removeByIds(java.util.List<Long> ids);

@@ -13,6 +13,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import cn.hutool.core.bean.BeanUtil;
+import com.wheatmall.product.vo.SkuSaleAttrValueVO;
+import org.apache.ibatis.executor.BatchResult;
 /**
  * SkuSaleAttrValue Service 实现
  */
@@ -37,18 +41,27 @@ public class SkuSaleAttrValueServiceImpl implements SkuSaleAttrValueService {
     }
 
     @Override
-    public Integer save(SkuSaleAttrValueEntity entity) {
-        return skuSaleAttrValueMapper.insert(entity);
+    public Integer save(SkuSaleAttrValueVO vo) {
+        SkuSaleAttrValueEntity e = new SkuSaleAttrValueEntity();
+        BeanUtil.copyProperties(vo, e);
+        return skuSaleAttrValueMapper.insert(e);
     }
 
     @Override
-    public void saveBatch(List<SkuSaleAttrValueEntity> list) {
-        skuSaleAttrValueMapper.insert(list);
+    public Integer saveBatch(List<SkuSaleAttrValueVO> list) {
+        List<SkuSaleAttrValueEntity> entities = list.stream().map(vo -> {
+            SkuSaleAttrValueEntity e = new SkuSaleAttrValueEntity();
+            BeanUtil.copyProperties(vo, e);
+            return e;
+        }).collect(Collectors.toList());
+        return skuSaleAttrValueMapper.insert(entities).size();
     }
 
     @Override
-    public Integer updateById(SkuSaleAttrValueEntity entity) {
-        return skuSaleAttrValueMapper.updateById(entity);
+    public Integer updateById(SkuSaleAttrValueVO vo) {
+        SkuSaleAttrValueEntity e = new SkuSaleAttrValueEntity();
+        BeanUtil.copyProperties(vo, e);
+        return skuSaleAttrValueMapper.updateById(e);
     }
 
     @Override

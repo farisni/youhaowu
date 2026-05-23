@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import cn.hutool.core.bean.BeanUtil;
+import org.apache.ibatis.executor.BatchResult;
 /**
  * UndoLog Service 实现
  */
@@ -37,18 +40,27 @@ public class UndoLogServiceImpl implements UndoLogService {
     }
 
     @Override
-    public Integer save(UndoLogEntity entity) {
-        return undoLogMapper.insert(entity);
+    public Integer save(UndoLogVO vo) {
+        UndoLogEntity e = new UndoLogEntity();
+        BeanUtil.copyProperties(vo, e);
+        return undoLogMapper.insert(e);
     }
 
     @Override
-    public void saveBatch(List<UndoLogEntity> list) {
-        undoLogMapper.insert(list);
+    public Integer saveBatch(List<UndoLogVO> list) {
+        List<UndoLogEntity> entities = list.stream().map(vo -> {
+            UndoLogEntity e = new UndoLogEntity();
+            BeanUtil.copyProperties(vo, e);
+            return e;
+        }).collect(Collectors.toList());
+        return undoLogMapper.insert(entities).size();
     }
 
     @Override
-    public Integer updateById(UndoLogEntity entity) {
-        return undoLogMapper.updateById(entity);
+    public Integer updateById(UndoLogVO vo) {
+        UndoLogEntity e = new UndoLogEntity();
+        BeanUtil.copyProperties(vo, e);
+        return undoLogMapper.updateById(e);
     }
 
     @Override

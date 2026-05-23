@@ -18,17 +18,17 @@ public interface ProductAttrValueService {
     ProductAttrValueEntity getById(Long id);
 
     /** 保存 */
-    Integer save(ProductAttrValueEntity entity);
+    Integer save(ProductAttrValueVO vo);
 
     /** 批量保存 */
-    void saveBatch(List<ProductAttrValueEntity> list);
+    Integer saveBatch(List<ProductAttrValueVO> list);
 
     /** 根据ID更新 */
-    Integer updateById(ProductAttrValueEntity entity);
+    Integer updateById(ProductAttrValueVO vo);
 
     /** 批量删除 */
     void removeByIds(java.util.List<Long> ids);
-    void saveProductAttr(List<ProductAttrValueEntity> collect);
+    Integer saveProductAttr(List<ProductAttrValueVO> collect);
     List<ProductAttrValueEntity> baseAttrListforspu(Long spuId);
     List<ProductAttrValueVO> listBySpuId(Long spuId);
 }

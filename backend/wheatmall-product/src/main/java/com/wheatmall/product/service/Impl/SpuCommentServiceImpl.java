@@ -8,11 +8,14 @@ import com.wheatmall.common.dto.BaseQueryDTO;
 import com.wheatmall.product.entity.SpuCommentEntity;
 import com.wheatmall.product.mapper.SpuCommentMapper;
 import com.wheatmall.product.service.SpuCommentService;
+import org.apache.ibatis.executor.BatchResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import cn.hutool.core.bean.BeanUtil;
 /**
  * SpuComment Service 实现
  */
@@ -37,20 +40,27 @@ public class SpuCommentServiceImpl implements SpuCommentService {
     }
 
     @Override
-    public Integer save(SpuCommentEntity entity) {
-        return spuCommentMapper.insert(entity);
+    public Integer save(SpuCommentVO vo) {
+        SpuCommentEntity e = new SpuCommentEntity();
+        BeanUtil.copyProperties(vo, e);
+        return spuCommentMapper.insert(e);
     }
 
     @Override
-    public void saveBatch(List<SpuCommentEntity> list) {
-        for (SpuCommentEntity e : list) {
-            spuCommentMapper.insert(e);
-        }
+    public Integer saveBatch(List<SpuCommentVO> list) {
+        List<SpuCommentEntity> entities = list.stream().map(vo -> {
+            SpuCommentEntity e = new SpuCommentEntity();
+            BeanUtil.copyProperties(vo, e);
+            return e;
+        }).collect(Collectors.toList());
+        return spuCommentMapper.insert(entities).size();
     }
 
     @Override
-    public void updateById(SpuCommentEntity entity) {
-        spuCommentMapper.updateById(entity);
+    public Integer updateById(SpuCommentVO vo) {
+        SpuCommentEntity e = new SpuCommentEntity();
+        BeanUtil.copyProperties(vo, e);
+        return spuCommentMapper.updateById(e);
     }
 
     @Override

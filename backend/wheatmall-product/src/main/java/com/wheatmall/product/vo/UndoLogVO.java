@@ -3,6 +3,7 @@ package com.wheatmall.product.vo;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * UndoLog VO
@@ -10,5 +11,14 @@ import java.io.Serializable;
 @Data
 public class UndoLogVO implements Serializable {
     private static final long serialVersionUID = 1L;
-    // 字段与 UndoLogEntity 一致，通过 BeanUtil.copyProperties 转换
+
+    private Long id;
+    private Long branchId;
+    private String xid;
+    private String context;
+    private byte[] rollbackInfo;
+    private Integer logStatus;
+    private Date logCreated;
+    private Date logModified;
+    private String ext;
 }

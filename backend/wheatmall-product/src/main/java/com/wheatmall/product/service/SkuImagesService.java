@@ -18,13 +18,13 @@ public interface SkuImagesService {
     SkuImagesEntity getById(Long id);
 
     /** 保存 */
-    Integer save(SkuImagesEntity entity);
+    Integer save(SkuImagesVO vo);
 
     /** 批量保存 */
-    void saveBatch(List<SkuImagesEntity> list);
+    Integer saveBatch(List<SkuImagesVO> list);
 
     /** 根据ID更新 */
-    Integer updateById(SkuImagesEntity entity);
+    Integer updateById(SkuImagesVO vo);
 
     /** 批量删除 */
     void removeByIds(java.util.List<Long> ids);

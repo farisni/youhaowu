@@ -27,6 +27,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.ibatis.executor.BatchResult;
+
 /**
  * Attr Service 实现
  */
@@ -118,13 +120,13 @@ public class AttrServiceImpl implements AttrService {
      * 批量新增属性
      */
     @Override
-    public void saveBatch(List<AttrVO> list) {
+    public Integer saveBatch(List<AttrVO> list) {
         List<AttrEntity> entities = list.stream().map(vo -> {
             AttrEntity e = new AttrEntity();
             BeanUtil.copyProperties(vo, e);
             return e;
         }).collect(Collectors.toList());
-        attrMapper.insert(entities);
+        return attrMapper.insert(entities).size();
     }
 
     /**

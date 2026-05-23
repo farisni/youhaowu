@@ -14,6 +14,7 @@ import com.wheatmall.common.dto.BaseQueryDTO;
 import com.wheatmall.product.utils.PageUtils;
 import com.wheatmall.product.vo.CategoryBrandRelationVO;
 import cn.hutool.core.bean.BeanUtil;
+import org.apache.ibatis.executor.BatchResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -63,10 +64,13 @@ public class CategoryBrandRelationServiceImpl implements CategoryBrandRelationSe
     }
 
     @Override
-    public void saveBatch(List<CategoryBrandRelationVO> list) {
-        for (CategoryBrandRelationVO vo : list) {
-            save(vo);
-        }
+    public Integer saveBatch(List<CategoryBrandRelationVO> list) {
+        List<CategoryBrandRelationEntity> entities = list.stream().map(vo -> {
+            CategoryBrandRelationEntity e = new CategoryBrandRelationEntity();
+            BeanUtil.copyProperties(vo, e);
+            return e;
+        }).collect(java.util.stream.Collectors.toList());
+        return categoryBrandRelationMapper.insert(entities).size();
     }
 
     @Override

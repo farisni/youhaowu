@@ -19,15 +19,15 @@ public interface AttrAttrgroupRelationService {
     AttrAttrgroupRelationEntity getById(Long id);
 
     /** 保存 */
-    Integer save(AttrAttrgroupRelationEntity entity);
+    Integer save(AttrAttrgroupRelationVO vo);
 
     /** 批量保存 */
-    void saveBatch(java.util.List<AttrAttrgroupRelationEntity> list);
+    Integer saveBatch(java.util.List<AttrAttrgroupRelationVO> list);
 
     /** 根据ID更新 */
-    Integer updateById(AttrAttrgroupRelationEntity entity);
+    Integer updateById(AttrAttrgroupRelationVO vo);
 
     /** 批量删除 */
     void removeByIds(java.util.List<Long> ids);
-    void saveRelationBatch(List<AttrGroupRelationVO> vos);
+    Integer saveRelationBatch(List<AttrGroupRelationVO> vos);
 }

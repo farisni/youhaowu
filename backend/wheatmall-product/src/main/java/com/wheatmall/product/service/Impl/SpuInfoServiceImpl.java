@@ -90,10 +90,10 @@ public class SpuInfoServiceImpl implements SpuInfoService {
         //  2. 保存SPU描述
         List<String> decript = vo.getDecript();
         if (decript != null) {
-            SpuInfoDescEntity desc = new SpuInfoDescEntity();
-            desc.setSpuId(spu.getId());
-            desc.setDecript(String.join(",", decript));
-            spuInfoDescService.saveSpuInfoDesc(desc);
+            SpuInfoDescVO descVO = new SpuInfoDescVO();
+            descVO.setSpuId(spu.getId());
+            descVO.setDecript(String.join(",", decript));
+            spuInfoDescService.saveSpuInfoDesc(descVO);
         }
 
         //  3. 保存SPU图片集
@@ -102,8 +102,8 @@ public class SpuInfoServiceImpl implements SpuInfoService {
         //  4. 保存SPU基本属性（规格参数）
         List<BaseAttrs> baseAttrs = vo.getBaseAttrs();
         if (baseAttrs != null) {
-            List<ProductAttrValueEntity> attrs = baseAttrs.stream().map(a -> {
-                ProductAttrValueEntity v = new ProductAttrValueEntity();
+            List<ProductAttrValueVO> attrs = baseAttrs.stream().map(a -> {
+                ProductAttrValueVO v = new ProductAttrValueVO();
                 v.setAttrId(a.getAttrId()); v.setAttrValue(a.getAttrValues());
                 v.setQuickShow(a.getShowDesc()); v.setSpuId(spu.getId());
                 return v;

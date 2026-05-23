@@ -10,5 +10,8 @@ import java.io.Serializable;
 @Data
 public class CommentReplayVO implements Serializable {
     private static final long serialVersionUID = 1L;
-    // 字段与 CommentReplayEntity 一致，通过 BeanUtil.copyProperties 转换
+
+    private Long id;
+    private Long commentId;
+    private Long replyId;
 }

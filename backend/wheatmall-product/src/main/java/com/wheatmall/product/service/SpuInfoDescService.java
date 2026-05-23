@@ -18,15 +18,15 @@ public interface SpuInfoDescService {
     SpuInfoDescEntity getById(Long id);
 
     /** 保存 */
-    Integer save(SpuInfoDescEntity entity);
+    Integer save(SpuInfoDescVO vo);
 
     /** 批量保存 */
-    void saveBatch(List<SpuInfoDescEntity> list);
+    Integer saveBatch(List<SpuInfoDescVO> list);
 
     /** 根据ID更新 */
-    Integer updateById(SpuInfoDescEntity entity);
+    Integer updateById(SpuInfoDescVO vo);
 
     /** 批量删除 */
     void removeByIds(java.util.List<Long> ids);
-    void saveSpuInfoDesc(SpuInfoDescEntity descEntity);
+    Integer saveSpuInfoDesc(SpuInfoDescVO descVO);
 }

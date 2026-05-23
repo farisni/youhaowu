@@ -16,6 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import cn.hutool.core.bean.BeanUtil;
+import org.apache.ibatis.executor.BatchResult;
 /**
  * SpuImages Service 实现
  */
@@ -40,18 +42,27 @@ public class SpuImagesServiceImpl implements SpuImagesService {
     }
 
     @Override
-    public Integer save(SpuImagesEntity entity) {
-        return spuImagesMapper.insert(entity);
+    public Integer save(SpuImagesVO vo) {
+        SpuImagesEntity e = new SpuImagesEntity();
+        BeanUtil.copyProperties(vo, e);
+        return spuImagesMapper.insert(e);
     }
 
     @Override
-    public void saveBatch(List<SpuImagesEntity> list) {
-        spuImagesMapper.insert(list);
+    public Integer saveBatch(List<SpuImagesVO> list) {
+        List<SpuImagesEntity> entities = list.stream().map(vo -> {
+            SpuImagesEntity e = new SpuImagesEntity();
+            BeanUtil.copyProperties(vo, e);
+            return e;
+        }).collect(Collectors.toList());
+        return spuImagesMapper.insert(entities).size();
     }
 
     @Override
-    public Integer updateById(SpuImagesEntity entity) {
-        return spuImagesMapper.updateById(entity);
+    public Integer updateById(SpuImagesVO vo) {
+        SpuImagesEntity e = new SpuImagesEntity();
+        BeanUtil.copyProperties(vo, e);
+        return spuImagesMapper.updateById(e);
     }
 
     @Override
@@ -59,7 +70,7 @@ public class SpuImagesServiceImpl implements SpuImagesService {
         spuImagesMapper.deleteBatchIds(ids);
     }
     @Override
-    public void saveImages(Long spuId, List<String> images) {
+    public Integer saveImages(Long spuId, List<String> images) {
         if (images != null && !images.isEmpty()) {
             List<SpuImagesEntity> entities = images.stream().map(img -> {
                 SpuImagesEntity e = new SpuImagesEntity();
@@ -67,7 +78,8 @@ public class SpuImagesServiceImpl implements SpuImagesService {
                 e.setImgUrl(img);
                 return e;
             }).collect(Collectors.toList());
-            spuImagesMapper.insert(entities);
+            return spuImagesMapper.insert(entities).size();
         }
+        return 0;
     }
 }

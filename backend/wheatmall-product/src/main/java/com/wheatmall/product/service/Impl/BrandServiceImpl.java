@@ -18,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.ibatis.executor.BatchResult;
+
 @Transactional(rollbackFor = Exception.class)
 @Service
 public class BrandServiceImpl implements BrandService {
@@ -58,13 +60,13 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public void saveBatch(List<BrandVO> list) {
+    public Integer saveBatch(List<BrandVO> list) {
         List<BrandEntity> entities = list.stream().map(vo -> {
             BrandEntity e = new BrandEntity();
             BeanUtil.copyProperties(vo, e);
             return e;
         }).collect(Collectors.toList());
-        brandMapper.insert(entities);
+        return brandMapper.insert(entities).size();
     }
 
     @Override

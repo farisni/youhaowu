@@ -10,5 +10,9 @@ import java.io.Serializable;
 @Data
 public class AttrAttrgroupRelationVO implements Serializable {
     private static final long serialVersionUID = 1L;
-    // 字段与 AttrAttrgroupRelationEntity 一致，通过 BeanUtil.copyProperties 转换
+
+    private Long id;
+    private Long attrId;
+    private Long attrGroupId;
+    private Integer attrSort;
 }
