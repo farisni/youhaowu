@@ -9,28 +9,28 @@
     </div>
     <div class="login-right">
       <div class="login-card">
-        <h2 class="right-title">Hello!</h2>
-        <p class="right-desc">Etiam pretium dapibus congue. Praesent a lorem erat. Morbi mollis posuere lacus, vel semper risus.</p>
+        <h2 class="right-title">你好！</h2>
+        <p class="right-desc">欢迎使用 Wheatmall 管理后台，请输入账号密码登录系统。</p>
         <div class="login-form">
           <div class="field-group">
-            <label class="field-label">Email Address</label>
-            <el-input v-model="form.email" placeholder="mtpiatek@gmail.com">
+            <label class="field-label">账号</label>
+            <el-input v-model="form.email" placeholder="admin@wheatmall.com">
               <template #suffix>
                 <span class="check-icon"><el-icon><Check /></el-icon></span>
               </template>
             </el-input>
           </div>
           <div class="field-group">
-            <label class="field-label">Password</label>
+            <label class="field-label">密码</label>
             <el-input v-model="form.password" type="password" placeholder="········" show-password />
           </div>
           <div class="form-row">
             <el-checkbox v-model="rememberMe">
-              <span class="remember-text">Remember me</span>
+              <span class="remember-text">记住我</span>
             </el-checkbox>
-            <a class="forgot-link" href="#">Forgot password?</a>
+            <a class="forgot-link" href="#">忘记密码？</a>
           </div>
-          <el-button type="primary" :loading="loading" class="signin-btn" @click="doLogin">Sign In</el-button>
+          <el-button type="primary" :loading="loading" class="signin-btn" @click="doLogin">登录</el-button>
         </div>
       </div>
     </div>
@@ -53,7 +53,7 @@ const loading = ref(false)
 const rememberMe = ref(false)
 
 const form = reactive({
-  email: 'mtpiatek@gmail.com',
+  email: 'admin@wheatmall.com',
   password: '',
 })
 
@@ -124,7 +124,7 @@ const doLogin = async () => {
 }
 
 .right-title {
-  font-family: "Poppins", sans-serif;
+  font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
   font-size: 52px;
   font-weight: 800;
   color: #1a1a2e;
@@ -132,7 +132,7 @@ const doLogin = async () => {
 }
 
 .right-desc {
-  font-family: "Poppins", sans-serif;
+  font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
   font-size: 16px;
   line-height: 1.6;
   color: #aaa;
@@ -148,7 +148,7 @@ const doLogin = async () => {
 
   .field-label {
     display: block;
-    font-family: "Poppins", sans-serif;
+    font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
     font-size: 14px;
     font-weight: 600;
     color: #aaa;
@@ -203,13 +203,13 @@ const doLogin = async () => {
   }
 
   .remember-text {
-    font-family: "Poppins", sans-serif;
+    font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
     color: #555;
     font-size: 15px;
   }
 
   .forgot-link {
-    font-family: "Poppins", sans-serif;
+    font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
     font-size: 14px;
     color: #aaa;
     text-decoration: none;
@@ -220,7 +220,7 @@ const doLogin = async () => {
     width: 100%;
     height: 56px;
     border-radius: 10px;
-    font-family: "Poppins", sans-serif;
+    font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
     font-size: 18px;
     font-weight: 700;
     letter-spacing: 1px;
