@@ -43,9 +43,7 @@ public class SpuInfoDescServiceImpl implements SpuInfoDescService {
 
     @Override
     public void saveBatch(List<SpuInfoDescEntity> list) {
-        for (SpuInfoDescEntity e : list) {
-            spuInfoDescMapper.insert(e);
-        }
+        spuInfoDescMapper.insert(list);
     }
 
     @Override

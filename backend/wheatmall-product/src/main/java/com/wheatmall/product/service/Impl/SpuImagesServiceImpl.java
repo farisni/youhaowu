@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 /**
  * SpuImages Service 实现
  */
@@ -45,9 +46,7 @@ public class SpuImagesServiceImpl implements SpuImagesService {
 
     @Override
     public void saveBatch(List<SpuImagesEntity> list) {
-        for (SpuImagesEntity e : list) {
-            spuImagesMapper.insert(e);
-        }
+        spuImagesMapper.insert(list);
     }
 
     @Override
@@ -62,12 +61,13 @@ public class SpuImagesServiceImpl implements SpuImagesService {
     @Override
     public void saveImages(Long spuId, List<String> images) {
         if (images != null && !images.isEmpty()) {
-            for (String img : images) {
+            List<SpuImagesEntity> entities = images.stream().map(img -> {
                 SpuImagesEntity e = new SpuImagesEntity();
                 e.setSpuId(spuId);
                 e.setImgUrl(img);
-                spuImagesMapper.insert(e);
-            }
+                return e;
+            }).collect(Collectors.toList());
+            spuImagesMapper.insert(entities);
         }
     }
 }

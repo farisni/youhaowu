@@ -40,9 +40,7 @@ public class ProductAttrValueServiceImpl implements ProductAttrValueService {
 
     @Override
     public void saveBatch(List<ProductAttrValueEntity> list) {
-        for (ProductAttrValueEntity e : list) {
-            attrValueMapper.insert(e);
-        }
+        attrValueMapper.insert(list);
     }
 
     @Override
@@ -57,9 +55,7 @@ public class ProductAttrValueServiceImpl implements ProductAttrValueService {
 
     @Override
     public void saveProductAttr(List<ProductAttrValueEntity> collect) {
-        for (ProductAttrValueEntity e : collect) {
-            attrValueMapper.insert(e);
-        }
+        attrValueMapper.insert(collect);
     }
 
     @Override

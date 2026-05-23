@@ -43,9 +43,7 @@ public class SkuImagesServiceImpl implements SkuImagesService {
 
     @Override
     public void saveBatch(List<SkuImagesEntity> list) {
-        for (SkuImagesEntity e : list) {
-            skuImagesMapper.insert(e);
-        }
+        skuImagesMapper.insert(list);
     }
 
     @Override

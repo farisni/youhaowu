@@ -44,9 +44,7 @@ public class CommentReplayServiceImpl implements CommentReplayService {
 
     @Override
     public void saveBatch(List<CommentReplayEntity> list) {
-        for (CommentReplayEntity e : list) {
-            commentReplayMapper.insert(e);
-        }
+        commentReplayMapper.insert(list);
     }
 
     @Override

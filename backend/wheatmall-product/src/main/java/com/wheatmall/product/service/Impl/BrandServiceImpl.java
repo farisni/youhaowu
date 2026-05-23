@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Transactional(rollbackFor = Exception.class)
 @Service
@@ -58,9 +59,12 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public void saveBatch(List<BrandVO> list) {
-        for (BrandVO vo : list) {
-            save(vo);
-        }
+        List<BrandEntity> entities = list.stream().map(vo -> {
+            BrandEntity e = new BrandEntity();
+            BeanUtils.copyProperties(vo, e);
+            return e;
+        }).collect(Collectors.toList());
+        brandMapper.insert(entities);
     }
 
     @Override

@@ -119,9 +119,12 @@ public class AttrServiceImpl implements AttrService {
      */
     @Override
     public void saveBatch(List<AttrVO> list) {
-        for (AttrVO vo : list) {
-            saveAttr(vo);
-        }
+        List<AttrEntity> entities = list.stream().map(vo -> {
+            AttrEntity e = new AttrEntity();
+            BeanUtils.copyProperties(vo, e);
+            return e;
+        }).collect(Collectors.toList());
+        attrMapper.insert(entities);
     }
 
     /**

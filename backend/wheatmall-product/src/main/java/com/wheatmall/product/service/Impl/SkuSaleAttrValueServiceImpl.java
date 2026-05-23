@@ -43,9 +43,7 @@ public class SkuSaleAttrValueServiceImpl implements SkuSaleAttrValueService {
 
     @Override
     public void saveBatch(List<SkuSaleAttrValueEntity> list) {
-        for (SkuSaleAttrValueEntity e : list) {
-            skuSaleAttrValueMapper.insert(e);
-        }
+        skuSaleAttrValueMapper.insert(list);
     }
 
     @Override
