@@ -26,3 +26,12 @@
 - [ ] 单点登录 SSO（CAS / OAuth2）
 - [ ] 登录审计日志（IP、时间、设备）
 - [ ] Nacos Config 统一配置中心
+
+## Search 模块
+
+- [ ] MallSearchServiceImpl.search() — ES 检索逻辑（DSL 构建、分页、聚合、品牌/属性/分类导航）
+- [ ] ProductSaveServiceImpl.productStatusUp() — ES 索引批量写入（BulkRequest）
+- [ ] ProductRemoteService — WebClient 调用 Product 模块（替换 Feign 占位）
+- [ ] ElasticSaveController.productStatusUp() — 错误处理完善（BizCodeEnum + 日志告警）
+- [ ] SearchController — Thymeleaf 页面搜索（需 Spring Session + Redis + 前端模板）
+- [ ] ES 索引 mapping 定义 + 中文分词器（IK）配置
