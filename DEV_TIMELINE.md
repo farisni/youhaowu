@@ -75,3 +75,7 @@
 - feat(admin): 搬运 template-vue3 菜单管理（含 commonTable + IconSelect + dateUtils 公共底座）
 
 - refactor(admin): 图标系统切换 UnoCSS + presetIcons（替换 unplugin-icons，对齐 template-vue3）
+
+## 2026-05-23
+
+- style: 重构登录页左侧海报区排版与配色（Poppins 字体、深蓝配色体系、watermark 效果）
