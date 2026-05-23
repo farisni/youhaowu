@@ -102,3 +102,6 @@
 - refactor: 提取 OrderServiceUris，Order URI 独立文件
 - test: 添加 BrandController pytest 接口测试（13 个用例）
 
+- refactor(product): 10 个 void Service 方法统一改为返回 Integer（delete/update/save 全链路透传影响行数）
+- refactor(product): SpuInfoService.saveBaseSpuInfo 参数 Entity→VO，消除 Service 接口最后一处 Entity 暴露
+- refactor(product): 2 个 Mapper 自定义方法 void→Integer（updateCategory/updaSpuStatus）

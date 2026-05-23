@@ -13,7 +13,7 @@ public interface SpuInfoService {
 
     PageData<SpuInfoVO> page(BaseQueryDTO query);
     SpuInfoVO getVOById(Long id);
-    void saveBaseSpuInfo(SpuInfoEntity entity);
-    void saveSupInfo(SpuSaveVO vo);
-    void up(Long spuId);
+    Integer saveBaseSpuInfo(SpuInfoVO vo);
+    Integer saveSupInfo(SpuSaveVO vo);
+    Integer up(Long spuId);
 }

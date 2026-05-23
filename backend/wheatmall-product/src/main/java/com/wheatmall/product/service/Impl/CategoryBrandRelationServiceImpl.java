@@ -86,28 +86,28 @@ public class CategoryBrandRelationServiceImpl implements CategoryBrandRelationSe
     }
 
     @Override
-    public void saveDetail(CategoryBrandRelationVO vo) {
+    public Integer saveDetail(CategoryBrandRelationVO vo) {
         CategoryBrandRelationEntity entity = new CategoryBrandRelationEntity();
         BeanUtil.copyProperties(vo, entity);
         BrandEntity brand = brandMapper.selectById(entity.getBrandId());
         CategoryEntity category = categoryMapper.selectById(entity.getCatelogId());
         entity.setBrandName(brand != null ? brand.getName() : "");
         entity.setCatelogName(category != null ? category.getName() : "");
-        categoryBrandRelationMapper.insert(entity);
+        return categoryBrandRelationMapper.insert(entity);
     }
 
     @Override
-    public void updateBrand(Long brandId, String name) {
+    public Integer updateBrand(Long brandId, String name) {
         CategoryBrandRelationEntity entity = new CategoryBrandRelationEntity();
         entity.setBrandId(brandId);
         entity.setBrandName(name);
-        categoryBrandRelationMapper.update(entity,
+        return categoryBrandRelationMapper.update(entity,
                 new LambdaUpdateWrapper<CategoryBrandRelationEntity>()
                         .eq(CategoryBrandRelationEntity::getBrandId, brandId));
     }
 
     @Override
-    public void updateCategory(Long catId, String name) {
-        categoryBrandRelationMapper.updateCategory(catId, name);
+    public Integer updateCategory(Long catId, String name) {
+        return categoryBrandRelationMapper.updateCategory(catId, name);
     }
 }

@@ -41,10 +41,10 @@ public class SkuInfoServiceImpl implements SkuInfoService {
     }
 
     @Override
-    public void saveSkuInfo(SkuInfoVO vo) {
+    public Integer saveSkuInfo(SkuInfoVO vo) {
         SkuInfoEntity entity = new SkuInfoEntity();
         BeanUtil.copyProperties(vo, entity);
-        skuInfoMapper.insert(entity);
+        return skuInfoMapper.insert(entity);
     }
 
     @Override

@@ -15,7 +15,7 @@ public interface CategoryBrandRelationService {
     Integer save(CategoryBrandRelationVO vo);
     Integer saveBatch(java.util.List<CategoryBrandRelationVO> list);
     Integer updateById(CategoryBrandRelationVO vo);
-    Integer removeByIds(java.util.List<Long> ids);    void saveDetail(CategoryBrandRelationVO vo);
-    void updateBrand(Long brandId, String name);
-    void updateCategory(Long catId, String name);
+    Integer removeByIds(java.util.List<Long> ids);    Integer saveDetail(CategoryBrandRelationVO vo);
+    Integer updateBrand(Long brandId, String name);
+    Integer updateCategory(Long catId, String name);
 }

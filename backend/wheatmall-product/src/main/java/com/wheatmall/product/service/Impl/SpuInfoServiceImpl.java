@@ -69,8 +69,10 @@ public class SpuInfoServiceImpl implements SpuInfoService {
     }
 
     @Override
-    public void saveBaseSpuInfo(SpuInfoEntity entity) {
-        spuInfoMapper.insert(entity);
+    public Integer saveBaseSpuInfo(SpuInfoVO vo) {
+        SpuInfoEntity entity = new SpuInfoEntity();
+        BeanUtil.copyProperties(vo, entity);
+        return spuInfoMapper.insert(entity);
     }
 
     /**
@@ -79,13 +81,13 @@ public class SpuInfoServiceImpl implements SpuInfoService {
      */
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void saveSupInfo(SpuSaveVO vo) {
+    public Integer saveSupInfo(SpuSaveVO vo) {
         //  1. 保存SPU基本信息
         SpuInfoEntity spu = new SpuInfoEntity();
         BeanUtil.copyProperties(vo, spu);
         spu.setCreateTime(new Date());
         spu.setUpdateTime(new Date());
-        saveBaseSpuInfo(spu);
+        int affected = spuInfoMapper.insert(spu);
 
         //  2. 保存SPU描述
         List<String> decript = vo.getDecript();
@@ -159,16 +161,17 @@ public class SpuInfoServiceImpl implements SpuInfoService {
                 if (item.getMemberPrice() != null) couponRemoteService.saveSkuReduction(item);
             });
         }
+        return affected;
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void up(Long spuId) {
+    public Integer up(Long spuId) {
         List<SkuInfoVO> skus = skuInfoService.getSkusBySpuId(spuId);
         List<ProductAttrValueEntity> baseAttrs = productAttrValueService.baseAttrListforspu(spuId);
         List<Long> skuIds = skus.stream().map(SkuInfoVO::getSkuId).collect(Collectors.toList());
         try { wareRemoteService.getSkuHasStock(skuIds); } catch (Exception ex) { log.error("库存查询异常: {}", ex.getMessage()); }
         try { searchRemoteService.productStatusUp(skus); } catch (Exception ex) { log.error("搜索上架异常: {}", ex.getMessage()); }
-        spuInfoMapper.updaSpuStatus(spuId, ProductConstant.ProductStatusEnum.SPU_UP.getCode());
+        return spuInfoMapper.updaSpuStatus(spuId, ProductConstant.ProductStatusEnum.SPU_UP.getCode());
     }
 }

@@ -14,5 +14,5 @@ public interface CategoryBrandRelationMapper extends BaseMapper<CategoryBrandRel
     /**
      * 更新分类名称
      */
-    void updateCategory(@Param("catId") Long catId, @Param("name") String name);
+    Integer updateCategory(@Param("catId") Long catId, @Param("name") String name);
 }

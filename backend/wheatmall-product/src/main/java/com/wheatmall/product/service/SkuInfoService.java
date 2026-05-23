@@ -13,7 +13,7 @@ public interface SkuInfoService {
 
     PageData<SkuInfoVO> page(SkuQueryDTO query);
     SkuInfoVO getVOById(Long id);
-    void saveSkuInfo(SkuInfoVO vo);
+    Integer saveSkuInfo(SkuInfoVO vo);
     List<SkuInfoVO> getSkusBySpuId(Long spuId);
     List<SkuInfoVO> listBySpuId(Long spuId);
 }

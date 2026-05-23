@@ -83,15 +83,15 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void deleteBatch(List<Long> ids) {
-        categoryMapper.deleteBatchIds(ids);
+    public Integer deleteBatch(List<Long> ids) {
+        return categoryMapper.deleteBatchIds(ids);
     }
 
     @Override
-    public void update(CategoryUpdateDTO dto) {
+    public Integer update(CategoryUpdateDTO dto) {
         CategoryEntity entity = new CategoryEntity();
         BeanUtil.copyProperties(dto, entity);
-        categoryMapper.updateById(entity);
+        return categoryMapper.updateById(entity);
     }
 
     private CategoryVO entityToVO(CategoryEntity entity) {

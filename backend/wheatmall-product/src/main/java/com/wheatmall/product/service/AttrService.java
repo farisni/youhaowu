@@ -21,7 +21,7 @@ public interface AttrService {
     Integer saveBatch(List<AttrVO> list);
     Integer removeById(Long id);
     Integer removeByIds(List<Long> ids);
-    void updateAttrById(Long id, AttrVO attr);
+    Integer updateAttrById(Long id, AttrVO attr);
 
     List<AttrRespVO> getRelationAttr(Long attrgroupId);
     PageData<?> getNoRelationAttr(AttrQueryDTO query, Long attrgroupId);

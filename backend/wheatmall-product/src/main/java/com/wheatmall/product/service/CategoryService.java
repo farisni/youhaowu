@@ -30,10 +30,10 @@ public interface CategoryService {
     /**
      * 批量删除分类
      */
-    void deleteBatch(List<Long> ids);
+    Integer deleteBatch(List<Long> ids);
 
     /**
      * 修改分类信息
      */
-    void update(CategoryUpdateDTO dto);
+    Integer update(CategoryUpdateDTO dto);
 }

@@ -246,12 +246,13 @@ public class AttrServiceImpl implements AttrService {
      */
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void updateAttrById(Long id, AttrVO attr) {
+    public Integer updateAttrById(Long id, AttrVO attr) {
         // 1. 更新属性基本信息
         AttrEntity entity = new AttrEntity();
         BeanUtil.copyProperties(attr, entity);
         entity.setAttrId(id);
-        attrMapper.updateById(entity);
+        int affected = attrMapper.updateById(entity);
+
 
         // 2. 基本属性：维护与分组的关联关系（已有则更新，无则新增）
         if (entity.getAttrType() == ProductConstant.AttrEnum.ATTR_TYPE_BASE.getCode()
@@ -269,6 +270,7 @@ public class AttrServiceImpl implements AttrService {
                 relationMapper.insert(rel);
             }
         }
+        return affected;
     }
 
     /**
