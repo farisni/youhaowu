@@ -23,8 +23,6 @@ public final class ProductServiceUris {
     @Deprecated
     public static final class Product {
         public static final String GET_BY_ID = ProductCategory.BASE_URL + "/{id}";
-        public static final String GET_BY_ID_INTERNAL = ProductCategory.BASE_URL + "/get/{id}";
-        public static final String LIST = ProductCategory.BASE_URL + "/list";
         public static final String CREATE = ProductCategory.BASE_URL;
         public static final String UPDATE = ProductCategory.BASE_URL + "/{id}";
         public static final String DELETE = ProductCategory.BASE_URL + "/{id}";

@@ -17,4 +17,10 @@ public final class OrderServiceUris {
         public static final String GET_PRODUCT_LIST = BASE_URL + "/products";
         public static final String CREATE = BASE_URL + "/create";
     }
+
+    // ==================== 对 Product 模块的调用 ====================
+    public static final class Product {
+        public static final String GET_BY_ID_INTERNAL = "/api/product/category/get/{id}";
+        public static final String LIST = "/api/product/category/list";
+    }
 }
