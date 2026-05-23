@@ -36,8 +36,8 @@ public class CommentReplayServiceImpl implements CommentReplayService {
     }
 
     @Override
-    public void save(CommentReplayEntity entity) {
-        commentReplayMapper.insert(entity);
+    public Integer save(CommentReplayEntity entity) {
+        return commentReplayMapper.insert(entity);
     }
 
     @Override
@@ -48,8 +48,8 @@ public class CommentReplayServiceImpl implements CommentReplayService {
     }
 
     @Override
-    public void updateById(CommentReplayEntity entity) {
-        commentReplayMapper.updateById(entity);
+    public Integer updateById(CommentReplayEntity entity) {
+        return commentReplayMapper.updateById(entity);
     }
 
     @Override

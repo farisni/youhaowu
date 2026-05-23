@@ -3,7 +3,7 @@ package com.wheatmall.product.vo;
 import lombok.Data;
 
 @Data
-public class BrandVo {
+public class BrandVO {
 
     private Long brandId;
 

@@ -17,13 +17,13 @@ public interface SkuSaleAttrValueService {
     SkuSaleAttrValueEntity getById(Long id);
 
     /** 保存 */
-    void save(SkuSaleAttrValueEntity entity);
+    Integer save(SkuSaleAttrValueEntity entity);
 
     /** 批量保存 */
     void saveBatch(java.util.List<SkuSaleAttrValueEntity> list);
 
     /** 根据ID更新 */
-    void updateById(SkuSaleAttrValueEntity entity);
+    Integer updateById(SkuSaleAttrValueEntity entity);
 
     /** 批量删除 */
     void removeByIds(java.util.List<Long> ids);

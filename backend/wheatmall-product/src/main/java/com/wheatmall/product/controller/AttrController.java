@@ -5,8 +5,8 @@ import com.wheatmall.common.utils.PageData;
 import com.wheatmall.common.utils.R;
 import com.wheatmall.product.query.AttrQueryDTO;
 import com.wheatmall.product.service.AttrService;
-import com.wheatmall.product.vo.AttrRespVo;
-import com.wheatmall.product.vo.AttrVo;
+import com.wheatmall.product.vo.AttrRespVO;
+import com.wheatmall.product.vo.AttrVO;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +25,7 @@ public class AttrController {
      * 分页查询基本属性
      */
     @GetMapping(ServiceUris.ProductAttr.BASE_PAGE)
-    public R<PageData<AttrRespVo>> baseAttrList(AttrQueryDTO query, @PathVariable Long catelogId) {
+    public R<PageData<AttrRespVO>> baseAttrList(AttrQueryDTO query, @PathVariable Long catelogId) {
         return R.ok(attrService.queryBaseAttrPage(query, catelogId, "base"));
     }
 
@@ -33,7 +33,7 @@ public class AttrController {
      * 分页查询销售属性
      */
     @GetMapping(ServiceUris.ProductAttr.SALE_PAGE)
-    public R<PageData<AttrRespVo>> saleAttrList(AttrQueryDTO query, @PathVariable Long catelogId) {
+    public R<PageData<AttrRespVO>> saleAttrList(AttrQueryDTO query, @PathVariable Long catelogId) {
         return R.ok(attrService.queryBaseAttrPage(query, catelogId, "sale"));
     }
 
@@ -41,7 +41,7 @@ public class AttrController {
      * 查询属性详情
      */
     @GetMapping(ServiceUris.ProductAttr.INFO)
-    public R<AttrRespVo> info(@PathVariable Long attrId) {
+    public R<AttrRespVO> info(@PathVariable Long attrId) {
         return R.ok(attrService.getAttrInfo(attrId));
     }
 
@@ -49,16 +49,15 @@ public class AttrController {
      * 保存属性
      */
     @PostMapping(ServiceUris.ProductAttr.SAVE)
-    public R<Void> save(@RequestBody AttrVo attr) {
-        attrService.saveAttr(attr);
-        return R.ok();
+    public R<Integer> save(@RequestBody AttrVO attr) {
+        return R.ok(attrService.saveAttr(attr));
     }
 
     /**
      * 更新属性
      */
     @PostMapping(ServiceUris.ProductAttr.UPDATE)
-    public R<Void> update(@PathVariable Long id, @RequestBody AttrVo attr) {
+    public R<Void> update(@PathVariable Long id, @RequestBody AttrVO attr) {
         attrService.updateAttrById(id, attr);
         return R.ok();
     }
@@ -67,16 +66,15 @@ public class AttrController {
      * 删除属性
      */
     @PostMapping(ServiceUris.ProductAttr.DELETE)
-    public R<Void> delete(@PathVariable Long id) {
-        attrService.removeById(id);
-        return R.ok();
+    public R<Integer> delete(@PathVariable Long id) {
+        return R.ok(attrService.removeById(id));
     }
 
     /**
      * 查询属性关联关系
      */
     @GetMapping(ServiceUris.ProductAttr.RELATION_PAGE)
-    public R<List<AttrRespVo>> relation(@PathVariable Long attrgroupId) {
+    public R<List<AttrRespVO>> relation(@PathVariable Long attrgroupId) {
         return R.ok(attrService.getRelationAttr(attrgroupId));
     }
 

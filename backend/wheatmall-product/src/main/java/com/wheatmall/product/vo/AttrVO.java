@@ -3,7 +3,7 @@ package com.wheatmall.product.vo;
 import lombok.Data;
 
 @Data
-public class AttrVo {
+public class AttrVO {
     /**
      * 属性id
      */

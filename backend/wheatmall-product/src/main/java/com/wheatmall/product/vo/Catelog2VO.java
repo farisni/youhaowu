@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Catelog2Vo {
+public class Catelog2VO {
     /**
      * 一级父分类的id
      */

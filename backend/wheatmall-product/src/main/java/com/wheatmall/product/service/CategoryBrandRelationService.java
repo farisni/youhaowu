@@ -12,9 +12,9 @@ public interface CategoryBrandRelationService {
     PageData<CategoryBrandRelationVO> page(BaseQueryDTO query);
     CategoryBrandRelationVO getById(Long id);
     CategoryBrandRelationVO getVOById(Long id);
-    void save(CategoryBrandRelationVO vo);
+    Integer save(CategoryBrandRelationVO vo);
     void saveBatch(java.util.List<CategoryBrandRelationVO> list);
-    void updateById(CategoryBrandRelationVO vo);
+    Integer updateById(CategoryBrandRelationVO vo);
     void removeByIds(java.util.List<Long> ids);    void saveDetail(CategoryBrandRelationVO vo);
     void updateBrand(Long brandId, String name);
     void updateCategory(Long catId, String name);

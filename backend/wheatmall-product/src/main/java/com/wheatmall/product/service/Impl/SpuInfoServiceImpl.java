@@ -78,7 +78,7 @@ public class SpuInfoServiceImpl implements SpuInfoService {
      */
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void saveSupInfo(SpuSaveVo vo) {
+    public void saveSupInfo(SpuSaveVO vo) {
         //  1. 保存SPU基本信息
         SpuInfoEntity spu = new SpuInfoEntity();
         BeanUtils.copyProperties(vo, spu);

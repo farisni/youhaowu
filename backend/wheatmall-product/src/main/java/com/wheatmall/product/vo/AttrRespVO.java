@@ -3,7 +3,7 @@ package com.wheatmall.product.vo;
 import lombok.Data;
 
 @Data
-public class AttrRespVo extends AttrVo {
+public class AttrRespVO extends AttrVO {
 
     /**
      *

@@ -32,8 +32,8 @@ public class ProductAttrValueServiceImpl implements ProductAttrValueService {
     }
 
     @Override
-    public void save(ProductAttrValueEntity entity) {
-        attrValueMapper.insert(entity);
+    public Integer save(ProductAttrValueEntity entity) {
+        return attrValueMapper.insert(entity);
     }
 
     @Override
@@ -44,8 +44,8 @@ public class ProductAttrValueServiceImpl implements ProductAttrValueService {
     }
 
     @Override
-    public void updateById(ProductAttrValueEntity entity) {
-        attrValueMapper.updateById(entity);
+    public Integer updateById(ProductAttrValueEntity entity) {
+        return attrValueMapper.updateById(entity);
     }
 
     @Override

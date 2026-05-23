@@ -6,7 +6,7 @@ import com.wheatmall.common.utils.R;
 import com.wheatmall.product.service.SpuInfoService;
 import com.wheatmall.product.query.SpuQueryDTO;
 import com.wheatmall.product.vo.SpuInfoVO;
-import com.wheatmall.product.vo.SpuSaveVo;
+import com.wheatmall.product.vo.SpuSaveVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,7 +40,7 @@ public class SpuInfoController {
      * 保存SPU
      */
     @PostMapping(ServiceUris.ProductSpu.SAVE)
-    public R<Void> save(@RequestBody SpuSaveVo vo) {
+    public R<Void> save(@RequestBody SpuSaveVO vo) {
         spuInfoService.saveSupInfo(vo);
         return R.ok();
     }

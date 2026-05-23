@@ -37,8 +37,8 @@ public class SpuImagesServiceImpl implements SpuImagesService {
     }
 
     @Override
-    public void save(SpuImagesEntity entity) {
-        spuImagesMapper.insert(entity);
+    public Integer save(SpuImagesEntity entity) {
+        return spuImagesMapper.insert(entity);
     }
 
     @Override
@@ -49,8 +49,8 @@ public class SpuImagesServiceImpl implements SpuImagesService {
     }
 
     @Override
-    public void updateById(SpuImagesEntity entity) {
-        spuImagesMapper.updateById(entity);
+    public Integer updateById(SpuImagesEntity entity) {
+        return spuImagesMapper.updateById(entity);
     }
 
     @Override

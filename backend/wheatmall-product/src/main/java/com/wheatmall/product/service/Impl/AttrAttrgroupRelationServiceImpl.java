@@ -1,7 +1,7 @@
 package com.wheatmall.product.service.Impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.wheatmall.product.vo.AttrGroupRelationVo;
+import com.wheatmall.product.vo.AttrGroupRelationVO;
 import org.springframework.beans.BeanUtils;
 import java.util.stream.Collectors;
 import com.wheatmall.common.utils.PageData;
@@ -40,8 +40,8 @@ public class AttrAttrgroupRelationServiceImpl implements AttrAttrgroupRelationSe
     }
 
     @Override
-    public void save(AttrAttrgroupRelationEntity entity) {
-        attrAttrgroupRelationMapper.insert(entity);
+    public Integer save(AttrAttrgroupRelationEntity entity) {
+        return attrAttrgroupRelationMapper.insert(entity);
     }
 
     @Override
@@ -52,8 +52,8 @@ public class AttrAttrgroupRelationServiceImpl implements AttrAttrgroupRelationSe
     }
 
     @Override
-    public void updateById(AttrAttrgroupRelationEntity entity) {
-        attrAttrgroupRelationMapper.updateById(entity);
+    public Integer updateById(AttrAttrgroupRelationEntity entity) {
+        return attrAttrgroupRelationMapper.updateById(entity);
     }
 
     @Override
@@ -61,7 +61,7 @@ public class AttrAttrgroupRelationServiceImpl implements AttrAttrgroupRelationSe
         attrAttrgroupRelationMapper.deleteBatchIds(ids);
     }
     @Override
-    public void saveRelationBatch(List<AttrGroupRelationVo> vos) {
+    public void saveRelationBatch(List<AttrGroupRelationVO> vos) {
         List<AttrAttrgroupRelationEntity> list = vos.stream().map(item -> {
             AttrAttrgroupRelationEntity e = new AttrAttrgroupRelationEntity();
             BeanUtils.copyProperties(item, e);

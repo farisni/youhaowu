@@ -2,9 +2,8 @@ package com.wheatmall.product.service;
 
 import com.wheatmall.common.utils.PageData;
 import com.wheatmall.product.query.AttrQueryDTO;
-import com.wheatmall.product.vo.AttrGroupRelationVo;
-import com.wheatmall.product.vo.AttrRespVo;
-import com.wheatmall.product.vo.AttrVo;
+import com.wheatmall.product.vo.AttrRespVO;
+import com.wheatmall.product.vo.AttrVO;
 
 import java.util.List;
 
@@ -13,17 +12,17 @@ import java.util.List;
  */
 public interface AttrService {
 
-    PageData<AttrRespVo> page(AttrQueryDTO query);
-    PageData<AttrRespVo> queryBaseAttrPage(AttrQueryDTO query, Long catelogId, String attrType);
-    AttrRespVo getAttrInfo(Long id);
-    AttrRespVo getVOById(Long id);
-    void save(AttrVo vo);
-    void saveAttr(AttrVo vo);
-    void saveBatch(List<AttrVo> list);
-    void removeById(Long id);
+    PageData<AttrRespVO> page(AttrQueryDTO query);
+    PageData<AttrRespVO> queryBaseAttrPage(AttrQueryDTO query, Long catelogId, String attrType);
+    AttrRespVO getAttrInfo(Long id);
+    AttrRespVO getVOById(Long id);
+    Integer save(AttrVO vo);
+    Integer saveAttr(AttrVO vo);
+    void saveBatch(List<AttrVO> list);
+    Integer removeById(Long id);
     void removeByIds(List<Long> ids);
-    void updateAttrById(Long id, AttrVo attr);
+    void updateAttrById(Long id, AttrVO attr);
 
-    List<AttrRespVo> getRelationAttr(Long attrgroupId);
+    List<AttrRespVO> getRelationAttr(Long attrgroupId);
     PageData<?> getNoRelationAttr(AttrQueryDTO query, Long attrgroupId);
 }

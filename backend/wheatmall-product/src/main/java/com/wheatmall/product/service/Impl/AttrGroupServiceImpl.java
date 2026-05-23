@@ -9,7 +9,7 @@ import com.wheatmall.product.service.AttrGroupService;
 import com.wheatmall.product.service.AttrService;
 import com.wheatmall.product.utils.PageUtils;
 import com.wheatmall.product.vo.AttrGroupVO;
-import com.wheatmall.product.vo.AttrGroupWithAttrsVo;
+import com.wheatmall.product.vo.AttrGroupWithAttrsVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,10 +53,10 @@ public class AttrGroupServiceImpl implements AttrGroupService {
     }
 
     @Override
-    public void save(AttrGroupVO vo) {
+    public Integer save(AttrGroupVO vo) {
         AttrGroupEntity e = new AttrGroupEntity();
         BeanUtils.copyProperties(vo, e);
-        attrGroupMapper.insert(e);
+        return attrGroupMapper.insert(e);
     }
 
     @Override
@@ -67,16 +67,16 @@ public class AttrGroupServiceImpl implements AttrGroupService {
     }
 
     @Override
-    public void updateById(Long id, AttrGroupVO vo) {
+    public Integer updateById(Long id, AttrGroupVO vo) {
         AttrGroupEntity e = new AttrGroupEntity();
         BeanUtils.copyProperties(vo, e);
         e.setAttrGroupId(id);
-        attrGroupMapper.updateById(e);
+        return attrGroupMapper.updateById(e);
     }
 
     @Override
-    public void removeById(Long id) {
-        attrGroupMapper.deleteById(id);
+    public Integer removeById(Long id) {
+        return attrGroupMapper.deleteById(id);
     }
 
     @Override
@@ -85,11 +85,11 @@ public class AttrGroupServiceImpl implements AttrGroupService {
     }
 
     @Override
-    public List<AttrGroupWithAttrsVo> getAttrGroupWithAttrsByCatelogId(Long catelogId) {
+    public List<AttrGroupWithAttrsVO> getAttrGroupWithAttrsByCatelogId(Long catelogId) {
         List<AttrGroupEntity> groups = attrGroupMapper.selectList(
                 new LambdaQueryWrapper<AttrGroupEntity>().eq(AttrGroupEntity::getCatelogId, catelogId));
         return groups.stream().map(group -> {
-            AttrGroupWithAttrsVo vo = new AttrGroupWithAttrsVo();
+            AttrGroupWithAttrsVO vo = new AttrGroupWithAttrsVO();
             BeanUtils.copyProperties(group, vo);
             vo.setAttrs(attrService.getRelationAttr(vo.getAttrGroupId()));
             return vo;

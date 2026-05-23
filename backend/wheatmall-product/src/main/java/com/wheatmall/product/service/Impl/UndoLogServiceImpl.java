@@ -35,8 +35,8 @@ public class UndoLogServiceImpl implements UndoLogService {
     }
 
     @Override
-    public void save(UndoLogEntity entity) {
-        undoLogMapper.insert(entity);
+    public Integer save(UndoLogEntity entity) {
+        return undoLogMapper.insert(entity);
     }
 
     @Override
@@ -47,8 +47,8 @@ public class UndoLogServiceImpl implements UndoLogService {
     }
 
     @Override
-    public void updateById(UndoLogEntity entity) {
-        undoLogMapper.updateById(entity);
+    public Integer updateById(UndoLogEntity entity) {
+        return undoLogMapper.updateById(entity);
     }
 
     @Override

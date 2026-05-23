@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Data
-public class SpuSaveVo {
+public class SpuSaveVO {
 
     private String spuName;
     private String spuDescription;

@@ -35,8 +35,8 @@ public class SpuCommentServiceImpl implements SpuCommentService {
     }
 
     @Override
-    public void save(SpuCommentEntity entity) {
-        spuCommentMapper.insert(entity);
+    public Integer save(SpuCommentEntity entity) {
+        return spuCommentMapper.insert(entity);
     }
 
     @Override

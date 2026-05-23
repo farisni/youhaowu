@@ -54,10 +54,10 @@ public class CategoryBrandRelationServiceImpl implements CategoryBrandRelationSe
     }
 
     @Override
-    public void save(CategoryBrandRelationVO vo) {
+    public Integer save(CategoryBrandRelationVO vo) {
         CategoryBrandRelationEntity e = new CategoryBrandRelationEntity();
         BeanUtils.copyProperties(vo, e);
-        categoryBrandRelationMapper.insert(e);
+        return categoryBrandRelationMapper.insert(e);
     }
 
     @Override
@@ -68,10 +68,10 @@ public class CategoryBrandRelationServiceImpl implements CategoryBrandRelationSe
     }
 
     @Override
-    public void updateById(CategoryBrandRelationVO vo) {
+    public Integer updateById(CategoryBrandRelationVO vo) {
         CategoryBrandRelationEntity e = new CategoryBrandRelationEntity();
         BeanUtils.copyProperties(vo, e);
-        categoryBrandRelationMapper.updateById(e);
+        return categoryBrandRelationMapper.updateById(e);
     }
 
     @Override

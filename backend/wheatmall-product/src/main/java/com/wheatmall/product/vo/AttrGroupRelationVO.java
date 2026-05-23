@@ -3,7 +3,7 @@ package com.wheatmall.product.vo;
 import lombok.Data;
 
 @Data
-public class AttrGroupRelationVo {
+public class AttrGroupRelationVO {
 
     //[{"attrId":1,"attrGroupId":2}]
     private Long attrId;

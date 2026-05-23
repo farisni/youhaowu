@@ -16,8 +16,8 @@ import com.wheatmall.product.mapper.CategoryMapper;
 import com.wheatmall.product.query.AttrQueryDTO;
 import com.wheatmall.product.service.AttrService;
 import com.wheatmall.product.utils.PageUtils;
-import com.wheatmall.product.vo.AttrRespVo;
-import com.wheatmall.product.vo.AttrVo;
+import com.wheatmall.product.vo.AttrRespVO;
+import com.wheatmall.product.vo.AttrVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,19 +46,19 @@ public class AttrServiceImpl implements AttrService {
     private CategoryMapper categoryMapper;
 
     @Override
-    public PageData<AttrRespVo> page(AttrQueryDTO query) {
+    public PageData<AttrRespVO> page(AttrQueryDTO query) {
         return PageUtils.selectPage(attrMapper, new LambdaQueryWrapper<>(), query, e -> {
-            AttrRespVo vo = new AttrRespVo();
+            AttrRespVO vo = new AttrRespVO();
             BeanUtils.copyProperties(e, vo);
             return vo;
         });
     }
 
     @Override
-    public AttrRespVo getAttrInfo(Long attrId) {
+    public AttrRespVO getAttrInfo(Long attrId) {
         AttrEntity attr = attrMapper.selectById(attrId);
         if (attr == null) return null;
-        AttrRespVo vo = new AttrRespVo();
+        AttrRespVO vo = new AttrRespVO();
         BeanUtils.copyProperties(attr, vo);
         if (attr.getAttrType() == ProductConstant.AttrEnum.ATTR_TYPE_BASE.getCode()) {
             AttrAttrgroupRelationEntity rel = relationMapper.selectOne(
@@ -77,32 +77,32 @@ public class AttrServiceImpl implements AttrService {
     }
 
     @Override
-    public AttrRespVo getVOById(Long id) {
+    public AttrRespVO getVOById(Long id) {
         return getAttrInfo(id);
     }
 
     @Override
-    public void saveAttr(AttrVo vo) {
+    public Integer saveAttr(AttrVO vo) {
         AttrEntity entity = new AttrEntity();
         BeanUtils.copyProperties(vo, entity);
-        attrMapper.insert(entity);
+        return attrMapper.insert(entity);
     }
 
     @Override
-    public void save(AttrVo vo) {
-        saveAttr(vo);
+    public Integer save(AttrVO vo) {
+        return saveAttr(vo);
     }
 
     @Override
-    public void saveBatch(List<AttrVo> list) {
-        for (AttrVo vo : list) {
+    public void saveBatch(List<AttrVO> list) {
+        for (AttrVO vo : list) {
             saveAttr(vo);
         }
     }
 
     @Override
-    public void removeById(Long id) {
-        attrMapper.deleteById(id);
+    public Integer removeById(Long id) {
+        return attrMapper.deleteById(id);
     }
 
     @Override
@@ -111,7 +111,7 @@ public class AttrServiceImpl implements AttrService {
     }
 
     @Override
-    public PageData<AttrRespVo> queryBaseAttrPage(AttrQueryDTO query, Long catelogId, String attrType) {
+    public PageData<AttrRespVO> queryBaseAttrPage(AttrQueryDTO query, Long catelogId, String attrType) {
         LambdaQueryWrapper<AttrEntity> wrapper = new LambdaQueryWrapper<AttrEntity>()
                 .eq(AttrEntity::getAttrType, "base".equalsIgnoreCase(attrType)
                         ? ProductConstant.AttrEnum.ATTR_TYPE_BASE.getCode()
@@ -120,8 +120,8 @@ public class AttrServiceImpl implements AttrService {
 
         Page<AttrEntity> page = PageUtils.buildPage(query);
         var result = attrMapper.selectPage(page, wrapper);
-        List<AttrRespVo> vos = result.getRecords().stream().map(attr -> {
-            AttrRespVo vo = new AttrRespVo();
+        List<AttrRespVO> vos = result.getRecords().stream().map(attr -> {
+            AttrRespVO vo = new AttrRespVO();
             BeanUtils.copyProperties(attr, vo);
             if ("base".equalsIgnoreCase(attrType)) {
                 AttrAttrgroupRelationEntity rel = relationMapper.selectOne(
@@ -140,7 +140,7 @@ public class AttrServiceImpl implements AttrService {
     }
 
     @Override
-    public List<AttrRespVo> getRelationAttr(Long attrgroupId) {
+    public List<AttrRespVO> getRelationAttr(Long attrgroupId) {
         List<AttrAttrgroupRelationEntity> entities = relationMapper.selectList(
                 new LambdaQueryWrapper<AttrAttrgroupRelationEntity>()
                         .eq(AttrAttrgroupRelationEntity::getAttrGroupId, attrgroupId));
@@ -150,7 +150,7 @@ public class AttrServiceImpl implements AttrService {
         if (attrIds.isEmpty()) return Collections.emptyList();
         List<AttrEntity> attrs = attrMapper.selectBatchIds(attrIds);
         return attrs.stream().map(a -> {
-            AttrRespVo v = new AttrRespVo();
+            AttrRespVO v = new AttrRespVO();
             BeanUtils.copyProperties(a, v);
             return v;
         }).collect(Collectors.toList());
@@ -177,7 +177,7 @@ public class AttrServiceImpl implements AttrService {
         if (!attrIds.isEmpty()) wrapper.notIn(AttrEntity::getAttrId, attrIds);
 
         return PageUtils.selectPage(attrMapper, wrapper, query, e -> {
-            AttrRespVo vo = new AttrRespVo();
+            AttrRespVO vo = new AttrRespVO();
             BeanUtils.copyProperties(e, vo);
             return vo;
         });
@@ -185,7 +185,7 @@ public class AttrServiceImpl implements AttrService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void updateAttrById(Long id, AttrVo attr) {
+    public void updateAttrById(Long id, AttrVO attr) {
         AttrEntity entity = new AttrEntity();
         BeanUtils.copyProperties(attr, entity);
         entity.setAttrId(id);

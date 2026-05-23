@@ -17,13 +17,13 @@ public interface SpuInfoDescService {
     SpuInfoDescEntity getById(Long id);
 
     /** 保存 */
-    void save(SpuInfoDescEntity entity);
+    Integer save(SpuInfoDescEntity entity);
 
     /** 批量保存 */
     void saveBatch(java.util.List<SpuInfoDescEntity> list);
 
     /** 根据ID更新 */
-    void updateById(SpuInfoDescEntity entity);
+    Integer updateById(SpuInfoDescEntity entity);
 
     /** 批量删除 */
     void removeByIds(java.util.List<Long> ids);

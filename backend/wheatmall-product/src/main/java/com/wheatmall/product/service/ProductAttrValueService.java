@@ -18,13 +18,13 @@ public interface ProductAttrValueService {
     ProductAttrValueEntity getById(Long id);
 
     /** 保存 */
-    void save(ProductAttrValueEntity entity);
+    Integer save(ProductAttrValueEntity entity);
 
     /** 批量保存 */
     void saveBatch(java.util.List<ProductAttrValueEntity> list);
 
     /** 根据ID更新 */
-    void updateById(ProductAttrValueEntity entity);
+    Integer updateById(ProductAttrValueEntity entity);
 
     /** 批量删除 */
     void removeByIds(java.util.List<Long> ids);

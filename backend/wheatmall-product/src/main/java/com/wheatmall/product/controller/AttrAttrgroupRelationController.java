@@ -6,7 +6,7 @@ import com.wheatmall.common.utils.R;
 import com.wheatmall.product.service.AttrAttrgroupRelationService;
 import com.wheatmall.product.query.AttrQueryDTO;
 import com.wheatmall.product.vo.AttrAttrgroupRelationVO;
-import com.wheatmall.product.vo.AttrGroupRelationVo;
+import com.wheatmall.product.vo.AttrGroupRelationVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,7 +34,7 @@ public class AttrAttrgroupRelationController {
      * 保存关联关系
      */
     @PostMapping(ServiceUris.ProductAttr.SAVE_RELATION)
-    public R<Void> saveRelation(@RequestBody List<AttrGroupRelationVo> vos) {
+    public R<Void> saveRelation(@RequestBody List<AttrGroupRelationVO> vos) {
         relationService.saveRelationBatch(vos);
         return R.ok();
     }

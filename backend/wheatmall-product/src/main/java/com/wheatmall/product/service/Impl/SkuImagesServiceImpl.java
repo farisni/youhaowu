@@ -35,8 +35,8 @@ public class SkuImagesServiceImpl implements SkuImagesService {
     }
 
     @Override
-    public void save(SkuImagesEntity entity) {
-        skuImagesMapper.insert(entity);
+    public Integer save(SkuImagesEntity entity) {
+        return skuImagesMapper.insert(entity);
     }
 
     @Override
@@ -47,8 +47,8 @@ public class SkuImagesServiceImpl implements SkuImagesService {
     }
 
     @Override
-    public void updateById(SkuImagesEntity entity) {
-        skuImagesMapper.updateById(entity);
+    public Integer updateById(SkuImagesEntity entity) {
+        return skuImagesMapper.updateById(entity);
     }
 
     @Override

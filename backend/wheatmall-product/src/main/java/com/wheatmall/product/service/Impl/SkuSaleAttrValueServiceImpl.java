@@ -35,8 +35,8 @@ public class SkuSaleAttrValueServiceImpl implements SkuSaleAttrValueService {
     }
 
     @Override
-    public void save(SkuSaleAttrValueEntity entity) {
-        skuSaleAttrValueMapper.insert(entity);
+    public Integer save(SkuSaleAttrValueEntity entity) {
+        return skuSaleAttrValueMapper.insert(entity);
     }
 
     @Override
@@ -47,8 +47,8 @@ public class SkuSaleAttrValueServiceImpl implements SkuSaleAttrValueService {
     }
 
     @Override
-    public void updateById(SkuSaleAttrValueEntity entity) {
-        skuSaleAttrValueMapper.updateById(entity);
+    public Integer updateById(SkuSaleAttrValueEntity entity) {
+        return skuSaleAttrValueMapper.updateById(entity);
     }
 
     @Override

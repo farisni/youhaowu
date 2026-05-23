@@ -18,13 +18,13 @@ public interface SpuImagesService {
     SpuImagesEntity getById(Long id);
 
     /** 保存 */
-    void save(SpuImagesEntity entity);
+    Integer save(SpuImagesEntity entity);
 
     /** 批量保存 */
     void saveBatch(java.util.List<SpuImagesEntity> list);
 
     /** 根据ID更新 */
-    void updateById(SpuImagesEntity entity);
+    Integer updateById(SpuImagesEntity entity);
 
     /** 批量删除 */
     void removeByIds(java.util.List<Long> ids);

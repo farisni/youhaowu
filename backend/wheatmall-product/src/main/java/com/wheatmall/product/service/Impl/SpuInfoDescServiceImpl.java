@@ -35,8 +35,8 @@ public class SpuInfoDescServiceImpl implements SpuInfoDescService {
     }
 
     @Override
-    public void save(SpuInfoDescEntity entity) {
-        spuInfoDescMapper.insert(entity);
+    public Integer save(SpuInfoDescEntity entity) {
+        return spuInfoDescMapper.insert(entity);
     }
 
     @Override
@@ -47,8 +47,8 @@ public class SpuInfoDescServiceImpl implements SpuInfoDescService {
     }
 
     @Override
-    public void updateById(SpuInfoDescEntity entity) {
-        spuInfoDescMapper.updateById(entity);
+    public Integer updateById(SpuInfoDescEntity entity) {
+        return spuInfoDescMapper.updateById(entity);
     }
 
     @Override

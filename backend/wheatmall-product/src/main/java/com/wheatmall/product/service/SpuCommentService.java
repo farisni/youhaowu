@@ -17,7 +17,7 @@ public interface SpuCommentService {
     SpuCommentEntity getById(Long id);
 
     /** 保存 */
-    void save(SpuCommentEntity entity);
+    Integer save(SpuCommentEntity entity);
 
     /** 批量保存 */
     void saveBatch(java.util.List<SpuCommentEntity> list);
