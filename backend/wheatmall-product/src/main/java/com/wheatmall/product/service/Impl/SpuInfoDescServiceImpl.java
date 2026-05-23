@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 import cn.hutool.core.bean.BeanUtil;
-import org.apache.ibatis.executor.BatchResult;
 /**
  * SpuInfoDesc Service 实现
  */
@@ -35,8 +34,12 @@ public class SpuInfoDescServiceImpl implements SpuInfoDescService {
     }
 
     @Override
-    public SpuInfoDescEntity getById(Long id) {
-        return spuInfoDescMapper.selectById(id);
+    public SpuInfoDescVO getById(Long id) {
+        SpuInfoDescEntity e = spuInfoDescMapper.selectById(id);
+        if (e == null) return null;
+        SpuInfoDescVO vo = new SpuInfoDescVO();
+        BeanUtil.copyProperties(e, vo);
+        return vo;
     }
 
     @Override
@@ -64,8 +67,8 @@ public class SpuInfoDescServiceImpl implements SpuInfoDescService {
     }
 
     @Override
-    public void removeByIds(List<Long> ids) {
-        spuInfoDescMapper.deleteBatchIds(ids);
+    public Integer removeByIds(List<Long> ids) {
+        return spuInfoDescMapper.deleteBatchIds(ids);
     }
     @Override
     public Integer saveSpuInfoDesc(SpuInfoDescVO descVO) {

@@ -3,7 +3,6 @@ package com.wheatmall.product.service;
 import com.wheatmall.common.utils.PageData;
 import com.wheatmall.product.vo.AttrAttrgroupRelationVO;
 import com.wheatmall.common.dto.BaseQueryDTO;
-import com.wheatmall.product.entity.AttrAttrgroupRelationEntity;
 import com.wheatmall.product.vo.AttrGroupRelationVO;
 import java.util.List;
 
@@ -16,7 +15,7 @@ public interface AttrAttrgroupRelationService {
     PageData<AttrAttrgroupRelationVO> page(BaseQueryDTO query);
 
     /** 根据ID查询 */
-    AttrAttrgroupRelationEntity getById(Long id);
+    AttrAttrgroupRelationVO getById(Long id);
 
     /** 保存 */
     Integer save(AttrAttrgroupRelationVO vo);
@@ -28,6 +27,6 @@ public interface AttrAttrgroupRelationService {
     Integer updateById(AttrAttrgroupRelationVO vo);
 
     /** 批量删除 */
-    void removeByIds(java.util.List<Long> ids);
+    Integer removeByIds(java.util.List<Long> ids);
     Integer saveRelationBatch(List<AttrGroupRelationVO> vos);
 }

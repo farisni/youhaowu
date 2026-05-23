@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 import cn.hutool.core.bean.BeanUtil;
-import org.apache.ibatis.executor.BatchResult;
 /**
  * UndoLog Service 实现
  */
@@ -35,8 +34,12 @@ public class UndoLogServiceImpl implements UndoLogService {
     }
 
     @Override
-    public UndoLogEntity getById(Long id) {
-        return undoLogMapper.selectById(id);
+    public UndoLogVO getById(Long id) {
+        UndoLogEntity e = undoLogMapper.selectById(id);
+        if (e == null) return null;
+        UndoLogVO vo = new UndoLogVO();
+        BeanUtil.copyProperties(e, vo);
+        return vo;
     }
 
     @Override
@@ -64,7 +67,7 @@ public class UndoLogServiceImpl implements UndoLogService {
     }
 
     @Override
-    public void removeByIds(List<Long> ids) {
-        undoLogMapper.deleteBatchIds(ids);
+    public Integer removeByIds(List<Long> ids) {
+        return undoLogMapper.deleteBatchIds(ids);
     }
 }

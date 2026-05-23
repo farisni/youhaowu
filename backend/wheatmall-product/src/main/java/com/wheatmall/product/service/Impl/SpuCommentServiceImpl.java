@@ -8,7 +8,6 @@ import com.wheatmall.common.dto.BaseQueryDTO;
 import com.wheatmall.product.entity.SpuCommentEntity;
 import com.wheatmall.product.mapper.SpuCommentMapper;
 import com.wheatmall.product.service.SpuCommentService;
-import org.apache.ibatis.executor.BatchResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,8 +34,12 @@ public class SpuCommentServiceImpl implements SpuCommentService {
     }
 
     @Override
-    public SpuCommentEntity getById(Long id) {
-        return spuCommentMapper.selectById(id);
+    public SpuCommentVO getById(Long id) {
+        SpuCommentEntity e = spuCommentMapper.selectById(id);
+        if (e == null) return null;
+        SpuCommentVO vo = new SpuCommentVO();
+        BeanUtil.copyProperties(e, vo);
+        return vo;
     }
 
     @Override
@@ -64,7 +67,7 @@ public class SpuCommentServiceImpl implements SpuCommentService {
     }
 
     @Override
-    public void removeByIds(List<Long> ids) {
-        spuCommentMapper.deleteBatchIds(ids);
+    public Integer removeByIds(List<Long> ids) {
+        return spuCommentMapper.deleteBatchIds(ids);
     }
 }

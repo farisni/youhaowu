@@ -81,8 +81,8 @@ public class CategoryBrandRelationServiceImpl implements CategoryBrandRelationSe
     }
 
     @Override
-    public void removeByIds(List<Long> ids) {
-        categoryBrandRelationMapper.deleteBatchIds(ids);
+    public Integer removeByIds(List<Long> ids) {
+        return categoryBrandRelationMapper.deleteBatchIds(ids);
     }
 
     @Override

@@ -7,8 +7,6 @@ import com.wheatmall.common.utils.PageData;
 import com.wheatmall.product.vo.SpuImagesVO;
 import com.wheatmall.product.utils.PageUtils;
 import com.wheatmall.common.dto.BaseQueryDTO;
-import com.wheatmall.product.entity.SpuImagesEntity;
-import com.wheatmall.product.mapper.SpuImagesMapper;
 import com.wheatmall.product.service.SpuImagesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 import cn.hutool.core.bean.BeanUtil;
-import org.apache.ibatis.executor.BatchResult;
 /**
  * SpuImages Service 实现
  */
@@ -37,8 +34,12 @@ public class SpuImagesServiceImpl implements SpuImagesService {
     }
 
     @Override
-    public SpuImagesEntity getById(Long id) {
-        return spuImagesMapper.selectById(id);
+    public SpuImagesVO getById(Long id) {
+        SpuImagesEntity e = spuImagesMapper.selectById(id);
+        if (e == null) return null;
+        SpuImagesVO vo = new SpuImagesVO();
+        BeanUtil.copyProperties(e, vo);
+        return vo;
     }
 
     @Override
@@ -66,8 +67,8 @@ public class SpuImagesServiceImpl implements SpuImagesService {
     }
 
     @Override
-    public void removeByIds(List<Long> ids) {
-        spuImagesMapper.deleteBatchIds(ids);
+    public Integer removeByIds(List<Long> ids) {
+        return spuImagesMapper.deleteBatchIds(ids);
     }
     @Override
     public Integer saveImages(Long spuId, List<String> images) {

@@ -15,7 +15,7 @@ public interface ProductAttrValueService {
     PageData<ProductAttrValueVO> page(BaseQueryDTO query);
 
     /** 根据ID查询 */
-    ProductAttrValueEntity getById(Long id);
+    ProductAttrValueVO getById(Long id);
 
     /** 保存 */
     Integer save(ProductAttrValueVO vo);
@@ -27,7 +27,7 @@ public interface ProductAttrValueService {
     Integer updateById(ProductAttrValueVO vo);
 
     /** 批量删除 */
-    void removeByIds(java.util.List<Long> ids);
+    Integer removeByIds(java.util.List<Long> ids);
     Integer saveProductAttr(List<ProductAttrValueVO> collect);
     List<ProductAttrValueEntity> baseAttrListforspu(Long spuId);
     List<ProductAttrValueVO> listBySpuId(Long spuId);

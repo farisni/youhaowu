@@ -15,8 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 import cn.hutool.core.bean.BeanUtil;
-import com.wheatmall.product.vo.SkuSaleAttrValueVO;
-import org.apache.ibatis.executor.BatchResult;
 /**
  * SkuSaleAttrValue Service 实现
  */
@@ -36,8 +34,12 @@ public class SkuSaleAttrValueServiceImpl implements SkuSaleAttrValueService {
     }
 
     @Override
-    public SkuSaleAttrValueEntity getById(Long id) {
-        return skuSaleAttrValueMapper.selectById(id);
+    public SkuSaleAttrValueVO getById(Long id) {
+        SkuSaleAttrValueEntity e = skuSaleAttrValueMapper.selectById(id);
+        if (e == null) return null;
+        SkuSaleAttrValueVO vo = new SkuSaleAttrValueVO();
+        BeanUtil.copyProperties(e, vo);
+        return vo;
     }
 
     @Override
@@ -65,7 +67,7 @@ public class SkuSaleAttrValueServiceImpl implements SkuSaleAttrValueService {
     }
 
     @Override
-    public void removeByIds(List<Long> ids) {
-        skuSaleAttrValueMapper.deleteBatchIds(ids);
+    public Integer removeByIds(List<Long> ids) {
+        return skuSaleAttrValueMapper.deleteBatchIds(ids);
     }
 }

@@ -3,7 +3,6 @@ package com.wheatmall.product.service;
 import com.wheatmall.common.utils.PageData;
 import com.wheatmall.product.vo.SpuCommentVO;
 import com.wheatmall.common.dto.BaseQueryDTO;
-import com.wheatmall.product.entity.SpuCommentEntity;
 
 /**
  * SpuComment Service
@@ -14,7 +13,7 @@ public interface SpuCommentService {
     PageData<SpuCommentVO> page(BaseQueryDTO query);
 
     /** 根据ID查询 */
-    SpuCommentEntity getById(Long id);
+    SpuCommentVO getById(Long id);
 
     /** 保存 */
     Integer save(SpuCommentVO vo);
@@ -26,5 +25,5 @@ public interface SpuCommentService {
     Integer updateById(SpuCommentVO vo);
 
     /** 批量删除 */
-    void removeByIds(java.util.List<Long> ids);
+    Integer removeByIds(java.util.List<Long> ids);
 }

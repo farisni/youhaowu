@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 import cn.hutool.core.bean.BeanUtil;
-import org.apache.ibatis.executor.BatchResult;
 /**
  * SkuImages Service 实现
  */
@@ -35,8 +34,12 @@ public class SkuImagesServiceImpl implements SkuImagesService {
     }
 
     @Override
-    public SkuImagesEntity getById(Long id) {
-        return skuImagesMapper.selectById(id);
+    public SkuImagesVO getById(Long id) {
+        SkuImagesEntity e = skuImagesMapper.selectById(id);
+        if (e == null) return null;
+        SkuImagesVO vo = new SkuImagesVO();
+        BeanUtil.copyProperties(e, vo);
+        return vo;
     }
 
     @Override
@@ -64,7 +67,7 @@ public class SkuImagesServiceImpl implements SkuImagesService {
     }
 
     @Override
-    public void removeByIds(List<Long> ids) {
-        skuImagesMapper.deleteBatchIds(ids);
+    public Integer removeByIds(List<Long> ids) {
+        return skuImagesMapper.deleteBatchIds(ids);
     }
 }

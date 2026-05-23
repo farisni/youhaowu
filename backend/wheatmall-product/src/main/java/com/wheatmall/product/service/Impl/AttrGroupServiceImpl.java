@@ -86,8 +86,8 @@ public class AttrGroupServiceImpl implements AttrGroupService {
     }
 
     @Override
-    public void removeByIds(List<Long> ids) {
-        attrGroupMapper.deleteBatchIds(ids);
+    public Integer removeByIds(List<Long> ids) {
+        return attrGroupMapper.deleteBatchIds(ids);
     }
 
     @Override

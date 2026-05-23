@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import org.apache.ibatis.executor.BatchResult;
 
 @Transactional(rollbackFor = Exception.class)
 @Service
@@ -30,8 +29,12 @@ public class ProductAttrValueServiceImpl implements ProductAttrValueService {
     }
 
     @Override
-    public ProductAttrValueEntity getById(Long id) {
-        return attrValueMapper.selectById(id);
+    public ProductAttrValueVO getById(Long id) {
+        ProductAttrValueEntity e = attrValueMapper.selectById(id);
+        if (e == null) return null;
+        ProductAttrValueVO vo = new ProductAttrValueVO();
+        BeanUtil.copyProperties(e, vo);
+        return vo;
     }
 
     @Override
@@ -59,8 +62,8 @@ public class ProductAttrValueServiceImpl implements ProductAttrValueService {
     }
 
     @Override
-    public void removeByIds(List<Long> ids) {
-        attrValueMapper.deleteBatchIds(ids);
+    public Integer removeByIds(List<Long> ids) {
+        return attrValueMapper.deleteBatchIds(ids);
     }
 
     @Override

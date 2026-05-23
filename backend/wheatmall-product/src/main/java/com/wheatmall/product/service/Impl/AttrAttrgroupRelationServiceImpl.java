@@ -38,8 +38,12 @@ public class AttrAttrgroupRelationServiceImpl implements AttrAttrgroupRelationSe
     }
 
     @Override
-    public AttrAttrgroupRelationEntity getById(Long id) {
-        return attrAttrgroupRelationMapper.selectById(id);
+    public AttrAttrgroupRelationVO getById(Long id) {
+        AttrAttrgroupRelationEntity e = attrAttrgroupRelationMapper.selectById(id);
+        if (e == null) return null;
+        AttrAttrgroupRelationVO vo = new AttrAttrgroupRelationVO();
+        BeanUtil.copyProperties(e, vo);
+        return vo;
     }
 
     @Override
@@ -67,8 +71,8 @@ public class AttrAttrgroupRelationServiceImpl implements AttrAttrgroupRelationSe
     }
 
     @Override
-    public void removeByIds(List<Long> ids) {
-        attrAttrgroupRelationMapper.deleteBatchIds(ids);
+    public Integer removeByIds(List<Long> ids) {
+        return attrAttrgroupRelationMapper.deleteBatchIds(ids);
     }
     @Override
     public Integer saveRelationBatch(List<AttrGroupRelationVO> vos) {

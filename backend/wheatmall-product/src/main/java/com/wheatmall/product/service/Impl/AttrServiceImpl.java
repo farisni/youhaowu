@@ -141,8 +141,8 @@ public class AttrServiceImpl implements AttrService {
      * 批量删除属性
      */
     @Override
-    public void removeByIds(List<Long> ids) {
-        attrMapper.deleteBatchIds(ids);
+    public Integer removeByIds(List<Long> ids) {
+        return attrMapper.deleteBatchIds(ids);
     }
 
     /**

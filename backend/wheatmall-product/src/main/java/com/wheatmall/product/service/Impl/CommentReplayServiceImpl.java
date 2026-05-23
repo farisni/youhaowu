@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 import cn.hutool.core.bean.BeanUtil;
-import org.apache.ibatis.executor.BatchResult;
 /**
  * CommentReplay Service 实现
  */
@@ -36,8 +35,12 @@ public class CommentReplayServiceImpl implements CommentReplayService {
     }
 
     @Override
-    public CommentReplayEntity getById(Long id) {
-        return commentReplayMapper.selectById(id);
+    public CommentReplayVO getById(Long id) {
+        CommentReplayEntity e = commentReplayMapper.selectById(id);
+        if (e == null) return null;
+        CommentReplayVO vo = new CommentReplayVO();
+        BeanUtil.copyProperties(e, vo);
+        return vo;
     }
 
     @Override
@@ -65,7 +68,7 @@ public class CommentReplayServiceImpl implements CommentReplayService {
     }
 
     @Override
-    public void removeByIds(List<Long> ids) {
-        commentReplayMapper.deleteBatchIds(ids);
+    public Integer removeByIds(List<Long> ids) {
+        return commentReplayMapper.deleteBatchIds(ids);
     }
 }

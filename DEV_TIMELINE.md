@@ -96,3 +96,4 @@
 - perf: saveBatch 全部改用 BaseMapper.insert(Collection) 批量插入（MyBatis-Plus 3.5.7+ 内置）
 - refactor: Spring BeanUtils 统一替换为 Hutool BeanUtil
 - refactor: 10 个 Service 的 save/saveBatch/updateById 参数从 Entity 改为 VO
+- refactor: 12 个 removeByIds 和 9 个 getById 改为返回 Integer/VO，Service 层零 Entity 暴露
