@@ -110,3 +110,4 @@
 - refactor(order): 统一 2026 规范——Controller 路由常量/极薄转发/VO 入参出参，Service void→Integer，ServiceImpl @Transactional+BeanUtil 转换
 - refactor(common): OrderServiceUris 补充 9 个内部类完整 URI 常量
 - test: 添加 OrderController pytest 接口验证
+- build: Order 模块添加 application.yml（PostgreSQL + Nacos + Kafka）

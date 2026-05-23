@@ -1,5 +1,5 @@
 server:
-  port: 8090
+  port: 8092
 
 spring:
   application:
@@ -11,13 +11,20 @@ spring:
         namespace: public
         group: DEFAULT_GROUP
         register-enabled: true
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://192.168.8.112:5432/wheatmall_oms
+    username: faris
+    password: "123456"
+
+  kafka:
+    bootstrap-servers: 192.168.8.112:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
 logging:
   file:
-    path: /tmp  # 所有日志（包括Nacos）都会输出到 /tmp 目录
+    path: /tmp
   level:
     com.wheatmall.order: debug
-
-nacos:
-  logging:
-    path: /tmp/nacos  # 专门指定nacos日志路径
