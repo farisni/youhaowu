@@ -15,40 +15,37 @@ public final class ProductServiceUris {
     /** 商品分类服务根路径 */
     public static final String PRODUCT_CATEGORY_SERVICE = "/api/product/category";
 
-    /** Product 商品服务根路径 */
-    public static final String PRODUCT_ROOT = "/api/product";
-
     /** Order服务根路径 */
     public static final String ORDER_SERVICE = "/api/order";
-    
+
     /** User服务根路径 */
     public static final String USER_SERVICE = "/api/user";
 
     // ==================== 各模块根路径 ====================
 
     /** 品牌管理根路径 */
-    public static final String PRODUCT_BRAND_SERVICE = PRODUCT_ROOT + "/brand";
+    public static final String PRODUCT_BRAND_SERVICE = "/api/product/brand";
 
     /** 属性管理根路径 */
-    public static final String PRODUCT_ATTR_SERVICE = PRODUCT_ROOT + "/attr";
+    public static final String PRODUCT_ATTR_SERVICE = "/api/product/attr";
 
     /** 属性分组根路径 */
-    public static final String PRODUCT_ATTRGROUP_SERVICE = PRODUCT_ROOT + "/attrgroup";
+    public static final String PRODUCT_ATTRGROUP_SERVICE = "/api/product/attrgroup";
 
     /** SPU 信息根路径 */
-    public static final String PRODUCT_SPU_SERVICE = PRODUCT_ROOT + "/spuinfo";
+    public static final String PRODUCT_SPU_SERVICE = "/api/product/spuinfo";
 
     /** SKU 信息根路径 */
-    public static final String PRODUCT_SKU_SERVICE = PRODUCT_ROOT + "/skuinfo";
+    public static final String PRODUCT_SKU_SERVICE = "/api/product/skuinfo";
 
     /** 分类品牌关联根路径 */
-    public static final String PRODUCT_CATEGORY_BRAND_RELATION_SERVICE = PRODUCT_ROOT + "/categorybrandrelation";
+    public static final String PRODUCT_CATEGORY_BRAND_RELATION_SERVICE = "/api/product/categorybrandrelation";
 
     /** 评论回复根路径 */
-    public static final String PRODUCT_COMMENT_REPLAY_SERVICE = PRODUCT_ROOT + "/commentreplay";
+    public static final String PRODUCT_COMMENT_REPLAY_SERVICE = "/api/product/commentreplay";
 
     /** 商品属性值根路径 */
-    public static final String PRODUCT_ATTR_VALUE_SERVICE = PRODUCT_ROOT + "/productattrvalue";
+    public static final String PRODUCT_ATTR_VALUE_SERVICE = "/api/product/productattrvalue";
 
 
     // ==================== 商品分类相关URI ====================
@@ -60,6 +57,17 @@ public final class ProductServiceUris {
         public static final String UPDATE = "/update/{id}";
     }
 
+    // ==================== Product服务相关URI（已弃用） ====================
+    @Deprecated
+    public static final class Product {
+        public static final String GET_BY_ID = PRODUCT_CATEGORY_SERVICE + "/{id}";
+        public static final String GET_BY_ID_INTERNAL = PRODUCT_CATEGORY_SERVICE + "/get/{id}";
+        public static final String LIST = PRODUCT_CATEGORY_SERVICE + "/list";
+        public static final String CREATE = PRODUCT_CATEGORY_SERVICE;
+        public static final String UPDATE = PRODUCT_CATEGORY_SERVICE + "/{id}";
+        public static final String DELETE = PRODUCT_CATEGORY_SERVICE + "/{id}";
+        public static final String DEDUCT_STOCK = PRODUCT_CATEGORY_SERVICE + "/{id}/deduct-stock";
+    }
 
     // ==================== Order服务相关URI ====================
     public static final class Order {
