@@ -11,6 +11,10 @@ import org.springframework.kafka.core.ProducerFactory;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Kafka Producer 配置（按需激活）
+ * <p>模块不含此包扫描范围，需在自身 Config 中用 @Import 显式引入。</p>
+ */
 @Configuration
 public class KafkaConfig {
 

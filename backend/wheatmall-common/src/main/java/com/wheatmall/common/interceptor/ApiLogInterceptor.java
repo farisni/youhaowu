@@ -13,6 +13,10 @@ import org.springframework.web.util.ContentCachingRequestWrapper;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 
+/**
+ * API 日志拦截器，将请求信息异步写入 Kafka。
+ * <p>不带 @Component，各模块需在 Config 中 @Bean 手动注册。</p>
+ */
 @Slf4j
 public class ApiLogInterceptor implements HandlerInterceptor {
 
@@ -31,9 +35,11 @@ public class ApiLogInterceptor implements HandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
                                 Object handler, Exception ex) {
+        //  计算耗时
         Long startTime = (Long) request.getAttribute(START_TIME_ATTR);
         long duration = startTime != null ? System.currentTimeMillis() - startTime : -1;
 
+        //  组装日志条目
         JSONObject entry = new JSONObject();
         entry.put("timestamp", Instant.now().toString());
         entry.put("service", ApiLogConstants.SERVICE_NAME);
@@ -45,6 +51,7 @@ public class ApiLogInterceptor implements HandlerInterceptor {
         entry.put("duration", duration);
         entry.put("ip", getClientIp(request));
 
+        //  异步推送 Kafka
         kafkaTemplate.send(TOPIC, request.getRequestURI(), entry.toJSONString())
                 .whenComplete((result, throwable) -> {
                     if (throwable != null) {
