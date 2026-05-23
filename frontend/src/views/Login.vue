@@ -31,6 +31,7 @@
             <a class="forgot-link" href="#">忘记密码？</a>
           </div>
           <el-button type="primary" :loading="loading" class="signin-btn" @click="doLogin">登录</el-button>
+          <div class="signup-line">还没有账号？<a href="#" class="signup-link">申请</a></div>
         </div>
       </div>
     </div>
@@ -149,7 +150,7 @@ const doLogin = async () => {
   .field-label {
     display: block;
     font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 600;
     color: #aaa;
     margin-bottom: 8px;
@@ -174,7 +175,7 @@ const doLogin = async () => {
 
   :deep(.el-input__inner) {
     color: #333;
-    font-size: 16px;
+    font-size: 17px;
     &::placeholder { color: #ccc; }
   }
 
@@ -205,15 +206,30 @@ const doLogin = async () => {
   .remember-text {
     font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
     color: #555;
-    font-size: 15px;
+    font-size: 16px;
   }
 
   .forgot-link {
     font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
-    font-size: 14px;
+    font-size: 15px;
     color: #aaa;
     text-decoration: none;
     &:hover { color: #213b6a; }
+  }
+
+  .signup-line {
+    text-align: left;
+    font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-size: 15px;
+    color: #aaa;
+    margin-top: 20px;
+  }
+
+  .signup-link {
+    color: #409EFF;
+    text-decoration: none;
+    font-weight: 600;
+    &:hover { text-decoration: underline; }
   }
 
   .signin-btn {
