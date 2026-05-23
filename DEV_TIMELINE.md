@@ -115,3 +115,5 @@
 - refactor(ware): 统一 2026 规范——Controller 路由常量/VO 入参，Service void→Integer，Feign→预留 RemoteService
 - refactor(common): 新增 WareServiceUris 常量类 + SkuHasStockVO
 - feat(search): 从 wheatmall-2022 搬迁 Search 模块（ES 索引 + 搜索服务）
+- feat(thirdparty): 搬迁 Thirdparty 模块（OSS 签名 + 短信发送），手动创建 OssConfig 替代废弃的 spring-cloud-starter-alicloud-oss
+- feat(thirdparty): 新增 OssConfig 配置类，手动装配 OSS Bean（Spring Cloud Alibaba 2025.x 已移除 alicloud-oss-starter）
