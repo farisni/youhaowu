@@ -4,6 +4,7 @@ import com.wheatmall.common.utils.PageData;
 import com.wheatmall.product.vo.SkuImagesVO;
 import com.wheatmall.common.dto.BaseQueryDTO;
 import com.wheatmall.product.entity.SkuImagesEntity;
+import java.util.List;
 
 /**
  * SkuImages Service
@@ -20,7 +21,7 @@ public interface SkuImagesService {
     Integer save(SkuImagesEntity entity);
 
     /** 批量保存 */
-    void saveBatch(java.util.List<SkuImagesEntity> list);
+    void saveBatch(List<SkuImagesEntity> list);
 
     /** 根据ID更新 */
     Integer updateById(SkuImagesEntity entity);

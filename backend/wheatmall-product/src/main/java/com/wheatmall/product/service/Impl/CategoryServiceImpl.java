@@ -10,7 +10,7 @@ import com.wheatmall.product.entity.CategoryEntity;
 import com.wheatmall.product.mapper.CategoryMapper;
 import com.wheatmall.product.service.CategoryService;
 import com.wheatmall.product.vo.CategoryVO;
-import org.springframework.beans.BeanUtils;
+import cn.hutool.core.bean.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -90,13 +90,13 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void update(CategoryUpdateDTO dto) {
         CategoryEntity entity = new CategoryEntity();
-        BeanUtils.copyProperties(dto, entity);
+        BeanUtil.copyProperties(dto, entity);
         categoryMapper.updateById(entity);
     }
 
     private CategoryVO entityToVO(CategoryEntity entity) {
         CategoryVO vo = new CategoryVO();
-        BeanUtils.copyProperties(entity, vo);
+        BeanUtil.copyProperties(entity, vo);
         return vo;
     }
 }

@@ -4,6 +4,7 @@ import com.wheatmall.common.utils.PageData;
 import com.wheatmall.product.vo.SkuSaleAttrValueVO;
 import com.wheatmall.common.dto.BaseQueryDTO;
 import com.wheatmall.product.entity.SkuSaleAttrValueEntity;
+import java.util.List;
 
 /**
  * SkuSaleAttrValue Service
@@ -20,7 +21,7 @@ public interface SkuSaleAttrValueService {
     Integer save(SkuSaleAttrValueEntity entity);
 
     /** 批量保存 */
-    void saveBatch(java.util.List<SkuSaleAttrValueEntity> list);
+    void saveBatch(List<SkuSaleAttrValueEntity> list);
 
     /** 根据ID更新 */
     Integer updateById(SkuSaleAttrValueEntity entity);

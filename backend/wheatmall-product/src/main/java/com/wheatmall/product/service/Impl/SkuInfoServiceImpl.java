@@ -8,7 +8,7 @@ import com.wheatmall.product.query.SkuQueryDTO;
 import com.wheatmall.product.service.SkuInfoService;
 import com.wheatmall.product.utils.PageUtils;
 import com.wheatmall.product.vo.SkuInfoVO;
-import org.springframework.beans.BeanUtils;
+import cn.hutool.core.bean.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +27,7 @@ public class SkuInfoServiceImpl implements SkuInfoService {
     public PageData<SkuInfoVO> page(SkuQueryDTO query) {
         return PageUtils.selectPage(skuInfoMapper, new LambdaQueryWrapper<>(), query, e -> {
             SkuInfoVO v = new SkuInfoVO();
-            BeanUtils.copyProperties(e, v);
+            BeanUtil.copyProperties(e, v);
             return v;
         });
     }
@@ -36,14 +36,14 @@ public class SkuInfoServiceImpl implements SkuInfoService {
     public SkuInfoVO getVOById(Long id) {
         SkuInfoEntity e = skuInfoMapper.selectById(id);
         SkuInfoVO v = new SkuInfoVO();
-        BeanUtils.copyProperties(e, v);
+        BeanUtil.copyProperties(e, v);
         return v;
     }
 
     @Override
     public void saveSkuInfo(SkuInfoVO vo) {
         SkuInfoEntity entity = new SkuInfoEntity();
-        BeanUtils.copyProperties(vo, entity);
+        BeanUtil.copyProperties(vo, entity);
         skuInfoMapper.insert(entity);
     }
 
@@ -53,7 +53,7 @@ public class SkuInfoServiceImpl implements SkuInfoService {
                 new LambdaQueryWrapper<SkuInfoEntity>().eq(SkuInfoEntity::getSpuId, spuId));
         return entities.stream().map(e -> {
             SkuInfoVO v = new SkuInfoVO();
-            BeanUtils.copyProperties(e, v);
+            BeanUtil.copyProperties(e, v);
             return v;
         }).collect(Collectors.toList());
     }

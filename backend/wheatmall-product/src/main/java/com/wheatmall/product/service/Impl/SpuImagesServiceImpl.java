@@ -29,7 +29,7 @@ public class SpuImagesServiceImpl implements SpuImagesService {
     public PageData<SpuImagesVO> page(BaseQueryDTO query) {
         return PageUtils.selectPage(spuImagesMapper, new LambdaQueryWrapper<>(), query, e -> {
         SpuImagesVO vo = new SpuImagesVO();
-        org.springframework.beans.BeanUtils.copyProperties(e, vo);
+        cn.hutool.core.bean.BeanUtil.copyProperties(e, vo);
         return vo;
     });
     }

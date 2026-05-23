@@ -94,3 +94,4 @@
 - refactor: 16 个 ServiceImpl 添加类级别 @Transactional
 - docs: 注释规则阈值从 40 行收紧为 15 行，AttrServiceImpl 全部方法补注释
 - perf: saveBatch 全部改用 BaseMapper.insert(Collection) 批量插入（MyBatis-Plus 3.5.7+ 内置）
+- refactor: Spring BeanUtils 统一替换为 Hutool BeanUtil

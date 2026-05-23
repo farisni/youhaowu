@@ -21,7 +21,7 @@ public interface ProductAttrValueService {
     Integer save(ProductAttrValueEntity entity);
 
     /** 批量保存 */
-    void saveBatch(java.util.List<ProductAttrValueEntity> list);
+    void saveBatch(List<ProductAttrValueEntity> list);
 
     /** 根据ID更新 */
     Integer updateById(ProductAttrValueEntity entity);

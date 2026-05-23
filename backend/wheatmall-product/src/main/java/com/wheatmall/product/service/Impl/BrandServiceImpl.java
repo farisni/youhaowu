@@ -10,7 +10,7 @@ import com.wheatmall.product.service.CategoryBrandRelationService;
 import com.wheatmall.product.utils.PageUtils;
 import com.wheatmall.product.vo.BrandVO;
 import cn.hutool.core.util.StrUtil;
-import org.springframework.beans.BeanUtils;
+import cn.hutool.core.bean.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,7 +32,7 @@ public class BrandServiceImpl implements BrandService {
     public PageData<BrandVO> page(BrandQueryDTO query) {
         return PageUtils.selectPage(brandMapper, new LambdaQueryWrapper<>(), query, e -> {
             BrandVO v = new BrandVO();
-            BeanUtils.copyProperties(e, v);
+            BeanUtil.copyProperties(e, v);
             return v;
         });
     }
@@ -41,7 +41,7 @@ public class BrandServiceImpl implements BrandService {
     public BrandVO getById(Long id) {
         BrandEntity e = brandMapper.selectById(id);
         BrandVO v = new BrandVO();
-        BeanUtils.copyProperties(e, v);
+        BeanUtil.copyProperties(e, v);
         return v;
     }
 
@@ -53,7 +53,7 @@ public class BrandServiceImpl implements BrandService {
     @Override
     public Integer save(BrandVO vo) {
         BrandEntity e = new BrandEntity();
-        BeanUtils.copyProperties(vo, e);
+        BeanUtil.copyProperties(vo, e);
         return brandMapper.insert(e);
     }
 
@@ -61,7 +61,7 @@ public class BrandServiceImpl implements BrandService {
     public void saveBatch(List<BrandVO> list) {
         List<BrandEntity> entities = list.stream().map(vo -> {
             BrandEntity e = new BrandEntity();
-            BeanUtils.copyProperties(vo, e);
+            BeanUtil.copyProperties(vo, e);
             return e;
         }).collect(Collectors.toList());
         brandMapper.insert(entities);
@@ -70,7 +70,7 @@ public class BrandServiceImpl implements BrandService {
     @Override
     public Integer updateById(Long id, BrandVO vo) {
         BrandEntity e = new BrandEntity();
-        BeanUtils.copyProperties(vo, e);
+        BeanUtil.copyProperties(vo, e);
         e.setBrandId(id);
         return brandMapper.updateById(e);
     }
@@ -80,11 +80,10 @@ public class BrandServiceImpl implements BrandService {
         return brandMapper.deleteById(id);
     }
 
-    @Transactional(rollbackFor = Exception.class)
     @Override
     public void updateDetail(Long id, BrandVO vo) {
         BrandEntity entity = new BrandEntity();
-        BeanUtils.copyProperties(vo, entity);
+        BeanUtil.copyProperties(vo, entity);
         entity.setBrandId(id);
         brandMapper.updateById(entity);
         if (StrUtil.isNotBlank(entity.getName())) {

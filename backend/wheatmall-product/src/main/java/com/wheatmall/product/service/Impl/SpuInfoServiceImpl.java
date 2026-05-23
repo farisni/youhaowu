@@ -13,7 +13,7 @@ import com.wheatmall.product.remote.WareRemoteService;
 import com.wheatmall.product.service.*;
 import com.wheatmall.product.vo.*;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
+import cn.hutool.core.bean.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -55,7 +55,7 @@ public class SpuInfoServiceImpl implements SpuInfoService {
     public PageData<SpuInfoVO> page(BaseQueryDTO query) {
         return PageUtils.selectPage(spuInfoMapper, new LambdaQueryWrapper<>(), query, e -> {
             SpuInfoVO v = new SpuInfoVO();
-            BeanUtils.copyProperties(e, v);
+            BeanUtil.copyProperties(e, v);
             return v;
         });
     }
@@ -64,7 +64,7 @@ public class SpuInfoServiceImpl implements SpuInfoService {
     public SpuInfoVO getVOById(Long id) {
         SpuInfoEntity e = spuInfoMapper.selectById(id);
         SpuInfoVO v = new SpuInfoVO();
-        BeanUtils.copyProperties(e, v);
+        BeanUtil.copyProperties(e, v);
         return v;
     }
 
@@ -82,7 +82,7 @@ public class SpuInfoServiceImpl implements SpuInfoService {
     public void saveSupInfo(SpuSaveVO vo) {
         //  1. 保存SPU基本信息
         SpuInfoEntity spu = new SpuInfoEntity();
-        BeanUtils.copyProperties(vo, spu);
+        BeanUtil.copyProperties(vo, spu);
         spu.setCreateTime(new Date());
         spu.setUpdateTime(new Date());
         saveBaseSpuInfo(spu);
@@ -120,7 +120,7 @@ public class SpuInfoServiceImpl implements SpuInfoService {
             skus.forEach(item -> {
                 //  6a. 构建SKU基本信息并保存
                 SkuInfoVO sku = new SkuInfoVO();
-                BeanUtils.copyProperties(item, sku);
+                BeanUtil.copyProperties(item, sku);
                 sku.setSpuId(spu.getId()); sku.setCatalogId(vo.getCatalogId());
                 sku.setBrandId(vo.getBrandId()); sku.setSaleCount(0L);
                 String defaultImg = "";
@@ -150,7 +150,7 @@ public class SpuInfoServiceImpl implements SpuInfoService {
                 if (saleAttrs != null) {
                     saleAttrs.forEach(a -> {
                         SkuSaleAttrValueEntity e = new SkuSaleAttrValueEntity();
-                        BeanUtils.copyProperties(a, e); e.setSkuId(skuId);
+                        BeanUtil.copyProperties(a, e); e.setSkuId(skuId);
                         skuSaleAttrValueMapper.insert(e);
                     });
                 }

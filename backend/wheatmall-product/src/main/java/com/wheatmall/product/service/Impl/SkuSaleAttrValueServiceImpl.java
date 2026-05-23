@@ -26,7 +26,7 @@ public class SkuSaleAttrValueServiceImpl implements SkuSaleAttrValueService {
     public PageData<SkuSaleAttrValueVO> page(BaseQueryDTO query) {
         return PageUtils.selectPage(skuSaleAttrValueMapper, new LambdaQueryWrapper<>(), query, e -> {
         SkuSaleAttrValueVO vo = new SkuSaleAttrValueVO();
-        org.springframework.beans.BeanUtils.copyProperties(e, vo);
+        cn.hutool.core.bean.BeanUtil.copyProperties(e, vo);
         return vo;
     });
     }

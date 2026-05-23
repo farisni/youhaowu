@@ -21,7 +21,7 @@ public interface SpuImagesService {
     Integer save(SpuImagesEntity entity);
 
     /** 批量保存 */
-    void saveBatch(java.util.List<SpuImagesEntity> list);
+    void saveBatch(List<SpuImagesEntity> list);
 
     /** 根据ID更新 */
     Integer updateById(SpuImagesEntity entity);

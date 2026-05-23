@@ -8,7 +8,7 @@ import com.wheatmall.product.entity.ProductAttrValueEntity;
 import com.wheatmall.product.mapper.ProductAttrValueMapper;
 import com.wheatmall.product.service.ProductAttrValueService;
 import com.wheatmall.product.vo.ProductAttrValueVO;
-import org.springframework.beans.BeanUtils;
+import cn.hutool.core.bean.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -71,7 +71,7 @@ public class ProductAttrValueServiceImpl implements ProductAttrValueService {
 
     private ProductAttrValueVO entityToVO(ProductAttrValueEntity e) {
         ProductAttrValueVO vo = new ProductAttrValueVO();
-        BeanUtils.copyProperties(e, vo);
+        BeanUtil.copyProperties(e, vo);
         return vo;
     }
 }

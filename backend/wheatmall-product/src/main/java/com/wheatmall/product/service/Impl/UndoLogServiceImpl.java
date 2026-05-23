@@ -26,7 +26,7 @@ public class UndoLogServiceImpl implements UndoLogService {
     public PageData<UndoLogVO> page(BaseQueryDTO query) {
         return PageUtils.selectPage(undoLogMapper, new LambdaQueryWrapper<>(), query, e -> {
         UndoLogVO vo = new UndoLogVO();
-        org.springframework.beans.BeanUtils.copyProperties(e, vo);
+        cn.hutool.core.bean.BeanUtil.copyProperties(e, vo);
         return vo;
     });
     }
@@ -43,9 +43,7 @@ public class UndoLogServiceImpl implements UndoLogService {
 
     @Override
     public void saveBatch(List<UndoLogEntity> list) {
-        for (UndoLogEntity e : list) {
-            undoLogMapper.insert(e);
-        }
+        undoLogMapper.insert(list);
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.wheatmall.common.utils.PageData;
 import com.wheatmall.product.vo.SpuInfoDescVO;
 import com.wheatmall.common.dto.BaseQueryDTO;
 import com.wheatmall.product.entity.SpuInfoDescEntity;
+import java.util.List;
 
 /**
  * SpuInfoDesc Service
@@ -20,7 +21,7 @@ public interface SpuInfoDescService {
     Integer save(SpuInfoDescEntity entity);
 
     /** 批量保存 */
-    void saveBatch(java.util.List<SpuInfoDescEntity> list);
+    void saveBatch(List<SpuInfoDescEntity> list);
 
     /** 根据ID更新 */
     Integer updateById(SpuInfoDescEntity entity);

@@ -26,7 +26,7 @@ public class SkuImagesServiceImpl implements SkuImagesService {
     public PageData<SkuImagesVO> page(BaseQueryDTO query) {
         return PageUtils.selectPage(skuImagesMapper, new LambdaQueryWrapper<>(), query, e -> {
         SkuImagesVO vo = new SkuImagesVO();
-        org.springframework.beans.BeanUtils.copyProperties(e, vo);
+        cn.hutool.core.bean.BeanUtil.copyProperties(e, vo);
         return vo;
     });
     }
@@ -39,7 +39,7 @@ public class SkuImagesServiceImpl implements SkuImagesService {
     @Override
     public Integer save(SkuImagesEntity entity) {
         return skuImagesMapper.insert(entity);
-    }
+    } 
 
     @Override
     public void saveBatch(List<SkuImagesEntity> list) {

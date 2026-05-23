@@ -27,7 +27,7 @@ public class CommentReplayServiceImpl implements CommentReplayService {
     public PageData<CommentReplayVO> page(BaseQueryDTO query) {
         return PageUtils.selectPage(commentReplayMapper, new LambdaQueryWrapper<>(), query, e -> {
         CommentReplayVO vo = new CommentReplayVO();
-        org.springframework.beans.BeanUtils.copyProperties(e, vo);
+        cn.hutool.core.bean.BeanUtil.copyProperties(e, vo);
         return vo;
     });
     }

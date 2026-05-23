@@ -26,7 +26,7 @@ public class SpuCommentServiceImpl implements SpuCommentService {
     public PageData<SpuCommentVO> page(BaseQueryDTO query) {
         return PageUtils.selectPage(spuCommentMapper, new LambdaQueryWrapper<>(), query, e -> {
         SpuCommentVO vo = new SpuCommentVO();
-        org.springframework.beans.BeanUtils.copyProperties(e, vo);
+        cn.hutool.core.bean.BeanUtil.copyProperties(e, vo);
         return vo;
     });
     }

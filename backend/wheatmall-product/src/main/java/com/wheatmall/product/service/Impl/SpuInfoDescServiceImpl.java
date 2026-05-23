@@ -26,7 +26,7 @@ public class SpuInfoDescServiceImpl implements SpuInfoDescService {
     public PageData<SpuInfoDescVO> page(BaseQueryDTO query) {
         return PageUtils.selectPage(spuInfoDescMapper, new LambdaQueryWrapper<>(), query, e -> {
         SpuInfoDescVO vo = new SpuInfoDescVO();
-        org.springframework.beans.BeanUtils.copyProperties(e, vo);
+        cn.hutool.core.bean.BeanUtil.copyProperties(e, vo);
         return vo;
     });
     }

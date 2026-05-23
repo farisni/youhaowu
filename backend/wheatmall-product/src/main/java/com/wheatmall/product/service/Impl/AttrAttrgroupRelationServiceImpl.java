@@ -2,7 +2,7 @@ package com.wheatmall.product.service.Impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.wheatmall.product.vo.AttrGroupRelationVO;
-import org.springframework.beans.BeanUtils;
+import cn.hutool.core.bean.BeanUtil;
 import java.util.stream.Collectors;
 import com.wheatmall.common.utils.PageData;
 import com.wheatmall.product.vo.AttrAttrgroupRelationVO;
@@ -31,7 +31,7 @@ public class AttrAttrgroupRelationServiceImpl implements AttrAttrgroupRelationSe
     public PageData<AttrAttrgroupRelationVO> page(BaseQueryDTO query) {
         return PageUtils.selectPage(attrAttrgroupRelationMapper, new LambdaQueryWrapper<>(), query, e -> {
         AttrAttrgroupRelationVO vo = new AttrAttrgroupRelationVO();
-        org.springframework.beans.BeanUtils.copyProperties(e, vo);
+        cn.hutool.core.bean.BeanUtil.copyProperties(e, vo);
         return vo;
     });
     }
@@ -66,7 +66,7 @@ public class AttrAttrgroupRelationServiceImpl implements AttrAttrgroupRelationSe
     public void saveRelationBatch(List<AttrGroupRelationVO> vos) {
         List<AttrAttrgroupRelationEntity> list = vos.stream().map(item -> {
             AttrAttrgroupRelationEntity e = new AttrAttrgroupRelationEntity();
-            BeanUtils.copyProperties(item, e);
+            BeanUtil.copyProperties(item, e);
             return e;
         }).collect(Collectors.toList());
         for (AttrAttrgroupRelationEntity e : list) {

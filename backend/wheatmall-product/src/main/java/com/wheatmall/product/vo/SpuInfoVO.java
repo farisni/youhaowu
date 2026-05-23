@@ -10,5 +10,5 @@ import java.io.Serializable;
 @Data
 public class SpuInfoVO implements Serializable {
     private static final long serialVersionUID = 1L;
-    // 字段与 SpuInfoEntity 一致，通过 BeanUtils.copyProperties 转换
+    // 字段与 SpuInfoEntity 一致，通过 BeanUtil.copyProperties 转换
 }

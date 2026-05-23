@@ -13,7 +13,7 @@ import com.wheatmall.product.service.CategoryBrandRelationService;
 import com.wheatmall.common.dto.BaseQueryDTO;
 import com.wheatmall.product.utils.PageUtils;
 import com.wheatmall.product.vo.CategoryBrandRelationVO;
-import org.springframework.beans.BeanUtils;
+import cn.hutool.core.bean.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,7 +37,7 @@ public class CategoryBrandRelationServiceImpl implements CategoryBrandRelationSe
     public PageData<CategoryBrandRelationVO> page(BaseQueryDTO query) {
         return PageUtils.selectPage(categoryBrandRelationMapper, new LambdaQueryWrapper<>(), query, e -> {
             CategoryBrandRelationVO v = new CategoryBrandRelationVO();
-            BeanUtils.copyProperties(e, v);
+            BeanUtil.copyProperties(e, v);
             return v;
         });
     }
@@ -46,7 +46,7 @@ public class CategoryBrandRelationServiceImpl implements CategoryBrandRelationSe
     public CategoryBrandRelationVO getById(Long id) {
         CategoryBrandRelationEntity e = categoryBrandRelationMapper.selectById(id);
         CategoryBrandRelationVO v = new CategoryBrandRelationVO();
-        BeanUtils.copyProperties(e, v);
+        BeanUtil.copyProperties(e, v);
         return v;
     }
 
@@ -58,7 +58,7 @@ public class CategoryBrandRelationServiceImpl implements CategoryBrandRelationSe
     @Override
     public Integer save(CategoryBrandRelationVO vo) {
         CategoryBrandRelationEntity e = new CategoryBrandRelationEntity();
-        BeanUtils.copyProperties(vo, e);
+        BeanUtil.copyProperties(vo, e);
         return categoryBrandRelationMapper.insert(e);
     }
 
@@ -72,7 +72,7 @@ public class CategoryBrandRelationServiceImpl implements CategoryBrandRelationSe
     @Override
     public Integer updateById(CategoryBrandRelationVO vo) {
         CategoryBrandRelationEntity e = new CategoryBrandRelationEntity();
-        BeanUtils.copyProperties(vo, e);
+        BeanUtil.copyProperties(vo, e);
         return categoryBrandRelationMapper.updateById(e);
     }
 
@@ -84,7 +84,7 @@ public class CategoryBrandRelationServiceImpl implements CategoryBrandRelationSe
     @Override
     public void saveDetail(CategoryBrandRelationVO vo) {
         CategoryBrandRelationEntity entity = new CategoryBrandRelationEntity();
-        BeanUtils.copyProperties(vo, entity);
+        BeanUtil.copyProperties(vo, entity);
         BrandEntity brand = brandMapper.selectById(entity.getBrandId());
         CategoryEntity category = categoryMapper.selectById(entity.getCatelogId());
         entity.setBrandName(brand != null ? brand.getName() : "");

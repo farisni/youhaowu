@@ -18,7 +18,7 @@ import com.wheatmall.product.service.AttrService;
 import com.wheatmall.product.utils.PageUtils;
 import com.wheatmall.product.vo.AttrRespVO;
 import com.wheatmall.product.vo.AttrVO;
-import org.springframework.beans.BeanUtils;
+import cn.hutool.core.bean.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,7 +53,7 @@ public class AttrServiceImpl implements AttrService {
     public PageData<AttrRespVO> page(AttrQueryDTO query) {
         return PageUtils.selectPage(attrMapper, new LambdaQueryWrapper<>(), query, e -> {
             AttrRespVO vo = new AttrRespVO();
-            BeanUtils.copyProperties(e, vo);
+            BeanUtil.copyProperties(e, vo);
             return vo;
         });
     }
@@ -67,7 +67,7 @@ public class AttrServiceImpl implements AttrService {
         AttrEntity attr = attrMapper.selectById(attrId);
         if (attr == null) return null;
         AttrRespVO vo = new AttrRespVO();
-        BeanUtils.copyProperties(attr, vo);
+        BeanUtil.copyProperties(attr, vo);
 
         // 2. 基本属性：补充所属分组ID和分组名
         if (attr.getAttrType() == ProductConstant.AttrEnum.ATTR_TYPE_BASE.getCode()) {
@@ -102,7 +102,7 @@ public class AttrServiceImpl implements AttrService {
     @Override
     public Integer saveAttr(AttrVO vo) {
         AttrEntity entity = new AttrEntity();
-        BeanUtils.copyProperties(vo, entity);
+        BeanUtil.copyProperties(vo, entity);
         return attrMapper.insert(entity);
     }
 
@@ -121,7 +121,7 @@ public class AttrServiceImpl implements AttrService {
     public void saveBatch(List<AttrVO> list) {
         List<AttrEntity> entities = list.stream().map(vo -> {
             AttrEntity e = new AttrEntity();
-            BeanUtils.copyProperties(vo, e);
+            BeanUtil.copyProperties(vo, e);
             return e;
         }).collect(Collectors.toList());
         attrMapper.insert(entities);
@@ -162,7 +162,7 @@ public class AttrServiceImpl implements AttrService {
         // 3. 转换为 VO，基本属性补充分组名，所有属性补充分类名
         List<AttrRespVO> vos = result.getRecords().stream().map(attr -> {
             AttrRespVO vo = new AttrRespVO();
-            BeanUtils.copyProperties(attr, vo);
+            BeanUtil.copyProperties(attr, vo);
             if ("base".equalsIgnoreCase(attrType)) {
                 AttrAttrgroupRelationEntity rel = relationMapper.selectOne(
                         new LambdaQueryWrapper<AttrAttrgroupRelationEntity>()
@@ -197,7 +197,7 @@ public class AttrServiceImpl implements AttrService {
         List<AttrEntity> attrs = attrMapper.selectBatchIds(attrIds);
         return attrs.stream().map(a -> {
             AttrRespVO v = new AttrRespVO();
-            BeanUtils.copyProperties(a, v);
+            BeanUtil.copyProperties(a, v);
             return v;
         }).collect(Collectors.toList());
     }
@@ -234,7 +234,7 @@ public class AttrServiceImpl implements AttrService {
 
         return PageUtils.selectPage(attrMapper, wrapper, query, e -> {
             AttrRespVO vo = new AttrRespVO();
-            BeanUtils.copyProperties(e, vo);
+            BeanUtil.copyProperties(e, vo);
             return vo;
         });
     }
@@ -247,7 +247,7 @@ public class AttrServiceImpl implements AttrService {
     public void updateAttrById(Long id, AttrVO attr) {
         // 1. 更新属性基本信息
         AttrEntity entity = new AttrEntity();
-        BeanUtils.copyProperties(attr, entity);
+        BeanUtil.copyProperties(attr, entity);
         entity.setAttrId(id);
         attrMapper.updateById(entity);
 

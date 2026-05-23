@@ -4,6 +4,7 @@ import com.wheatmall.common.utils.PageData;
 import com.wheatmall.product.vo.CommentReplayVO;
 import com.wheatmall.common.dto.BaseQueryDTO;
 import com.wheatmall.product.entity.CommentReplayEntity;
+import java.util.List;
 
 /**
  * CommentReplay Service
@@ -20,7 +21,7 @@ public interface CommentReplayService {
     Integer save(CommentReplayEntity entity);
 
     /** 批量保存 */
-    void saveBatch(java.util.List<CommentReplayEntity> list);
+    void saveBatch(List<CommentReplayEntity> list);
 
     /** 根据ID更新 */
     Integer updateById(CommentReplayEntity entity);
