@@ -1,16 +1,49 @@
 package com.wheatmall.product.controller;
 
 import com.wheatmall.common.constant.ServiceUris;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.wheatmall.common.utils.PageData;
+import com.wheatmall.common.utils.R;
+import com.wheatmall.product.service.CategoryBrandRelationService;
+import com.wheatmall.product.query.CategoryBrandRelationQueryDTO;
+import com.wheatmall.product.vo.CategoryBrandRelationVO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
- * 品牌与分类关联关系控制器
- * 管理品牌与分类的关联关系，提供查询品牌关联分类及获取分类下品牌列表的接口
+ * 品牌分类关联控制器
  */
 @RestController
-@RequestMapping(ServiceUris.PRODUCT_CATEGORY_SERVICE)
+@RequestMapping(ServiceUris.PRODUCT_CATEGORY_BRAND_RELATION_SERVICE)
 public class CategoryBrandRelationController {
-    // TODO: GET /catelog/list 获取分类关联的品牌
-    // TODO: GET /brands/list 获取品牌关联的分类
+
+    @Autowired
+    private CategoryBrandRelationService categoryBrandRelationService;
+
+    /**
+     * 分页查询关联关系
+     */
+    @GetMapping(ServiceUris.ProductCategoryBrandRelation.PAGE)
+    public R<PageData<CategoryBrandRelationVO>> list(CategoryBrandRelationQueryDTO query) {
+        return R.ok(categoryBrandRelationService.page(query));
+    }
+
+    /**
+     * 根据分类ID查询关联品牌
+     */
+    @GetMapping(ServiceUris.ProductCategoryBrandRelation.BRANDS_BY_CAT)
+    public R<List<CategoryBrandRelationVO>> brandsByCat(@PathVariable Long catId) {
+        // TODO: 添加 listByCatelogId 方法到 CategoryBrandRelationService
+        return R.ok(java.util.Collections.emptyList());
+    }
+
+    /**
+     * 保存品牌分类关联
+     */
+    @PostMapping(ServiceUris.ProductCategoryBrandRelation.SAVE)
+    public R<Void> save(@RequestBody CategoryBrandRelationVO vo) {
+        categoryBrandRelationService.saveDetail(vo);
+        return R.ok();
+    }
 }

@@ -2,7 +2,8 @@ package com.wheatmall.product.service.Impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.wheatmall.common.utils.PageData;
-import com.wheatmall.common.utils.PageUtils;
+import com.wheatmall.product.utils.PageUtils;
+import com.wheatmall.common.dto.BaseQueryDTO;
 import com.wheatmall.product.dto.CategoryQueryDTO;
 import com.wheatmall.product.dto.CategoryUpdateDTO;
 import com.wheatmall.product.entity.CategoryEntity;

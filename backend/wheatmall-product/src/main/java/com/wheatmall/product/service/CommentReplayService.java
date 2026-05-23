@@ -1,0 +1,30 @@
+package com.wheatmall.product.service;
+
+import com.wheatmall.common.utils.PageData;
+import com.wheatmall.product.vo.CommentReplayVO;
+import com.wheatmall.common.dto.BaseQueryDTO;
+import com.wheatmall.product.entity.CommentReplayEntity;
+
+/**
+ * CommentReplay Service
+ */
+public interface CommentReplayService {
+
+    /** 分页查询 */
+    PageData<CommentReplayVO> page(BaseQueryDTO query);
+
+    /** 根据ID查询 */
+    CommentReplayEntity getById(Long id);
+
+    /** 保存 */
+    void save(CommentReplayEntity entity);
+
+    /** 批量保存 */
+    void saveBatch(java.util.List<CommentReplayEntity> list);
+
+    /** 根据ID更新 */
+    void updateById(CommentReplayEntity entity);
+
+    /** 批量删除 */
+    void removeByIds(java.util.List<Long> ids);
+}

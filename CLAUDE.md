@@ -273,3 +273,38 @@ public class CategoryController {
 ---
 
 **注意：** 本文档由 AI 助手维护，如有新的规则需求，请告知 AI 助手更新此文档。
+
+### 6. 代码注释规则
+
+**规则描述：**
+方法体内代码超过 40 行时，方法签名上方必须加 Javadoc，且方法内关键逻辑块前加行内注释。
+
+**具体要求：**
+- 方法体超过 40 行（不含空行和只有大括号的行），必须在方法签名上方加 Javadoc 注释
+- Javadoc 写清楚方法做的几件事、执行步骤、关键逻辑
+- 方法内关键步骤处加行内注释，格式统一用 `//  xxxxx`（双斜杠+两个空格+中文）
+
+**示例：**
+```java
+public void complexMethod() {
+    //  1. 校验入参
+    validateParams(dto);
+
+    //  2. 查询关联数据
+    List<RelationEntity> relations = relationMapper.selectList(...);
+
+    //  3. 构建 VO 并填充关联信息
+    List<XxxVO> vos = entities.stream().map(e -> {
+        XxxVO vo = new XxxVO();
+        //  ...
+        return vo;
+    }).collect(Collectors.toList());
+
+    //  4. 保存并返回
+    mapper.batchInsert(vos);
+}
+```
+
+**注意：**
+- 低于 40 行的方法不强制，但鼓励在复杂逻辑处加注释
+- 不要每行都加注释，在逻辑分界点加即可
