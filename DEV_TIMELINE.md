@@ -126,3 +126,7 @@
 - feat(gateway): 搬迁 Gateway 模块（Spring Cloud Gateway + Nacos 发现 + CORS + 8 条路由）
 - feat(cart): 从 gulimall-dev 迁移 Cart 模块（Redis 购物车，7 个 REST API 端点）
 - feat(common): 新增 CartConstant/CartVO/CartItemVO/SkuInfoVO/UserInfoTO/AuthConstant
+
+## 2026-05-24
+
+- refactor: SQL文件重命名 wheatmall→youhaowu，测试目录重命名 intergre-py-test→test

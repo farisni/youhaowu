@@ -2,10 +2,10 @@
 -- PostgreSQL database dump
 --
 
-\restrict 9oM0cu9GYMnc7mDwwr7aMhQ2gcBe2K3drHzfC1hcbMt0aVcCDaT78bZyzmzsMn2
+\restrict WPcUjOluzYBbe9WlZZjaJoClGyOV2xt4LqAWG52AK8uRk22DJTPMT5NYQkZotOY
 
 -- Dumped from database version 17.10
--- Dumped by pg_dump version 17.10
+-- Dumped by pg_dump version 18.4
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -24,7 +24,7 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- Name: qrtz_blob_triggers; Type: TABLE; Schema: public; Owner: -
+-- Name: qrtz_blob_triggers; Type: TABLE; Schema: public; Owner: faris
 --
 
 CREATE TABLE public.qrtz_blob_triggers (
@@ -35,8 +35,10 @@ CREATE TABLE public.qrtz_blob_triggers (
 );
 
 
+ALTER TABLE public.qrtz_blob_triggers OWNER TO faris;
+
 --
--- Name: qrtz_calendars; Type: TABLE; Schema: public; Owner: -
+-- Name: qrtz_calendars; Type: TABLE; Schema: public; Owner: faris
 --
 
 CREATE TABLE public.qrtz_calendars (
@@ -46,8 +48,10 @@ CREATE TABLE public.qrtz_calendars (
 );
 
 
+ALTER TABLE public.qrtz_calendars OWNER TO faris;
+
 --
--- Name: qrtz_cron_triggers; Type: TABLE; Schema: public; Owner: -
+-- Name: qrtz_cron_triggers; Type: TABLE; Schema: public; Owner: faris
 --
 
 CREATE TABLE public.qrtz_cron_triggers (
@@ -59,8 +63,10 @@ CREATE TABLE public.qrtz_cron_triggers (
 );
 
 
+ALTER TABLE public.qrtz_cron_triggers OWNER TO faris;
+
 --
--- Name: qrtz_fired_triggers; Type: TABLE; Schema: public; Owner: -
+-- Name: qrtz_fired_triggers; Type: TABLE; Schema: public; Owner: faris
 --
 
 CREATE TABLE public.qrtz_fired_triggers (
@@ -80,8 +86,10 @@ CREATE TABLE public.qrtz_fired_triggers (
 );
 
 
+ALTER TABLE public.qrtz_fired_triggers OWNER TO faris;
+
 --
--- Name: qrtz_job_details; Type: TABLE; Schema: public; Owner: -
+-- Name: qrtz_job_details; Type: TABLE; Schema: public; Owner: faris
 --
 
 CREATE TABLE public.qrtz_job_details (
@@ -98,8 +106,10 @@ CREATE TABLE public.qrtz_job_details (
 );
 
 
+ALTER TABLE public.qrtz_job_details OWNER TO faris;
+
 --
--- Name: qrtz_locks; Type: TABLE; Schema: public; Owner: -
+-- Name: qrtz_locks; Type: TABLE; Schema: public; Owner: faris
 --
 
 CREATE TABLE public.qrtz_locks (
@@ -108,8 +118,10 @@ CREATE TABLE public.qrtz_locks (
 );
 
 
+ALTER TABLE public.qrtz_locks OWNER TO faris;
+
 --
--- Name: qrtz_paused_trigger_grps; Type: TABLE; Schema: public; Owner: -
+-- Name: qrtz_paused_trigger_grps; Type: TABLE; Schema: public; Owner: faris
 --
 
 CREATE TABLE public.qrtz_paused_trigger_grps (
@@ -118,8 +130,10 @@ CREATE TABLE public.qrtz_paused_trigger_grps (
 );
 
 
+ALTER TABLE public.qrtz_paused_trigger_grps OWNER TO faris;
+
 --
--- Name: qrtz_scheduler_state; Type: TABLE; Schema: public; Owner: -
+-- Name: qrtz_scheduler_state; Type: TABLE; Schema: public; Owner: faris
 --
 
 CREATE TABLE public.qrtz_scheduler_state (
@@ -130,8 +144,10 @@ CREATE TABLE public.qrtz_scheduler_state (
 );
 
 
+ALTER TABLE public.qrtz_scheduler_state OWNER TO faris;
+
 --
--- Name: qrtz_simple_triggers; Type: TABLE; Schema: public; Owner: -
+-- Name: qrtz_simple_triggers; Type: TABLE; Schema: public; Owner: faris
 --
 
 CREATE TABLE public.qrtz_simple_triggers (
@@ -144,8 +160,10 @@ CREATE TABLE public.qrtz_simple_triggers (
 );
 
 
+ALTER TABLE public.qrtz_simple_triggers OWNER TO faris;
+
 --
--- Name: qrtz_simprop_triggers; Type: TABLE; Schema: public; Owner: -
+-- Name: qrtz_simprop_triggers; Type: TABLE; Schema: public; Owner: faris
 --
 
 CREATE TABLE public.qrtz_simprop_triggers (
@@ -166,8 +184,10 @@ CREATE TABLE public.qrtz_simprop_triggers (
 );
 
 
+ALTER TABLE public.qrtz_simprop_triggers OWNER TO faris;
+
 --
--- Name: qrtz_triggers; Type: TABLE; Schema: public; Owner: -
+-- Name: qrtz_triggers; Type: TABLE; Schema: public; Owner: faris
 --
 
 CREATE TABLE public.qrtz_triggers (
@@ -190,8 +210,10 @@ CREATE TABLE public.qrtz_triggers (
 );
 
 
+ALTER TABLE public.qrtz_triggers OWNER TO faris;
+
 --
--- Name: schedule_job; Type: TABLE; Schema: public; Owner: -
+-- Name: schedule_job; Type: TABLE; Schema: public; Owner: faris
 --
 
 CREATE TABLE public.schedule_job (
@@ -205,64 +227,66 @@ CREATE TABLE public.schedule_job (
 );
 
 
+ALTER TABLE public.schedule_job OWNER TO faris;
+
 --
--- Name: TABLE schedule_job; Type: COMMENT; Schema: public; Owner: -
+-- Name: TABLE schedule_job; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON TABLE public.schedule_job IS '定时任务';
 
 
 --
--- Name: COLUMN schedule_job.job_id; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN schedule_job.job_id; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.schedule_job.job_id IS '任务id';
 
 
 --
--- Name: COLUMN schedule_job.bean_name; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN schedule_job.bean_name; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.schedule_job.bean_name IS 'spring bean名称';
 
 
 --
--- Name: COLUMN schedule_job.params; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN schedule_job.params; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.schedule_job.params IS '参数';
 
 
 --
--- Name: COLUMN schedule_job.cron_expression; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN schedule_job.cron_expression; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.schedule_job.cron_expression IS 'cron表达式';
 
 
 --
--- Name: COLUMN schedule_job.status; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN schedule_job.status; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.schedule_job.status IS '任务状态  0：正常  1：暂停';
 
 
 --
--- Name: COLUMN schedule_job.remark; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN schedule_job.remark; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.schedule_job.remark IS '备注';
 
 
 --
--- Name: COLUMN schedule_job.create_time; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN schedule_job.create_time; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.schedule_job.create_time IS '创建时间';
 
 
 --
--- Name: schedule_job_job_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: schedule_job_job_id_seq; Type: SEQUENCE; Schema: public; Owner: faris
 --
 
 CREATE SEQUENCE public.schedule_job_job_id_seq
@@ -273,15 +297,17 @@ CREATE SEQUENCE public.schedule_job_job_id_seq
     CACHE 1;
 
 
+ALTER SEQUENCE public.schedule_job_job_id_seq OWNER TO faris;
+
 --
--- Name: schedule_job_job_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: schedule_job_job_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: faris
 --
 
 ALTER SEQUENCE public.schedule_job_job_id_seq OWNED BY public.schedule_job.job_id;
 
 
 --
--- Name: schedule_job_log; Type: TABLE; Schema: public; Owner: -
+-- Name: schedule_job_log; Type: TABLE; Schema: public; Owner: faris
 --
 
 CREATE TABLE public.schedule_job_log (
@@ -296,71 +322,73 @@ CREATE TABLE public.schedule_job_log (
 );
 
 
+ALTER TABLE public.schedule_job_log OWNER TO faris;
+
 --
--- Name: TABLE schedule_job_log; Type: COMMENT; Schema: public; Owner: -
+-- Name: TABLE schedule_job_log; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON TABLE public.schedule_job_log IS '定时任务日志';
 
 
 --
--- Name: COLUMN schedule_job_log.log_id; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN schedule_job_log.log_id; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.schedule_job_log.log_id IS '任务日志id';
 
 
 --
--- Name: COLUMN schedule_job_log.job_id; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN schedule_job_log.job_id; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.schedule_job_log.job_id IS '任务id';
 
 
 --
--- Name: COLUMN schedule_job_log.bean_name; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN schedule_job_log.bean_name; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.schedule_job_log.bean_name IS 'spring bean名称';
 
 
 --
--- Name: COLUMN schedule_job_log.params; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN schedule_job_log.params; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.schedule_job_log.params IS '参数';
 
 
 --
--- Name: COLUMN schedule_job_log.status; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN schedule_job_log.status; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.schedule_job_log.status IS '任务状态    0：成功    1：失败';
 
 
 --
--- Name: COLUMN schedule_job_log.error; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN schedule_job_log.error; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.schedule_job_log.error IS '失败信息';
 
 
 --
--- Name: COLUMN schedule_job_log.times; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN schedule_job_log.times; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.schedule_job_log.times IS '耗时(单位：毫秒)';
 
 
 --
--- Name: COLUMN schedule_job_log.create_time; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN schedule_job_log.create_time; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.schedule_job_log.create_time IS '创建时间';
 
 
 --
--- Name: schedule_job_log_log_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: schedule_job_log_log_id_seq; Type: SEQUENCE; Schema: public; Owner: faris
 --
 
 CREATE SEQUENCE public.schedule_job_log_log_id_seq
@@ -371,54 +399,58 @@ CREATE SEQUENCE public.schedule_job_log_log_id_seq
     CACHE 1;
 
 
+ALTER SEQUENCE public.schedule_job_log_log_id_seq OWNER TO faris;
+
 --
--- Name: schedule_job_log_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: schedule_job_log_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: faris
 --
 
 ALTER SEQUENCE public.schedule_job_log_log_id_seq OWNED BY public.schedule_job_log.log_id;
 
 
 --
--- Name: sys_captcha; Type: TABLE; Schema: public; Owner: -
+-- Name: sys_captcha; Type: TABLE; Schema: public; Owner: faris
 --
 
 CREATE TABLE public.sys_captcha (
-    uuid character(36) NOT NULL,
+    uuid character varying(36) NOT NULL,
     code character varying(6) NOT NULL,
     expire_time timestamp with time zone
 );
 
 
+ALTER TABLE public.sys_captcha OWNER TO faris;
+
 --
--- Name: TABLE sys_captcha; Type: COMMENT; Schema: public; Owner: -
+-- Name: TABLE sys_captcha; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON TABLE public.sys_captcha IS '系统验证码';
 
 
 --
--- Name: COLUMN sys_captcha.uuid; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN sys_captcha.uuid; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.sys_captcha.uuid IS 'uuid';
 
 
 --
--- Name: COLUMN sys_captcha.code; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN sys_captcha.code; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.sys_captcha.code IS '验证码';
 
 
 --
--- Name: COLUMN sys_captcha.expire_time; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN sys_captcha.expire_time; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.sys_captcha.expire_time IS '过期时间';
 
 
 --
--- Name: sys_config; Type: TABLE; Schema: public; Owner: -
+-- Name: sys_config; Type: TABLE; Schema: public; Owner: faris
 --
 
 CREATE TABLE public.sys_config (
@@ -430,43 +462,45 @@ CREATE TABLE public.sys_config (
 );
 
 
+ALTER TABLE public.sys_config OWNER TO faris;
+
 --
--- Name: TABLE sys_config; Type: COMMENT; Schema: public; Owner: -
+-- Name: TABLE sys_config; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON TABLE public.sys_config IS '系统配置信息表';
 
 
 --
--- Name: COLUMN sys_config.param_key; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN sys_config.param_key; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.sys_config.param_key IS 'key';
 
 
 --
--- Name: COLUMN sys_config.param_value; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN sys_config.param_value; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.sys_config.param_value IS 'value';
 
 
 --
--- Name: COLUMN sys_config.status; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN sys_config.status; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.sys_config.status IS '状态   0：隐藏   1：显示';
 
 
 --
--- Name: COLUMN sys_config.remark; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN sys_config.remark; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.sys_config.remark IS '备注';
 
 
 --
--- Name: sys_config_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: sys_config_id_seq; Type: SEQUENCE; Schema: public; Owner: faris
 --
 
 CREATE SEQUENCE public.sys_config_id_seq
@@ -477,15 +511,17 @@ CREATE SEQUENCE public.sys_config_id_seq
     CACHE 1;
 
 
+ALTER SEQUENCE public.sys_config_id_seq OWNER TO faris;
+
 --
--- Name: sys_config_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: sys_config_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: faris
 --
 
 ALTER SEQUENCE public.sys_config_id_seq OWNED BY public.sys_config.id;
 
 
 --
--- Name: sys_log; Type: TABLE; Schema: public; Owner: -
+-- Name: sys_log; Type: TABLE; Schema: public; Owner: faris
 --
 
 CREATE TABLE public.sys_log (
@@ -500,64 +536,66 @@ CREATE TABLE public.sys_log (
 );
 
 
+ALTER TABLE public.sys_log OWNER TO faris;
+
 --
--- Name: TABLE sys_log; Type: COMMENT; Schema: public; Owner: -
+-- Name: TABLE sys_log; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON TABLE public.sys_log IS '系统日志';
 
 
 --
--- Name: COLUMN sys_log.username; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN sys_log.username; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.sys_log.username IS '用户名';
 
 
 --
--- Name: COLUMN sys_log.operation; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN sys_log.operation; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.sys_log.operation IS '用户操作';
 
 
 --
--- Name: COLUMN sys_log.method; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN sys_log.method; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.sys_log.method IS '请求方法';
 
 
 --
--- Name: COLUMN sys_log.params; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN sys_log.params; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.sys_log.params IS '请求参数';
 
 
 --
--- Name: COLUMN sys_log."time"; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN sys_log."time"; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.sys_log."time" IS '执行时长(毫秒)';
 
 
 --
--- Name: COLUMN sys_log.ip; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN sys_log.ip; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.sys_log.ip IS 'IP地址';
 
 
 --
--- Name: COLUMN sys_log.create_date; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN sys_log.create_date; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.sys_log.create_date IS '创建时间';
 
 
 --
--- Name: sys_log_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: sys_log_id_seq; Type: SEQUENCE; Schema: public; Owner: faris
 --
 
 CREATE SEQUENCE public.sys_log_id_seq
@@ -568,15 +606,17 @@ CREATE SEQUENCE public.sys_log_id_seq
     CACHE 1;
 
 
+ALTER SEQUENCE public.sys_log_id_seq OWNER TO faris;
+
 --
--- Name: sys_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: sys_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: faris
 --
 
 ALTER SEQUENCE public.sys_log_id_seq OWNED BY public.sys_log.id;
 
 
 --
--- Name: sys_menu; Type: TABLE; Schema: public; Owner: -
+-- Name: sys_menu; Type: TABLE; Schema: public; Owner: faris
 --
 
 CREATE TABLE public.sys_menu (
@@ -591,64 +631,66 @@ CREATE TABLE public.sys_menu (
 );
 
 
+ALTER TABLE public.sys_menu OWNER TO faris;
+
 --
--- Name: TABLE sys_menu; Type: COMMENT; Schema: public; Owner: -
+-- Name: TABLE sys_menu; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON TABLE public.sys_menu IS '菜单管理';
 
 
 --
--- Name: COLUMN sys_menu.parent_id; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN sys_menu.parent_id; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.sys_menu.parent_id IS '父菜单ID，一级菜单为0';
 
 
 --
--- Name: COLUMN sys_menu.name; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN sys_menu.name; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.sys_menu.name IS '菜单名称';
 
 
 --
--- Name: COLUMN sys_menu.url; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN sys_menu.url; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.sys_menu.url IS '菜单URL';
 
 
 --
--- Name: COLUMN sys_menu.perms; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN sys_menu.perms; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.sys_menu.perms IS '授权(多个用逗号分隔，如：user:list,user:create)';
 
 
 --
--- Name: COLUMN sys_menu.type; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN sys_menu.type; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.sys_menu.type IS '类型   0：目录   1：菜单   2：按钮';
 
 
 --
--- Name: COLUMN sys_menu.icon; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN sys_menu.icon; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.sys_menu.icon IS '菜单图标';
 
 
 --
--- Name: COLUMN sys_menu.order_num; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN sys_menu.order_num; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.sys_menu.order_num IS '排序';
 
 
 --
--- Name: sys_menu_menu_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: sys_menu_menu_id_seq; Type: SEQUENCE; Schema: public; Owner: faris
 --
 
 CREATE SEQUENCE public.sys_menu_menu_id_seq
@@ -659,15 +701,17 @@ CREATE SEQUENCE public.sys_menu_menu_id_seq
     CACHE 1;
 
 
+ALTER SEQUENCE public.sys_menu_menu_id_seq OWNER TO faris;
+
 --
--- Name: sys_menu_menu_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: sys_menu_menu_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: faris
 --
 
 ALTER SEQUENCE public.sys_menu_menu_id_seq OWNED BY public.sys_menu.menu_id;
 
 
 --
--- Name: sys_oss; Type: TABLE; Schema: public; Owner: -
+-- Name: sys_oss; Type: TABLE; Schema: public; Owner: faris
 --
 
 CREATE TABLE public.sys_oss (
@@ -677,29 +721,31 @@ CREATE TABLE public.sys_oss (
 );
 
 
+ALTER TABLE public.sys_oss OWNER TO faris;
+
 --
--- Name: TABLE sys_oss; Type: COMMENT; Schema: public; Owner: -
+-- Name: TABLE sys_oss; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON TABLE public.sys_oss IS '文件上传';
 
 
 --
--- Name: COLUMN sys_oss.url; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN sys_oss.url; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.sys_oss.url IS 'URL地址';
 
 
 --
--- Name: COLUMN sys_oss.create_date; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN sys_oss.create_date; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.sys_oss.create_date IS '创建时间';
 
 
 --
--- Name: sys_oss_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: sys_oss_id_seq; Type: SEQUENCE; Schema: public; Owner: faris
 --
 
 CREATE SEQUENCE public.sys_oss_id_seq
@@ -710,15 +756,17 @@ CREATE SEQUENCE public.sys_oss_id_seq
     CACHE 1;
 
 
+ALTER SEQUENCE public.sys_oss_id_seq OWNER TO faris;
+
 --
--- Name: sys_oss_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: sys_oss_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: faris
 --
 
 ALTER SEQUENCE public.sys_oss_id_seq OWNED BY public.sys_oss.id;
 
 
 --
--- Name: sys_role; Type: TABLE; Schema: public; Owner: -
+-- Name: sys_role; Type: TABLE; Schema: public; Owner: faris
 --
 
 CREATE TABLE public.sys_role (
@@ -730,43 +778,45 @@ CREATE TABLE public.sys_role (
 );
 
 
+ALTER TABLE public.sys_role OWNER TO faris;
+
 --
--- Name: TABLE sys_role; Type: COMMENT; Schema: public; Owner: -
+-- Name: TABLE sys_role; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON TABLE public.sys_role IS '角色';
 
 
 --
--- Name: COLUMN sys_role.role_name; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN sys_role.role_name; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.sys_role.role_name IS '角色名称';
 
 
 --
--- Name: COLUMN sys_role.remark; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN sys_role.remark; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.sys_role.remark IS '备注';
 
 
 --
--- Name: COLUMN sys_role.create_user_id; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN sys_role.create_user_id; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.sys_role.create_user_id IS '创建者ID';
 
 
 --
--- Name: COLUMN sys_role.create_time; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN sys_role.create_time; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.sys_role.create_time IS '创建时间';
 
 
 --
--- Name: sys_role_menu; Type: TABLE; Schema: public; Owner: -
+-- Name: sys_role_menu; Type: TABLE; Schema: public; Owner: faris
 --
 
 CREATE TABLE public.sys_role_menu (
@@ -776,29 +826,31 @@ CREATE TABLE public.sys_role_menu (
 );
 
 
+ALTER TABLE public.sys_role_menu OWNER TO faris;
+
 --
--- Name: TABLE sys_role_menu; Type: COMMENT; Schema: public; Owner: -
+-- Name: TABLE sys_role_menu; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON TABLE public.sys_role_menu IS '角色与菜单对应关系';
 
 
 --
--- Name: COLUMN sys_role_menu.role_id; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN sys_role_menu.role_id; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.sys_role_menu.role_id IS '角色ID';
 
 
 --
--- Name: COLUMN sys_role_menu.menu_id; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN sys_role_menu.menu_id; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.sys_role_menu.menu_id IS '菜单ID';
 
 
 --
--- Name: sys_role_menu_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: sys_role_menu_id_seq; Type: SEQUENCE; Schema: public; Owner: faris
 --
 
 CREATE SEQUENCE public.sys_role_menu_id_seq
@@ -809,15 +861,17 @@ CREATE SEQUENCE public.sys_role_menu_id_seq
     CACHE 1;
 
 
+ALTER SEQUENCE public.sys_role_menu_id_seq OWNER TO faris;
+
 --
--- Name: sys_role_menu_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: sys_role_menu_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: faris
 --
 
 ALTER SEQUENCE public.sys_role_menu_id_seq OWNED BY public.sys_role_menu.id;
 
 
 --
--- Name: sys_role_role_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: sys_role_role_id_seq; Type: SEQUENCE; Schema: public; Owner: faris
 --
 
 CREATE SEQUENCE public.sys_role_role_id_seq
@@ -828,15 +882,17 @@ CREATE SEQUENCE public.sys_role_role_id_seq
     CACHE 1;
 
 
+ALTER SEQUENCE public.sys_role_role_id_seq OWNER TO faris;
+
 --
--- Name: sys_role_role_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: sys_role_role_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: faris
 --
 
 ALTER SEQUENCE public.sys_role_role_id_seq OWNED BY public.sys_role.role_id;
 
 
 --
--- Name: sys_user; Type: TABLE; Schema: public; Owner: -
+-- Name: sys_user; Type: TABLE; Schema: public; Owner: faris
 --
 
 CREATE TABLE public.sys_user (
@@ -852,71 +908,73 @@ CREATE TABLE public.sys_user (
 );
 
 
+ALTER TABLE public.sys_user OWNER TO faris;
+
 --
--- Name: TABLE sys_user; Type: COMMENT; Schema: public; Owner: -
+-- Name: TABLE sys_user; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON TABLE public.sys_user IS '系统用户';
 
 
 --
--- Name: COLUMN sys_user.username; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN sys_user.username; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.sys_user.username IS '用户名';
 
 
 --
--- Name: COLUMN sys_user.password; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN sys_user.password; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.sys_user.password IS '密码';
 
 
 --
--- Name: COLUMN sys_user.salt; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN sys_user.salt; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.sys_user.salt IS '盐';
 
 
 --
--- Name: COLUMN sys_user.email; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN sys_user.email; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.sys_user.email IS '邮箱';
 
 
 --
--- Name: COLUMN sys_user.mobile; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN sys_user.mobile; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.sys_user.mobile IS '手机号';
 
 
 --
--- Name: COLUMN sys_user.status; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN sys_user.status; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.sys_user.status IS '状态  0：禁用   1：正常';
 
 
 --
--- Name: COLUMN sys_user.create_user_id; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN sys_user.create_user_id; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.sys_user.create_user_id IS '创建者ID';
 
 
 --
--- Name: COLUMN sys_user.create_time; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN sys_user.create_time; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.sys_user.create_time IS '创建时间';
 
 
 --
--- Name: sys_user_role; Type: TABLE; Schema: public; Owner: -
+-- Name: sys_user_role; Type: TABLE; Schema: public; Owner: faris
 --
 
 CREATE TABLE public.sys_user_role (
@@ -926,29 +984,31 @@ CREATE TABLE public.sys_user_role (
 );
 
 
+ALTER TABLE public.sys_user_role OWNER TO faris;
+
 --
--- Name: TABLE sys_user_role; Type: COMMENT; Schema: public; Owner: -
+-- Name: TABLE sys_user_role; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON TABLE public.sys_user_role IS '用户与角色对应关系';
 
 
 --
--- Name: COLUMN sys_user_role.user_id; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN sys_user_role.user_id; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.sys_user_role.user_id IS '用户ID';
 
 
 --
--- Name: COLUMN sys_user_role.role_id; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN sys_user_role.role_id; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.sys_user_role.role_id IS '角色ID';
 
 
 --
--- Name: sys_user_role_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: sys_user_role_id_seq; Type: SEQUENCE; Schema: public; Owner: faris
 --
 
 CREATE SEQUENCE public.sys_user_role_id_seq
@@ -959,15 +1019,17 @@ CREATE SEQUENCE public.sys_user_role_id_seq
     CACHE 1;
 
 
+ALTER SEQUENCE public.sys_user_role_id_seq OWNER TO faris;
+
 --
--- Name: sys_user_role_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: sys_user_role_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: faris
 --
 
 ALTER SEQUENCE public.sys_user_role_id_seq OWNED BY public.sys_user_role.id;
 
 
 --
--- Name: sys_user_token; Type: TABLE; Schema: public; Owner: -
+-- Name: sys_user_token; Type: TABLE; Schema: public; Owner: faris
 --
 
 CREATE TABLE public.sys_user_token (
@@ -978,36 +1040,38 @@ CREATE TABLE public.sys_user_token (
 );
 
 
+ALTER TABLE public.sys_user_token OWNER TO faris;
+
 --
--- Name: TABLE sys_user_token; Type: COMMENT; Schema: public; Owner: -
+-- Name: TABLE sys_user_token; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON TABLE public.sys_user_token IS '系统用户Token';
 
 
 --
--- Name: COLUMN sys_user_token.token; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN sys_user_token.token; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.sys_user_token.token IS 'token';
 
 
 --
--- Name: COLUMN sys_user_token.expire_time; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN sys_user_token.expire_time; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.sys_user_token.expire_time IS '过期时间';
 
 
 --
--- Name: COLUMN sys_user_token.update_time; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN sys_user_token.update_time; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.sys_user_token.update_time IS '更新时间';
 
 
 --
--- Name: sys_user_user_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: sys_user_user_id_seq; Type: SEQUENCE; Schema: public; Owner: faris
 --
 
 CREATE SEQUENCE public.sys_user_user_id_seq
@@ -1018,15 +1082,17 @@ CREATE SEQUENCE public.sys_user_user_id_seq
     CACHE 1;
 
 
+ALTER SEQUENCE public.sys_user_user_id_seq OWNER TO faris;
+
 --
--- Name: sys_user_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: sys_user_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: faris
 --
 
 ALTER SEQUENCE public.sys_user_user_id_seq OWNED BY public.sys_user.user_id;
 
 
 --
--- Name: tb_user; Type: TABLE; Schema: public; Owner: -
+-- Name: tb_user; Type: TABLE; Schema: public; Owner: faris
 --
 
 CREATE TABLE public.tb_user (
@@ -1038,43 +1104,45 @@ CREATE TABLE public.tb_user (
 );
 
 
+ALTER TABLE public.tb_user OWNER TO faris;
+
 --
--- Name: TABLE tb_user; Type: COMMENT; Schema: public; Owner: -
+-- Name: TABLE tb_user; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON TABLE public.tb_user IS '用户';
 
 
 --
--- Name: COLUMN tb_user.username; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN tb_user.username; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.tb_user.username IS '用户名';
 
 
 --
--- Name: COLUMN tb_user.mobile; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN tb_user.mobile; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.tb_user.mobile IS '手机号';
 
 
 --
--- Name: COLUMN tb_user.password; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN tb_user.password; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.tb_user.password IS '密码';
 
 
 --
--- Name: COLUMN tb_user.create_time; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN tb_user.create_time; Type: COMMENT; Schema: public; Owner: faris
 --
 
 COMMENT ON COLUMN public.tb_user.create_time IS '创建时间';
 
 
 --
--- Name: tb_user_user_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: tb_user_user_id_seq; Type: SEQUENCE; Schema: public; Owner: faris
 --
 
 CREATE SEQUENCE public.tb_user_user_id_seq
@@ -1085,15 +1153,17 @@ CREATE SEQUENCE public.tb_user_user_id_seq
     CACHE 1;
 
 
+ALTER SEQUENCE public.tb_user_user_id_seq OWNER TO faris;
+
 --
--- Name: tb_user_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: tb_user_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: faris
 --
 
 ALTER SEQUENCE public.tb_user_user_id_seq OWNED BY public.tb_user.user_id;
 
 
 --
--- Name: undo_log; Type: TABLE; Schema: public; Owner: -
+-- Name: undo_log; Type: TABLE; Schema: public; Owner: faris
 --
 
 CREATE TABLE public.undo_log (
@@ -1109,8 +1179,10 @@ CREATE TABLE public.undo_log (
 );
 
 
+ALTER TABLE public.undo_log OWNER TO faris;
+
 --
--- Name: undo_log_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: undo_log_id_seq; Type: SEQUENCE; Schema: public; Owner: faris
 --
 
 CREATE SEQUENCE public.undo_log_id_seq
@@ -1121,99 +1193,101 @@ CREATE SEQUENCE public.undo_log_id_seq
     CACHE 1;
 
 
+ALTER SEQUENCE public.undo_log_id_seq OWNER TO faris;
+
 --
--- Name: undo_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: undo_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: faris
 --
 
 ALTER SEQUENCE public.undo_log_id_seq OWNED BY public.undo_log.id;
 
 
 --
--- Name: schedule_job job_id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: schedule_job job_id; Type: DEFAULT; Schema: public; Owner: faris
 --
 
 ALTER TABLE ONLY public.schedule_job ALTER COLUMN job_id SET DEFAULT nextval('public.schedule_job_job_id_seq'::regclass);
 
 
 --
--- Name: schedule_job_log log_id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: schedule_job_log log_id; Type: DEFAULT; Schema: public; Owner: faris
 --
 
 ALTER TABLE ONLY public.schedule_job_log ALTER COLUMN log_id SET DEFAULT nextval('public.schedule_job_log_log_id_seq'::regclass);
 
 
 --
--- Name: sys_config id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: sys_config id; Type: DEFAULT; Schema: public; Owner: faris
 --
 
 ALTER TABLE ONLY public.sys_config ALTER COLUMN id SET DEFAULT nextval('public.sys_config_id_seq'::regclass);
 
 
 --
--- Name: sys_log id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: sys_log id; Type: DEFAULT; Schema: public; Owner: faris
 --
 
 ALTER TABLE ONLY public.sys_log ALTER COLUMN id SET DEFAULT nextval('public.sys_log_id_seq'::regclass);
 
 
 --
--- Name: sys_menu menu_id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: sys_menu menu_id; Type: DEFAULT; Schema: public; Owner: faris
 --
 
 ALTER TABLE ONLY public.sys_menu ALTER COLUMN menu_id SET DEFAULT nextval('public.sys_menu_menu_id_seq'::regclass);
 
 
 --
--- Name: sys_oss id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: sys_oss id; Type: DEFAULT; Schema: public; Owner: faris
 --
 
 ALTER TABLE ONLY public.sys_oss ALTER COLUMN id SET DEFAULT nextval('public.sys_oss_id_seq'::regclass);
 
 
 --
--- Name: sys_role role_id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: sys_role role_id; Type: DEFAULT; Schema: public; Owner: faris
 --
 
 ALTER TABLE ONLY public.sys_role ALTER COLUMN role_id SET DEFAULT nextval('public.sys_role_role_id_seq'::regclass);
 
 
 --
--- Name: sys_role_menu id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: sys_role_menu id; Type: DEFAULT; Schema: public; Owner: faris
 --
 
 ALTER TABLE ONLY public.sys_role_menu ALTER COLUMN id SET DEFAULT nextval('public.sys_role_menu_id_seq'::regclass);
 
 
 --
--- Name: sys_user user_id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: sys_user user_id; Type: DEFAULT; Schema: public; Owner: faris
 --
 
 ALTER TABLE ONLY public.sys_user ALTER COLUMN user_id SET DEFAULT nextval('public.sys_user_user_id_seq'::regclass);
 
 
 --
--- Name: sys_user_role id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: sys_user_role id; Type: DEFAULT; Schema: public; Owner: faris
 --
 
 ALTER TABLE ONLY public.sys_user_role ALTER COLUMN id SET DEFAULT nextval('public.sys_user_role_id_seq'::regclass);
 
 
 --
--- Name: tb_user user_id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: tb_user user_id; Type: DEFAULT; Schema: public; Owner: faris
 --
 
 ALTER TABLE ONLY public.tb_user ALTER COLUMN user_id SET DEFAULT nextval('public.tb_user_user_id_seq'::regclass);
 
 
 --
--- Name: undo_log id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: undo_log id; Type: DEFAULT; Schema: public; Owner: faris
 --
 
 ALTER TABLE ONLY public.undo_log ALTER COLUMN id SET DEFAULT nextval('public.undo_log_id_seq'::regclass);
 
 
 --
--- Data for Name: qrtz_blob_triggers; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: qrtz_blob_triggers; Type: TABLE DATA; Schema: public; Owner: faris
 --
 
 COPY public.qrtz_blob_triggers (sched_name, trigger_name, trigger_group, blob_data) FROM stdin;
@@ -1221,7 +1295,7 @@ COPY public.qrtz_blob_triggers (sched_name, trigger_name, trigger_group, blob_da
 
 
 --
--- Data for Name: qrtz_calendars; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: qrtz_calendars; Type: TABLE DATA; Schema: public; Owner: faris
 --
 
 COPY public.qrtz_calendars (sched_name, calendar_name, calendar) FROM stdin;
@@ -1229,7 +1303,7 @@ COPY public.qrtz_calendars (sched_name, calendar_name, calendar) FROM stdin;
 
 
 --
--- Data for Name: qrtz_cron_triggers; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: qrtz_cron_triggers; Type: TABLE DATA; Schema: public; Owner: faris
 --
 
 COPY public.qrtz_cron_triggers (sched_name, trigger_name, trigger_group, cron_expression, time_zone_id) FROM stdin;
@@ -1238,7 +1312,7 @@ RenrenScheduler	TASK_1	DEFAULT	0 0/30 * * * ?	Etc/UTC
 
 
 --
--- Data for Name: qrtz_fired_triggers; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: qrtz_fired_triggers; Type: TABLE DATA; Schema: public; Owner: faris
 --
 
 COPY public.qrtz_fired_triggers (sched_name, entry_id, trigger_name, trigger_group, instance_name, fired_time, sched_time, priority, state, job_name, job_group, is_nonconcurrent, requests_recovery) FROM stdin;
@@ -1246,7 +1320,7 @@ COPY public.qrtz_fired_triggers (sched_name, entry_id, trigger_name, trigger_gro
 
 
 --
--- Data for Name: qrtz_job_details; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: qrtz_job_details; Type: TABLE DATA; Schema: public; Owner: faris
 --
 
 COPY public.qrtz_job_details (sched_name, job_name, job_group, description, job_class_name, is_durable, is_nonconcurrent, is_update_data, requests_recovery, job_data) FROM stdin;
@@ -1255,7 +1329,7 @@ RenrenScheduler	TASK_1	DEFAULT	\N	io.renren.modules.job.utils.ScheduleJob	0	0	0	
 
 
 --
--- Data for Name: qrtz_locks; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: qrtz_locks; Type: TABLE DATA; Schema: public; Owner: faris
 --
 
 COPY public.qrtz_locks (sched_name, lock_name) FROM stdin;
@@ -1265,7 +1339,7 @@ RenrenScheduler	TRIGGER_ACCESS
 
 
 --
--- Data for Name: qrtz_paused_trigger_grps; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: qrtz_paused_trigger_grps; Type: TABLE DATA; Schema: public; Owner: faris
 --
 
 COPY public.qrtz_paused_trigger_grps (sched_name, trigger_group) FROM stdin;
@@ -1273,7 +1347,7 @@ COPY public.qrtz_paused_trigger_grps (sched_name, trigger_group) FROM stdin;
 
 
 --
--- Data for Name: qrtz_scheduler_state; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: qrtz_scheduler_state; Type: TABLE DATA; Schema: public; Owner: faris
 --
 
 COPY public.qrtz_scheduler_state (sched_name, instance_name, last_checkin_time, checkin_interval) FROM stdin;
@@ -1282,7 +1356,7 @@ RenrenScheduler	398b46e373ca1583849178560	1583857581231	15000
 
 
 --
--- Data for Name: qrtz_simple_triggers; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: qrtz_simple_triggers; Type: TABLE DATA; Schema: public; Owner: faris
 --
 
 COPY public.qrtz_simple_triggers (sched_name, trigger_name, trigger_group, repeat_count, repeat_interval, times_triggered) FROM stdin;
@@ -1290,7 +1364,7 @@ COPY public.qrtz_simple_triggers (sched_name, trigger_name, trigger_group, repea
 
 
 --
--- Data for Name: qrtz_simprop_triggers; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: qrtz_simprop_triggers; Type: TABLE DATA; Schema: public; Owner: faris
 --
 
 COPY public.qrtz_simprop_triggers (sched_name, trigger_name, trigger_group, str_prop_1, str_prop_2, str_prop_3, int_prop_1, int_prop_2, long_prop_1, long_prop_2, dec_prop_1, dec_prop_2, bool_prop_1, bool_prop_2) FROM stdin;
@@ -1298,7 +1372,7 @@ COPY public.qrtz_simprop_triggers (sched_name, trigger_name, trigger_group, str_
 
 
 --
--- Data for Name: qrtz_triggers; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: qrtz_triggers; Type: TABLE DATA; Schema: public; Owner: faris
 --
 
 COPY public.qrtz_triggers (sched_name, trigger_name, trigger_group, job_name, job_group, description, next_fire_time, prev_fire_time, priority, trigger_state, trigger_type, start_time, end_time, calendar_name, misfire_instr, job_data) FROM stdin;
@@ -1307,7 +1381,7 @@ RenrenScheduler	TASK_1	DEFAULT	TASK_1	DEFAULT	\N	1583857800000	1583856000000	5	W
 
 
 --
--- Data for Name: schedule_job; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: schedule_job; Type: TABLE DATA; Schema: public; Owner: faris
 --
 
 COPY public.schedule_job (job_id, bean_name, params, cron_expression, status, remark, create_time) FROM stdin;
@@ -1316,7 +1390,7 @@ COPY public.schedule_job (job_id, bean_name, params, cron_expression, status, re
 
 
 --
--- Data for Name: schedule_job_log; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: schedule_job_log; Type: TABLE DATA; Schema: public; Owner: faris
 --
 
 COPY public.schedule_job_log (log_id, job_id, bean_name, params, status, error, times, create_time) FROM stdin;
@@ -2630,7 +2704,7 @@ COPY public.schedule_job_log (log_id, job_id, bean_name, params, status, error, 
 
 
 --
--- Data for Name: sys_captcha; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: sys_captcha; Type: TABLE DATA; Schema: public; Owner: faris
 --
 
 COPY public.sys_captcha (uuid, code, expire_time) FROM stdin;
@@ -2687,7 +2761,7 @@ fee96fac-a4b8-46ab-89bb-93d3673163e8	2b4nd	2020-02-21 21:46:43+00
 
 
 --
--- Data for Name: sys_config; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: sys_config; Type: TABLE DATA; Schema: public; Owner: faris
 --
 
 COPY public.sys_config (id, param_key, param_value, status, remark) FROM stdin;
@@ -2696,7 +2770,7 @@ COPY public.sys_config (id, param_key, param_value, status, remark) FROM stdin;
 
 
 --
--- Data for Name: sys_log; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: sys_log; Type: TABLE DATA; Schema: public; Owner: faris
 --
 
 COPY public.sys_log (id, username, operation, method, params, "time", ip, create_date) FROM stdin;
@@ -2758,7 +2832,7 @@ COPY public.sys_log (id, username, operation, method, params, "time", ip, create
 
 
 --
--- Data for Name: sys_menu; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: sys_menu; Type: TABLE DATA; Schema: public; Owner: faris
 --
 
 COPY public.sys_menu (menu_id, parent_id, name, url, perms, type, icon, order_num) FROM stdin;
@@ -2837,7 +2911,7 @@ COPY public.sys_menu (menu_id, parent_id, name, url, perms, type, icon, order_nu
 
 
 --
--- Data for Name: sys_oss; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: sys_oss; Type: TABLE DATA; Schema: public; Owner: faris
 --
 
 COPY public.sys_oss (id, url, create_date) FROM stdin;
@@ -2845,7 +2919,7 @@ COPY public.sys_oss (id, url, create_date) FROM stdin;
 
 
 --
--- Data for Name: sys_role; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: sys_role; Type: TABLE DATA; Schema: public; Owner: faris
 --
 
 COPY public.sys_role (role_id, role_name, remark, create_user_id, create_time) FROM stdin;
@@ -2853,7 +2927,7 @@ COPY public.sys_role (role_id, role_name, remark, create_user_id, create_time) F
 
 
 --
--- Data for Name: sys_role_menu; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: sys_role_menu; Type: TABLE DATA; Schema: public; Owner: faris
 --
 
 COPY public.sys_role_menu (id, role_id, menu_id) FROM stdin;
@@ -2861,7 +2935,7 @@ COPY public.sys_role_menu (id, role_id, menu_id) FROM stdin;
 
 
 --
--- Data for Name: sys_user; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: sys_user; Type: TABLE DATA; Schema: public; Owner: faris
 --
 
 COPY public.sys_user (user_id, username, password, salt, email, mobile, status, create_user_id, create_time) FROM stdin;
@@ -2871,7 +2945,7 @@ COPY public.sys_user (user_id, username, password, salt, email, mobile, status, 
 
 
 --
--- Data for Name: sys_user_role; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: sys_user_role; Type: TABLE DATA; Schema: public; Owner: faris
 --
 
 COPY public.sys_user_role (id, user_id, role_id) FROM stdin;
@@ -2879,7 +2953,7 @@ COPY public.sys_user_role (id, user_id, role_id) FROM stdin;
 
 
 --
--- Data for Name: sys_user_token; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: sys_user_token; Type: TABLE DATA; Schema: public; Owner: faris
 --
 
 COPY public.sys_user_token (user_id, token, expire_time, update_time) FROM stdin;
@@ -2888,7 +2962,7 @@ COPY public.sys_user_token (user_id, token, expire_time, update_time) FROM stdin
 
 
 --
--- Data for Name: tb_user; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: tb_user; Type: TABLE DATA; Schema: public; Owner: faris
 --
 
 COPY public.tb_user (user_id, username, mobile, password, create_time) FROM stdin;
@@ -2897,7 +2971,7 @@ COPY public.tb_user (user_id, username, mobile, password, create_time) FROM stdi
 
 
 --
--- Data for Name: undo_log; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: undo_log; Type: TABLE DATA; Schema: public; Owner: faris
 --
 
 COPY public.undo_log (id, branch_id, xid, context, rollback_info, log_status, log_created, log_modified, ext) FROM stdin;
@@ -2905,91 +2979,91 @@ COPY public.undo_log (id, branch_id, xid, context, rollback_info, log_status, lo
 
 
 --
--- Name: schedule_job_job_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: schedule_job_job_id_seq; Type: SEQUENCE SET; Schema: public; Owner: faris
 --
 
 SELECT pg_catalog.setval('public.schedule_job_job_id_seq', 1, true);
 
 
 --
--- Name: schedule_job_log_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: schedule_job_log_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: faris
 --
 
 SELECT pg_catalog.setval('public.schedule_job_log_log_id_seq', 1306, true);
 
 
 --
--- Name: sys_config_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: sys_config_id_seq; Type: SEQUENCE SET; Schema: public; Owner: faris
 --
 
 SELECT pg_catalog.setval('public.sys_config_id_seq', 1, true);
 
 
 --
--- Name: sys_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: sys_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: faris
 --
 
 SELECT pg_catalog.setval('public.sys_log_id_seq', 54, true);
 
 
 --
--- Name: sys_menu_menu_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: sys_menu_menu_id_seq; Type: SEQUENCE SET; Schema: public; Owner: faris
 --
 
 SELECT pg_catalog.setval('public.sys_menu_menu_id_seq', 75, true);
 
 
 --
--- Name: sys_oss_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: sys_oss_id_seq; Type: SEQUENCE SET; Schema: public; Owner: faris
 --
 
 SELECT pg_catalog.setval('public.sys_oss_id_seq', 1, true);
 
 
 --
--- Name: sys_role_menu_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: sys_role_menu_id_seq; Type: SEQUENCE SET; Schema: public; Owner: faris
 --
 
 SELECT pg_catalog.setval('public.sys_role_menu_id_seq', 1, true);
 
 
 --
--- Name: sys_role_role_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: sys_role_role_id_seq; Type: SEQUENCE SET; Schema: public; Owner: faris
 --
 
 SELECT pg_catalog.setval('public.sys_role_role_id_seq', 1, true);
 
 
 --
--- Name: sys_user_role_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: sys_user_role_id_seq; Type: SEQUENCE SET; Schema: public; Owner: faris
 --
 
 SELECT pg_catalog.setval('public.sys_user_role_id_seq', 1, true);
 
 
 --
--- Name: sys_user_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: sys_user_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: faris
 --
 
 SELECT pg_catalog.setval('public.sys_user_user_id_seq', 2, true);
 
 
 --
--- Name: tb_user_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: tb_user_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: faris
 --
 
 SELECT pg_catalog.setval('public.tb_user_user_id_seq', 1, true);
 
 
 --
--- Name: undo_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: undo_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: faris
 --
 
 SELECT pg_catalog.setval('public.undo_log_id_seq', 1, true);
 
 
 --
--- Name: qrtz_blob_triggers idx_24810_primary; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: qrtz_blob_triggers idx_24810_primary; Type: CONSTRAINT; Schema: public; Owner: faris
 --
 
 ALTER TABLE ONLY public.qrtz_blob_triggers
@@ -2997,7 +3071,7 @@ ALTER TABLE ONLY public.qrtz_blob_triggers
 
 
 --
--- Name: qrtz_calendars idx_24815_primary; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: qrtz_calendars idx_24815_primary; Type: CONSTRAINT; Schema: public; Owner: faris
 --
 
 ALTER TABLE ONLY public.qrtz_calendars
@@ -3005,7 +3079,7 @@ ALTER TABLE ONLY public.qrtz_calendars
 
 
 --
--- Name: qrtz_cron_triggers idx_24820_primary; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: qrtz_cron_triggers idx_24820_primary; Type: CONSTRAINT; Schema: public; Owner: faris
 --
 
 ALTER TABLE ONLY public.qrtz_cron_triggers
@@ -3013,7 +3087,7 @@ ALTER TABLE ONLY public.qrtz_cron_triggers
 
 
 --
--- Name: qrtz_fired_triggers idx_24825_primary; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: qrtz_fired_triggers idx_24825_primary; Type: CONSTRAINT; Schema: public; Owner: faris
 --
 
 ALTER TABLE ONLY public.qrtz_fired_triggers
@@ -3021,7 +3095,7 @@ ALTER TABLE ONLY public.qrtz_fired_triggers
 
 
 --
--- Name: qrtz_job_details idx_24830_primary; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: qrtz_job_details idx_24830_primary; Type: CONSTRAINT; Schema: public; Owner: faris
 --
 
 ALTER TABLE ONLY public.qrtz_job_details
@@ -3029,7 +3103,7 @@ ALTER TABLE ONLY public.qrtz_job_details
 
 
 --
--- Name: qrtz_locks idx_24835_primary; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: qrtz_locks idx_24835_primary; Type: CONSTRAINT; Schema: public; Owner: faris
 --
 
 ALTER TABLE ONLY public.qrtz_locks
@@ -3037,7 +3111,7 @@ ALTER TABLE ONLY public.qrtz_locks
 
 
 --
--- Name: qrtz_paused_trigger_grps idx_24838_primary; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: qrtz_paused_trigger_grps idx_24838_primary; Type: CONSTRAINT; Schema: public; Owner: faris
 --
 
 ALTER TABLE ONLY public.qrtz_paused_trigger_grps
@@ -3045,7 +3119,7 @@ ALTER TABLE ONLY public.qrtz_paused_trigger_grps
 
 
 --
--- Name: qrtz_scheduler_state idx_24841_primary; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: qrtz_scheduler_state idx_24841_primary; Type: CONSTRAINT; Schema: public; Owner: faris
 --
 
 ALTER TABLE ONLY public.qrtz_scheduler_state
@@ -3053,7 +3127,7 @@ ALTER TABLE ONLY public.qrtz_scheduler_state
 
 
 --
--- Name: qrtz_simple_triggers idx_24844_primary; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: qrtz_simple_triggers idx_24844_primary; Type: CONSTRAINT; Schema: public; Owner: faris
 --
 
 ALTER TABLE ONLY public.qrtz_simple_triggers
@@ -3061,7 +3135,7 @@ ALTER TABLE ONLY public.qrtz_simple_triggers
 
 
 --
--- Name: qrtz_simprop_triggers idx_24849_primary; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: qrtz_simprop_triggers idx_24849_primary; Type: CONSTRAINT; Schema: public; Owner: faris
 --
 
 ALTER TABLE ONLY public.qrtz_simprop_triggers
@@ -3069,7 +3143,7 @@ ALTER TABLE ONLY public.qrtz_simprop_triggers
 
 
 --
--- Name: qrtz_triggers idx_24854_primary; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: qrtz_triggers idx_24854_primary; Type: CONSTRAINT; Schema: public; Owner: faris
 --
 
 ALTER TABLE ONLY public.qrtz_triggers
@@ -3077,7 +3151,7 @@ ALTER TABLE ONLY public.qrtz_triggers
 
 
 --
--- Name: schedule_job idx_24860_primary; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: schedule_job idx_24860_primary; Type: CONSTRAINT; Schema: public; Owner: faris
 --
 
 ALTER TABLE ONLY public.schedule_job
@@ -3085,7 +3159,7 @@ ALTER TABLE ONLY public.schedule_job
 
 
 --
--- Name: schedule_job_log idx_24867_primary; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: schedule_job_log idx_24867_primary; Type: CONSTRAINT; Schema: public; Owner: faris
 --
 
 ALTER TABLE ONLY public.schedule_job_log
@@ -3093,7 +3167,7 @@ ALTER TABLE ONLY public.schedule_job_log
 
 
 --
--- Name: sys_captcha idx_24873_primary; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: sys_captcha idx_24873_primary; Type: CONSTRAINT; Schema: public; Owner: faris
 --
 
 ALTER TABLE ONLY public.sys_captcha
@@ -3101,7 +3175,7 @@ ALTER TABLE ONLY public.sys_captcha
 
 
 --
--- Name: sys_config idx_24877_primary; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: sys_config idx_24877_primary; Type: CONSTRAINT; Schema: public; Owner: faris
 --
 
 ALTER TABLE ONLY public.sys_config
@@ -3109,7 +3183,7 @@ ALTER TABLE ONLY public.sys_config
 
 
 --
--- Name: sys_log idx_24885_primary; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: sys_log idx_24885_primary; Type: CONSTRAINT; Schema: public; Owner: faris
 --
 
 ALTER TABLE ONLY public.sys_log
@@ -3117,7 +3191,7 @@ ALTER TABLE ONLY public.sys_log
 
 
 --
--- Name: sys_menu idx_24892_primary; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: sys_menu idx_24892_primary; Type: CONSTRAINT; Schema: public; Owner: faris
 --
 
 ALTER TABLE ONLY public.sys_menu
@@ -3125,7 +3199,7 @@ ALTER TABLE ONLY public.sys_menu
 
 
 --
--- Name: sys_oss idx_24899_primary; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: sys_oss idx_24899_primary; Type: CONSTRAINT; Schema: public; Owner: faris
 --
 
 ALTER TABLE ONLY public.sys_oss
@@ -3133,7 +3207,7 @@ ALTER TABLE ONLY public.sys_oss
 
 
 --
--- Name: sys_role idx_24904_primary; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: sys_role idx_24904_primary; Type: CONSTRAINT; Schema: public; Owner: faris
 --
 
 ALTER TABLE ONLY public.sys_role
@@ -3141,7 +3215,7 @@ ALTER TABLE ONLY public.sys_role
 
 
 --
--- Name: sys_role_menu idx_24909_primary; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: sys_role_menu idx_24909_primary; Type: CONSTRAINT; Schema: public; Owner: faris
 --
 
 ALTER TABLE ONLY public.sys_role_menu
@@ -3149,7 +3223,7 @@ ALTER TABLE ONLY public.sys_role_menu
 
 
 --
--- Name: sys_user idx_24914_primary; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: sys_user idx_24914_primary; Type: CONSTRAINT; Schema: public; Owner: faris
 --
 
 ALTER TABLE ONLY public.sys_user
@@ -3157,7 +3231,7 @@ ALTER TABLE ONLY public.sys_user
 
 
 --
--- Name: sys_user_role idx_24919_primary; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: sys_user_role idx_24919_primary; Type: CONSTRAINT; Schema: public; Owner: faris
 --
 
 ALTER TABLE ONLY public.sys_user_role
@@ -3165,7 +3239,7 @@ ALTER TABLE ONLY public.sys_user_role
 
 
 --
--- Name: sys_user_token idx_24923_primary; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: sys_user_token idx_24923_primary; Type: CONSTRAINT; Schema: public; Owner: faris
 --
 
 ALTER TABLE ONLY public.sys_user_token
@@ -3173,7 +3247,7 @@ ALTER TABLE ONLY public.sys_user_token
 
 
 --
--- Name: tb_user idx_24927_primary; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: tb_user idx_24927_primary; Type: CONSTRAINT; Schema: public; Owner: faris
 --
 
 ALTER TABLE ONLY public.tb_user
@@ -3181,7 +3255,7 @@ ALTER TABLE ONLY public.tb_user
 
 
 --
--- Name: undo_log idx_24932_primary; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: undo_log idx_24932_primary; Type: CONSTRAINT; Schema: public; Owner: faris
 --
 
 ALTER TABLE ONLY public.undo_log
@@ -3189,196 +3263,196 @@ ALTER TABLE ONLY public.undo_log
 
 
 --
--- Name: idx_24810_sched_name; Type: INDEX; Schema: public; Owner: -
+-- Name: idx_24810_sched_name; Type: INDEX; Schema: public; Owner: faris
 --
 
 CREATE INDEX idx_24810_sched_name ON public.qrtz_blob_triggers USING btree (sched_name, trigger_name, trigger_group);
 
 
 --
--- Name: idx_24825_idx_qrtz_ft_inst_job_req_rcvry; Type: INDEX; Schema: public; Owner: -
+-- Name: idx_24825_idx_qrtz_ft_inst_job_req_rcvry; Type: INDEX; Schema: public; Owner: faris
 --
 
 CREATE INDEX idx_24825_idx_qrtz_ft_inst_job_req_rcvry ON public.qrtz_fired_triggers USING btree (sched_name, instance_name, requests_recovery);
 
 
 --
--- Name: idx_24825_idx_qrtz_ft_j_g; Type: INDEX; Schema: public; Owner: -
+-- Name: idx_24825_idx_qrtz_ft_j_g; Type: INDEX; Schema: public; Owner: faris
 --
 
 CREATE INDEX idx_24825_idx_qrtz_ft_j_g ON public.qrtz_fired_triggers USING btree (sched_name, job_name, job_group);
 
 
 --
--- Name: idx_24825_idx_qrtz_ft_jg; Type: INDEX; Schema: public; Owner: -
+-- Name: idx_24825_idx_qrtz_ft_jg; Type: INDEX; Schema: public; Owner: faris
 --
 
 CREATE INDEX idx_24825_idx_qrtz_ft_jg ON public.qrtz_fired_triggers USING btree (sched_name, job_group);
 
 
 --
--- Name: idx_24825_idx_qrtz_ft_t_g; Type: INDEX; Schema: public; Owner: -
+-- Name: idx_24825_idx_qrtz_ft_t_g; Type: INDEX; Schema: public; Owner: faris
 --
 
 CREATE INDEX idx_24825_idx_qrtz_ft_t_g ON public.qrtz_fired_triggers USING btree (sched_name, trigger_name, trigger_group);
 
 
 --
--- Name: idx_24825_idx_qrtz_ft_tg; Type: INDEX; Schema: public; Owner: -
+-- Name: idx_24825_idx_qrtz_ft_tg; Type: INDEX; Schema: public; Owner: faris
 --
 
 CREATE INDEX idx_24825_idx_qrtz_ft_tg ON public.qrtz_fired_triggers USING btree (sched_name, trigger_group);
 
 
 --
--- Name: idx_24825_idx_qrtz_ft_trig_inst_name; Type: INDEX; Schema: public; Owner: -
+-- Name: idx_24825_idx_qrtz_ft_trig_inst_name; Type: INDEX; Schema: public; Owner: faris
 --
 
 CREATE INDEX idx_24825_idx_qrtz_ft_trig_inst_name ON public.qrtz_fired_triggers USING btree (sched_name, instance_name);
 
 
 --
--- Name: idx_24830_idx_qrtz_j_grp; Type: INDEX; Schema: public; Owner: -
+-- Name: idx_24830_idx_qrtz_j_grp; Type: INDEX; Schema: public; Owner: faris
 --
 
 CREATE INDEX idx_24830_idx_qrtz_j_grp ON public.qrtz_job_details USING btree (sched_name, job_group);
 
 
 --
--- Name: idx_24830_idx_qrtz_j_req_recovery; Type: INDEX; Schema: public; Owner: -
+-- Name: idx_24830_idx_qrtz_j_req_recovery; Type: INDEX; Schema: public; Owner: faris
 --
 
 CREATE INDEX idx_24830_idx_qrtz_j_req_recovery ON public.qrtz_job_details USING btree (sched_name, requests_recovery);
 
 
 --
--- Name: idx_24854_idx_qrtz_t_c; Type: INDEX; Schema: public; Owner: -
+-- Name: idx_24854_idx_qrtz_t_c; Type: INDEX; Schema: public; Owner: faris
 --
 
 CREATE INDEX idx_24854_idx_qrtz_t_c ON public.qrtz_triggers USING btree (sched_name, calendar_name);
 
 
 --
--- Name: idx_24854_idx_qrtz_t_g; Type: INDEX; Schema: public; Owner: -
+-- Name: idx_24854_idx_qrtz_t_g; Type: INDEX; Schema: public; Owner: faris
 --
 
 CREATE INDEX idx_24854_idx_qrtz_t_g ON public.qrtz_triggers USING btree (sched_name, trigger_group);
 
 
 --
--- Name: idx_24854_idx_qrtz_t_j; Type: INDEX; Schema: public; Owner: -
+-- Name: idx_24854_idx_qrtz_t_j; Type: INDEX; Schema: public; Owner: faris
 --
 
 CREATE INDEX idx_24854_idx_qrtz_t_j ON public.qrtz_triggers USING btree (sched_name, job_name, job_group);
 
 
 --
--- Name: idx_24854_idx_qrtz_t_jg; Type: INDEX; Schema: public; Owner: -
+-- Name: idx_24854_idx_qrtz_t_jg; Type: INDEX; Schema: public; Owner: faris
 --
 
 CREATE INDEX idx_24854_idx_qrtz_t_jg ON public.qrtz_triggers USING btree (sched_name, job_group);
 
 
 --
--- Name: idx_24854_idx_qrtz_t_n_g_state; Type: INDEX; Schema: public; Owner: -
+-- Name: idx_24854_idx_qrtz_t_n_g_state; Type: INDEX; Schema: public; Owner: faris
 --
 
 CREATE INDEX idx_24854_idx_qrtz_t_n_g_state ON public.qrtz_triggers USING btree (sched_name, trigger_group, trigger_state);
 
 
 --
--- Name: idx_24854_idx_qrtz_t_n_state; Type: INDEX; Schema: public; Owner: -
+-- Name: idx_24854_idx_qrtz_t_n_state; Type: INDEX; Schema: public; Owner: faris
 --
 
 CREATE INDEX idx_24854_idx_qrtz_t_n_state ON public.qrtz_triggers USING btree (sched_name, trigger_name, trigger_group, trigger_state);
 
 
 --
--- Name: idx_24854_idx_qrtz_t_next_fire_time; Type: INDEX; Schema: public; Owner: -
+-- Name: idx_24854_idx_qrtz_t_next_fire_time; Type: INDEX; Schema: public; Owner: faris
 --
 
 CREATE INDEX idx_24854_idx_qrtz_t_next_fire_time ON public.qrtz_triggers USING btree (sched_name, next_fire_time);
 
 
 --
--- Name: idx_24854_idx_qrtz_t_nft_misfire; Type: INDEX; Schema: public; Owner: -
+-- Name: idx_24854_idx_qrtz_t_nft_misfire; Type: INDEX; Schema: public; Owner: faris
 --
 
 CREATE INDEX idx_24854_idx_qrtz_t_nft_misfire ON public.qrtz_triggers USING btree (sched_name, misfire_instr, next_fire_time);
 
 
 --
--- Name: idx_24854_idx_qrtz_t_nft_st; Type: INDEX; Schema: public; Owner: -
+-- Name: idx_24854_idx_qrtz_t_nft_st; Type: INDEX; Schema: public; Owner: faris
 --
 
 CREATE INDEX idx_24854_idx_qrtz_t_nft_st ON public.qrtz_triggers USING btree (sched_name, trigger_state, next_fire_time);
 
 
 --
--- Name: idx_24854_idx_qrtz_t_nft_st_misfire; Type: INDEX; Schema: public; Owner: -
+-- Name: idx_24854_idx_qrtz_t_nft_st_misfire; Type: INDEX; Schema: public; Owner: faris
 --
 
 CREATE INDEX idx_24854_idx_qrtz_t_nft_st_misfire ON public.qrtz_triggers USING btree (sched_name, misfire_instr, next_fire_time, trigger_state);
 
 
 --
--- Name: idx_24854_idx_qrtz_t_nft_st_misfire_grp; Type: INDEX; Schema: public; Owner: -
+-- Name: idx_24854_idx_qrtz_t_nft_st_misfire_grp; Type: INDEX; Schema: public; Owner: faris
 --
 
 CREATE INDEX idx_24854_idx_qrtz_t_nft_st_misfire_grp ON public.qrtz_triggers USING btree (sched_name, misfire_instr, next_fire_time, trigger_group, trigger_state);
 
 
 --
--- Name: idx_24854_idx_qrtz_t_state; Type: INDEX; Schema: public; Owner: -
+-- Name: idx_24854_idx_qrtz_t_state; Type: INDEX; Schema: public; Owner: faris
 --
 
 CREATE INDEX idx_24854_idx_qrtz_t_state ON public.qrtz_triggers USING btree (sched_name, trigger_state);
 
 
 --
--- Name: idx_24867_job_id; Type: INDEX; Schema: public; Owner: -
+-- Name: idx_24867_job_id; Type: INDEX; Schema: public; Owner: faris
 --
 
 CREATE INDEX idx_24867_job_id ON public.schedule_job_log USING btree (job_id);
 
 
 --
--- Name: idx_24877_param_key; Type: INDEX; Schema: public; Owner: -
+-- Name: idx_24877_param_key; Type: INDEX; Schema: public; Owner: faris
 --
 
 CREATE UNIQUE INDEX idx_24877_param_key ON public.sys_config USING btree (param_key);
 
 
 --
--- Name: idx_24914_username; Type: INDEX; Schema: public; Owner: -
+-- Name: idx_24914_username; Type: INDEX; Schema: public; Owner: faris
 --
 
 CREATE UNIQUE INDEX idx_24914_username ON public.sys_user USING btree (username);
 
 
 --
--- Name: idx_24923_token; Type: INDEX; Schema: public; Owner: -
+-- Name: idx_24923_token; Type: INDEX; Schema: public; Owner: faris
 --
 
 CREATE UNIQUE INDEX idx_24923_token ON public.sys_user_token USING btree (token);
 
 
 --
--- Name: idx_24927_username; Type: INDEX; Schema: public; Owner: -
+-- Name: idx_24927_username; Type: INDEX; Schema: public; Owner: faris
 --
 
 CREATE UNIQUE INDEX idx_24927_username ON public.tb_user USING btree (username);
 
 
 --
--- Name: idx_24932_ux_undo_log; Type: INDEX; Schema: public; Owner: -
+-- Name: idx_24932_ux_undo_log; Type: INDEX; Schema: public; Owner: faris
 --
 
 CREATE UNIQUE INDEX idx_24932_ux_undo_log ON public.undo_log USING btree (xid, branch_id);
 
 
 --
--- Name: qrtz_blob_triggers qrtz_blob_triggers_ibfk_1; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: qrtz_blob_triggers qrtz_blob_triggers_ibfk_1; Type: FK CONSTRAINT; Schema: public; Owner: faris
 --
 
 ALTER TABLE ONLY public.qrtz_blob_triggers
@@ -3386,7 +3460,7 @@ ALTER TABLE ONLY public.qrtz_blob_triggers
 
 
 --
--- Name: qrtz_cron_triggers qrtz_cron_triggers_ibfk_1; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: qrtz_cron_triggers qrtz_cron_triggers_ibfk_1; Type: FK CONSTRAINT; Schema: public; Owner: faris
 --
 
 ALTER TABLE ONLY public.qrtz_cron_triggers
@@ -3394,7 +3468,7 @@ ALTER TABLE ONLY public.qrtz_cron_triggers
 
 
 --
--- Name: qrtz_simple_triggers qrtz_simple_triggers_ibfk_1; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: qrtz_simple_triggers qrtz_simple_triggers_ibfk_1; Type: FK CONSTRAINT; Schema: public; Owner: faris
 --
 
 ALTER TABLE ONLY public.qrtz_simple_triggers
@@ -3402,7 +3476,7 @@ ALTER TABLE ONLY public.qrtz_simple_triggers
 
 
 --
--- Name: qrtz_simprop_triggers qrtz_simprop_triggers_ibfk_1; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: qrtz_simprop_triggers qrtz_simprop_triggers_ibfk_1; Type: FK CONSTRAINT; Schema: public; Owner: faris
 --
 
 ALTER TABLE ONLY public.qrtz_simprop_triggers
@@ -3410,7 +3484,7 @@ ALTER TABLE ONLY public.qrtz_simprop_triggers
 
 
 --
--- Name: qrtz_triggers qrtz_triggers_ibfk_1; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: qrtz_triggers qrtz_triggers_ibfk_1; Type: FK CONSTRAINT; Schema: public; Owner: faris
 --
 
 ALTER TABLE ONLY public.qrtz_triggers
@@ -3421,5 +3495,5 @@ ALTER TABLE ONLY public.qrtz_triggers
 -- PostgreSQL database dump complete
 --
 
-\unrestrict 9oM0cu9GYMnc7mDwwr7aMhQ2gcBe2K3drHzfC1hcbMt0aVcCDaT78bZyzmzsMn2
+\unrestrict WPcUjOluzYBbe9WlZZjaJoClGyOV2xt4LqAWG52AK8uRk22DJTPMT5NYQkZotOY
 
