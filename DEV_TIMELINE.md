@@ -131,3 +131,4 @@
 
 - refactor: SQL文件重命名 wheatmall→youhaowu，测试目录重命名 intergre-py-test→test
 - refactor: 移除冗余 @MapperScan，Mapper 已全部使用 @Mapper 注解
+- feat: 新建 youhaowu-pc-vue 电商 To C 前端骨架（Vue 3 + Vite + Element Plus + Pinia）
