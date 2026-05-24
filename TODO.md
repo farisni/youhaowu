@@ -131,7 +131,7 @@
 
 ## 新模块（2022 规划但未实现）
 
-### wheatmall-cart（购物车服务）
+### ✅ wheatmall-cart（购物车服务）— 已迁移
 - [ ] 购物车 Entity + Mapper + Service + Controller
 - [ ] 添加商品到购物车、修改数量、删除商品
 - [ ] 购物车关联 SKU 实时价格查询

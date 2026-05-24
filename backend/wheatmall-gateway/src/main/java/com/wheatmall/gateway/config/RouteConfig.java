@@ -22,6 +22,7 @@ public class RouteConfig {
                         .uri("lb://wheatmall-ware"))
                 .route("coupon_route", r -> r.path("/api/coupon/**")
                         .uri("lb://wheatmall-coupon"))
+        - id: cart_routen          uri: lb://wheatmall-cartn          predicates:n            - Path=/api/cart/**
                 .route("member_route", r -> r.path("/api/member/**")
                         .uri("lb://wheatmall-member"))
                 .route("thirdparty_route", r -> r.path("/api/thirdparty/**")

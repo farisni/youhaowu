@@ -29,6 +29,7 @@ wheatmall-2026/
 │   ├── wheatmall-auth/             # 认证服务（:8096）
 │   ├── wheatmall-coupon/           # 优惠券服务（:8097）
 │   └── wheatmall-member/           # 会员服务（:8098）
+│   ├── wheatmall-cart/              # 购物车服务（:8099）
 ├── frontend/                       # 前端项目
 └── README.md
 ```
