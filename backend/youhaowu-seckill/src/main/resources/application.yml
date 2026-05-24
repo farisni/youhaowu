@@ -1,0 +1,29 @@
+server:
+  port: 8100
+
+spring:
+  application:
+    name: youhaowu-seckill
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.8.112:8848
+        namespace: public
+        group: DEFAULT_GROUP
+        register-enabled: true
+  data:
+    redis:
+      host: 192.168.8.112
+      port: 6379
+  kafka:
+    bootstrap-servers: 192.168.8.112:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+logging:
+  level:
+    com.youhaowu.seckill: debug

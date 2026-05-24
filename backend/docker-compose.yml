@@ -3,7 +3,7 @@ version: "3.8"
 services:
   kafka:
     image: bitnami/kafka:3.9
-    container_name: wheatmall-kafka
+    container_name: youhaowu-kafka
     ports:
       - "9092:9092"
     environment:
@@ -22,7 +22,7 @@ services:
 
   kafka-ui:
     image: provectuslabs/kafka-ui:latest
-    container_name: wheatmall-kafka-ui
+    container_name: youhaowu-kafka-ui
     ports:
       - "9090:8080"
     environment:

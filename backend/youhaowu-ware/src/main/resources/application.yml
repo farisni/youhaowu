@@ -1,0 +1,30 @@
+server:
+  port: 8093
+
+spring:
+  application:
+    name: youhaowu-ware
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.8.112:8848
+        namespace: public
+        group: DEFAULT_GROUP
+        register-enabled: true
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://192.168.8.112:5432/youhaowu_wms
+    username: faris
+    password: "123456"
+
+  kafka:
+    bootstrap-servers: 192.168.8.112:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+logging:
+  file:
+    path: /tmp
+  level:
+    com.youhaowu.ware: debug

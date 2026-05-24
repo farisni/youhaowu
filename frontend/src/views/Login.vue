@@ -20,7 +20,7 @@
           <template v-if="loginType === 'username'">
             <div class="field-group">
               <label class="field-label">账号</label>
-              <el-input v-model="form.email" placeholder="admin@wheatmall.com" :prefix-icon="Message">
+              <el-input v-model="form.email" placeholder="admin@youhaowu.com" :prefix-icon="Message">
                 <template #suffix>
                   <span class="check-icon"><el-icon><Check /></el-icon></span>
                 </template>
@@ -77,7 +77,7 @@ const rememberMe = ref(false)
 const countdown = ref(0)
 
 const form = reactive({
-  email: 'admin@wheatmall.com',
+  email: 'admin@youhaowu.com',
   password: '',
   phone: '',
   smsCode: '',

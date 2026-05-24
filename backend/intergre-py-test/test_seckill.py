@@ -1,4 +1,4 @@
-"""wheatmall-seckill 集成测试（pytest + requests）"""
+"""youhaowu-seckill 集成测试（pytest + requests）"""
 import pytest
 import requests
 

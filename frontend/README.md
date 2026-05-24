@@ -1,4 +1,4 @@
-# WheatMall Admin 前端
+# 有好物 Admin 前端
 
 基于 Vue 3.5 + Vite 7 + Element Plus 2.12 的后台管理系统。
 

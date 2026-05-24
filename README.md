@@ -1,6 +1,6 @@
-# WheatMall
+# 有好物
 
-基于 Spring Boot 的微服务商城系统，从 wheatmall-2022 迁移而来。
+基于 Spring Boot 的微服务商城系统，从 youhaowu-2022 迁移而来。
 
 ## 技术栈
 
@@ -16,20 +16,20 @@
 ## 项目结构
 
 ```
-wheatmall-2026/
+youhaowu/
 ├── backend/
 │   ├── pom.xml                     # 父工程 POM
-│   ├── wheatmall-common/           # 公共模块（R、PageUtils、ServiceUris 等）
-│   ├── wheatmall-gateway/          # 网关服务（:8888）
-│   ├── wheatmall-product/          # 商品服务（:8091）
-│   ├── wheatmall-order/            # 订单服务（:8092）
-│   ├── wheatmall-ware/             # 仓储服务（:8093）
-│   ├── wheatmall-search/           # 搜索服务（:8094）
-│   ├── wheatmall-thirdparty/       # 第三方服务（:8095）
-│   ├── wheatmall-auth/             # 认证服务（:8096）
-│   ├── wheatmall-coupon/           # 优惠券服务（:8097）
-│   └── wheatmall-member/           # 会员服务（:8098）
-│   ├── wheatmall-cart/              # 购物车服务（:8099）
+│   ├── youhaowu-common/           # 公共模块（R、PageUtils、ServiceUris 等）
+│   ├── youhaowu-gateway/          # 网关服务（:8888）
+│   ├── youhaowu-product/          # 商品服务（:8091）
+│   ├── youhaowu-order/            # 订单服务（:8092）
+│   ├── youhaowu-ware/             # 仓储服务（:8093）
+│   ├── youhaowu-search/           # 搜索服务（:8094）
+│   ├── youhaowu-thirdparty/       # 第三方服务（:8095）
+│   ├── youhaowu-auth/             # 认证服务（:8096）
+│   ├── youhaowu-coupon/           # 优惠券服务（:8097）
+│   └── youhaowu-member/           # 会员服务（:8098）
+│   ├── youhaowu-cart/              # 购物车服务（:8099）
 ├── frontend/                       # 前端项目
 └── README.md
 ```
@@ -103,7 +103,7 @@ cd backend && docker-compose up -d
 mvn compile -q
 
 # 运行单个模块
-mvn spring-boot:run -pl wheatmall-product
+mvn spring-boot:run -pl youhaowu-product
 ```
 
 ## 测试

@@ -1,6 +1,6 @@
 # TODO
 
-> 基于 gulimall-dev（wheatmall-2022）对标 wheatmall-2026 的功能差距分析。
+> 基于 gulimall-dev（youhaowu-2022）对标 youhaowu 的功能差距分析。
 > 标记 ✅ 的模块表示已完整迁移（含核心业务逻辑）。
 
 ---
@@ -28,7 +28,7 @@
 
 ## 🔴 核心业务逻辑空壳
 
-### wheatmall-order（订单模块）
+### youhaowu-order（订单模块）
 
 OrderServiceImpl 当前仅 82 行纯 CRUD，缺以下核心方法（gulimall 原始 469 行）：
 
@@ -40,20 +40,20 @@ OrderServiceImpl 当前仅 82 行纯 CRUD，缺以下核心方法（gulimall 原
 - [ ] **秒杀订单消费** — Kafka 消费 seckill-order-topic 创建订单
 - [ ] RemoteService 全部占位 → 见跨服务调用章节
 
-### wheatmall-ware（仓储模块）
+### youhaowu-ware（仓储模块）
 
 - [ ] **WareSkuServiceImpl.lockStock** — 下单锁库存（SKU 级分布式锁，gulimall 210 行）
 - [ ] **WareSkuServiceImpl.unlockStock** — 订单取消/超时解锁库存
 - [ ] RemoteService 全部占位 → 见跨服务调用章节
 
-### wheatmall-search（搜索模块）
+### youhaowu-search（搜索模块）
 
 - [ ] **MallSearchServiceImpl.search()** — ES DSL 查询（多条件筛选、分页、聚合、品牌/属性/分类导航）
 - [ ] **ProductSaveServiceImpl.productStatusUp()** — ES 批量索引写入（BulkRequest）
 - [ ] RemoteService 全部占位 → 见跨服务调用章节
 - [ ] ES 索引 mapping + 中文分词器（IK）
 
-### wheatmall-coupon（优惠券模块）
+### youhaowu-coupon（优惠券模块）
 
 - [ ] **SeckillSessionServiceImpl.getLates3DaySession()** — 查询最近三天秒杀场次（seckill 定时上架依赖）
 - [ ] **SpuBoundsServiceImpl.saveSpuBounds** — SPU 积分保存业务逻辑
@@ -63,7 +63,7 @@ OrderServiceImpl 当前仅 82 行纯 CRUD，缺以下核心方法（gulimall 原
 
 ## ⚠️ 有 Entity/Service 但缺 Controller 端点
 
-### wheatmall-product
+### youhaowu-product
 
 | 缺失 Controller | 对应 Entity | 说明 |
 |-----------------|-------------|------|
@@ -75,7 +75,7 @@ OrderServiceImpl 当前仅 82 行纯 CRUD，缺以下核心方法（gulimall 原
 
 ---
 
-## 🔴 wheatmall-auth（认证模块）
+## 🔴 youhaowu-auth（认证模块）
 
 gulimall 有 LoginController + OAuth2Controller，wheatmall 当前仅 DemoController。
 
@@ -88,12 +88,12 @@ gulimall 有 LoginController + OAuth2Controller，wheatmall 当前仅 DemoContro
 
 ## ✅ 已完整迁移模块
 
-- ✅ **wheatmall-product** — 核心 CRUD + SpuInfoServiceImpl.saveBaseSpuInfo（106 行）+ 商品上架
-- ✅ **wheatmall-coupon** — 16 组完整 CRUD
-- ✅ **wheatmall-member** — 10 组 CRUD + 注册 / 密码登录 / Gitee OAuth
-- ✅ **wheatmall-cart** — Redis 购物车（添加 / 合并 / 选中 / 数量 / 删除 / 结算）
-- ✅ **wheatmall-seckill** — Redis 秒杀（定时上架 + 信号量 + Kafka 下单）
-- ✅ **wheatmall-gateway** — 路由 + CORS + Nacos 发现
+- ✅ **youhaowu-product** — 核心 CRUD + SpuInfoServiceImpl.saveBaseSpuInfo（106 行）+ 商品上架
+- ✅ **youhaowu-coupon** — 16 组完整 CRUD
+- ✅ **youhaowu-member** — 10 组 CRUD + 注册 / 密码登录 / Gitee OAuth
+- ✅ **youhaowu-cart** — Redis 购物车（添加 / 合并 / 选中 / 数量 / 删除 / 结算）
+- ✅ **youhaowu-seckill** — Redis 秒杀（定时上架 + 信号量 + Kafka 下单）
+- ✅ **youhaowu-gateway** — 路由 + CORS + Nacos 发现
 
 ---
 
