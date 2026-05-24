@@ -43,6 +43,7 @@
         <module>wheatmall-coupon</module>
         <module>wheatmall-member</module>
         <module>wheatmall-gateway</module>
+        <module>wheatmall-cart</module>
     </modules>
 
     <!-- 依赖版本统一管理（不实际引入依赖） -->

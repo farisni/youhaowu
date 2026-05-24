@@ -124,3 +124,5 @@
 - feat(member): 保留会员注册/密码登录/Gitee OAuth 登录逻辑，Feign→CouponRemoteService 占位
 - refactor(common): 新增 MemberServiceUris + UserLoginVO + UserRegisterVO + HttpUtils(RestTemplate)
 - feat(gateway): 搬迁 Gateway 模块（Spring Cloud Gateway + Nacos 发现 + CORS + 8 条路由）
+- feat(cart): 从 gulimall-dev 迁移 Cart 模块（Redis 购物车，7 个 REST API 端点）
+- feat(common): 新增 CartConstant/CartVO/CartItemVO/SkuInfoVO/UserInfoTO/AuthConstant
