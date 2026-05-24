@@ -21,13 +21,9 @@
         <span class="custom-tree-node">
           <span>{{ node.label }}</span>
           <span class="tree-actions">
-            <el-button v-if="node.level <= 2" type="text" size="small" @click="append(data)">
-              Append
-            </el-button>
-            <el-button type="text" size="small" @click="edit(data)">编辑</el-button>
-            <el-button v-if="node.childNodes.length === 0" type="text" size="small" @click="remove(node, data)">
-              删除
-            </el-button>
+            <el-button v-if="node.level <= 2" type="primary" size="small" link :icon="Plus" @click="append(data)">追加</el-button>
+            <el-button type="primary" size="small" link :icon="Edit" @click="edit(data)">编辑</el-button>
+            <el-button v-if="node.childNodes.length === 0" type="primary" size="small" link :icon="Delete" @click="remove(node, data)">删除</el-button>
           </span>
         </span>
       </template>
@@ -55,6 +51,7 @@
 
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
+import { Plus, Edit, Delete } from '@element-plus/icons-vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import http from '@/utils/http.js'
 
@@ -239,14 +236,20 @@ onMounted(() => {
   border-radius: 4px;
   margin-bottom: 10px;
 }
+
 .custom-tree-node {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   width: 100%;
+  padding-right: 12px;
   .tree-actions {
     display: flex;
-    gap: 4px;
+    gap: 8px;
+    margin-left: auto;
+
+    :deep(.el-button + .el-button) {
+      margin-left: 0;
+    }
   }
 }
 </style>
