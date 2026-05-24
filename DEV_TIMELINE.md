@@ -142,3 +142,4 @@
 - feat(admin): 商品分类管理页面（el-tree + 拖拽排序 + CRUD + 三级限制）
 
 - feat(admin/product): 完善分类管理——新增 save/batchSort 后端接口 + 前端完整对接
+- refactor(admin): 清理 WheatMall 命名残留 → 有好物

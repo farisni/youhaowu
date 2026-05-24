@@ -10,7 +10,7 @@
     <div class="login-right">
       <div class="login-card">
         <h2 class="right-title">你好！</h2>
-        <p class="right-desc">欢迎使用 Wheatmall 管理后台，请输入账号密码登录系统。</p>
+        <p class="right-desc">欢迎使用 有好物 管理后台，请输入账号密码登录系统。</p>
         <div class="login-form">
           <div class="login-switch">
             <span class="switch-item" :class="{ active: loginType === 'username' }" @click="loginType = 'username'">账号登录</span>

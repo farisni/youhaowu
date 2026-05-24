@@ -2,7 +2,7 @@
   <div class="home">
     <el-card class="welcome-card" shadow="hover">
       <h2>欢迎回来，{{ appStore.userInfo.username }}</h2>
-      <p>WheatMall 后台管理系统</p>
+      <p>有好物 后台管理系统</p>
     </el-card>
 
     <el-row :gutter="20">
