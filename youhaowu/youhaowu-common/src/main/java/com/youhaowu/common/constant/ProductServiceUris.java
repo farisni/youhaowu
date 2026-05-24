@@ -15,8 +15,10 @@ public final class ProductServiceUris {
         public static final String LIST_TREE = BASE_URL + "/list/tree";
         public static final String PAGE = BASE_URL + "/list";
         public static final String PARENT_BY_ID = BASE_URL + "/parent/{parentId}";
-        public static final String DELETE = BASE_URL + "/delete/{id}";
+        public static final String DELETE = BASE_URL + "/delete";
         public static final String UPDATE = BASE_URL + "/update/{id}";
+        public static final String SAVE = BASE_URL + "/save";
+        public static final String BATCH_UPDATE_SORT = BASE_URL + "/update/sort";
     }
 
 

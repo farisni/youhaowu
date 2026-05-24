@@ -4,6 +4,7 @@ import com.youhaowu.common.constant.ProductServiceUris;
 import com.youhaowu.common.utils.PageData;
 import com.youhaowu.common.utils.R;
 import com.youhaowu.product.dto.CategoryQueryDTO;
+import com.youhaowu.product.dto.CategorySortUpdateDTO;
 import com.youhaowu.product.dto.CategoryUpdateDTO;
 import com.youhaowu.product.service.CategoryService;
 import com.youhaowu.product.vo.CategoryVO;
@@ -71,6 +72,26 @@ public class CategoryController {
     @PostMapping(ProductServiceUris.ProductCategory.UPDATE)
     public R<Void> update(@Valid @RequestBody CategoryUpdateDTO dto) {
         categoryService.update(dto);
+        return R.ok();
+    }
+
+    /**
+     * 新增分类
+     * 在指定父分类下创建子分类
+     */
+    @PostMapping(ProductServiceUris.ProductCategory.SAVE)
+    public R<Void> save(@Valid @RequestBody CategoryUpdateDTO dto) {
+        categoryService.save(dto);
+        return R.ok();
+    }
+
+    /**
+     * 批量更新排序
+     * 拖拽排序后批量更新分类的排序值和父分类ID
+     */
+    @PostMapping(ProductServiceUris.ProductCategory.BATCH_UPDATE_SORT)
+    public R<Void> batchUpdateSort(@RequestBody List<CategorySortUpdateDTO> list) {
+        categoryService.batchUpdateSort(list);
         return R.ok();
     }
 }

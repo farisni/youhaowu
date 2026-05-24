@@ -2,6 +2,7 @@ package com.youhaowu.product.service;
 
 import com.youhaowu.common.utils.PageData;
 import com.youhaowu.product.dto.CategoryQueryDTO;
+import com.youhaowu.product.dto.CategorySortUpdateDTO;
 import com.youhaowu.product.dto.CategoryUpdateDTO;
 import com.youhaowu.product.vo.CategoryVO;
 
@@ -36,4 +37,14 @@ public interface CategoryService {
      * 修改分类信息
      */
     Integer update(CategoryUpdateDTO dto);
+
+    /**
+     * 新增分类
+     */
+    Integer save(CategoryUpdateDTO dto);
+
+    /**
+     * 批量更新排序
+     */
+    void batchUpdateSort(List<CategorySortUpdateDTO> list);
 }

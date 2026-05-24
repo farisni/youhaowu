@@ -32,7 +32,6 @@
       </template>
     </el-tree>
 
-    <!-- 新增/编辑弹窗 -->
     <el-dialog v-model="dialogVisible" :title="title" width="30%" :close-on-click-modal="false">
       <el-form :model="category">
         <el-form-item label="分类名称">
@@ -58,7 +57,6 @@ import { ref, reactive, onMounted } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import http from '@/utils/http.js'
 
-// ===== 状态 =====
 const draggable = ref(false)
 const dialogVisible = ref(false)
 const dialogType = ref('')
@@ -81,61 +79,59 @@ const category = reactive({
   catId: null,
 })
 
-// ===== 数据加载 =====
+// 加载分类树
 const getMenus = async () => {
   const res = await http.get('/product/category/list/tree')
   if (res.data) menus.value = res.data
 }
 
-// ===== 批量删除 =====
+// 批量删除
 const batchDelete = () => {
-  const checkedNodes = menuTreeRef.value.getCheckedNodes()
+  const checkedNodes = menuTreeRef.value?.getCheckedNodes?.() || []
   if (checkedNodes.length === 0) {
     ElMessage.warning('请先勾选要删除的分类')
     return
   }
-  const catIds = checkedNodes.map(n => n.catId)
-  ElMessageBox.confirm(`是否批量删除选中的 ${catIds.length} 个分类？`, '提示', {
+  ElMessageBox.confirm(`是否批量删除选中的 ${checkedNodes.length} 个分类？`, '提示', {
     confirmButtonText: '确定',
     cancelButtonText: '取消',
     type: 'warning',
   }).then(async () => {
-    await http.post('/product/category/delete', catIds)
+    const ids = checkedNodes.map(n => n.catId)
+    await http.post('/product/category/delete', ids)
     ElMessage.success('批量删除成功')
     getMenus()
   }).catch(() => {})
 }
 
-// ===== 拖拽排序 =====
+// 拖拽处理
 const handleDrop = (draggingNode, dropNode, dropType) => {
-  // 计算被拖拽节点的父节点ID及排序
   let pCid = 0
   let siblings = null
   if (dropType === 'before' || dropType === 'after') {
-    pCid = dropNode.parent.data.catId || dropNode.parent.level === 0 ? 0 : dropNode.parent.data.catId
+    pCid = dropNode.parent.level === 0 ? 0 : dropNode.parent.data.catId
     siblings = dropNode.parent.childNodes
   } else {
     pCid = dropNode.data.catId
     siblings = dropNode.childNodes
   }
-  // 更新兄弟节点排序
   if (siblings) {
     siblings.forEach((child, index) => {
       const existing = updateNodes.value.find(n => n.catId === child.data.catId)
       if (existing) {
         existing.sort = index
       } else {
-        updateNodes.value.push({
-          catId: child.data.catId,
-          sort: index,
-          parentCid: pCid,
-        })
+        updateNodes.value.push({ catId: child.data.catId, sort: index, parentCid: pCid })
       }
     })
   }
 }
 
 const batchSave = async () => {
+  if (updateNodes.value.length === 0) {
+    ElMessage.warning('没有需要保存的排序变更')
+    return
+  }
   await http.post('/product/category/update/sort', updateNodes.value)
   ElMessage.success('排序保存成功')
   updateNodes.value = []
@@ -143,7 +139,7 @@ const batchSave = async () => {
   getMenus()
 }
 
-// ===== 拖拽限制：最多三级 =====
+// 拖拽限制三级
 const countNodeLevel = (node) => {
   if (node.childNodes && node.childNodes.length > 0) {
     node.childNodes.forEach(child => {
@@ -157,13 +153,11 @@ const allowDrop = (draggingNode, dropNode, type) => {
   maxLevel.value = draggingNode.level
   countNodeLevel(draggingNode)
   const deep = maxLevel.value - draggingNode.level + 1
-  if (type === 'inner') {
-    return deep + dropNode.level <= 3
-  }
+  if (type === 'inner') return deep + dropNode.level <= 3
   return deep + dropNode.parent.level <= 3
 }
 
-// ===== 新增 =====
+// 新增
 const append = (data) => {
   dialogType.value = 'add'
   title.value = '添加分类'
@@ -178,26 +172,22 @@ const append = (data) => {
   category.showStatus = 1
 }
 
-// ===== 编辑 =====
-const edit = async (data) => {
+// 编辑：用树数据回填
+const edit = (data) => {
   dialogType.value = 'edit'
   title.value = '修改分类'
+  category.name = data.name
+  category.catId = data.catId
+  category.icon = data.icon || ''
+  category.productUnit = data.productUnit || ''
+  category.parentCid = data.parentCid
+  category.catLevel = data.catLevel
+  category.sort = data.sort
+  category.showStatus = data.showStatus
   dialogVisible.value = true
-  const res = await http.get(`/product/category/info/${data.catId}`)
-  if (res.data) {
-    const d = res.data
-    category.name = d.name
-    category.catId = d.catId
-    category.icon = d.icon
-    category.productUnit = d.productUnit
-    category.parentCid = d.parentCid
-    category.catLevel = d.catLevel
-    category.sort = d.sort
-    category.showStatus = d.showStatus
-  }
 }
 
-// ===== 删除 =====
+// 单个删除
 const remove = (node, data) => {
   ElMessageBox.confirm(`是否删除【${data.name}】？`, '提示', {
     confirmButtonText: '确定',
@@ -211,7 +201,7 @@ const remove = (node, data) => {
   }).catch(() => {})
 }
 
-// ===== 提交表单 =====
+// 提交表单
 const submitData = async () => {
   const { catId, name, icon, productUnit, parentCid, catLevel, showStatus, sort } = category
   const payload = { catId, name, icon, productUnit, parentCid, catLevel, showStatus, sort }
@@ -220,7 +210,7 @@ const submitData = async () => {
     await http.post('/product/category/save', payload)
     ElMessage.success('添加成功')
   } else {
-    await http.post('/product/category/update', payload)
+    await http.post(`/product/category/update/${catId}`, payload)
     ElMessage.success('修改成功')
   }
   dialogVisible.value = false

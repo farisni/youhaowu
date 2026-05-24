@@ -140,3 +140,5 @@
 - feat(pc): 加入 mock 数据 + 统一 API 层（DEV 自动走 mock）
 
 - feat(admin): 商品分类管理页面（el-tree + 拖拽排序 + CRUD + 三级限制）
+
+- feat(admin/product): 完善分类管理——新增 save/batchSort 后端接口 + 前端完整对接

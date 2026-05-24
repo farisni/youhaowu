@@ -5,6 +5,7 @@ import com.youhaowu.common.utils.PageData;
 import com.youhaowu.product.utils.PageUtils;
 import com.youhaowu.common.dto.BaseQueryDTO;
 import com.youhaowu.product.dto.CategoryQueryDTO;
+import com.youhaowu.product.dto.CategorySortUpdateDTO;
 import com.youhaowu.product.dto.CategoryUpdateDTO;
 import com.youhaowu.product.entity.CategoryEntity;
 import com.youhaowu.product.mapper.CategoryMapper;
@@ -92,6 +93,39 @@ public class CategoryServiceImpl implements CategoryService {
         CategoryEntity entity = new CategoryEntity();
         BeanUtil.copyProperties(dto, entity);
         return categoryMapper.updateById(entity);
+    }
+
+    /**
+     * 新增分类
+     */
+    @Override
+    public Integer save(CategoryUpdateDTO dto) {
+        CategoryEntity entity = new CategoryEntity();
+        BeanUtil.copyProperties(dto, entity);
+        if (entity.getShowStatus() == null) {
+            entity.setShowStatus(1);
+        }
+        if (entity.getSort() == null) {
+            entity.setSort(0);
+        }
+        return categoryMapper.insert(entity);
+    }
+
+    /**
+     * 批量更新排序
+     */
+    @Override
+    public void batchUpdateSort(List<CategorySortUpdateDTO> list) {
+        List<CategoryEntity> entities = list.stream().map(dto -> {
+            CategoryEntity entity = new CategoryEntity();
+            entity.setCatId(dto.getCatId());
+            entity.setSort(dto.getSort());
+            entity.setParentCid(dto.getParentCid());
+            return entity;
+        }).collect(Collectors.toList());
+        for (CategoryEntity entity : entities) {
+            categoryMapper.updateById(entity);
+        }
     }
 
     private CategoryVO entityToVO(CategoryEntity entity) {
