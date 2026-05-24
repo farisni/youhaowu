@@ -123,6 +123,9 @@
 - [ ] Nacos Config 统一配置管理（当前各模块本地 application.yml）
 - [ ] 敏感信息（AK/SK、DB密码）从 Nacos 或环境变量注入
 
+### 认证方案迁移
+- [ ] Gateway + JWT Token 替代各模块 Spring Session（当前占位用 X-User-Id Header）
+
 ### Docker / 部署
 - [ ] docker-compose.yml 补充 PostgreSQL、ES、Nacos、Kafka 完整编排
 - [ ] 各模块 Dockerfile
@@ -138,7 +141,7 @@
 - [ ] 购物车选中结算（生成订单前确认页）
 - [ ] 支持登录/未登录购物车合并
 
-### wheatmall-seckill（秒杀服务）
+### ✅ wheatmall-seckill（秒杀服务）— 已迁移
 - [ ] 独立秒杀微服务（当前秒杀逻辑在 coupon 模块内）
 - [ ] 秒杀商品预热 + Redis 库存扣减 + 消息队列异步下单
 - [ ] 秒杀接口地址隐藏 + 验证码防刷
