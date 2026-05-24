@@ -1,127 +1,126 @@
 # TODO
 
+> 基于 gulimall-dev（wheatmall-2022）对标 wheatmall-2026 的功能差距分析。
+> 标记 ✅ 的模块表示已完整迁移（含核心业务逻辑）。
+
+---
+
+## 🔴 跨服务调用 — 全部占位
+
+所有 RemoteService 当前为 `return R.fail("占位")` 或返回假数据，需改为 WebClient 调用。
+
+| 调用方 | RemoteService | 方法 | 被调方 |
+|--------|--------------|------|--------|
+| product | CouponRemoteService | saveSpuBounds / saveSkuReduction | coupon |
+| product | WareRemoteService | getSkuHasStock | ware |
+| product | SearchRemoteService | productStatusUp | search |
+| order | WareRemoteService | lockStock / unlockStock | ware |
+| order | ProductRemoteService | getSpuInfo / getSkuInfo | product |
+| order | CartRemoteService | getUserCartItems | cart |
+| order | MemberRemoteService | getMemberInfo | member |
+| cart | ProductRemoteService | getInfo / getSkuSaleAttrValues / getPrice | product |
+| seckill | ProductRemoteService | getSkuInfo / getSkuInfos | product |
+| seckill | CouponRemoteService | getLates3DaySession | coupon |
+| search | ProductRemoteService | getSkuInfos | product |
+| member | CouponRemoteService | getMemberCoupons | coupon |
+
+---
+
+## 🔴 核心业务逻辑空壳
+
+### wheatmall-order（订单模块）
+
+OrderServiceImpl 当前仅 82 行纯 CRUD，缺以下核心方法（gulimall 原始 469 行）：
+
+- [ ] **submitOrder** — 提交订单（验令牌、验价、锁库存、生成订单、删购物车）
+- [ ] **getOrderConfirmData** — 订单确认页数据（地址、购物项、运费、总价）
+- [ ] **closeOrder** — 关闭过期订单（超时未支付自动取消）
+- [ ] **订单状态流转** — 待付款→已支付→已发货→已完成→已取消
+- [ ] **支付回调** — handlePayResult（支付宝/微信回调处理）
+- [ ] **秒杀订单消费** — Kafka 消费 seckill-order-topic 创建订单
+- [ ] RemoteService 全部占位 → 见跨服务调用章节
+
+### wheatmall-ware（仓储模块）
+
+- [ ] **WareSkuServiceImpl.lockStock** — 下单锁库存（SKU 级分布式锁，gulimall 210 行）
+- [ ] **WareSkuServiceImpl.unlockStock** — 订单取消/超时解锁库存
+- [ ] RemoteService 全部占位 → 见跨服务调用章节
+
+### wheatmall-search（搜索模块）
+
+- [ ] **MallSearchServiceImpl.search()** — ES DSL 查询（多条件筛选、分页、聚合、品牌/属性/分类导航）
+- [ ] **ProductSaveServiceImpl.productStatusUp()** — ES 批量索引写入（BulkRequest）
+- [ ] RemoteService 全部占位 → 见跨服务调用章节
+- [ ] ES 索引 mapping + 中文分词器（IK）
+
+### wheatmall-coupon（优惠券模块）
+
+- [ ] **SeckillSessionServiceImpl.getLates3DaySession()** — 查询最近三天秒杀场次（seckill 定时上架依赖）
+- [ ] **SpuBoundsServiceImpl.saveSpuBounds** — SPU 积分保存业务逻辑
+- [ ] **SkuFullReductionServiceImpl** — 满减 + 会员价批量保存（依赖 SkuLadder / MemberPrice）
+
+---
+
+## ⚠️ 有 Entity/Service 但缺 Controller 端点
+
+### wheatmall-product
+
+| 缺失 Controller | 对应 Entity | 说明 |
+|-----------------|-------------|------|
+| SkuImagesController | SkuImagesEntity | SKU 图片 REST API |
+| SkuSaleAttrValueController | SkuSaleAttrValueEntity | SKU 销售属性 REST API |
+| SpuCommentController | SpuCommentEntity | 商品评价 REST API |
+| SpuImagesController | SpuImagesEntity | SPU 图片集 REST API |
+| SpuInfoDescController | SpuInfoDescEntity | SPU 描述 REST API |
+
+---
+
+## 🔴 wheatmall-auth（认证模块）
+
+gulimall 有 LoginController + OAuth2Controller，wheatmall 当前仅 DemoController。
+
+> 注：member 模块已有 register / login / OAuth 端点。auth 的 Thymeleaf SSR 登录页面在 REST API 架构下是否需要保留待评估。
+
+- [ ] **LoginController** — 登录页 / 注册 / 短信验证码（或评估 member 已覆盖后移除）
+- [ ] **OAuth2Controller** — 微博 / Gitee 授权回调（或评估 member 已覆盖后移除）
+
+---
+
+## ✅ 已完整迁移模块
+
+- ✅ **wheatmall-product** — 核心 CRUD + SpuInfoServiceImpl.saveBaseSpuInfo（106 行）+ 商品上架
+- ✅ **wheatmall-coupon** — 16 组完整 CRUD
+- ✅ **wheatmall-member** — 10 组 CRUD + 注册 / 密码登录 / Gitee OAuth
+- ✅ **wheatmall-cart** — Redis 购物车（添加 / 合并 / 选中 / 数量 / 删除 / 结算）
+- ✅ **wheatmall-seckill** — Redis 秒杀（定时上架 + 信号量 + Kafka 下单）
+- ✅ **wheatmall-gateway** — 路由 + CORS + Nacos 发现
+
+---
+
 ## 安全
 
-- [x] 密码加密使用 BCrypt（SecurityConfig 已配置 BCryptPasswordEncoder）
-- [ ] JWT 密钥通过环境变量注入（当前 `@Value` 有硬编码默认值）
-- [ ] 前端 Token 存储 httpOnly cookie 或内存，避免 XSS
+- [x] 密码加密使用 BCrypt
+- [ ] JWT 密钥通过环境变量注入
+- [ ] 前端 Token 存储 httpOnly cookie 或内存
 - [ ] 生产环境强制 HTTPS
-- [ ] 登录失败次数限制（防暴力破解）
-
-## 认证
-
-- [x] Token 续期（refreshToken 机制已实现）
-- [x] Spring Security + JWT 无状态认证
+- [ ] 登录失败次数限制
 
 ## 性能
 
 - [ ] 用户权限缓存到 Redis
-- [ ] Token 解析优化（JWT 缓存 / 本地线程缓存）
+- [ ] Token 解析优化（JWT 缓存）
 - [ ] username、role_code、perm_code 字段加索引
 
 ## 扩展
 
-- [ ] 多租户支持（添加 tenant_id）
-- [ ] OAuth2.0 第三方登录（微信、QQ、GitHub）
-- [ ] 单点登录 SSO（CAS / OAuth2）
-- [ ] 登录审计日志（IP、时间、设备）
 - [ ] Nacos Config 统一配置中心
-
-## Search 模块
-
-- [ ] MallSearchServiceImpl.search() — ES 检索逻辑（DSL 构建、分页、聚合、品牌/属性/分类导航）
-- [ ] ProductSaveServiceImpl.productStatusUp() — ES 索引批量写入（BulkRequest）
-- [ ] ProductRemoteService — WebClient 调用 Product 模块（替换 Feign 占位）
-- [ ] ElasticSaveController.productStatusUp() — 错误处理完善（BizCodeEnum + 日志告警）
-- [ ] SearchController — Thymeleaf 页面搜索（需 Spring Session + Redis + 前端模板）
-- [ ] ES 索引 mapping 定义 + 中文分词器（IK）配置
-
----
-
-## 未迁移模块（对标 wheatmall-2022）
-
-### ✅ wheatmall-member（用户模块）— 已迁移
-
-- [ ] 10 Entity + 10 Mapper + 10 Service + 10 Controller（Member/Level/Address/LoginLog/CollectSpu/CollectSubject 等）
-- [ ] MemberService — 注册、登录（普通+社交）、手机号唯一校验
-- [ ] MemberReceiveAddressService — 用户收货地址
-- [ ] CouponRemoteService — WebClient 调用 Coupon 模块（替换 Feign）
-- [ ] VO: MemberUserRegisterVO / SocialUser / GiteeUser
-- [ ] exception: PhoneException / UsernameException
-- [ ] application.yml + DB: wheatmall_ums
-
-### ✅ wheatmall-gateway（网关）— 已迁移
-- [ ] Spring Cloud Gateway 路由配置
-- [ ] CORS 跨域配置
-- [ ] 统一前缀 /api 路由转发
-
-### renren-fast（管理后台）
-- [ ] 原 2022 依赖 renren-fast 作为后台管理，2026 用 wheatmall-auth 替代
-- [ ] 若需代码生成器：renren-generator
-
----
-
-## 各模块核心逻辑缺口
-
-### wheatmall-product
-- [ ] SpuInfoService.saveBaseSpuInfo — 保存 SPU 同时调用 Coupon 保存满减/积分（跨模块调用）
-- [ ] ProductAttrValueService — 基本属性批量保存（baseSaleAttrs）
-- [ ] SkuInfoService — SKU 图片批量保存
-- [ ] CouponRemoteService / WareRemoteService / SearchRemoteService — WebClient 实现（当前为占位）
-- [ ] ProductConstant — 商品状态常量（SPU_UP/NEW/DOWN）
-- [ ] SkuEsModel / SpuBoundTo — TO 类迁移到 common
-
-### wheatmall-order
-- [ ] OrderService — 创建订单（验令牌、验价、锁库存）、订单确认页数据
-- [ ] OrderItemService — 订单项批量保存
-- [ ] 订单状态流转（待付款→已支付→已发货→已完成→已取消）
-- [ ] WareRemoteService — WebClient 锁库存/解锁库存
-- [ ] ProductRemoteService — WebClient 查 SPU/SKU 信息
-- [ ] CartRemoteService / MemberRemoteService — WebClient 占位
-
-### wheatmall-ware
-- [ ] PurchaseService — 合并采购需求、领取采购单、完成采购
-- [ ] WareSkuService — 库存锁定/解锁（订单扣库存核心逻辑）
-- [ ] PurchaseDetailService — 采购需求状态流转
-- [ ] WareConstant — 采购单状态常量
-- [ ] SkuHasStockVo — 移入 common（已部分迁移）
-
-### wheatmall-coupon
-- [ ] SkuFullReductionService.saveSkuReduction — 满减+会员价批量保存逻辑（依赖 SkuLadder/MemberPrice）
-- [ ] SeckillSessionService — 秒杀场次关联 SKU
-- [ ] SeckillSkuRelationService — 秒杀商品关联
-- [ ] SpuBoundsService — SPU 积分保存
-
-### wheatmall-search
-- [ ] MallSearchServiceImpl.search() — ES DSL 查询构建、分页、聚合、品牌/属性/分类导航
-- [ ] ProductSaveServiceImpl.productStatusUp() — ES 批量索引（BulkRequest）
-- [ ] ProductRemoteService — WebClient 实现（替换占位）
-- [ ] SearchController — Thymeleaf 搜索页（需 Redis + Spring Session）
-- [ ] ES 索引 mapping + 中文分词器（IK）
-
-### wheatmall-thirdparty
-- [ ] OSSController — 前端直传 OSS 签名（已有，需验证与前端联调）
-- [ ] SmsSendController.sendCode — 短信验证码发送（已有，需验证）
-
----
-
-## 前端
-
-### wheatmall-admin（Vue2→Vue3 重写）
-- [ ] 2022 为 Vue2 + Element UI，2026 已搭建 Vite + React? 框架
-- [ ] 商品管理（SPU/SKU/品牌/分类/属性）
-- [ ] 订单管理
-- [ ] 优惠券管理
-- [ ] 用户管理
-- [ ] 仓储管理
+- [ ] 单点登录 SSO
+- [ ] 登录审计日志
+- [ ] 多租户支持
 
 ---
 
 ## 基础设施
-
-### 配置中心
-- [ ] Nacos Config 统一配置管理（当前各模块本地 application.yml）
-- [ ] 敏感信息（AK/SK、DB密码）从 Nacos 或环境变量注入
 
 ### 认证方案迁移
 - [ ] Gateway + JWT Token 替代各模块 Spring Session（当前占位用 X-User-Id Header）
@@ -129,21 +128,3 @@
 ### Docker / 部署
 - [ ] docker-compose.yml 补充 PostgreSQL、ES、Nacos、Kafka 完整编排
 - [ ] 各模块 Dockerfile
-
----
-
-## 新模块（2022 规划但未实现）
-
-### ✅ wheatmall-cart（购物车服务）— 已迁移
-- [ ] 购物车 Entity + Mapper + Service + Controller
-- [ ] 添加商品到购物车、修改数量、删除商品
-- [ ] 购物车关联 SKU 实时价格查询
-- [ ] 购物车选中结算（生成订单前确认页）
-- [ ] 支持登录/未登录购物车合并
-
-### ✅ wheatmall-seckill（秒杀服务）— 已迁移
-- [ ] 独立秒杀微服务（当前秒杀逻辑在 coupon 模块内）
-- [ ] 秒杀商品预热 + Redis 库存扣减 + 消息队列异步下单
-- [ ] 秒杀接口地址隐藏 + 验证码防刷
-- [ ] 秒杀倒计时 + 限流（Sentinel）
-- [ ] 秒杀订单创建 + 支付超时取消
