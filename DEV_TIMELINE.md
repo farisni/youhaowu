@@ -134,3 +134,5 @@
 - feat: 新建 youhaowu-pc-vue 电商 To C 前端骨架（Vue 3 + Vite + Element Plus + Pinia）
 
 - feat(pc): 搭建首页骨架 12 组件（尚品汇风格）—— 分类hover导航 / Banner轮播 / 楼层 / 推荐 / 品牌 / 搜索
+
+- fix(pc): 首页三栏等高 + 全局 border-box + 间距修复
