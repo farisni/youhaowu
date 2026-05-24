@@ -25,7 +25,7 @@ http.interceptors.response.use(
   (res) => {
     const data = res.data
     // 适配后端 R<T> 格式：code === 200 为成功
-    if (data.code === 200) {
+    if (data.code === 0) {
       return data
     }
     ElMessage.error(data.msg || '请求失败')

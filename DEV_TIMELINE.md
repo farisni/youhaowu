@@ -138,3 +138,5 @@
 - fix(pc): 首页三栏等高 + 全局 border-box + 间距修复
 
 - feat(pc): 加入 mock 数据 + 统一 API 层（DEV 自动走 mock）
+
+- feat(admin): 商品分类管理页面（el-tree + 拖拽排序 + CRUD + 三级限制）
