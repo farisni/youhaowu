@@ -1,6 +1,6 @@
 # 有好物
 
-基于 Spring Boot 的微服务商城系统，从 youhaowu-2022 迁移而来。
+基于 Spring Boot 的微服务商城系统。
 
 ## 技术栈
 
@@ -9,7 +9,7 @@
 - **Spring Cloud Alibaba**: 2025.0.0.0
 - **Java**: 17
 - **Nacos**: 服务注册发现
-- **PostgreSQL**: 数据库
+- **PostgreSQL 17**: 数据库
 - **Kafka**: 消息队列
 - **MyBatis-Plus**: ORM
 

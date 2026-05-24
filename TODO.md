@@ -117,7 +117,7 @@ gulimall 有 LoginController + OAuth2Controller，wheatmall 当前仅 DemoContro
 - [ ] 单点登录 SSO
 - [ ] 登录审计日志
 - [ ] 多租户支持
-
+- [ ] 重构 youhaowu：参照 springcloud-demo 的 plug 方式，抽取 youhaowu-plug 公共底座模块（MyBatis-Plus/Redisson/Kafka/Nacos），各业务模块只保留领域代码
 ---
 
 ## 基础设施
