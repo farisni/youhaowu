@@ -1,9 +1,10 @@
 <template>
   <div class="category-container">
-    <el-switch v-model="draggable" active-text="开启拖拽" inactive-text="关闭拖拽" />
-    <el-button v-if="draggable" type="primary" @click="batchSave">批量保存</el-button>
-    <el-button type="danger" @click="batchDelete">批量删除</el-button>
-
+    <div class="operation-bar">
+        <el-switch v-model="draggable" active-text="开启拖拽" inactive-text="关闭拖拽" />
+        <el-button v-if="draggable" type="primary" @click="batchSave">批量保存</el-button>
+        <el-button type="danger" @click="batchDelete">批量删除</el-button>
+    </div>
     <el-tree
       :data="menus"
       :props="defaultProps"
@@ -226,6 +227,17 @@ onMounted(() => {
 <style lang="scss" scoped>
 .category-container {
   padding: 16px;
+}
+
+.operation-bar {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 10px;
+  border: 1px solid #EBEEF5;
+  border-radius: 4px;
+  margin-bottom: 10px;
 }
 .custom-tree-node {
   display: flex;

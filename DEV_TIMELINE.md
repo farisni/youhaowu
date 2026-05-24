@@ -143,3 +143,4 @@
 
 - feat(admin/product): 完善分类管理——新增 save/batchSort 后端接口 + 前端完整对接
 - refactor(admin): 清理 WheatMall 命名残留 → 有好物
+- style(admin): 分类管理操作栏风格与菜单管理统一
