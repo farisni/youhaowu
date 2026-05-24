@@ -1,0 +1,26 @@
+{
+  "1": [
+    { "catalog1Id": 1, "id": 101, "name": "电子书", "catalog3List": [
+      { "id": 1001, "name": "小说" }, { "id": 1002, "name": "文学" }
+    ]},
+    { "catalog1Id": 1, "id": 102, "name": "教育", "catalog3List": [
+      { "id": 1003, "name": "教材" }, { "id": 1004, "name": "考试" }
+    ]}
+  ],
+  "2": [
+    { "catalog1Id": 2, "id": 201, "name": "手机通讯", "catalog3List": [
+      { "id": 2001, "name": "5G手机" }, { "id": 2002, "name": "游戏手机" }
+    ]},
+    { "catalog1Id": 2, "id": 202, "name": "运营商", "catalog3List": [
+      { "id": 2003, "name": "合约机" }, { "id": 2004, "name": "手机卡" }
+    ]}
+  ],
+  "3": [
+    { "catalog1Id": 3, "id": 301, "name": "大家电", "catalog3List": [
+      { "id": 3001, "name": "平板电视" }, { "id": 3002, "name": "空调" }
+    ]},
+    { "catalog1Id": 3, "id": 302, "name": "生活电器", "catalog3List": [
+      { "id": 3003, "name": "净化器" }, { "id": 3004, "name": "吸尘器" }
+    ]}
+  ]
+}

@@ -1,0 +1,53 @@
+[
+  {
+    "id": 1,
+    "name": "家用电器",
+    "keywords": ["节能补贴","4K电视","空气净化器","IH电饭煲","滚筒洗衣机","电热水器"],
+    "imgUrl": "",
+    "tabs": ["热门","大家电","生活电器","厨房电器","应季电器","空气/净水","高端电器"],
+    "carouselList": [
+      { "id": 1, "imgUrl": "" },
+      { "id": 2, "imgUrl": "" },
+      { "id": 3, "imgUrl": "" }
+    ],
+    "products": [
+      { "id": 1, "imgUrl": "" }, { "id": 2, "imgUrl": "" },
+      { "id": 3, "imgUrl": "" }, { "id": 4, "imgUrl": "" },
+      { "id": 5, "imgUrl": "" }, { "id": 6, "imgUrl": "" }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "手机通讯",
+    "keywords": ["全面屏","游戏手机","拍照手机","5G手机","老人机","学生机"],
+    "imgUrl": "",
+    "tabs": ["热门","手机","运营商","数码"],
+    "carouselList": [
+      { "id": 1, "imgUrl": "" },
+      { "id": 2, "imgUrl": "" },
+      { "id": 3, "imgUrl": "" }
+    ],
+    "products": [
+      { "id": 1, "imgUrl": "" }, { "id": 2, "imgUrl": "" },
+      { "id": 3, "imgUrl": "" }, { "id": 4, "imgUrl": "" },
+      { "id": 5, "imgUrl": "" }, { "id": 6, "imgUrl": "" }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "电脑办公",
+    "keywords": ["笔记本","游戏本","平板电脑","台式机","一体机","显示器"],
+    "imgUrl": "",
+    "tabs": ["热门","电脑整机","外设","办公"],
+    "carouselList": [
+      { "id": 1, "imgUrl": "" },
+      { "id": 2, "imgUrl": "" },
+      { "id": 3, "imgUrl": "" }
+    ],
+    "products": [
+      { "id": 1, "imgUrl": "" }, { "id": 2, "imgUrl": "" },
+      { "id": 3, "imgUrl": "" }, { "id": 4, "imgUrl": "" },
+      { "id": 5, "imgUrl": "" }, { "id": 6, "imgUrl": "" }
+    ]
+  }
+]
