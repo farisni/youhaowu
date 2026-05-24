@@ -6,7 +6,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'Home',
-      component: () => import('@/views/Home.vue'),
+      component: () => import('@/views/home/index.vue'),
       meta: { title: '首页' },
     },
     {
@@ -14,6 +14,12 @@ const router = createRouter({
       name: 'Login',
       component: () => import('@/views/Login.vue'),
       meta: { title: '登录' },
+    },
+    {
+      path: '/search',
+      name: 'Search',
+      component: () => import('@/views/Search.vue'),
+      meta: { title: '搜索' },
     },
   ],
   scrollBehavior() {
