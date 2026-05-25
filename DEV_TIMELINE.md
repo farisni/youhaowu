@@ -156,3 +156,4 @@
 - refactor: RestHighLevelClient → ElasticsearchClient（ES 8.x 新客户端）
 - refactor: selectBatchIds → selectByIds（MyBatis-Plus 过时 API）
 - refactor: JwtUtil SignatureException 迁移到 jjwt 0.12 security 包
+- fix: AttrRespVO 补充 @EqualsAndHashCode(callSuper=false) 消除 Lombok 警告
