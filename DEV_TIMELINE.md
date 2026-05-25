@@ -152,3 +152,4 @@
 - chore: VSCode 配置——关闭 null 分析、raw type 警告、开启保存时自动 organize imports
 - refactor: SeckillServiceImpl 过时 StringUtils.isEmpty 替换为 Hutool StrUtil
 - chore: 父 POM 加 -Xlint:-options 消除 javac 注解处理提示
+- refactor: 全项目 StringUtils.isEmpty → Hutool StrUtil.isEmpty（消除过时 API 警告）

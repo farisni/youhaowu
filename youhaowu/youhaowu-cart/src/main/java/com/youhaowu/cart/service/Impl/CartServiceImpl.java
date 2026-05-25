@@ -16,7 +16,7 @@ import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
+import cn.hutool.core.util.StrUtil;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -49,7 +49,7 @@ public class CartServiceImpl implements CartService {
         //  获取当前用户购物车 Redis 操作对象
         BoundHashOperations<String, Object, Object> ops = getCartOps();
         String json = (String) ops.get(skuId.toString());
-        if (StringUtils.isEmpty(json)) {
+        if (StrUtil.isEmpty(json)) {
             //  商品不存在：新建购物项
             CartItemVO cartItem = new CartItemVO();
 
