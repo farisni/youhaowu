@@ -155,3 +155,4 @@
 - refactor: 全项目 StringUtils.isEmpty → Hutool StrUtil.isEmpty（消除过时 API 警告）
 - refactor: RestHighLevelClient → ElasticsearchClient（ES 8.x 新客户端）
 - refactor: selectBatchIds → selectByIds（MyBatis-Plus 过时 API）
+- refactor: JwtUtil SignatureException 迁移到 jjwt 0.12 security 包
