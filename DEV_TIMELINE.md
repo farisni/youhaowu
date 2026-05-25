@@ -146,3 +146,4 @@
 - style(admin): 分类管理操作栏风格与菜单管理统一
 - style(admin): 分类管理树节点操作按钮加图标、调整间距对齐菜单管理风格
 - feat(admin): 品牌管理 CRUD —— BrandVO 补全 + brandApi + brand.vue（QATable）
+- refactor: 清理 31 个实体类中未使用的 import java.util.Date
