@@ -195,7 +195,7 @@ public class AttrServiceImpl implements AttrService {
         if (attrIds.isEmpty()) return Collections.emptyList();
 
         // 2. 批量查询属性并转 VO
-        List<AttrEntity> attrs = attrMapper.selectBatchIds(attrIds);
+        List<AttrEntity> attrs = attrMapper.selectByIds(attrIds);
         return attrs.stream().map(a -> {
             AttrRespVO v = new AttrRespVO();
             BeanUtil.copyProperties(a, v);

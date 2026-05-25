@@ -3,7 +3,9 @@ package com.youhaowu.search.config;
 import org.apache.http.HttpHost;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
-import org.elasticsearch.client.RestHighLevelClient;
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.json.jackson.JacksonJsonpMapper;
+import co.elastic.clients.transport.rest_client.RestClientTransport;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,10 +42,10 @@ public class ElasticsearchConfig {
     }
 
     @Bean
-    public RestHighLevelClient esRestClient(){
-        RestHighLevelClient client = new RestHighLevelClient(
-                RestClient.builder(new HttpHost(ESHost, ESPort, "http")));
-        return  client;
+    public ElasticsearchClient esRestClient() {
+        RestClient restClient = RestClient.builder(new HttpHost(ESHost, ESPort, "http")).build();
+        RestClientTransport transport = new RestClientTransport(restClient, new JacksonJsonpMapper());
+        return new ElasticsearchClient(transport);
     }
 
 }

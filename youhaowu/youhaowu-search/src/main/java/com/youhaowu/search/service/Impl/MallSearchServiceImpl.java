@@ -8,7 +8,7 @@ import com.youhaowu.search.vo.SearchParam;
 import com.youhaowu.search.vo.SearchResult;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.elasticsearch.client.RestHighLevelClient;
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 public class MallSearchServiceImpl implements MallSearchService {
 
     @Autowired
-    private RestHighLevelClient esRestClient;
+    private ElasticsearchClient esRestClient;
 
     @Resource
     private ProductRemoteService productRemoteService;

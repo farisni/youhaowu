@@ -5,7 +5,7 @@ import com.youhaowu.search.config.ElasticsearchConfig;
 import com.youhaowu.search.constant.EsConstant;
 import com.youhaowu.search.service.ProductSaveService;
 import lombok.extern.slf4j.Slf4j;
-import org.elasticsearch.client.RestHighLevelClient;
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ import java.util.List;
 public class ProductSaveServiceImpl implements ProductSaveService {
 
     @Autowired
-    private RestHighLevelClient esRestClient;
+    private ElasticsearchClient esRestClient;
 
     @Override
     public boolean productStatusUp(List<SkuEsModel> skuEsModels) throws IOException {

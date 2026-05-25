@@ -153,3 +153,5 @@
 - refactor: SeckillServiceImpl 过时 StringUtils.isEmpty 替换为 Hutool StrUtil
 - chore: 父 POM 加 -Xlint:-options 消除 javac 注解处理提示
 - refactor: 全项目 StringUtils.isEmpty → Hutool StrUtil.isEmpty（消除过时 API 警告）
+- refactor: RestHighLevelClient → ElasticsearchClient（ES 8.x 新客户端）
+- refactor: selectBatchIds → selectByIds（MyBatis-Plus 过时 API）
