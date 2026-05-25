@@ -22,7 +22,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
+import cn.hutool.core.util.StrUtil;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -257,7 +257,7 @@ public class SeckillServiceImpl implements SeckillService {
         //  2. 校验秒杀场次 + 商品是否存在
         BoundHashOperations<String, Object, Object> skuOps = redisTemplate.boundHashOps(SECKILL_CHARE_KEY);
         String jsonString = (String) skuOps.get(killId);
-        if (StringUtils.isEmpty(jsonString)) {
+        if (StrUtil.isEmpty(jsonString)) {
             return null;
         }
         SeckillSkuRedisTO skuInfo = JSON.parseObject(jsonString, SeckillSkuRedisTO.class);

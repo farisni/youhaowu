@@ -150,3 +150,5 @@
 - refactor: 批量替换 52 处 deleteBatchIds → deleteByIds（MyBatis-Plus deprecated）
 - refactor: 清理 6 处未使用的 import BatchResult
 - chore: VSCode 配置——关闭 null 分析、raw type 警告、开启保存时自动 organize imports
+- refactor: SeckillServiceImpl 过时 StringUtils.isEmpty 替换为 Hutool StrUtil
+- chore: 父 POM 加 -Xlint:-options 消除 javac 注解处理提示

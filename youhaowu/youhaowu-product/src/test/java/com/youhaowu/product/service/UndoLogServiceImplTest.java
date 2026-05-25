@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import org.apache.ibatis.mapping.SqlCommandType;
+import org.apache.ibatis.executor.BatchResult;
 
 import java.util.Arrays;
 import java.util.Collections;
