@@ -69,7 +69,7 @@ public class WareInfoServiceImpl implements WareInfoService {
 
     @Override
     public Integer removeByIds(List<Long> ids) {
-        return wareInfoMapper.deleteBatchIds(ids);
+        return wareInfoMapper.deleteByIds(ids);
     }
 
     private WareInfoVO entityToVO(WareInfoEntity e) {

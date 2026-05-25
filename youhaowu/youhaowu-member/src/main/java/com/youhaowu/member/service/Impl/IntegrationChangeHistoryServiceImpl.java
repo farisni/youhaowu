@@ -71,7 +71,7 @@ public class IntegrationChangeHistoryServiceImpl implements IntegrationChangeHis
 
     @Override
     public Integer removeByIds(List<Long> ids) {
-        return integrationChangeHistoryMapper.deleteBatchIds(ids);
+        return integrationChangeHistoryMapper.deleteByIds(ids);
     }
 
     private IntegrationChangeHistoryVO entityToVO(IntegrationChangeHistoryEntity e) {

@@ -92,7 +92,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public Integer removeByIds(List<Long> ids) {
-        return memberMapper.deleteBatchIds(ids);
+        return memberMapper.deleteByIds(ids);
     }
 
     //  ==================== 会员业务 ====================

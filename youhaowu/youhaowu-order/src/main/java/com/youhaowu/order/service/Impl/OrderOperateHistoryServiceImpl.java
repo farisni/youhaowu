@@ -71,7 +71,7 @@ public class OrderOperateHistoryServiceImpl implements OrderOperateHistoryServic
 
     @Override
     public Integer removeByIds(List<Long> ids) {
-        return orderOperateHistoryMapper.deleteBatchIds(ids);
+        return orderOperateHistoryMapper.deleteByIds(ids);
     }
 
     private OrderOperateHistoryVO entityToVO(OrderOperateHistoryEntity e) {

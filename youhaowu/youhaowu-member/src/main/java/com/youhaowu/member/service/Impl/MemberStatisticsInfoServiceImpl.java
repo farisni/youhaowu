@@ -71,7 +71,7 @@ public class MemberStatisticsInfoServiceImpl implements MemberStatisticsInfoServ
 
     @Override
     public Integer removeByIds(List<Long> ids) {
-        return memberStatisticsInfoMapper.deleteBatchIds(ids);
+        return memberStatisticsInfoMapper.deleteByIds(ids);
     }
 
     private MemberStatisticsInfoVO entityToVO(MemberStatisticsInfoEntity e) {

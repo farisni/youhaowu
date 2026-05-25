@@ -69,6 +69,6 @@ public class CommentReplayServiceImpl implements CommentReplayService {
 
     @Override
     public Integer removeByIds(List<Long> ids) {
-        return commentReplayMapper.deleteBatchIds(ids);
+        return commentReplayMapper.deleteByIds(ids);
     }
 }

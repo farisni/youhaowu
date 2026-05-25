@@ -71,7 +71,7 @@ public class SeckillSkuNoticeServiceImpl implements SeckillSkuNoticeService {
 
     @Override
     public Integer removeByIds(List<Long> ids) {
-        return seckillSkuNoticeMapper.deleteBatchIds(ids);
+        return seckillSkuNoticeMapper.deleteByIds(ids);
     }
 
     private SeckillSkuNoticeVO entityToVO(SeckillSkuNoticeEntity e) {

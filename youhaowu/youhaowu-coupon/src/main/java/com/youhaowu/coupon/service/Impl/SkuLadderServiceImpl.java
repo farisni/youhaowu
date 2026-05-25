@@ -71,7 +71,7 @@ public class SkuLadderServiceImpl implements SkuLadderService {
 
     @Override
     public Integer removeByIds(List<Long> ids) {
-        return skuLadderMapper.deleteBatchIds(ids);
+        return skuLadderMapper.deleteByIds(ids);
     }
 
     private SkuLadderVO entityToVO(SkuLadderEntity e) {

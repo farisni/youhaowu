@@ -71,7 +71,7 @@ public class SkuFullReductionServiceImpl implements SkuFullReductionService {
 
     @Override
     public Integer removeByIds(List<Long> ids) {
-        return skuFullReductionMapper.deleteBatchIds(ids);
+        return skuFullReductionMapper.deleteByIds(ids);
     }
 
     private SkuFullReductionVO entityToVO(SkuFullReductionEntity e) {

@@ -71,7 +71,7 @@ public class OrderReturnApplyServiceImpl implements OrderReturnApplyService {
 
     @Override
     public Integer removeByIds(List<Long> ids) {
-        return orderReturnApplyMapper.deleteBatchIds(ids);
+        return orderReturnApplyMapper.deleteByIds(ids);
     }
 
     private OrderReturnApplyVO entityToVO(OrderReturnApplyEntity e) {

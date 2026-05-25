@@ -71,7 +71,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Integer removeByIds(List<Long> ids) {
-        return orderMapper.deleteBatchIds(ids);
+        return orderMapper.deleteByIds(ids);
     }
 
     private OrderVO entityToVO(OrderEntity e) {

@@ -71,7 +71,7 @@ public class MemberCollectSubjectServiceImpl implements MemberCollectSubjectServ
 
     @Override
     public Integer removeByIds(List<Long> ids) {
-        return memberCollectSubjectMapper.deleteBatchIds(ids);
+        return memberCollectSubjectMapper.deleteByIds(ids);
     }
 
     private MemberCollectSubjectVO entityToVO(MemberCollectSubjectEntity e) {

@@ -71,7 +71,7 @@ public class GrowthChangeHistoryServiceImpl implements GrowthChangeHistoryServic
 
     @Override
     public Integer removeByIds(List<Long> ids) {
-        return growthChangeHistoryMapper.deleteBatchIds(ids);
+        return growthChangeHistoryMapper.deleteByIds(ids);
     }
 
     private GrowthChangeHistoryVO entityToVO(GrowthChangeHistoryEntity e) {

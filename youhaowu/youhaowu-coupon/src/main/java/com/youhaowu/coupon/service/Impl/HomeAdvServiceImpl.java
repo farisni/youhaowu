@@ -71,7 +71,7 @@ public class HomeAdvServiceImpl implements HomeAdvService {
 
     @Override
     public Integer removeByIds(List<Long> ids) {
-        return homeAdvMapper.deleteBatchIds(ids);
+        return homeAdvMapper.deleteByIds(ids);
     }
 
     private HomeAdvVO entityToVO(HomeAdvEntity e) {

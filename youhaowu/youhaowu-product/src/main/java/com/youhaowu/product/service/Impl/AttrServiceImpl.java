@@ -27,7 +27,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.apache.ibatis.executor.BatchResult;
 
 /**
  * Attr Service 实现
@@ -142,7 +141,7 @@ public class AttrServiceImpl implements AttrService {
      */
     @Override
     public Integer removeByIds(List<Long> ids) {
-        return attrMapper.deleteBatchIds(ids);
+        return attrMapper.deleteByIds(ids);
     }
 
     /**

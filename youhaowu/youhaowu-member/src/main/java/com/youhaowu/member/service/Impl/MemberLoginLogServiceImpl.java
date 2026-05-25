@@ -71,7 +71,7 @@ public class MemberLoginLogServiceImpl implements MemberLoginLogService {
 
     @Override
     public Integer removeByIds(List<Long> ids) {
-        return memberLoginLogMapper.deleteBatchIds(ids);
+        return memberLoginLogMapper.deleteByIds(ids);
     }
 
     private MemberLoginLogVO entityToVO(MemberLoginLogEntity e) {

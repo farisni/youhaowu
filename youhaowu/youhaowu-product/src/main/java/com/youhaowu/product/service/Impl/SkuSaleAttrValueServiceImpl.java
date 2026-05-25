@@ -68,6 +68,6 @@ public class SkuSaleAttrValueServiceImpl implements SkuSaleAttrValueService {
 
     @Override
     public Integer removeByIds(List<Long> ids) {
-        return skuSaleAttrValueMapper.deleteBatchIds(ids);
+        return skuSaleAttrValueMapper.deleteByIds(ids);
     }
 }

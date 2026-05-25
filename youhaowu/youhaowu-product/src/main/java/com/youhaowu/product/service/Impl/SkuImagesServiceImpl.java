@@ -68,6 +68,6 @@ public class SkuImagesServiceImpl implements SkuImagesService {
 
     @Override
     public Integer removeByIds(List<Long> ids) {
-        return skuImagesMapper.deleteBatchIds(ids);
+        return skuImagesMapper.deleteByIds(ids);
     }
 }

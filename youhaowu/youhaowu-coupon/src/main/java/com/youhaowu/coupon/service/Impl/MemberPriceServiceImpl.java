@@ -71,7 +71,7 @@ public class MemberPriceServiceImpl implements MemberPriceService {
 
     @Override
     public Integer removeByIds(List<Long> ids) {
-        return memberPriceMapper.deleteBatchIds(ids);
+        return memberPriceMapper.deleteByIds(ids);
     }
 
     private MemberPriceVO entityToVO(MemberPriceEntity e) {

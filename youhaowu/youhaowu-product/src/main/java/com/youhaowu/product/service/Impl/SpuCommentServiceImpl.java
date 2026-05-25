@@ -68,6 +68,6 @@ public class SpuCommentServiceImpl implements SpuCommentService {
 
     @Override
     public Integer removeByIds(List<Long> ids) {
-        return spuCommentMapper.deleteBatchIds(ids);
+        return spuCommentMapper.deleteByIds(ids);
     }
 }

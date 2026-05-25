@@ -71,7 +71,7 @@ public class MemberCollectSpuServiceImpl implements MemberCollectSpuService {
 
     @Override
     public Integer removeByIds(List<Long> ids) {
-        return memberCollectSpuMapper.deleteBatchIds(ids);
+        return memberCollectSpuMapper.deleteByIds(ids);
     }
 
     private MemberCollectSpuVO entityToVO(MemberCollectSpuEntity e) {

@@ -86,7 +86,7 @@ public class WareSkuServiceImpl implements WareSkuService {
 
     @Override
     public Integer removeByIds(List<Long> ids) {
-        return wareSkuMapper.deleteBatchIds(ids);
+        return wareSkuMapper.deleteByIds(ids);
     }
 
     private WareSkuVO entityToVO(WareSkuEntity e) {

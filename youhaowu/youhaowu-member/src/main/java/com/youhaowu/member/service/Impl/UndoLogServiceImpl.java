@@ -71,7 +71,7 @@ public class UndoLogServiceImpl implements UndoLogService {
 
     @Override
     public Integer removeByIds(List<Long> ids) {
-        return undoLogMapper.deleteBatchIds(ids);
+        return undoLogMapper.deleteByIds(ids);
     }
 
     private UndoLogVO entityToVO(UndoLogEntity e) {

@@ -71,7 +71,7 @@ public class SpuBoundsServiceImpl implements SpuBoundsService {
 
     @Override
     public Integer removeByIds(List<Long> ids) {
-        return spuBoundsMapper.deleteBatchIds(ids);
+        return spuBoundsMapper.deleteByIds(ids);
     }
 
     private SpuBoundsVO entityToVO(SpuBoundsEntity e) {

@@ -71,7 +71,7 @@ public class MemberLevelServiceImpl implements MemberLevelService {
 
     @Override
     public Integer removeByIds(List<Long> ids) {
-        return memberLevelMapper.deleteBatchIds(ids);
+        return memberLevelMapper.deleteByIds(ids);
     }
 
     private MemberLevelVO entityToVO(MemberLevelEntity e) {

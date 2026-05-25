@@ -71,7 +71,7 @@ public class MemberReceiveAddressServiceImpl implements MemberReceiveAddressServ
 
     @Override
     public Integer removeByIds(List<Long> ids) {
-        return memberReceiveAddressMapper.deleteBatchIds(ids);
+        return memberReceiveAddressMapper.deleteByIds(ids);
     }
 
     private MemberReceiveAddressVO entityToVO(MemberReceiveAddressEntity e) {

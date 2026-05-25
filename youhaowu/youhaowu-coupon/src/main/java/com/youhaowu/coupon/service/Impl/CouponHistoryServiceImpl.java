@@ -71,7 +71,7 @@ public class CouponHistoryServiceImpl implements CouponHistoryService {
 
     @Override
     public Integer removeByIds(List<Long> ids) {
-        return couponHistoryMapper.deleteBatchIds(ids);
+        return couponHistoryMapper.deleteByIds(ids);
     }
 
     private CouponHistoryVO entityToVO(CouponHistoryEntity e) {

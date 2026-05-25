@@ -18,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.apache.ibatis.executor.BatchResult;
 
 @Transactional(rollbackFor = Exception.class)
 @Service

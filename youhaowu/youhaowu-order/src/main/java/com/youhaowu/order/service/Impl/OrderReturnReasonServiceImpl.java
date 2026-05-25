@@ -71,7 +71,7 @@ public class OrderReturnReasonServiceImpl implements OrderReturnReasonService {
 
     @Override
     public Integer removeByIds(List<Long> ids) {
-        return orderReturnReasonMapper.deleteBatchIds(ids);
+        return orderReturnReasonMapper.deleteByIds(ids);
     }
 
     private OrderReturnReasonVO entityToVO(OrderReturnReasonEntity e) {

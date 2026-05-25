@@ -71,7 +71,7 @@ public class SeckillSessionServiceImpl implements SeckillSessionService {
 
     @Override
     public Integer removeByIds(List<Long> ids) {
-        return seckillSessionMapper.deleteBatchIds(ids);
+        return seckillSessionMapper.deleteByIds(ids);
     }
 
     private SeckillSessionVO entityToVO(SeckillSessionEntity e) {

@@ -71,7 +71,7 @@ public class CouponSpuCategoryRelationServiceImpl implements CouponSpuCategoryRe
 
     @Override
     public Integer removeByIds(List<Long> ids) {
-        return couponSpuCategoryRelationMapper.deleteBatchIds(ids);
+        return couponSpuCategoryRelationMapper.deleteByIds(ids);
     }
 
     private CouponSpuCategoryRelationVO entityToVO(CouponSpuCategoryRelationEntity e) {

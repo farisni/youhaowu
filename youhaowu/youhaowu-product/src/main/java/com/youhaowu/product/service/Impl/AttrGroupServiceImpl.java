@@ -11,7 +11,6 @@ import com.youhaowu.product.utils.PageUtils;
 import com.youhaowu.product.vo.AttrGroupVO;
 import com.youhaowu.product.vo.AttrGroupWithAttrsVO;
 import cn.hutool.core.bean.BeanUtil;
-import org.apache.ibatis.executor.BatchResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -87,7 +86,7 @@ public class AttrGroupServiceImpl implements AttrGroupService {
 
     @Override
     public Integer removeByIds(List<Long> ids) {
-        return attrGroupMapper.deleteBatchIds(ids);
+        return attrGroupMapper.deleteByIds(ids);
     }
 
     @Override

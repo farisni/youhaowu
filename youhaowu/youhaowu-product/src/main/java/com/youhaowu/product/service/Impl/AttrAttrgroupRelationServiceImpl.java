@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import org.apache.ibatis.executor.BatchResult;
 import java.util.List;
 /**
  * AttrAttrgroupRelation Service 实现
@@ -72,7 +71,7 @@ public class AttrAttrgroupRelationServiceImpl implements AttrAttrgroupRelationSe
 
     @Override
     public Integer removeByIds(List<Long> ids) {
-        return attrAttrgroupRelationMapper.deleteBatchIds(ids);
+        return attrAttrgroupRelationMapper.deleteByIds(ids);
     }
     @Override
     public Integer saveRelationBatch(List<AttrGroupRelationVO> vos) {

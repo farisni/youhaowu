@@ -130,7 +130,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 
     @Override
     public Integer removeByIds(List<Long> ids) {
-        return purchaseMapper.deleteBatchIds(ids);
+        return purchaseMapper.deleteByIds(ids);
     }
 
     private PurchaseVO entityToVO(PurchaseEntity e) {

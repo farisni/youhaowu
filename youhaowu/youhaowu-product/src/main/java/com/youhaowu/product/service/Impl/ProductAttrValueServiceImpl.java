@@ -63,7 +63,7 @@ public class ProductAttrValueServiceImpl implements ProductAttrValueService {
 
     @Override
     public Integer removeByIds(List<Long> ids) {
-        return attrValueMapper.deleteBatchIds(ids);
+        return attrValueMapper.deleteByIds(ids);
     }
 
     @Override

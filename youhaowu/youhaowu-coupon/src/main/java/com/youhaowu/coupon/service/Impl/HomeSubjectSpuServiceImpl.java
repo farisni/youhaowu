@@ -71,7 +71,7 @@ public class HomeSubjectSpuServiceImpl implements HomeSubjectSpuService {
 
     @Override
     public Integer removeByIds(List<Long> ids) {
-        return homeSubjectSpuMapper.deleteBatchIds(ids);
+        return homeSubjectSpuMapper.deleteByIds(ids);
     }
 
     private HomeSubjectSpuVO entityToVO(HomeSubjectSpuEntity e) {

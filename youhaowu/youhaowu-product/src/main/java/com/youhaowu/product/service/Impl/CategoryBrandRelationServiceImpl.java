@@ -14,7 +14,6 @@ import com.youhaowu.common.dto.BaseQueryDTO;
 import com.youhaowu.product.utils.PageUtils;
 import com.youhaowu.product.vo.CategoryBrandRelationVO;
 import cn.hutool.core.bean.BeanUtil;
-import org.apache.ibatis.executor.BatchResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -82,7 +81,7 @@ public class CategoryBrandRelationServiceImpl implements CategoryBrandRelationSe
 
     @Override
     public Integer removeByIds(List<Long> ids) {
-        return categoryBrandRelationMapper.deleteBatchIds(ids);
+        return categoryBrandRelationMapper.deleteByIds(ids);
     }
 
     @Override

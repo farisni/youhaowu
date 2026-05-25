@@ -71,7 +71,7 @@ public class SeckillPromotionServiceImpl implements SeckillPromotionService {
 
     @Override
     public Integer removeByIds(List<Long> ids) {
-        return seckillPromotionMapper.deleteBatchIds(ids);
+        return seckillPromotionMapper.deleteByIds(ids);
     }
 
     private SeckillPromotionVO entityToVO(SeckillPromotionEntity e) {

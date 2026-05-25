@@ -69,7 +69,7 @@ public class PurchaseDetailServiceImpl implements PurchaseDetailService {
 
     @Override
     public Integer removeByIds(List<Long> ids) {
-        return purchaseDetailMapper.deleteBatchIds(ids);
+        return purchaseDetailMapper.deleteByIds(ids);
     }
 
     private PurchaseDetailVO entityToVO(PurchaseDetailEntity e) {

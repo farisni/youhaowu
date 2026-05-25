@@ -69,7 +69,7 @@ public class WareOrderTaskServiceImpl implements WareOrderTaskService {
 
     @Override
     public Integer removeByIds(List<Long> ids) {
-        return wareOrderTaskMapper.deleteBatchIds(ids);
+        return wareOrderTaskMapper.deleteByIds(ids);
     }
 
     private WareOrderTaskVO entityToVO(WareOrderTaskEntity e) {

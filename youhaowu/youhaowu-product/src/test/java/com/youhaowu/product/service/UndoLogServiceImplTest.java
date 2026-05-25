@@ -11,7 +11,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import org.apache.ibatis.executor.BatchResult;
 import org.apache.ibatis.mapping.SqlCommandType;
 
 import java.util.Arrays;

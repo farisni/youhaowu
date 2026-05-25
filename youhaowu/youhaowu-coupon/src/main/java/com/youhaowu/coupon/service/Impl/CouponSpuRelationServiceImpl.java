@@ -71,7 +71,7 @@ public class CouponSpuRelationServiceImpl implements CouponSpuRelationService {
 
     @Override
     public Integer removeByIds(List<Long> ids) {
-        return couponSpuRelationMapper.deleteBatchIds(ids);
+        return couponSpuRelationMapper.deleteByIds(ids);
     }
 
     private CouponSpuRelationVO entityToVO(CouponSpuRelationEntity e) {

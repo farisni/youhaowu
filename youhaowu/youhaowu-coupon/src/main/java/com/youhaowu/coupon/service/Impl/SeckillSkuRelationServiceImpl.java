@@ -71,7 +71,7 @@ public class SeckillSkuRelationServiceImpl implements SeckillSkuRelationService 
 
     @Override
     public Integer removeByIds(List<Long> ids) {
-        return seckillSkuRelationMapper.deleteBatchIds(ids);
+        return seckillSkuRelationMapper.deleteByIds(ids);
     }
 
     private SeckillSkuRelationVO entityToVO(SeckillSkuRelationEntity e) {

@@ -71,7 +71,7 @@ public class OrderSettingServiceImpl implements OrderSettingService {
 
     @Override
     public Integer removeByIds(List<Long> ids) {
-        return orderSettingMapper.deleteBatchIds(ids);
+        return orderSettingMapper.deleteByIds(ids);
     }
 
     private OrderSettingVO entityToVO(OrderSettingEntity e) {

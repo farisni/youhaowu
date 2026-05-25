@@ -68,7 +68,7 @@ public class SpuImagesServiceImpl implements SpuImagesService {
 
     @Override
     public Integer removeByIds(List<Long> ids) {
-        return spuImagesMapper.deleteBatchIds(ids);
+        return spuImagesMapper.deleteByIds(ids);
     }
     @Override
     public Integer saveImages(Long spuId, List<String> images) {

@@ -85,7 +85,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Integer deleteBatch(List<Long> ids) {
-        return categoryMapper.deleteBatchIds(ids);
+        return categoryMapper.deleteByIds(ids);
     }
 
     @Override

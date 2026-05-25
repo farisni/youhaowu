@@ -147,3 +147,6 @@
 - style(admin): 分类管理树节点操作按钮加图标、调整间距对齐菜单管理风格
 - feat(admin): 品牌管理 CRUD —— BrandVO 补全 + brandApi + brand.vue（QATable）
 - refactor: 清理 31 个实体类中未使用的 import java.util.Date
+- refactor: 批量替换 52 处 deleteBatchIds → deleteByIds（MyBatis-Plus deprecated）
+- refactor: 清理 6 处未使用的 import BatchResult
+- chore: VSCode 配置——关闭 null 分析、raw type 警告、开启保存时自动 organize imports

@@ -71,7 +71,7 @@ public class RefundInfoServiceImpl implements RefundInfoService {
 
     @Override
     public Integer removeByIds(List<Long> ids) {
-        return refundInfoMapper.deleteBatchIds(ids);
+        return refundInfoMapper.deleteByIds(ids);
     }
 
     private RefundInfoVO entityToVO(RefundInfoEntity e) {

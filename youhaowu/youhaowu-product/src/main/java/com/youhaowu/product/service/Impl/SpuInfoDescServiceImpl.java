@@ -68,7 +68,7 @@ public class SpuInfoDescServiceImpl implements SpuInfoDescService {
 
     @Override
     public Integer removeByIds(List<Long> ids) {
-        return spuInfoDescMapper.deleteBatchIds(ids);
+        return spuInfoDescMapper.deleteByIds(ids);
     }
     @Override
     public Integer saveSpuInfoDesc(SpuInfoDescVO descVO) {

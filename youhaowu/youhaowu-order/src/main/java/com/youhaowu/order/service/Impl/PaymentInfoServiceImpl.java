@@ -71,7 +71,7 @@ public class PaymentInfoServiceImpl implements PaymentInfoService {
 
     @Override
     public Integer removeByIds(List<Long> ids) {
-        return paymentInfoMapper.deleteBatchIds(ids);
+        return paymentInfoMapper.deleteByIds(ids);
     }
 
     private PaymentInfoVO entityToVO(PaymentInfoEntity e) {
