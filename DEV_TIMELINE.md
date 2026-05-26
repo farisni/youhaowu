@@ -157,3 +157,7 @@
 - refactor: selectBatchIds → selectByIds（MyBatis-Plus 过时 API）
 - refactor: JwtUtil SignatureException 迁移到 jjwt 0.12 security 包
 - fix: AttrRespVO 补充 @EqualsAndHashCode(callSuper=false) 消除 Lombok 警告
+
+## 2026-05-26
+
+- fix(build): 9 个子模块补充 spring-boot-maven-plugin，修复 no main manifest attribute 导致 JAR 无法启动
