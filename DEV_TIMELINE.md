@@ -164,3 +164,4 @@
 - fix: youhaowu-common 添加 spring-boot-starter-actuator，修复 /actuator/health 404
 - refactor: gateway 依赖升级 spring-cloud-starter-gateway-server-webflux
 - build: 新增 youhaowu-product Dockerfile
+- build: Dockerfile 加 HEALTHCHECK 健康检查
