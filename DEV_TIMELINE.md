@@ -163,3 +163,4 @@
 - fix(build): 9 个子模块补充 spring-boot-maven-plugin，修复 no main manifest attribute 导致 JAR 无法启动
 - fix: youhaowu-common 添加 spring-boot-starter-actuator，修复 /actuator/health 404
 - refactor: gateway 依赖升级 spring-cloud-starter-gateway-server-webflux
+- build: 新增 youhaowu-product Dockerfile
