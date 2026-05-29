@@ -166,3 +166,4 @@
 - build: 新增 youhaowu-product Dockerfile
 - build: Dockerfile 加 HEALTHCHECK 健康检查
 - build: gateway 新增 Dockerfile + actuator 健康检查
+- ci: 新增 Jenkins Pipeline（参数化多模块部署）

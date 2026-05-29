@@ -1,0 +1,76 @@
+pipeline {
+    agent any
+    
+    tools {
+        maven 'maven-3.9'
+    }
+    
+    parameters {
+        choice(name: 'MODULE', choices: ['youhaowu-product', 'youhaowu-gateway'], description: '选择要部署的模块')
+    }
+    
+    stages {
+        stage('检出代码') {
+            steps {
+                git branch: 'main', 
+                    url: 'https://gitee.com/nidazhong/wheatmall-2026.git'
+            }
+        }
+        
+        stage('Maven打包') {
+            steps {
+                dir('youhaowu-backend') {
+                    sh "mvn clean package -pl ${params.MODULE} -am -Dmaven.test.skip=true"
+                }
+            }
+        }
+        
+        stage('部署') {
+            steps {
+                dir("youhaowu-backend/${params.MODULE}") {
+                    sh """
+                        docker build -t ${params.MODULE}:latest .
+                        docker stop ${params.MODULE} || true
+                        docker rm ${params.MODULE} || true
+                        docker run -d --name ${params.MODULE} --network host ${params.MODULE}:latest
+                    """
+                }
+            }
+        }
+        
+        stage('健康检查') {
+            steps {
+                script {
+                    for (int i = 1; i <= 12; i++) {
+                        sleep 5
+                        def status = sh(
+                            script: "docker inspect -f '{{.State.Health.Status}}' ${params.MODULE}",
+                            returnStdout: true
+                        ).trim()
+                        if (status == 'healthy') {
+                            echo "服务启动成功 (${i * 5}s)"
+                            return
+                        }
+                        echo "等待启动... (${i * 5}s)"
+                    }
+                    error '服务启动超时（60s）'
+                }
+            }
+        }
+        
+        stage('查看状态') {
+            steps {
+                sh """
+                    docker ps --filter name=${params.MODULE}
+                    docker logs --tail 20 ${params.MODULE}
+                """
+            }
+        }
+    }
+    
+    post {
+        failure {
+            sh "docker logs --tail 50 ${params.MODULE} || true"
+        }
+    }
+}
