@@ -115,3 +115,48 @@ python3 -m pytest test_category.py -v
 python3 -m pytest test_order.py -v
 python3 -m pytest test_coupon.py -v
 ```
+
+---
+
+## Jenkins 部署
+
+### 环境
+
+- Jenkins 2.541.3（Docker 部署在 192.168.8.112）
+- Pipeline 支持参数化多模块选择
+- Docker Healthcheck 健康检查
+
+### 快速触发部署
+
+```bash
+# 从本地触发（安装 jenkins-cli）
+curl -O http://192.168.8.112:8070/jnlpJars/jenkins-cli.jar
+
+# 部署商品服务
+java -jar jenkins-cli.jar -s http://192.168.8.112:8070 -auth <user>:<token> build youhaowu -p MODULE=youhaowu-product
+
+# 部署网关
+java -jar jenkins-cli.jar -s http://192.168.8.112:8070 -auth <user>:<token> build youhaowu -p MODULE=youhaowu-gateway
+```
+
+### 推荐 alias
+
+```bash
+# 加到 ~/.zshrc
+alias deploy-product='java -jar ~/jenkins-cli.jar -s http://192.168.8.112:8070 -auth faris:$JENKINS_TOKEN build youhaowu -p MODULE=youhaowu-product'
+alias deploy-gateway='java -jar ~/jenkins-cli.jar -s http://192.168.8.112:8070 -auth faris:$JENKINS_TOKEN build youhaowu -p MODULE=youhaowu-gateway'
+```
+
+### Pipeline 流程
+
+1. **检出代码** — 拉取 Gitee main 分支
+2. **Maven 打包** — 编译 + 跳过测试
+3. **Docker 构建** — 多阶段镜像构建（含 HEALTHCHECK）
+4. **部署** — stop/rm/run 滚动更新
+5. **健康检查** — 轮询 `docker inspect Health.Status`，最多 60s
+6. **查看状态** — 输出容器状态 + 最新日志
+
+### 加新模块
+
+1. 在模块目录下加 `Dockerfile`（含 HEALTHCHECK）
+2. 在 Jenkins Pipeline 的 `parameters.choices` 里加模块名

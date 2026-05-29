@@ -285,3 +285,19 @@ backend/intergre-py-test/
 cd backend/intergre-py-test
 python3 -m pytest test_xxx.py -v
 ```
+
+### 7. Jenkins 自动部署规则
+
+**规则描述：**
+每次代码推送（git push）后，自动触发对应模块的 Jenkins Job 进行部署。
+
+**具体操作：**
+- 推送代码后，自动执行 Jenkins CLI 触发部署
+- 根据改动的模块选择对应参数
+- 部署命令：`java -jar ~/jenkins-cli.jar -s http://192.168.8.112:8070 -auth faris:$JENKINS_TOKEN build youhaowu -p MODULE=<模块名>`
+- 如改动 `youhaowu-backend/youhaowu-product` → `MODULE=youhaowu-product`
+- 如改动 `youhaowu-backend/youhaowu-gateway` → `MODULE=youhaowu-gateway`
+- 如改动前端 `youhaowu-admin-vue` → 暂时跳过（前端未接入）
+
+**环境变量要求：**
+- 需在环境变量中设置 `JENKINS_TOKEN`
