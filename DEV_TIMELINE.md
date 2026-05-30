@@ -173,3 +173,7 @@
 - docs: README 加 Jenkins 部署文档 + AGENTS.md 加自动部署规则
 - feat: 服务器环境检查脚本 env-install.py（Java/Docker 检查 + 自动创建网络 + PostgreSQL 部署）
 - refactor: env-install.py 去掉 POSTGRES_DB，PG 容器名改为 postgres-17
+
+## 2026-05-31
+
+- feat: Nacos PostgreSQL 插件打包脚本 build-nacos.py（Maven Central 下载 + zipfile 注入 + Docker 镜像构建）
