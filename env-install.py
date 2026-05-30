@@ -29,10 +29,9 @@ def get_config() -> dict:
 
         # PostgreSQL
         "pg_image": "postgres:17-alpine",
-        "pg_container": "nacos-postgres",
+        "pg_container": "postgres-17",
         "pg_ip": "172.20.0.10",
         "pg_port": "5432",
-        "pg_db": "nacos",
         "pg_user": "faris",
         "pg_password": "123456",
         "pg_data_dir": "data/postgres/data",
@@ -146,18 +145,13 @@ def generate_docker_compose(script_dir: str, cfg: dict) -> tuple[bool, str]:
     content = textwrap.dedent("""\
         networks:
           {net_name}:
-            driver: bridge
-            ipam:
-              config:
-                - subnet: {net_subnet}
-                  gateway: {net_gateway}
+            external: true
 
         services:
           postgres:
             image: {pg_image}
             container_name: {pg_container}
             environment:
-              - POSTGRES_DB={pg_db}
               - POSTGRES_USER={pg_user}
               - POSTGRES_PASSWORD={pg_password}
             volumes:
@@ -169,7 +163,7 @@ def generate_docker_compose(script_dir: str, cfg: dict) -> tuple[bool, str]:
               {net_name}:
                 ipv4_address: {pg_ip}
             healthcheck:
-              test: ["CMD-SHELL", "pg_isready -U {pg_user} -d {pg_db}"]
+              test: ["CMD-SHELL", "pg_isready -U {pg_user}"]
               interval: 5s
               timeout: 5s
               retries: 5
