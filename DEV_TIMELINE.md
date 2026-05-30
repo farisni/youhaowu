@@ -171,3 +171,4 @@
 
 - ci: 新增 Jenkins Pipeline（参数化多模块部署）
 - docs: README 加 Jenkins 部署文档 + AGENTS.md 加自动部署规则
+- feat: 服务器环境检查脚本 env-install.py（Java/Docker 检查 + 自动创建网络 + PostgreSQL 部署）
