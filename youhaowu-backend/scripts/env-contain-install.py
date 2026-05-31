@@ -293,7 +293,6 @@ def generate_docker_compose(script_dir: str, cfg: dict) -> tuple[bool, str]:
               - "8080:8080"
               - "8848:8848"
               - "9848:9848"
-            mem_limit: 1g
             networks:
               {net_name}:
                 ipv4_address: {nacos_ip}
