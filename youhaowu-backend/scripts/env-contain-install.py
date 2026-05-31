@@ -306,7 +306,7 @@ def generate_docker_compose(script_dir: str, cfg: dict) -> tuple[bool, str]:
               - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@localhost:9093
               - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
               - KAFKA_CFG_LISTENERS=PLAINTEXT://:{kafka_port},CONTROLLER://:9093
-              - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://{kafka_ip}:{kafka_port}
+              - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://{host_ip}:{kafka_port}
               - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
               - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=true
             volumes:
