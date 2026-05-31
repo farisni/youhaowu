@@ -38,6 +38,18 @@ def _is_root() -> bool:
 #  检查
 # ═══════════════════════════════════════════════════════════
 
+def _setup_sudo():
+    """配置 faris 用户 yum 免密 sudo。"""
+    sudoers_file = "/etc/sudoers.d/faris-yum"
+    if os.path.exists(sudoers_file):
+        return
+    user = os.environ.get("USER", "faris")
+    rule = f"{user} ALL=(ALL) NOPASSWD: /usr/bin/yum\n"
+    code, _, _ = shell(f"echo '{rule}' | sudo tee {sudoers_file} 2>&1")
+    if code != 0:
+        print("  [warn] sudo 免密配置失败，可能需要手动输入密码")
+
+
 def check_java() -> tuple[bool, str]:
     """检查 Java 是否已安装。"""
     code, stdout, _ = shell("java -version 2>&1")
@@ -111,6 +123,9 @@ def main():
         print("=" * 40)
         print("  开发环境准备（yum）")
         print("=" * 40)
+
+    # 0️⃣ sudo 免密
+    _setup_sudo()
 
     # 1️⃣ Java 21
     ok, msg = check_java()
