@@ -280,8 +280,8 @@ def generate_docker_compose(script_dir: str, cfg: dict) -> tuple[bool, str]:
                 condition: service_healthy
             environment:
               - MODE=standalone
-              - JVM_XMS=512m
-              - JVM_XMX=512m
+              - JVM_XMS=768m
+              - JVM_XMX=768m
               - NACOS_AUTH_ENABLE=false
               - NACOS_AUTH_TOKEN={nacos_auth_token}
               - NACOS_AUTH_IDENTITY_KEY={nacos_auth_identity_key}
@@ -293,7 +293,7 @@ def generate_docker_compose(script_dir: str, cfg: dict) -> tuple[bool, str]:
               - "8080:8080"
               - "8848:8848"
               - "9848:9848"
-            mem_limit: 768m
+            mem_limit: 1g
             networks:
               {net_name}:
                 ipv4_address: {nacos_ip}
