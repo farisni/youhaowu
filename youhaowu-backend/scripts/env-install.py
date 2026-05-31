@@ -57,6 +57,19 @@ def get_config() -> dict:
         "redis_ip": "172.20.0.5",
         "redis_port": "6379",
         "redis_data_dir": "data/redis",
+
+        # Kafka
+        "kafka_image": "bitnami/kafka:3.9",
+        "kafka_container": "youhaowu-kafka",
+        "kafka_ip": "172.20.0.3",
+        "kafka_port": "9092",
+        "kafka_data_dir": "data/kafka",
+
+        # Kafka UI
+        "kafka_ui_image": "provectuslabs/kafka-ui:latest",
+        "kafka_ui_container": "youhaowu-kafka-ui",
+        "kafka_ui_ip": "172.20.0.4",
+        "kafka_ui_port": "9090",
     }
 
 
@@ -213,6 +226,42 @@ def generate_docker_compose(script_dir: str, cfg: dict) -> tuple[bool, str]:
               {net_name}:
                 ipv4_address: {nacos_ip}
 
+          kafka:
+            image: {kafka_image}
+            container_name: {kafka_container}
+            ports:
+              - "{kafka_port}:9092"
+            environment:
+              - KAFKA_CFG_NODE_ID=1
+              - KAFKA_CFG_PROCESS_ROLES=broker,controller
+              - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@localhost:9093
+              - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+              - KAFKA_CFG_LISTENERS=PLAINTEXT://:{kafka_port},CONTROLLER://:9093
+              - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://{kafka_ip}:{kafka_port}
+              - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+              - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=true
+            volumes:
+              - ./{kafka_data_dir}:/bitnami/kafka
+            networks:
+              {net_name}:
+                ipv4_address: {kafka_ip}
+            restart: unless-stopped
+
+          kafka-ui:
+            image: {kafka_ui_image}
+            container_name: {kafka_ui_container}
+            ports:
+              - "{kafka_ui_port}:8080"
+            environment:
+              - KAFKA_CLUSTERS_0_NAME=youhaowu
+              - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS={kafka_container}:{kafka_port}
+            depends_on:
+              - kafka
+            networks:
+              {net_name}:
+                ipv4_address: {kafka_ui_ip}
+            restart: unless-stopped
+
           redis:
             image: {redis_image}
             container_name: {redis_container}
@@ -257,11 +306,17 @@ def download_nacos_sql(script_dir: str, cfg: dict) -> tuple[bool, str]:
 
 
 def start_compose(script_dir: str, cfg: dict) -> tuple[bool, str]:
-    """启动 docker compose。"""
+    """启动 docker compose。
+
+    如遇 pull 失败（403 Forbidden），可能是 Clash TUN 劫持了 Docker 代理。
+    解决方法：直接 docker pull <image> 绕过镜像，再重跑脚本。
+    """
     compose_path = os.path.join(script_dir, "docker-compose.yml")
     rc = os.system(f"docker compose -f {compose_path} up -d")
     if rc == 0:
         return True, "容器启动成功"
+    print("  hint: 如 pull 失败(403)，可能是 Clash TUN 劫持了代理，建议关闭 Clash TUN 后重试")
+    print("         docker pull <image> 直连后再重跑脚本")
     return False, f"启动失败 (exit={rc})"
 
 
@@ -288,7 +343,7 @@ def run_setup(quiet: bool) -> tuple[int, int]:
     passed, failed = _count(passed, failed, ok)
 
     # 创建数据目录
-    for d in [cfg["pg_data_dir"], cfg["pg_init_dir"], cfg["redis_data_dir"]]:
+    for d in [cfg["pg_data_dir"], cfg["pg_init_dir"], cfg["redis_data_dir"], cfg["kafka_data_dir"]]:
         dir_path = os.path.join(script_dir, d)
         try:
             os.makedirs(dir_path, exist_ok=True)
