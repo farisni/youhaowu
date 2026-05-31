@@ -88,6 +88,11 @@ def get_config() -> dict:
         "kibana_port": "5601",
         "es_ik_url": "https://release.infinilabs.com/analysis-ik/stable/elasticsearch-analysis-ik-7.17.21.zip",
         "es_ik_dir": "analysis-ik",
+        "es_ik_custom_words": [
+            "有好物", "电商",  "购物车", "秒杀",
+            "拼团", "满减", "限时购", "优惠券", "砍价",
+            "积分商城", "商品详情", "库存", "商品规格",
+        ],
     }
 
 
@@ -375,10 +380,12 @@ def generate_es_config(script_dir: str, cfg: dict) -> tuple[bool, str]:
 
 
 def install_es_ik(script_dir: str, cfg: dict) -> tuple[bool, str]:
-    """下载并安装 IK 分词插件。"""
+    """下载并安装 IK 分词插件，含自定义词典。"""
     plugins_dir = os.path.join(script_dir, cfg["es_plugins_dir"])
     ik_dir = os.path.join(plugins_dir, cfg["es_ik_dir"])
     if os.path.exists(ik_dir):
+        #  已安装也要确保词典存在（升级场景）
+        _write_ik_dicts(ik_dir, cfg)
         return True, "IK 插件已安装，跳过"
 
     zip_path = os.path.join(script_dir, "ik.zip")
@@ -393,7 +400,35 @@ def install_es_ik(script_dir: str, cfg: dict) -> tuple[bool, str]:
     with zipfile.ZipFile(zip_path, 'r') as zf:
         zf.extractall(ik_dir)
     os.remove(zip_path)
+
+    # 写入自定义词典配置
+    _write_ik_dicts(ik_dir, cfg)
     return True, "IK 分词插件安装完成"
+
+
+def _write_ik_dicts(ik_dir: str, cfg: dict):
+    """生成 IKAnalyzer.cfg.xml + custom.dic 到 IK 插件 config 目录。"""
+    ik_config_dir = os.path.join(ik_dir, "config")
+    os.makedirs(ik_config_dir, exist_ok=True)
+
+    # IKAnalyzer.cfg.xml（强制覆盖，因为原版 ext_dict 为空）
+    xml_path = os.path.join(ik_config_dir, "IKAnalyzer.cfg.xml")
+    xml_content = textwrap.dedent("""\
+        <?xml version="1.0" encoding="UTF-8"?>
+        <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+        <properties>
+            <comment>IK Analyzer 扩展配置</comment>
+            <entry key="ext_dict">custom.dic</entry>
+        </properties>
+        """)
+    with open(xml_path, "w", encoding="utf-8") as f:
+        f.write(xml_content)
+
+    # custom.dic（已存在也覆盖，确保和配置一致）
+    dic_path = os.path.join(ik_config_dir, "custom.dic")
+    words = cfg.get("es_ik_custom_words", [])
+    with open(dic_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(words) + "\n")
 
 
 def start_compose(script_dir: str, cfg: dict) -> tuple[bool, str]:

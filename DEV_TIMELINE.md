@@ -184,3 +184,4 @@
 - refactor: SQL 下载 + Nacos 库初始化迁移到 env-install.py，用 POSTGRES_DB 自动建库
 - fix: nacos-pg.sql 直接下载到 postgres-init/，修复复制遗漏 Bug
 - refactor: env-install.py + build-nacos.py 移至 youhaowu-backend/scripts/
+- feat: install_es_ik 加自定义词典（IKAnalyzer.cfg.xml + custom.dic），修复原版 ext_dict 为空导致不生效
