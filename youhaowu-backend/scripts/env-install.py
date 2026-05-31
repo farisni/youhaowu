@@ -70,6 +70,15 @@ def get_config() -> dict:
         "kafka_ui_container": "youhaowu-kafka-ui",
         "kafka_ui_ip": "172.20.0.4",
         "kafka_ui_port": "9090",
+
+        # Elasticsearch
+        "es_image": "elasticsearch:7.17.21",
+        "es_container": "elasticsearch-7.17",
+        "es_ip": "172.20.0.6",
+        "es_port": "9200",
+        "es_data_dir": "data/elasticsearch/data",
+        "es_config_dir": "data/elasticsearch/config",
+        "es_plugins_dir": "data/elasticsearch/plugins",
     }
 
 
@@ -262,6 +271,23 @@ def generate_docker_compose(script_dir: str, cfg: dict) -> tuple[bool, str]:
                 ipv4_address: {kafka_ui_ip}
             restart: unless-stopped
 
+          elasticsearch:
+            image: {es_image}
+            container_name: {es_container}
+            environment:
+              - discovery.type=single-node
+              - ES_JAVA_OPTS=-Xms64m -Xmx512m
+              volumes:
+              - ./{es_config_dir}:/usr/share/elasticsearch/config
+              - ./{es_data_dir}:/usr/share/elasticsearch/data
+              - ./{es_plugins_dir}:/usr/share/elasticsearch/plugins
+            ports:
+              - "{es_port}:9200"
+            networks:
+              {net_name}:
+                ipv4_address: {es_ip}
+            restart: unless-stopped
+
           redis:
             image: {redis_image}
             container_name: {redis_container}
@@ -305,6 +331,20 @@ def download_nacos_sql(script_dir: str, cfg: dict) -> tuple[bool, str]:
 
 
 
+
+def generate_es_config(script_dir: str, cfg: dict) -> tuple[bool, str]:
+    """生成 elasticsearch.yml。"""
+    es_conf_dir = os.path.join(script_dir, cfg["es_config_dir"])
+    os.makedirs(es_conf_dir, exist_ok=True)
+    yml_path = os.path.join(es_conf_dir, "elasticsearch.yml")
+    if os.path.exists(yml_path):
+        return True, "elasticsearch.yml 已存在，跳过"
+    with open(yml_path, 'w') as f:
+        f.write("http.host: 0.0.0.0\n")
+    return True, "elasticsearch.yml 已生成"
+
+
+
 def start_compose(script_dir: str, cfg: dict) -> tuple[bool, str]:
     """启动 docker compose。
 
@@ -343,7 +383,7 @@ def run_setup(quiet: bool) -> tuple[int, int]:
     passed, failed = _count(passed, failed, ok)
 
     # 创建数据目录
-    for d in [cfg["pg_data_dir"], cfg["pg_init_dir"], cfg["redis_data_dir"], cfg["kafka_data_dir"]]:
+    for d in [cfg["pg_data_dir"], cfg["pg_init_dir"], cfg["redis_data_dir"], cfg["kafka_data_dir"], cfg["es_config_dir"], cfg["es_data_dir"], cfg["es_plugins_dir"]]:
         dir_path = os.path.join(script_dir, d)
         try:
             os.makedirs(dir_path, exist_ok=True)
@@ -355,6 +395,11 @@ def run_setup(quiet: bool) -> tuple[int, int]:
 
     # 下载 Nacos SQL
     ok, msg = download_nacos_sql(script_dir, cfg)
+    _print_result(quiet, ok, msg)
+    passed, failed = _count(passed, failed, ok)
+
+    # 生成 ES 配置
+    ok, msg = generate_es_config(script_dir, cfg)
     _print_result(quiet, ok, msg)
     passed, failed = _count(passed, failed, ok)
 
