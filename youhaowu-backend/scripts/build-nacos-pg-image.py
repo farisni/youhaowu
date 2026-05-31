@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""构建带 PostgreSQL 插件的 Nacos 镜像 + 初始化数据库 + 启动容器。
+"""构建带 PostgreSQL 插件的 Nacos Docker 镜像。
 
 用法:
     python3 build-nacos.py           # 增量构建
@@ -226,7 +226,6 @@ def main():
     print()
     print(f"  产物:     {WORK_DIR}/nacos-server.jar")
     print(f"  镜像:     {CUSTOM_IMAGE}")
-    print(f"  数据库:   {PG_CONTAINER} / {NACOS_DB}")
     print(f"  容器:     nacos ({NACOS_IP})")
     print(f"  登录:     http://<IP>:8848/nacos  (nacos/nacos)")
     print("=" * 50)
