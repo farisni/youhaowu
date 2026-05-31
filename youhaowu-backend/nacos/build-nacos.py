@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""构建带 PostgreSQL 插件的 Nacos 镜像。
+"""构建带 PostgreSQL 插件的 Nacos 镜像 + 初始化数据库。
 
 用法:
-    python3 build-nacos.py           # 增量构建（跳过已完成步骤）
+    python3 build-nacos.py           # 增量构建
     python3 build-nacos.py --force   # 强制全部重跑
 """
 
@@ -11,6 +11,7 @@ import sys
 import shutil
 import subprocess
 import urllib.request
+import zipfile
 
 
 # ═══════════════════════════════════════════════════════════
@@ -18,14 +19,15 @@ import urllib.request
 # ═══════════════════════════════════════════════════════════
 
 NACOS_VERSION = "3.1.1"
-PLUGIN_JAR_URL = (
-    "https://repo1.maven.org/maven2/com/sinhy/"
-    "nacos-postgresql-datasource-plugin-ext/3.1.1/"
-    "nacos-postgresql-datasource-plugin-ext-3.1.1.jar"
-)
+NACOS_SQL_URL = "https://ghproxy.net/https://raw.githubusercontent.com/lilinhai/nacos-datasource-plugin-ext/master/nacos-postgresql-datasource-plugin-ext/src/main/resources/schema/nacos-pg.sql"
+NACOS_SQL = "nacos-pg.sql"
+PLUGIN_JAR_URL = "https://repo1.maven.org/maven2/com/sinhy/nacos-postgresql-datasource-plugin-ext/3.1.1/nacos-postgresql-datasource-plugin-ext-3.1.1.jar"
 PLUGIN_JAR = "nacos-postgresql-datasource-plugin-ext-3.1.1.jar"
 PG_DRIVER_URL = "https://maven.aliyun.com/repository/central/org/postgresql/postgresql/42.7.4/postgresql-42.7.4.jar"
 PG_DRIVER_JAR = "postgresql-42.7.4.jar"
+PG_CONTAINER = "postgres-17"
+PG_USER = "faris"
+NACOS_DB = "nacos"
 DOCKER_IMAGE = f"nacos/nacos-server:v{NACOS_VERSION}"
 CUSTOM_IMAGE = f"nacos/nacos-server:v{NACOS_VERSION}-pg"
 
@@ -37,7 +39,6 @@ WORK_DIR = os.path.dirname(os.path.abspath(__file__))
 # ═══════════════════════════════════════════════════════════
 
 def run(cmd: str, cwd: str | None = None) -> tuple[int, str]:
-    """执行命令，打印输出并返回 (exit_code, last_line)。"""
     print(f"  -> {cmd}")
     try:
         result = subprocess.run(
@@ -71,7 +72,6 @@ def fail(msg: str):
 
 
 def download(url: str, dest: str, label: str, force: bool):
-    """下载文件，已存在且非 force 则跳过。"""
     if os.path.exists(dest) and not force:
         done(f"{label} 已存在，跳过")
         return
@@ -81,7 +81,7 @@ def download(url: str, dest: str, label: str, force: bool):
 
 
 # ═══════════════════════════════════════════════════════════
-#  各步骤
+#  步骤 1-2: 下载 JAR
 # ═══════════════════════════════════════════════════════════
 
 def download_plugin(force: bool):
@@ -95,6 +95,10 @@ def download_pg(force: bool):
     download(PG_DRIVER_URL, os.path.join(WORK_DIR, PG_DRIVER_JAR),
              PG_DRIVER_JAR, force)
 
+
+# ═══════════════════════════════════════════════════════════
+#  步骤 3: 提取官方 nacos-server.jar
+# ═══════════════════════════════════════════════════════════
 
 def extract_jar(force: bool):
     step(3, "提取官方 nacos-server.jar")
@@ -121,12 +125,14 @@ def extract_jar(force: bool):
     done("nacos-server.jar 提取完成")
 
 
+# ═══════════════════════════════════════════════════════════
+#  步骤 4: 注入 JAR
+# ═══════════════════════════════════════════════════════════
+
 def inject_jars(force: bool):
     step(4, "注入插件 + PG 驱动")
-    import zipfile
     jar_path = os.path.join(WORK_DIR, "nacos-server.jar")
 
-    # 检查是否已注入
     if not force:
         try:
             with zipfile.ZipFile(jar_path, 'r') as zf:
@@ -137,7 +143,6 @@ def inject_jars(force: bool):
         except Exception:
             pass
 
-    # 要注入的两个 JAR
     jars = [
         (os.path.join(WORK_DIR, PLUGIN_JAR), f"BOOT-INF/lib/{PLUGIN_JAR}"),
         (os.path.join(WORK_DIR, PG_DRIVER_JAR), f"BOOT-INF/lib/{PG_DRIVER_JAR}"),
@@ -153,6 +158,10 @@ def inject_jars(force: bool):
 
     done("注入完成")
 
+
+# ═══════════════════════════════════════════════════════════
+#  步骤 5: 构建 Docker 镜像
+# ═══════════════════════════════════════════════════════════
 
 def build_image(force: bool):
     step(5, "构建 Docker 镜像")
@@ -179,6 +188,58 @@ def build_image(force: bool):
     done(f"镜像 {CUSTOM_IMAGE} 构建完成")
 
 
+# ═══════════════════════════════════════════════════════════
+#  步骤 6: 下载 Nacos 初始化 SQL
+# ═══════════════════════════════════════════════════════════
+
+def download_sql(force: bool):
+    step(6, "下载 Nacos 初始化 SQL")
+    download(NACOS_SQL_URL, os.path.join(WORK_DIR, NACOS_SQL),
+             NACOS_SQL, force)
+
+
+# ═══════════════════════════════════════════════════════════
+#  步骤 7: 初始化 Nacos 数据库
+# ═══════════════════════════════════════════════════════════
+
+def init_db(force: bool):
+    step(7, "初始化 Nacos 数据库")
+
+    # 检查容器是否在运行
+    rc, _ = run(f"docker ps -q --filter name=^{PG_CONTAINER}$")
+    if rc != 0:
+        fail(f"容器 {PG_CONTAINER} 未运行，请先启动 PostgreSQL")
+
+    # 检查 nacos 数据库是否已存在
+    check = subprocess.run(
+        f"docker exec {PG_CONTAINER} psql -U {PG_USER} -d postgres -lqt | cut -d '|' -f1 | grep -qw {NACOS_DB}",
+        shell=True, capture_output=True, text=True
+    )
+    if check.returncode == 0 and not force:
+        done(f"数据库 {NACOS_DB} 已存在，跳过")
+        return
+
+    # 创建 nacos 数据库（连默认 postgres 库）
+    print(f"  -> 创建 {NACOS_DB} 数据库 ...")
+    run(f"docker exec {PG_CONTAINER} psql -U {PG_USER} -d postgres "
+        f"-c 'CREATE DATABASE {NACOS_DB};'")
+
+    # 执行初始化 SQL
+    sql_path = os.path.join(WORK_DIR, NACOS_SQL)
+    print("  -> 执行 nacos-pg.sql ...")
+    rc, _ = run(
+        f"docker exec -i {PG_CONTAINER} psql -U {PG_USER} -d {NACOS_DB} < {sql_path}"
+    )
+    if rc != 0:
+        fail("初始化 SQL 执行失败")
+
+    done("Nacos 数据库初始化完成")
+
+
+# ═══════════════════════════════════════════════════════════
+#  主流程
+# ═══════════════════════════════════════════════════════════
+
 def main():
     force = "--force" in sys.argv or "-f" in sys.argv
     os.chdir(WORK_DIR)
@@ -195,6 +256,8 @@ def main():
     extract_jar(force)
     inject_jars(force)
     build_image(force)
+    download_sql(force)
+    init_db(force)
 
     print()
     print("=" * 50)
@@ -203,6 +266,8 @@ def main():
     print("  产物:")
     print(f"    JAR:    {WORK_DIR}/nacos-server.jar")
     print(f"    镜像:   {CUSTOM_IMAGE}")
+    print(f"    SQL:    {WORK_DIR}/{NACOS_SQL}")
+    print(f"    数据库: {PG_CONTAINER} / {NACOS_DB} (已初始化)")
     print()
     print("  启动 Nacos:")
     print(f"    docker run -d --name nacos \\")
@@ -210,12 +275,12 @@ def main():
     print(f"      -p 8848:8848 -p 9848:9848 \\")
     print(f"      -e MODE=standalone \\")
     print(f"      -e SPRING_DATASOURCE_PLATFORM=postgresql \\")
-    print(f"      -e DB_URL=jdbc:postgresql://172.20.0.10:5432/faris \\")
-    print(f"      -e DB_USER=faris \\")
+    print(f"      -e DB_URL=jdbc:postgresql://172.20.0.10:5432/{NACOS_DB} \\")
+    print(f"      -e DB_USER={PG_USER} \\")
     print(f"      -e DB_PASSWORD=123456 \\")
     print(f"      {CUSTOM_IMAGE}")
     print()
-    print("  启动后登录: http://<IP>:8848/nacos  (nacos/nacos)")
+    print("  登录: http://<IP>:8848/nacos  (nacos/nacos)")
     print("=" * 50)
 
 
