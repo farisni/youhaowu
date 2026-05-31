@@ -565,7 +565,8 @@ def main():
             print(f"  Redis:      {h}:{cfg['redis_port']}")
             print(f"  Kafka:      {h}:{cfg['kafka_port']}")
             print(f"  Kafka-UI:   http://{h}:{cfg['kafka_ui_port']}")
-            print(f"  ES:         http://{h}:{cfg['es_port']}")
+            print(f"  ES:         http://{h}:{cfg['es_port']}  (已装 IK 分词)")
+            print(f"    词典路径:  data/elasticsearch/plugins/analysis-ik/config/custom.dic")
             print(f"  Kibana:     http://{h}:{cfg['kibana_port']}")
 
     sys.exit(0 if failed == 0 else 1)
