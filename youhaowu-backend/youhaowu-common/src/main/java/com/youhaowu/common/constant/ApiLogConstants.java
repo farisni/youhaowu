@@ -9,7 +9,7 @@ public final class ApiLogConstants {
     }
 
     /** Kafka Topic */
-    public static final String TOPIC = "wheatmall.api.log";
+    public static final String TOPIC = "youhaowu.api.log";
 
     /** 请求开始时间属性名 */
     public static final String START_TIME_ATTR = "apiLogStartTime";
