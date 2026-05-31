@@ -434,7 +434,7 @@ def generate_nginx_conf(script_dir: str, cfg: dict) -> tuple[bool, str]:
         }}
 
         http {{
-            include /etc/nginx/mime.types;
+            # 注：conf 目录挂载会覆盖默认 mime.types，故去掉 include
             default_type application/octet-stream;
 
             server {{

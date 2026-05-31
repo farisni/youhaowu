@@ -188,3 +188,4 @@
 - feat: 访问方式加 ES IK 分词说明 + 词典路径
 - feat: env-install.py 加 Nacos 镜像存在性检查，缺失时提示运行 build-nacos-pg-image.py
 - feat: env-install.py 加入 Nginx（前端静态 + 反代 Gateway），自动生成 nginx.conf
+- fix: nginx.conf 去掉 mime.types include（conf 挂载覆盖了系统文件）
