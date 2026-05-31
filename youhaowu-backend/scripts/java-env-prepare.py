@@ -8,8 +8,8 @@
     python3 java-env-prepare.py -u docker     # 卸载 docker
     python3 java-env-prepare.py -u sdkman    # 卸载 SDKMAN
     python3 java-env-prepare.py -u            # 卸载全部
-    python3 java-env-prepare.py -i java      # 仅安装 java
-    python3 java-env-prepare.py -i maven     # 仅安装 maven
+    python3 java-env-prepare.py -i java      # 仅安装 java（依赖 SDKMAN，自动安装）
+    python3 java-env-prepare.py -i maven     # 仅安装 maven（依赖 SDKMAN，自动安装）
     python3 java-env-prepare.py -i docker    # 仅安装 docker
     python3 java-env-prepare.py -q            # 静默模式
 """
