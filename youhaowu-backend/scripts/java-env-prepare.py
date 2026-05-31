@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Java 21 + Maven + Docker 一键安装/卸载脚本。
+"""Java 21 + Maven（SDKMAN）+ Docker 一键安装/卸载脚本
 
 用法:
     python3 java-env-prepare.py               # 安装 java21 + maven + docker
