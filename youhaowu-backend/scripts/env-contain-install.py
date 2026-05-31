@@ -62,14 +62,14 @@ def get_config() -> dict:
 
         # Kafka
         "kafka_image": "bitnami/kafka:3.9",
-        "kafka_container": "youhaowu-kafka",
+        "kafka_container": "kafka",
         "kafka_ip": "172.20.0.3",
         "kafka_port": "9092",
         "kafka_data_dir": "data/kafka",
 
         # Kafka UI
         "kafka_ui_image": "provectuslabs/kafka-ui:latest",
-        "kafka_ui_container": "youhaowu-kafka-ui",
+        "kafka_ui_container": "kafka-ui",
         "kafka_ui_ip": "172.20.0.4",
         "kafka_ui_port": "9090",
 
