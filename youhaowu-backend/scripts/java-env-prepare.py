@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
-"""Java 21 + Maven 一键安装脚本（yum 版，走阿里云镜像）。
+"""Java 21 + Maven 一键安装/卸载脚本（yum 版，走阿里云镜像）。
 
 用法:
-    python3 java-env-prepare.py          # 安装 java21 + maven + settings.xml
-    python3 java-env-prepare.py -q       # 静默模式
+    python3 java-env-prepare.py               # 安装 java21 + maven
+    python3 java-env-prepare.py -u java       # 卸载 java
+    python3 java-env-prepare.py -u maven      # 卸载 maven
+    python3 java-env-prepare.py -u            # 卸载 java + maven + settings
+    python3 java-env-prepare.py -q            # 静默模式
 """
 
 import os
@@ -39,11 +42,11 @@ def _is_root() -> bool:
 # ═══════════════════════════════════════════════════════════
 
 def _setup_sudo():
-    """配置 faris 用户 yum 免密 sudo。"""
-    sudoers_file = "/etc/sudoers.d/faris-yum"
+    """配置当前用户 yum 免密 sudo。"""
+    user = os.environ.get("USER", "unknown")
+    sudoers_file = f"/etc/sudoers.d/{user}-yum"
     if os.path.exists(sudoers_file):
         return
-    user = os.environ.get("USER", "faris")
     rule = f"{user} ALL=(ALL) NOPASSWD: /usr/bin/yum\n"
     code, _, _ = shell(f"echo '{rule}' | sudo tee {sudoers_file} 2>&1")
     if code != 0:
@@ -112,12 +115,67 @@ def generate_maven_settings():
         f.write(conf)
 
 
+#  卸载
+# ═══════════════════════════════════════════════════════════
+
+def uninstall_java():
+    """卸载所有已安装的 Java 相关包。"""
+    code, out, _ = shell("rpm -qa | grep -i java 2>/dev/null")
+    if out.strip():
+        print(f"  已安装: {', '.join(out.strip().split(chr(10)))}")
+    else:
+        print("  未检测到 Java 包")
+        return
+    print("  → sudo yum remove -y java-*-openjdk*")
+    shell_live("sudo yum remove -y java-*-openjdk* tzdata-java javapackages-filesystem javapackages-tools 2>&1")
+
+
+def uninstall_maven():
+    """卸载 Maven。"""
+    print("  → sudo yum remove -y maven")
+    shell_live("sudo yum remove -y maven 2>&1")
+
+
+def uninstall_maven_settings():
+    """删除 ~/.m2/settings.xml。"""
+    path = os.path.expanduser("~/.m2/settings.xml")
+    if os.path.exists(path):
+        os.remove(path)
+        print(f"  → 已删除 {path}")
+
+
 # ═══════════════════════════════════════════════════════════
 #  主流程
 # ═══════════════════════════════════════════════════════════
 
 def main():
     quiet = "-q" in sys.argv or "--quiet" in sys.argv
+    uninstall = "-u" in sys.argv or "--uninstall" in sys.argv
+
+    if uninstall:
+        # 解析卸载目标
+        target = "all"
+        for a in sys.argv:
+            if a in ("java", "maven", "settings", "all"):
+                target = a
+                break
+
+        if not quiet:
+            print("=" * 40)
+            print(f"  卸载 {target}")
+            print("=" * 40)
+
+        if target in ("java", "all"):
+            uninstall_java()
+        if target in ("maven", "all"):
+            uninstall_maven()
+        if target in ("settings", "all"):
+            uninstall_maven_settings()
+
+        if not quiet:
+            print()
+            print(f"[✓] 卸载 {target} 完成")
+        return
 
     if not quiet:
         print("=" * 40)
@@ -131,19 +189,28 @@ def main():
     ok, msg = check_java()
     if not quiet:
         print(f"[{'✓' if ok else '✗'}] {msg}")
-    if not ok:
+    if ok:
+        if not quiet:
+            print("        (如需卸载: python3 java-env-prepare.py -u java)")
+    else:
         if not install_java():
             print("[✗] Java 安装失败")
             sys.exit(1)
+        jdk_ver = shell("java -version 2>&1")[1]
+        if "17." in jdk_ver:
+            shell_live("sudo alternatives --set java java-21-openjdk.aarch64 2>&1")
         if not quiet:
             ok2, _ = check_java()
-            print(f"[✓] Java 安装完成")
+            print("[✓] Java 安装完成（已设 21 为默认）")
 
     # 2️⃣ Maven
     ok, msg = check_maven()
     if not quiet:
         print(f"[{'✓' if ok else '✗'}] {msg}")
-    if not ok:
+    if ok:
+        if not quiet:
+            print("        (如需卸载: python3 java-env-prepare.py -u maven)")
+    else:
         if not install_maven():
             print("[✗] Maven 安装失败")
             sys.exit(1)
