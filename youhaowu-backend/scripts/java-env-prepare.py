@@ -21,13 +21,19 @@ import textwrap
 #  常量
 # ═══════════════════════════════════════════════════════════
 
-JAVA_CANDIDATE = "21.0.6-tem"
+JAVA_CANDIDATE = "21.0.6-zulu"
 MAVEN_CANDIDATE = "3.9.9"
 
+_JDK_VER = "21.0.6"
+_JDK_BUILD = "7"
+
+# auto-detect arch; fallback to aarch64 on unknown
+_ARCH = "aarch64" if "aarch64" in os.uname().machine else "x64" if os.uname().machine == "x86_64" else "aarch64"
+
+JDK_ARCHIVE_NAME = f"zulu-{_JDK_VER}-linux-{_ARCH}.tar.gz"
 JDK_MIRROR_URLS = [
-    "https://ghproxy.net/https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.6%2B7/OpenJDK21U-jdk_aarch64_linux_hotspot_21.0.6_7.tar.gz",
+    f"https://cdn.azul.com/zulu/bin/zulu21.40.17-ca-jdk{_JDK_VER}-linux_{_ARCH}.tar.gz",
 ]
-JDK_ARCHIVE_NAME = "temurin-21.0.6-linux-aarch64.tar.gz"
 
 DOCKER_MIRRORS = [
     "https://docker.xuanyuan.me",
