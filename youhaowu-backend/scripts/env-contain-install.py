@@ -311,7 +311,6 @@ def generate_docker_compose(script_dir: str, cfg: dict) -> tuple[bool, str]:
               - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=true
             volumes:
               - ./{kafka_data_dir}:/bitnami/kafka
-            user: "root"
             networks:
               {net_name}:
                 ipv4_address: {kafka_ip}
