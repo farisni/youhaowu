@@ -186,3 +186,4 @@
 - refactor: env-install.py + build-nacos.py 移至 youhaowu-backend/scripts/
 - feat: install_es_ik 加自定义词典（IKAnalyzer.cfg.xml + custom.dic），修复原版 ext_dict 为空导致不生效
 - feat: 访问方式加 ES IK 分词说明 + 词典路径
+- feat: env-install.py 加 Nacos 镜像存在性检查，缺失时提示运行 build-nacos-pg-image.py

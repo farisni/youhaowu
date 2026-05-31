@@ -172,6 +172,16 @@ def check_docker_running() -> tuple[bool, str]:
     return False, f"Docker 未运行: {stdout.split(chr(10))[0] if stdout else '无法连接'}"
 
 
+def check_nacos_image() -> tuple[bool, str]:
+    """检查 nacos/nacos-server:v3.1.1-pg 镜像是否存在。"""
+    cfg = get_config()
+    image = cfg["nacos_image"]
+    code, stdout, _ = shell(f"docker image inspect {image} 2>&1")
+    if code == 0:
+        return True, f"Nacos 镜像 {image} 已就绪"
+    return False, f"Nacos 镜像 {image} 不存在，请先运行 build-nacos-pg-image.py 生成"
+
+
 # ═══════════════════════════════════════════════════════════
 #  初始化
 # ═══════════════════════════════════════════════════════════
@@ -522,6 +532,7 @@ def main():
         ("Docker", check_docker_installed),
         ("Docker Compose", check_docker_compose),
         ("Docker 运行中", check_docker_running),
+        ("Nacos 镜像", check_nacos_image),
     ]
 
     passed = 0
