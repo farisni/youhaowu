@@ -23,24 +23,9 @@ PLUGIN_JAR = "nacos-postgresql-datasource-plugin-ext-3.1.1.jar"
 PG_DRIVER_URL = "https://maven.aliyun.com/repository/central/org/postgresql/postgresql/42.7.4/postgresql-42.7.4.jar"
 PG_DRIVER_JAR = "postgresql-42.7.4.jar"
 
-# PostgreSQL
-PG_CONTAINER = "postgres-17"
-PG_USER = "faris"
-PG_PASSWORD = "123456"
-PG_PORT = "5432"
-
-# Nacos 数据库
-
-# Docker 网络
-NET_NAME = "youhaowu_net"
-PG_IP = "172.20.0.10"
-NACOS_IP = "172.20.0.20"
-
 # Docker 镜像
 DOCKER_IMAGE = f"nacos/nacos-server:v{NACOS_VERSION}"
 CUSTOM_IMAGE = f"nacos/nacos-server:v{NACOS_VERSION}-pg"
-
-# 认证
 
 WORK_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -224,10 +209,9 @@ def main():
     print("=" * 50)
     print("  OK 全部完成!")
     print()
-    print(f"  产物:     {WORK_DIR}/nacos-server.jar")
-    print(f"  镜像:     {CUSTOM_IMAGE}")
-    print(f"  容器:     nacos ({NACOS_IP})")
-    print(f"  登录:     http://<IP>:8848/nacos  (nacos/nacos)")
+    print(f"  产物:  {WORK_DIR}/nacos-server.jar")
+    print(f"  镜像:  {CUSTOM_IMAGE}")
+    print(f"  下一步:  python3 env-install.py  # 启动 PG + Nacos")
     print("=" * 50)
 
 
