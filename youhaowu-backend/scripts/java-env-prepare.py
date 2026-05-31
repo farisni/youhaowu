@@ -20,23 +20,13 @@ import textwrap
 #  常量
 # ═══════════════════════════════════════════════════════════
 
-JAVA_PKGS = "java-21-openjdk java-21-openjdk-devel"
-JAVA_ALT = "java-21-openjdk.aarch64"
-MAVEN_VER = "3.9.9"
-MIN_MAVEN_VER = "3.9"
+JAVA_CANDIDATE = "21.0.6-tem"
+MAVEN_CANDIDATE = "3.9.9"
 
-# Docker repo config handled inline in install_docker()
 DOCKER_MIRRORS = [
     "https://docker.xuanyuan.me",
     "https://docker.m.daocloud.io",
 ]
-MAVEN_URLS = [
-    "https://repo.huaweicloud.com/apache/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz",
-    "https://archive.apache.org/dist/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz",
-]
-MAVEN_HOME = "/opt/maven"
-MIRROR_URL = "https://maven.aliyun.com/repository/public"
-MIRROR_NAME = "阿里云公共仓库"
 
 
 # ═══════════════════════════════════════════════════════════
@@ -44,7 +34,6 @@ MIRROR_NAME = "阿里云公共仓库"
 # ═══════════════════════════════════════════════════════════
 
 def shell(cmd: str, timeout: int = 120) -> tuple[int, str, str]:
-    """执行 shell 命令，返回 (returncode, stdout, stderr)。"""
     result = subprocess.run(
         cmd, shell=True, capture_output=True, text=True,
         timeout=timeout, executable="/bin/bash"
@@ -53,32 +42,29 @@ def shell(cmd: str, timeout: int = 120) -> tuple[int, str, str]:
 
 
 def shell_live(cmd: str):
-    """执行 shell 命令，实时输出到终端。"""
     return os.system(cmd)
 
 
-def _is_root() -> bool:
-    return os.geteuid() == 0
+def sdk_exec(cmd: str) -> int:
+    """在 bash 中 source sdkman-init.sh 后执行 sdk 命令。"""
+    init = os.path.expanduser("~/.sdkman/bin/sdkman-init.sh")
+    if not os.path.exists(init):
+        return 1
+    return shell_live(f'bash -c \'source "{init}" && {cmd}\'')
 
 
 # ═══════════════════════════════════════════════════════════
 #  检查
 # ═══════════════════════════════════════════════════════════
 
-def _setup_sudo():
-    """配置当前用户 yum 免密 sudo。"""
-    user = os.environ.get("USER", "unknown")
-    sudoers_file = f"/etc/sudoers.d/{user}-yum"
-    if os.path.exists(sudoers_file):
-        return
-    rule = f"{user} ALL=(ALL) NOPASSWD: /usr/bin/yum\n"
-    code, _, _ = shell(f"echo '{rule}' | sudo tee {sudoers_file} 2>&1")
-    if code != 0:
-        print("  [warn] sudo 免密配置失败，可能需要手动输入密码")
+def check_sdkman() -> tuple[bool, str]:
+    home = os.path.expanduser("~/.sdkman")
+    if os.path.isdir(home):
+        return True, "SDKMAN 已安装"
+    return False, "SDKMAN 未安装"
 
 
 def check_java() -> tuple[bool, str]:
-    """检查 Java 是否已安装。"""
     code, stdout, _ = shell("java -version 2>&1")
     if code == 0:
         ver = stdout.split("\n")[0] if stdout else "unknown"
@@ -87,7 +73,6 @@ def check_java() -> tuple[bool, str]:
 
 
 def check_maven() -> tuple[bool, str]:
-    """检查 Maven 是否已安装。"""
     code, stdout, _ = shell("mvn --version 2>&1")
     if code == 0:
         ver = stdout.split("\n")[0] if stdout else "unknown"
@@ -96,157 +81,42 @@ def check_maven() -> tuple[bool, str]:
 
 
 def check_docker() -> tuple[bool, str]:
-    """检查 Docker 是否已安装。"""
     code, stdout, _ = shell("docker --version 2>&1")
     if code == 0:
-        ver = stdout.strip()
-        return True, f"Docker: {ver}"
+        return True, f"Docker: {stdout.strip()}"
     return False, "Docker 未安装"
-
-
-def check_docker_compose() -> tuple[bool, str]:
-    """检查 Docker Compose 是否可用。"""
-    code, stdout, _ = shell("docker compose version 2>&1")
-    if code == 0:
-        return True, f"Docker Compose: {stdout.strip()}"
-    return False, "Docker Compose 未安装"
-
-
-def check_docker_running() -> tuple[bool, str]:
-    """检查 Docker 是否运行中。"""
-    code, _, _ = shell("docker info 2>&1")
-    if code == 0:
-        return True, "Docker 运行中"
-    return False, "Docker 未运行，请执行: sudo systemctl start docker"
-
-
-
-def check_maven_settings() -> tuple[bool, str]:
-    """检查 ~/.m2/settings.xml 是否存在。"""
-    path = os.path.expanduser("~/.m2/settings.xml")
-    if os.path.exists(path):
-        return True, "Maven settings.xml 已存在"
-    return False, "Maven settings.xml 未配置"
 
 
 # ═══════════════════════════════════════════════════════════
 #  安装
 # ═══════════════════════════════════════════════════════════
 
-def install_java() -> bool:
-    """yum 安装 Java 21。"""
-    print(f"  → sudo yum install -y {JAVA_PKGS}")
-    return shell_live(f"sudo yum install -y {JAVA_PKGS} 2>&1") == 0
-
-
-def install_maven() -> bool:
-    """从 Apache 下载 Maven 到 /opt/maven 并配置 PATH。"""
-    if os.path.exists(MAVEN_HOME):
-        print(f"  → Maven 已存在 {MAVEN_HOME}")
-        return True
-
-    tarball = f"/tmp/maven-{MAVEN_VER}.tar.gz"
-    print(f"  → 下载 Maven {MAVEN_VER} ...")
-    rc = 1
-    for url in MAVEN_URLS:
-        rc = shell_live(f"curl -sfL --connect-timeout 10 --max-time 60 -o {tarball} '{url}'")
-        if rc == 0:
-            break
-        print(f"  → 重试下一个镜像...")
+def install_sdkman() -> bool:
+    """安装 SDKMAN。"""
+    print("  → curl -sL --http1.1 \"https://get.sdkman.io\" | bash")
+    rc = shell_live('curl -sL --http1.1 "https://get.sdkman.io" | bash')
     if rc != 0:
-        print("  [✗] 下载失败，所有镜像不可达")
-        return False
+        print("  重试...")
+        rc = shell_live('curl -sL --http1.1 "https://get.sdkman.io" | bash')
+    return rc == 0
 
-    print(f"  → 解压到 {MAVEN_HOME} ...")
-    rc = shell_live(f"sudo mkdir -p /opt && sudo tar -xzf {tarball} -C /opt && sudo mv /opt/apache-maven-{MAVEN_VER} {MAVEN_HOME}")
-    shell_live(f"rm -f {tarball}")
+
+def install_via_sdk(candidate: str, version: str) -> bool:
+    """通过 sdk 安装指定工具。"""
+    print(f"  → sdk install {candidate} {version} ...")
+    rc = sdk_exec(f"sdk install {candidate} {version}")
     if rc != 0:
         return False
-
-    # 配置 PATH
-    mvn_bin = f"{MAVEN_HOME}/bin"
-    profile = os.path.expanduser("~/.bashrc")
-    if not os.path.exists(profile):
-        profile = os.path.expanduser("~/.bash_profile")
-    marker = f"# MAVEN_HOME ({MAVEN_VER})"
-    with open(profile, "r") as fh:
-        if marker in fh.read():
-            return True
-    with open(profile, "a") as fh:
-        fh.write(f"\n{marker}\nexport MAVEN_HOME={MAVEN_HOME}\nexport PATH=$MAVEN_HOME/bin:$PATH\n")
-    print(f"  → PATH 已写入 {profile}")
+    sdk_exec(f"sdk default {candidate} {version}")
     return True
 
 
-def generate_maven_settings():
-    """生成 ~/.m2/settings.xml（阿里云镜像）。"""
-    m2_dir = os.path.expanduser("~/.m2")
-    os.makedirs(m2_dir, exist_ok=True)
-    conf = textwrap.dedent(f"""\
-        <settings>
-          <mirrors>
-            <mirror>
-              <id>aliyunmaven</id>
-              <mirrorOf>*</mirrorOf>
-              {MIRROR_NAME}
-              {MIRROR_URL}
-            </mirror>
-          </mirrors>
-        </settings>
-        """)
-    with open(os.path.join(m2_dir, "settings.xml"), "w") as f:
-        f.write(conf)
-
-
-#  卸载
-# ═══════════════════════════════════════════════════════════
-
-def uninstall_java():
-    """卸载所有已安装的 Java 相关包。"""
-    code, out, _ = shell("rpm -qa | grep -i java 2>/dev/null")
-    if out.strip():
-        print(f"  已安装: {', '.join(out.strip().split(chr(10)))}")
-    else:
-        print("  未检测到 Java 包")
-        return
-    print("  → sudo yum remove -y java-*-openjdk*")
-    shell_live("sudo yum remove -y java-*-openjdk* tzdata-java javapackages-filesystem javapackages-tools 2>&1")
-
-
-def uninstall_maven():
-    """卸载 Maven（删除 /opt/maven 和 PATH 配置）。"""
-    if os.path.exists(MAVEN_HOME):
-        print(f"  → sudo rm -rf {MAVEN_HOME}")
-        shell_live(f"sudo rm -rf {MAVEN_HOME}")
-
-    # 清理 bashrc 中的 Maven 配置
-    for prof in ["~/.bashrc", "~/.bash_profile"]:
-        prof = os.path.expanduser(prof)
-        if not os.path.exists(prof):
-            continue
-        with open(prof, "r") as fh:
-            lines = fh.readlines()
-        new_lines = [l for l in lines if "MAVEN_HOME" not in l or l.strip().startswith("#")]
-        if len(new_lines) != len(lines):
-            with open(prof, "w") as fh:
-                fh.writelines(new_lines)
-            print(f"  → 已清理 {prof}")
-
-
-def uninstall_maven_settings():
-    """删除 ~/.m2/settings.xml。"""
-    path = os.path.expanduser("~/.m2/settings.xml")
-    if os.path.exists(path):
-        os.remove(path)
-        print(f"  → 已删除 {path}")
-
-
 def install_docker() -> bool:
-    """安装 Docker CE + Compose。"""
+    """安装 Docker CE。"""
     repo_file = "/etc/yum.repos.d/docker-ce.repo"
     if not os.path.exists(repo_file):
         print("  → 写入阿里云 Docker CE 仓库 ...")
-        repo_content = textwrap.dedent("""\
+        repo = textwrap.dedent("""\
             [docker-ce-stable]
             name=Docker CE Stable - Aliyun
             baseurl=https://mirrors.aliyun.com/docker-ce/linux/centos/$releasever/$basearch/stable
@@ -254,11 +124,7 @@ def install_docker() -> bool:
             gpgcheck=1
             gpgkey=https://mirrors.aliyun.com/docker-ce/linux/centos/gpg
             """)
-        # sudo write the repo file
-        rc = shell_live(f"sudo tee {repo_file} << 'REPO_EOF'\n{repo_content}\nREPO_EOF")
-        if rc != 0:
-            return False
-    print("  → sudo yum install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin")
+        shell_live(f"sudo tee {repo_file} << 'REPO_EOF'\n{repo}\nREPO_EOF")
     return shell_live("sudo yum install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin 2>&1") == 0
 
 
@@ -278,9 +144,50 @@ def configure_docker_mirror():
     shell_live(f"sudo mkdir -p /etc/docker && sudo cp {tmp} {daemon}")
 
 
+def generate_maven_settings():
+    """生成 ~/.m2/settings.xml（阿里云镜像）。"""
+    m2_dir = os.path.expanduser("~/.m2")
+    os.makedirs(m2_dir, exist_ok=True)
+    conf = textwrap.dedent(f"""\
+        <settings>
+          <mirrors>
+            <mirror>
+              <id>aliyunmaven</id>
+              <mirrorOf>*</mirrorOf>
+              <name>阿里云公共仓库</name>
+              <url>https://maven.aliyun.com/repository/public</url>
+            </mirror>
+          </mirrors>
+        </settings>
+        """)
+    with open(os.path.join(m2_dir, "settings.xml"), "w") as f:
+        f.write(conf)
+
+
+# ═══════════════════════════════════════════════════════════
+#  卸载
+# ═══════════════════════════════════════════════════════════
+
+def uninstall_sdkman():
+    shell_live("rm -rf ~/.sdkman")
+    shell_live("sed -i '/sdkman/d' ~/.bashrc ~/.zshrc 2>/dev/null")
+
+
+def uninstall_java():
+    uninstall_sdkman()
+    sdk_dir = os.path.expanduser("~/.sdkman/candidates/java")
+    if os.path.exists(sdk_dir):
+        shell_live(f"rm -rf {sdk_dir}")
+
+
+def uninstall_maven():
+    sdk_dir = os.path.expanduser("~/.sdkman/candidates/maven")
+    if os.path.exists(sdk_dir):
+        shell_live(f"rm -rf {sdk_dir}")
+
+
 def uninstall_docker():
-    """卸载 Docker。"""
-    print("  → sudo yum remove -y docker-ce docker-ce-cli containerd.io docker-compose-plugin")
+    shell_live("sudo systemctl stop docker 2>/dev/null")
     shell_live("sudo yum remove -y docker-ce docker-ce-cli containerd.io docker-compose-plugin 2>&1")
 
 
@@ -293,41 +200,42 @@ def main():
     uninstall = "-u" in sys.argv or "--uninstall" in sys.argv
 
     if uninstall:
-        # 解析卸载目标
         target = "all"
         for a in sys.argv:
-            if a in ("java", "maven", "docker", "settings", "all"):
+            if a in ("java", "maven", "docker", "all"):
                 target = a
                 break
-
         if not quiet:
             print("=" * 40)
             print(f"  卸载 {target}")
             print("=" * 40)
-
         if target in ("java", "all"):
             uninstall_java()
         if target in ("maven", "all"):
             uninstall_maven()
         if target in ("docker", "all"):
             uninstall_docker()
-        if target in ("settings", "all"):
-            uninstall_maven_settings()
-
         if not quiet:
-            print()
-            print(f"[✓] 卸载 {target} 完成")
+            print(f"\n[✓] 卸载 {target} 完成")
         return
 
     if not quiet:
         print("=" * 40)
-        print("  开发环境准备（yum）")
+        print("  开发环境准备")
         print("=" * 40)
 
-    # 0️⃣ sudo 免密
-    _setup_sudo()
+    # 1️⃣ SDKMAN
+    ok, msg = check_sdkman()
+    if not quiet:
+        print(f"[{'✓' if ok else '✗'}] {msg}")
+    if not ok:
+        if not install_sdkman():
+            print("[✗] SDKMAN 安装失败，请检查网络")
+            sys.exit(1)
+        if not quiet:
+            print("[✓] SDKMAN 安装完成，新终端生效")
 
-    # 1️⃣ Java 21
+    # 2️⃣ Java
     ok, msg = check_java()
     if not quiet:
         print(f"[{'✓' if ok else '✗'}] {msg}")
@@ -335,17 +243,14 @@ def main():
         if not quiet:
             print("        (如需卸载: python3 java-env-prepare.py -u java)")
     else:
-        if not install_java():
+        if not install_via_sdk("java", JAVA_CANDIDATE):
             print("[✗] Java 安装失败")
             sys.exit(1)
-        jdk_ver = shell("java -version 2>&1")[1]
-        if "17." in jdk_ver:
-            shell_live(f"sudo alternatives --set java {JAVA_ALT} 2>&1")
         if not quiet:
-            ok2, _ = check_java()
-            print("[✓] Java 安装完成（已设 21 为默认）")
+            print(f"[✓] Java {JAVA_CANDIDATE} 安装完成")
+            print("        (如需卸载: python3 java-env-prepare.py -u java)")
 
-    # 2️⃣ Maven
+    # 3️⃣ Maven
     ok, msg = check_maven()
     if not quiet:
         print(f"[{'✓' if ok else '✗'}] {msg}")
@@ -353,23 +258,22 @@ def main():
         if not quiet:
             print("        (如需卸载: python3 java-env-prepare.py -u maven)")
     else:
-        if not install_maven():
+        if not install_via_sdk("maven", MAVEN_CANDIDATE):
             print("[✗] Maven 安装失败")
             sys.exit(1)
-        ver = shell("mvn --version 2>&1")[1]
-        if ver and "3.9" not in ver:
-            print(f"  [warn] Maven 版本低于 {MIN_MAVEN_VER}: {ver.split(chr(10))[0]}")
+        generate_maven_settings()
         if not quiet:
-            print("[✓] Maven 安装完成")
+            print(f"[✓] Maven {MAVEN_CANDIDATE} 安装完成")
+            print("        (如需卸载: python3 java-env-prepare.py -u maven)")
 
-    # 3️⃣ Docker
+    # 4️⃣ Docker
     ok, msg = check_docker()
     if not quiet:
         print(f"[{'✓' if ok else '✗'}] {msg}")
     if ok:
         if not quiet:
             print("        (如需卸载: python3 java-env-prepare.py -u docker)")
-    if not ok:
+    else:
         if not install_docker():
             print("[✗] Docker 安装失败")
             sys.exit(1)
@@ -379,23 +283,12 @@ def main():
         if not quiet:
             print("[✓] Docker 安装完成（镜像加速已配置）")
             print("        (如需卸载: python3 java-env-prepare.py -u docker)")
-            print("  → 验证: docker run hello-world ...")
-            shell_live("docker run hello-world 2>&1")
-
-    # 4️⃣ Maven settings.xml
-    ok, msg = check_maven_settings()
-    if not quiet:
-        print(f"[{'✓' if ok else '✗'}] {msg}")
-    if not ok:
-        generate_maven_settings()
-        if not quiet:
-            print("[✓] ~/.m2/settings.xml 已生成（阿里云镜像）")
 
     if not quiet:
         print()
         print("=" * 40)
         print("  完成")
-        print("  source ~/.bashrc 后 mvn --version 生效")
+        print("  source ~/.sdkman/bin/sdkman-init.sh 后生效")
         print("=" * 40)
 
 
