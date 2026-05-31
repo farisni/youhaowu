@@ -411,6 +411,7 @@ def generate_docker_compose(script_dir: str, cfg: dict) -> tuple[bool, str]:
               - "{jenkins_agent_port}:50000"
             volumes:
               - ./{jenkins_data_dir}:/var/jenkins_home
+              - ./{jenkins_data_dir}/workspace:/var/jenkins_home/workspace
               - /home/faris/.m2/settings.xml:/var/jenkins_home/.m2/settings.xml
               - /home/faris/.m2/repository:/var/jenkins_home/.m2/repository
               - /var/run/docker.sock:/var/run/docker.sock
@@ -642,7 +643,8 @@ def run_setup(quiet: bool, skip_existing: bool = False) -> tuple[int, int]:
     # 创建数据目录
     for d in [cfg["pg_data_dir"], cfg["pg_init_dir"], cfg["redis_data_dir"], cfg["kafka_data_dir"], cfg["es_config_dir"], cfg["es_data_dir"], cfg["es_plugins_dir"],
               cfg["nginx_html_dir"], cfg["nginx_conf_dir"], cfg["nginx_log_dir"],
-              cfg["jenkins_data_dir"]]:
+              cfg["jenkins_data_dir"],
+              cfg["jenkins_data_dir"] + "/workspace"]:
         dir_path = os.path.join(script_dir, d)
         try:
             os.makedirs(dir_path, exist_ok=True)
