@@ -279,7 +279,7 @@ def generate_docker_compose(script_dir: str, cfg: dict) -> tuple[bool, str]:
               - discovery.type=single-node
               - ES_JAVA_OPTS=-Xms64m -Xmx512m
             volumes:
-              - ./{es_config_dir}:/usr/share/elasticsearch/config
+              - ./{es_config_dir}/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
               - ./{es_data_dir}:/usr/share/elasticsearch/data
               - ./{es_plugins_dir}:/usr/share/elasticsearch/plugins
             ports:
