@@ -55,7 +55,7 @@ public class BrandEntity implements Serializable {
 	/**
 	 * 显示状态[0-不显示；1-显示]
 	 *  message = "显示状态只能是1or0" 可以指定
-	 *  com.ndz.wheatmall.web.valid.ListValue.message 或者取默认
+	 *  com.ndz.youhaowu.web.valid.ListValue.message 或者取默认
 	 */
 //	@Pattern()
 	@NotNull(groups = {AddGroup.class, UpdateStatusGroup.class})

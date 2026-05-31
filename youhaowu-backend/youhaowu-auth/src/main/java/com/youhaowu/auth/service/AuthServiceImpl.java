@@ -132,7 +132,7 @@ public class AuthServiceImpl implements AuthService {
         return UserInfoVO.builder()
                 .userId(1L)
                 .username("admin")
-                .email("admin@wheatmall.com")
+                .email("admin@youhaowu.com")
                 .roles(List.of("ADMIN", "USER"))
                 .build();
     }

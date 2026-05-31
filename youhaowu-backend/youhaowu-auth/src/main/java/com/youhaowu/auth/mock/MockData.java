@@ -59,7 +59,7 @@ public class MockData {
             1L, 
             "admin", 
             passwordEncoder.encode("123456"),
-            "admin@wheatmall.com"
+            "admin@youhaowu.com"
         );
         admin.setPhone("13800138000");
         
@@ -68,7 +68,7 @@ public class MockData {
             2L, 
             "user", 
             passwordEncoder.encode("123456"),
-            "user@wheatmall.com"
+            "user@youhaowu.com"
         );
         user.setPhone("13800138001");
         
@@ -77,7 +77,7 @@ public class MockData {
             3L, 
             "test", 
             passwordEncoder.encode("123456"),
-            "test@wheatmall.com"
+            "test@youhaowu.com"
         );
         test.setPhone("13800138002");
         test.setStatus(0); // 禁用状态

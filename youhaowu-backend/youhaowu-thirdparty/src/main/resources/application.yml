@@ -16,7 +16,7 @@ spring:
       secret-key: your-secret-key
       oss:
         endpoint: oss-cn-hangzhou.aliyuncs.com
-        bucket: wheatmall
+        bucket: youhaowu
       sms:
         region: cn-hangzhou
         endpoint: dysmsapi.aliyuncs.com

@@ -65,7 +65,7 @@ class AuthServiceTest {
         SysUser mockUser = new SysUser();
         mockUser.setId(TEST_USER_ID);
         mockUser.setUsername(TEST_USERNAME);
-        mockUser.setEmail(TEST_USERNAME + "@wheatmall.com");
+        mockUser.setEmail(TEST_USERNAME + "@youhaowu.com");
         mockUser.setPassword("encoded-password");
         
         SecurityUser securityUser = new SecurityUser(mockUser, TEST_ROLES, Arrays.asList("user:view"));

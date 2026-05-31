@@ -23,7 +23,7 @@ public class MyThreadConfig {
                 Executors.defaultThreadFactory(), new ThreadPoolExecutor.CallerRunsPolicy());
     }
 
-    @ConfigurationProperties(prefix = "wheatmall.thread")
+    @ConfigurationProperties(prefix = "youhaowu.thread")
     @Data
     static class ThreadPoolConfigProperties {
         private Integer coreSize = 20;
