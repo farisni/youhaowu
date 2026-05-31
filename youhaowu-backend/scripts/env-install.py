@@ -569,30 +569,52 @@ def start_compose(script_dir: str, cfg: dict, skip_existing: bool = False) -> tu
     """启动 docker compose。
 
     如遇 pull 失败（403 Forbidden），可能是 Clash TUN 劫持了 Docker 代理。
-    如遇容器名冲突，-k 参数可跳过已有容器。
+    -k 模式：逐个服务启动，跳过已有容器的服务。
     """
     compose_path = os.path.join(script_dir, "docker-compose.yml")
-    code, stdout, stderr = shell(f"docker compose -f {compose_path} up -d 2>&1")
-    if code == 0:
+
+    if not skip_existing:
+        code, stdout, stderr = shell(f"docker compose -f {compose_path} up -d 2>&1")
+        if code == 0:
+            return True, "容器启动成功"
+        combined = (stdout + stderr).lower()
+        if "conflict" in combined or "already in use" in combined:
+            for line in (stdout + stderr).split(chr(10)):
+                if "already in use" in line:
+                    name = line.split('"')[1] if '"' in line else "unknown"
+                    return False, f"容器 {name} 已存在，请 docker rm -f {name} 后重试，或用 -k 跳过"
+            return False, "容器名冲突，请手动处理或用 -k 跳过"
+        print("  hint: 如 pull 失败(403)，可能是 Clash TUN 劫持了代理，建议关闭 Clash TUN 后重试")
+        return False, f"启动失败 (exit={code})"
+
+    # -k 模式：获取服务列表，逐个启动
+    _sc, _so, _ = shell(f"docker compose -f {compose_path} config --services 2>&1")
+    services = [s.strip() for s in (_so or "").split(chr(10)) if s.strip()]
+    if not services:
+        code, _, _ = shell(f"docker compose -f {compose_path} up -d 2>&1")
+        return code == 0, "容器启动完成"
+
+    skipped, ok, fail = [], 0, 0
+    for svc in services:
+        _code, _out, _ = shell(f"docker compose -f {compose_path} up -d --no-deps {svc} 2>&1")
+        combined = (_out or "").lower()
+        if "conflict" in combined or "already in use" in combined:
+            name = svc
+            for _line in (_out or "").split(chr(10)):
+                if "already in use" in _line and '"' in _line:
+                    name = _line.split('"')[1]
+            skipped.append(name)
+        elif _code == 0:
+            ok += 1
+        else:
+            fail += 1
+            print(f"  [warn] {svc} 启动异常: {(_out or '')[:120]}")
+
+    if skipped:
+        return True, f"跳过 {len(skipped)} 个已有容器 ({', '.join(skipped[:3])}...)" if len(skipped) > 3 else f"跳过已有容器: {', '.join(skipped)}"
+    if fail == 0:
         return True, "容器启动成功"
-
-    # 检测容器名冲突
-    combined = (stdout + stderr).lower()
-    if "conflict" in combined or "already in use" in combined:
-        # 提取冲突的容器名
-        for line in (stdout + stderr).split(chr(10)):
-            if "already in use" in line:
-                name = line.split('"')[1] if '"' in line else "unknown"
-                if skip_existing:
-                    return True, f"容器 {name} 已存在，跳过"
-                return False, f"容器 {name} 已存在，请先: docker rm -f {name} && 重跑脚本"
-        if skip_existing:
-            return True, "容器名冲突，已跳过"
-        return False, "容器名冲突，请手动 docker rm -f <容器名> 后重试"
-
-    print("  hint: 如 pull 失败(403)，可能是 Clash TUN 劫持了代理，建议关闭 Clash TUN 后重试")
-    print("         docker pull <image> 直连后再重跑脚本")
-    return False, f"启动失败 (exit={code})"
+    return False, f"部分容器启动失败 ({fail}/{ok + fail})"
 
 
 def run_setup(quiet: bool, skip_existing: bool = False) -> tuple[int, int]:
@@ -672,6 +694,7 @@ def _count(passed: int, failed: int, ok: bool) -> tuple[int, int]:
 def main():
     get_script_dir()
     quiet = "-q" in sys.argv or "--quiet" in sys.argv
+    skip_existing = "-k" in sys.argv or "--skip-existing" in sys.argv
 
     checks = [
         ("Java", check_java),

@@ -191,3 +191,4 @@
 - fix: nginx.conf 去掉 mime.types include（conf 挂载覆盖了系统文件）
 - feat: env-install.py 加入 Jenkins 容器（Maven/docker 组检查 + compose 集成）
 - feat: env-install.py 加 -k 参数跳过已有容器 + 容器冲突检测
+- fix: env-install.py -k 改为逐服务启动，Skip 模式不阻止其他容器启动
