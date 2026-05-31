@@ -45,6 +45,7 @@ def get_config() -> dict:
         "nacos_auth_token": "VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=",
         "nacos_auth_identity_key": "nacos",
         "nacos_auth_identity_value": "nacos",
+        "nacos_db": "nacos",
 
         # Nacos SQL
         "nacos_sql_url": "https://ghproxy.net/https://raw.githubusercontent.com/lilinhai/nacos-datasource-plugin-ext/master/nacos-postgresql-datasource-plugin-ext/src/main/resources/schema/nacos-pg.sql",
