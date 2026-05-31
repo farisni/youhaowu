@@ -194,3 +194,4 @@
 - fix: env-install.py -k 改为逐服务启动，Skip 模式不阻止其他容器启动
 - feat: SQL 文件加 CREATE DATABASE IF NOT EXISTS，支持 PG 自动初始化建库
 - feat: java-env-prepare.py SDKMAN + Java 21 + Maven + settings.xml 一键安装
+- fix: Nacos 关闭 auth，解决 Gateway 注册 401

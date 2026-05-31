@@ -280,7 +280,7 @@ def generate_docker_compose(script_dir: str, cfg: dict) -> tuple[bool, str]:
                 condition: service_healthy
             environment:
               - MODE=standalone
-              - NACOS_AUTH_ENABLE=true
+              - NACOS_AUTH_ENABLE=false
               - NACOS_AUTH_TOKEN={nacos_auth_token}
               - NACOS_AUTH_IDENTITY_KEY={nacos_auth_identity_key}
               - NACOS_AUTH_IDENTITY_VALUE={nacos_auth_identity_value}
