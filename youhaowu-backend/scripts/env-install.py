@@ -4,7 +4,8 @@
 要求: 脚本必须放在 ~/Code/ 下执行。
 用法:
     python3 env-install.py          # 检查 + 自动初始化 + 启动
-    python3 env-install.py -q       # 静默模式
+    python3 env-install.py -q       # 静默模式，只输出结果
+    python3 env-install.py -k       # 跳过已存在的容器，不报错
 """
 
 import platform
@@ -564,22 +565,37 @@ def _write_ik_dicts(ik_dir: str, cfg: dict):
         f.write("\n".join(words) + "\n")
 
 
-def start_compose(script_dir: str, cfg: dict) -> tuple[bool, str]:
+def start_compose(script_dir: str, cfg: dict, skip_existing: bool = False) -> tuple[bool, str]:
     """启动 docker compose。
 
     如遇 pull 失败（403 Forbidden），可能是 Clash TUN 劫持了 Docker 代理。
-    解决方法：直接 docker pull <image> 绕过镜像，再重跑脚本。
+    如遇容器名冲突，-k 参数可跳过已有容器。
     """
     compose_path = os.path.join(script_dir, "docker-compose.yml")
-    rc = os.system(f"docker compose -f {compose_path} up -d")
-    if rc == 0:
+    code, stdout, stderr = shell(f"docker compose -f {compose_path} up -d 2>&1")
+    if code == 0:
         return True, "容器启动成功"
+
+    # 检测容器名冲突
+    combined = (stdout + stderr).lower()
+    if "conflict" in combined or "already in use" in combined:
+        # 提取冲突的容器名
+        for line in (stdout + stderr).split(chr(10)):
+            if "already in use" in line:
+                name = line.split('"')[1] if '"' in line else "unknown"
+                if skip_existing:
+                    return True, f"容器 {name} 已存在，跳过"
+                return False, f"容器 {name} 已存在，请先: docker rm -f {name} && 重跑脚本"
+        if skip_existing:
+            return True, "容器名冲突，已跳过"
+        return False, "容器名冲突，请手动 docker rm -f <容器名> 后重试"
+
     print("  hint: 如 pull 失败(403)，可能是 Clash TUN 劫持了代理，建议关闭 Clash TUN 后重试")
     print("         docker pull <image> 直连后再重跑脚本")
-    return False, f"启动失败 (exit={rc})"
+    return False, f"启动失败 (exit={code})"
 
 
-def run_setup(quiet: bool) -> tuple[int, int]:
+def run_setup(quiet: bool, skip_existing: bool = False) -> tuple[int, int]:
     """Docker 就绪后自动执行初始化：网络 → compose → SQL → 数据库 → 启动。"""
     cfg = get_config()
     script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -635,7 +651,7 @@ def run_setup(quiet: bool) -> tuple[int, int]:
     passed, failed = _count(passed, failed, ok)
 
     # 启动容器
-    ok, msg = start_compose(script_dir, cfg)
+    ok, msg = start_compose(script_dir, cfg, skip_existing)
     _print_result(quiet, ok, msg)
     passed, failed = _count(passed, failed, ok)
 
@@ -689,7 +705,7 @@ def main():
             print(f"[{status}] {name}: {msg}")
 
     if failed == 0:
-        sp, sf = run_setup(quiet)
+        sp, sf = run_setup(quiet, skip_existing)
         passed += sp
         failed += sf
 
