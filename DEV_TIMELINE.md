@@ -193,3 +193,4 @@
 - feat: env-install.py 加 -k 参数跳过已有容器 + 容器冲突检测
 - fix: env-install.py -k 改为逐服务启动，Skip 模式不阻止其他容器启动
 - feat: SQL 文件加 CREATE DATABASE IF NOT EXISTS，支持 PG 自动初始化建库
+- feat: java-env-prepare.py SDKMAN + Java 21 + Maven + settings.xml 一键安装
