@@ -180,3 +180,4 @@
 - feat: build-nacos.py 加 SQL 下载 + Nacos 数据库初始化步骤
 - feat: build-nacos.py 配置集中化 + 加 Nacos 8080 端口 + 步骤 8 自启动容器
 - feat: product 模块 Nacos 地址改为 129 + 加鉴权账号
+- refactor: Nacos 容器启动迁移到 env-install.py docker-compose，去除 build-nacos.py 自启动

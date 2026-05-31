@@ -251,43 +251,6 @@ def init_db(force: bool):
 
 
 # ═══════════════════════════════════════════════════════════
-#  步骤 8: 启动 Nacos 容器
-# ═══════════════════════════════════════════════════════════
-
-def start_nacos(force: bool):
-    step(8, "启动 Nacos 容器")
-
-    check = subprocess.run(
-        "docker ps -q --filter name=^nacos$", shell=True,
-        capture_output=True, text=True
-    )
-    if check.stdout.strip() and not force:
-        done("Nacos 容器已在运行，跳过")
-        return
-
-    if force:
-        run("docker rm -f nacos 2>/dev/null || true")
-
-    rc, _ = run(
-        f"docker run -d --name nacos "
-        f"--network {NET_NAME} --ip {NACOS_IP} "
-        f"-p 8080:8080 -p 8848:8848 -p 9848:9848 "
-        f"-e MODE=standalone "
-        f"-e NACOS_AUTH_ENABLE=true "
-        f"-e NACOS_AUTH_TOKEN={AUTH_TOKEN} "
-        f"-e NACOS_AUTH_IDENTITY_KEY={AUTH_IDENTITY_KEY} "
-        f"-e NACOS_AUTH_IDENTITY_VALUE={AUTH_IDENTITY_VALUE} "
-        f"-e DB_URL=jdbc:postgresql://{PG_IP}:{PG_PORT}/{NACOS_DB} "
-        f"-e DB_USER={PG_USER} "
-        f"-e DB_PASSWORD={PG_PASSWORD} "
-        f"{CUSTOM_IMAGE}"
-    )
-    if rc != 0:
-        fail("启动 Nacos 失败")
-    done("Nacos 容器启动成功")
-
-
-# ═══════════════════════════════════════════════════════════
 #  主流程
 # ═══════════════════════════════════════════════════════════
 
@@ -309,7 +272,6 @@ def main():
     build_image(force)
     download_sql(force)
     init_db(force)
-    start_nacos(force)
 
     print()
     print("=" * 50)

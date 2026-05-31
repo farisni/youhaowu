@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""服务器环境检查 + 初始化脚本 — 验证 Java/Docker 并自动创建网络和 PostgreSQL。
+"""服务器环境检查 + 初始化脚本 — 验证 Java/Docker 并自动创建网络、PostgreSQL 和 Nacos。
 
 要求: 脚本必须放在 ~/Code/ 下执行。
 用法:
@@ -36,6 +36,15 @@ def get_config() -> dict:
         "pg_password": "123456",
         "pg_data_dir": "data/postgres/data",
         "pg_init_dir": "data/postgres/init",
+
+        # Nacos
+        "nacos_image": "nacos/nacos-server:v3.1.1-pg",
+        "nacos_container": "nacos",
+        "nacos_ip": "172.20.0.20",
+        "nacos_db": "nacos",
+        "nacos_auth_token": "VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=",
+        "nacos_auth_identity_key": "nacos",
+        "nacos_auth_identity_value": "nacos",
     }
 
 
@@ -167,6 +176,29 @@ def generate_docker_compose(script_dir: str, cfg: dict) -> tuple[bool, str]:
               interval: 5s
               timeout: 5s
               retries: 5
+
+          nacos:
+            image: {nacos_image}
+            container_name: {nacos_container}
+            depends_on:
+              postgres:
+                condition: service_healthy
+            environment:
+              - MODE=standalone
+              - NACOS_AUTH_ENABLE=true
+              - NACOS_AUTH_TOKEN={nacos_auth_token}
+              - NACOS_AUTH_IDENTITY_KEY={nacos_auth_identity_key}
+              - NACOS_AUTH_IDENTITY_VALUE={nacos_auth_identity_value}
+              - DB_URL=jdbc:postgresql://{pg_ip}:{pg_port}/{nacos_db}
+              - DB_USER={pg_user}
+              - DB_PASSWORD={pg_password}
+            ports:
+              - "8080:8080"
+              - "8848:8848"
+              - "9848:9848"
+            networks:
+              {net_name}:
+                ipv4_address: {nacos_ip}
     """).format(**cfg)
 
     try:
@@ -183,7 +215,7 @@ def start_compose(script_dir: str, cfg: dict) -> tuple[bool, str]:
     # 用 os.system 直接交给终端，不限时
     rc = os.system(f"docker compose -f {compose_path} up -d")
     if rc == 0:
-        return True, f"容器 {cfg['pg_container']} 启动成功"
+        return True, "容器启动成功"
     return False, f"启动失败 (exit={rc})"
 
 
