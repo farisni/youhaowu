@@ -277,7 +277,7 @@ def generate_docker_compose(script_dir: str, cfg: dict) -> tuple[bool, str]:
             environment:
               - discovery.type=single-node
               - ES_JAVA_OPTS=-Xms64m -Xmx512m
-              volumes:
+            volumes:
               - ./{es_config_dir}:/usr/share/elasticsearch/config
               - ./{es_data_dir}:/usr/share/elasticsearch/data
               - ./{es_plugins_dir}:/usr/share/elasticsearch/plugins
@@ -342,7 +342,6 @@ def generate_es_config(script_dir: str, cfg: dict) -> tuple[bool, str]:
     with open(yml_path, 'w') as f:
         f.write("http.host: 0.0.0.0\n")
     return True, "elasticsearch.yml 已生成"
-
 
 
 def start_compose(script_dir: str, cfg: dict) -> tuple[bool, str]:
