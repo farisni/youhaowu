@@ -50,6 +50,13 @@ def get_config() -> dict:
         # Nacos SQL
         "nacos_sql_url": "https://ghproxy.net/https://raw.githubusercontent.com/lilinhai/nacos-datasource-plugin-ext/master/nacos-postgresql-datasource-plugin-ext/src/main/resources/schema/nacos-pg.sql",
         "nacos_sql_file": "nacos-pg.sql",
+
+        # Redis
+        "redis_image": "redis:7-alpine",
+        "redis_container": "redis-7",
+        "redis_ip": "172.20.0.5",
+        "redis_port": "6379",
+        "redis_data_dir": "data/redis",
     }
 
 
@@ -205,6 +212,23 @@ def generate_docker_compose(script_dir: str, cfg: dict) -> tuple[bool, str]:
             networks:
               {net_name}:
                 ipv4_address: {nacos_ip}
+
+          redis:
+            image: {redis_image}
+            container_name: {redis_container}
+            command: redis-server --appendonly yes
+            volumes:
+              - ./{redis_data_dir}:/data
+            ports:
+              - "{redis_port}:6379"
+            networks:
+              {net_name}:
+                ipv4_address: {redis_ip}
+            healthcheck:
+              test: ["CMD", "redis-cli", "ping"]
+              interval: 5s
+              timeout: 3s
+              retries: 5
     """).format(**cfg)
 
     try:
@@ -264,7 +288,7 @@ def run_setup(quiet: bool) -> tuple[int, int]:
     passed, failed = _count(passed, failed, ok)
 
     # 创建数据目录
-    for d in [cfg["pg_data_dir"], cfg["pg_init_dir"]]:
+    for d in [cfg["pg_data_dir"], cfg["pg_init_dir"], cfg["redis_data_dir"]]:
         dir_path = os.path.join(script_dir, d)
         try:
             os.makedirs(dir_path, exist_ok=True)
