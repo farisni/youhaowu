@@ -80,6 +80,12 @@ def get_config() -> dict:
         "es_data_dir": "data/elasticsearch/data",
         "es_config_dir": "data/elasticsearch/config",
         "es_plugins_dir": "data/elasticsearch/plugins",
+
+        # Kibana
+        "kibana_image": "kibana:7.17.21",
+        "kibana_container": "kibana-7.17",
+        "kibana_ip": "172.20.0.7",
+        "kibana_port": "5601",
         "es_ik_url": "https://release.infinilabs.com/analysis-ik/stable/elasticsearch-analysis-ik-7.17.21.zip",
         "es_ik_dir": "analysis-ik",
     }
@@ -289,6 +295,26 @@ def generate_docker_compose(script_dir: str, cfg: dict) -> tuple[bool, str]:
             networks:
               {net_name}:
                 ipv4_address: {es_ip}
+            restart: unless-stopped
+            healthcheck:
+              test: ["CMD-SHELL", "curl -s http://localhost:9200"]
+              interval: 10s
+              timeout: 5s
+              retries: 10
+
+          kibana:
+            depends_on:
+              elasticsearch:
+                condition: service_healthy
+            image: {kibana_image}
+            container_name: {kibana_container}
+            environment:
+              - ELASTICSEARCH_HOSTS=http://{es_ip}:9200
+            ports:
+              - "{kibana_port}:5601"
+            networks:
+              {net_name}:
+                ipv4_address: {kibana_ip}
             restart: unless-stopped
 
           redis:
@@ -505,6 +531,7 @@ def main():
             print(f"  Kafka:      {h}:{cfg['kafka_port']}")
             print(f"  Kafka-UI:   http://{h}:{cfg['kafka_ui_port']}")
             print(f"  ES:         http://{h}:{cfg['es_port']}")
+            print(f"  Kibana:     http://{h}:{cfg['kibana_port']}")
 
     sys.exit(0 if failed == 0 else 1)
 
