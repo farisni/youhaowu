@@ -18,8 +18,6 @@ import zipfile
 # ═══════════════════════════════════════════════════════════
 
 NACOS_VERSION = "3.1.1"
-NACOS_SQL_URL = "https://ghproxy.net/https://raw.githubusercontent.com/lilinhai/nacos-datasource-plugin-ext/master/nacos-postgresql-datasource-plugin-ext/src/main/resources/schema/nacos-pg.sql"
-NACOS_SQL = "nacos-pg.sql"
 PLUGIN_JAR_URL = "https://repo1.maven.org/maven2/com/sinhy/nacos-postgresql-datasource-plugin-ext/3.1.1/nacos-postgresql-datasource-plugin-ext-3.1.1.jar"
 PLUGIN_JAR = "nacos-postgresql-datasource-plugin-ext-3.1.1.jar"
 PG_DRIVER_URL = "https://maven.aliyun.com/repository/central/org/postgresql/postgresql/42.7.4/postgresql-42.7.4.jar"
@@ -32,7 +30,6 @@ PG_PASSWORD = "123456"
 PG_PORT = "5432"
 
 # Nacos 数据库
-NACOS_DB = "nacos"
 
 # Docker 网络
 NET_NAME = "youhaowu_net"
@@ -44,9 +41,6 @@ DOCKER_IMAGE = f"nacos/nacos-server:v{NACOS_VERSION}"
 CUSTOM_IMAGE = f"nacos/nacos-server:v{NACOS_VERSION}-pg"
 
 # 认证
-AUTH_TOKEN = "VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg="
-AUTH_IDENTITY_KEY = "nacos"
-AUTH_IDENTITY_VALUE = "nacos"
 
 WORK_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -206,51 +200,6 @@ def build_image(force: bool):
 
 
 # ═══════════════════════════════════════════════════════════
-#  步骤 6: 下载 Nacos 初始化 SQL
-# ═══════════════════════════════════════════════════════════
-
-def download_sql(force: bool):
-    step(6, "下载 Nacos 初始化 SQL")
-    download(NACOS_SQL_URL, os.path.join(WORK_DIR, NACOS_SQL),
-             NACOS_SQL, force)
-
-
-# ═══════════════════════════════════════════════════════════
-#  步骤 7: 初始化 Nacos 数据库
-# ═══════════════════════════════════════════════════════════
-
-def init_db(force: bool):
-    step(7, "初始化 Nacos 数据库")
-
-    rc, _ = run(f"docker ps -q --filter name=^{PG_CONTAINER}$")
-    if rc != 0:
-        fail(f"容器 {PG_CONTAINER} 未运行，请先启动 PostgreSQL")
-
-    check = subprocess.run(
-        f"docker exec {PG_CONTAINER} psql -U {PG_USER} -d postgres -lqt "
-        f"| cut -d '|' -f1 | grep -qw {NACOS_DB}",
-        shell=True, capture_output=True, text=True
-    )
-    if check.returncode == 0 and not force:
-        done(f"数据库 {NACOS_DB} 已存在，跳过")
-        return
-
-    print(f"  -> 创建 {NACOS_DB} 数据库 ...")
-    run(f"docker exec {PG_CONTAINER} psql -U {PG_USER} -d postgres "
-        f"-c 'CREATE DATABASE {NACOS_DB};'")
-
-    sql_path = os.path.join(WORK_DIR, NACOS_SQL)
-    print("  -> 执行 nacos-pg.sql ...")
-    rc, _ = run(
-        f"docker exec -i {PG_CONTAINER} psql -U {PG_USER} -d {NACOS_DB} < {sql_path}"
-    )
-    if rc != 0:
-        fail("初始化 SQL 执行失败")
-
-    done("Nacos 数据库初始化完成")
-
-
-# ═══════════════════════════════════════════════════════════
 #  主流程
 # ═══════════════════════════════════════════════════════════
 
@@ -270,8 +219,6 @@ def main():
     extract_jar(force)
     inject_jars(force)
     build_image(force)
-    download_sql(force)
-    init_db(force)
 
     print()
     print("=" * 50)

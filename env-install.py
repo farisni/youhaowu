@@ -13,6 +13,8 @@ import sys
 import re
 import os
 import textwrap
+import urllib.request
+import shutil
 
 
 # ═══════════════════════════════════════════════════════════
@@ -37,14 +39,17 @@ def get_config() -> dict:
         "pg_data_dir": "data/postgres/data",
         "pg_init_dir": "data/postgres/init",
 
-        # Nacos
+        # Nacos 镜像
         "nacos_image": "nacos/nacos-server:v3.1.1-pg",
         "nacos_container": "nacos",
         "nacos_ip": "172.20.0.20",
-        "nacos_db": "nacos",
         "nacos_auth_token": "VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=",
         "nacos_auth_identity_key": "nacos",
         "nacos_auth_identity_value": "nacos",
+
+        # Nacos SQL
+        "nacos_sql_url": "https://ghproxy.net/https://raw.githubusercontent.com/lilinhai/nacos-datasource-plugin-ext/master/nacos-postgresql-datasource-plugin-ext/src/main/resources/schema/nacos-pg.sql",
+        "nacos_sql_file": "nacos-pg.sql",
     }
 
 
@@ -149,7 +154,7 @@ def generate_docker_compose(script_dir: str, cfg: dict) -> tuple[bool, str]:
     """生成 docker-compose.yml（不覆盖已有文件）。"""
     compose_path = os.path.join(script_dir, "docker-compose.yml")
     if os.path.exists(compose_path):
-        return True, f"docker-compose.yml 已存在，跳过"
+        return True, "docker-compose.yml 已存在，跳过"
 
     content = textwrap.dedent("""\
         networks:
@@ -161,6 +166,7 @@ def generate_docker_compose(script_dir: str, cfg: dict) -> tuple[bool, str]:
             image: {pg_image}
             container_name: {pg_container}
             environment:
+              - POSTGRES_DB=nacos
               - POSTGRES_USER={pg_user}
               - POSTGRES_PASSWORD={pg_password}
             volumes:
@@ -209,10 +215,26 @@ def generate_docker_compose(script_dir: str, cfg: dict) -> tuple[bool, str]:
         return False, f"写入失败: {e}"
 
 
+def download_nacos_sql(script_dir: str, cfg: dict) -> tuple[bool, str]:
+    """下载 Nacos PG 初始化 SQL 并放入 postgres-init/。"""
+    dest = os.path.join(script_dir, cfg["nacos_sql_file"])
+    if os.path.exists(dest):
+        return True, f"{cfg['nacos_sql_file']} 已存在，跳过"
+    try:
+        urllib.request.urlretrieve(cfg["nacos_sql_url"], dest)
+        # 复制到 postgres-init，PG 首次启动自动执行
+        init_dir = os.path.join(script_dir, cfg["pg_init_dir"])
+        os.makedirs(init_dir, exist_ok=True)
+        shutil.copy2(dest, os.path.join(init_dir, cfg["nacos_sql_file"]))
+        return True, f"{cfg['nacos_sql_file']} 下载完成，已放入 postgres-init/"
+    except Exception as e:
+        return False, f"下载失败: {e}"
+
+
+
 def start_compose(script_dir: str, cfg: dict) -> tuple[bool, str]:
     """启动 docker compose。"""
     compose_path = os.path.join(script_dir, "docker-compose.yml")
-    # 用 os.system 直接交给终端，不限时
     rc = os.system(f"docker compose -f {compose_path} up -d")
     if rc == 0:
         return True, "容器启动成功"
@@ -220,7 +242,7 @@ def start_compose(script_dir: str, cfg: dict) -> tuple[bool, str]:
 
 
 def run_setup(quiet: bool) -> tuple[int, int]:
-    """Docker 就绪后自动执行初始化：网络 → compose → 启动。"""
+    """Docker 就绪后自动执行初始化：网络 → compose → SQL → 数据库 → 启动。"""
     cfg = get_config()
     script_dir = os.path.dirname(os.path.abspath(__file__))
     passed, failed = 0, 0
@@ -233,49 +255,51 @@ def run_setup(quiet: bool) -> tuple[int, int]:
 
     # 创建 Docker 网络
     ok, msg = create_network(cfg)
-    if not quiet:
-        print(f"[{'✓' if ok else '✗'}] {msg}")
-    if ok:
-        passed += 1
-    else:
-        failed += 1
+    _print_result(quiet, ok, msg)
+    passed, failed = _count(passed, failed, ok)
 
     # 生成 docker-compose.yml
     ok, msg = generate_docker_compose(script_dir, cfg)
-    if not quiet:
-        print(f"[{'✓' if ok else '✗'}] {msg}")
-    if ok:
-        passed += 1
-    else:
-        failed += 1
+    _print_result(quiet, ok, msg)
+    passed, failed = _count(passed, failed, ok)
 
     # 创建数据目录
     for d in [cfg["pg_data_dir"], cfg["pg_init_dir"]]:
         dir_path = os.path.join(script_dir, d)
         try:
             os.makedirs(dir_path, exist_ok=True)
-            if not quiet:
-                print(f"[✓] 目录 {d}/ 已就绪")
+            _print_result(quiet, True, f"目录 {d}/ 已就绪")
             passed += 1
         except OSError as e:
-            if not quiet:
-                print(f"[✗] 目录 {d}/ 创建失败: {e}")
+            _print_result(quiet, False, f"目录 {d}/ 创建失败: {e}")
             failed += 1
+
+    # 下载 Nacos SQL
+    ok, msg = download_nacos_sql(script_dir, cfg)
+    _print_result(quiet, ok, msg)
+    passed, failed = _count(passed, failed, ok)
 
     # 启动容器
     ok, msg = start_compose(script_dir, cfg)
-    if not quiet:
-        print(f"[{'✓' if ok else '✗'}] {msg}")
-    if ok:
-        passed += 1
-    else:
-        failed += 1
+    _print_result(quiet, ok, msg)
+    passed, failed = _count(passed, failed, ok)
 
     return passed, failed
 
 
+def _print_result(quiet: bool, ok: bool, msg: str):
+    if not quiet:
+        print(f"[{'✓' if ok else '✗'}] {msg}")
+
+
+def _count(passed: int, failed: int, ok: bool) -> tuple[int, int]:
+    if ok:
+        return passed + 1, failed
+    return passed, failed + 1
+
+
 def main():
-    get_script_dir()  # 强制要求脚本在 ~/Code
+    get_script_dir()
     quiet = "-q" in sys.argv or "--quiet" in sys.argv
 
     checks = [
@@ -306,7 +330,6 @@ def main():
         if not quiet:
             print(f"[{status}] {name}: {msg}")
 
-    # Docker 就绪则自动初始化 + 启动
     if failed == 0:
         sp, sf = run_setup(quiet)
         passed += sp
