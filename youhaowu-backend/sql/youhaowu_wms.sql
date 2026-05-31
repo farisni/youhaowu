@@ -2,10 +2,35 @@
 -- PostgreSQL database dump
 --
 
-\restrict jleAhRlptd5wjvToRwNuP4Tq4cWu9A0F94E7aBQCsbD7bzfh4VaB1h4jUhBKQB5
+\restrict ewD9S9pHx35OgnCnrj926KT00PeVRa5BDFBCuUxF3csvkBbR9gQgmgsycA0vwnv
 
 -- Dumped from database version 17.10
 -- Dumped by pg_dump version 18.4
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: youhaowu_wms; Type: DATABASE; Schema: -; Owner: faris
+--
+
+CREATE DATABASE youhaowu_wms WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE_PROVIDER = libc LOCALE = 'en_US.utf8';
+
+
+ALTER DATABASE youhaowu_wms OWNER TO faris;
+
+\unrestrict ewD9S9pHx35OgnCnrj926KT00PeVRa5BDFBCuUxF3csvkBbR9gQgmgsycA0vwnv
+\connect youhaowu_wms
+\restrict ewD9S9pHx35OgnCnrj926KT00PeVRa5BDFBCuUxF3csvkBbR9gQgmgsycA0vwnv
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -826,5 +851,5 @@ CREATE INDEX idx_25307_ware_id ON public.wms_ware_sku USING btree (ware_id);
 -- PostgreSQL database dump complete
 --
 
-\unrestrict jleAhRlptd5wjvToRwNuP4Tq4cWu9A0F94E7aBQCsbD7bzfh4VaB1h4jUhBKQB5
+\unrestrict ewD9S9pHx35OgnCnrj926KT00PeVRa5BDFBCuUxF3csvkBbR9gQgmgsycA0vwnv
 

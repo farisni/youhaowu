@@ -2,10 +2,35 @@
 -- PostgreSQL database dump
 --
 
-\restrict mxRna34d9GBuJXhdYvbdgMGnCWUAC4KjFFRj2lyCdT77tVuhW7TI0AFvPFVG7zd
+\restrict SWLoQcoQPZfyItvh4WeLNGSfdlTUaTmiNDxxITdGz3fLld7GKsaRfemROgIbhJc
 
 -- Dumped from database version 17.10
 -- Dumped by pg_dump version 18.4
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: youhaowu_sms; Type: DATABASE; Schema: -; Owner: faris
+--
+
+CREATE DATABASE youhaowu_sms WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE_PROVIDER = libc LOCALE = 'en_US.utf8';
+
+
+ALTER DATABASE youhaowu_sms OWNER TO faris;
+
+\unrestrict SWLoQcoQPZfyItvh4WeLNGSfdlTUaTmiNDxxITdGz3fLld7GKsaRfemROgIbhJc
+\connect youhaowu_sms
+\restrict SWLoQcoQPZfyItvh4WeLNGSfdlTUaTmiNDxxITdGz3fLld7GKsaRfemROgIbhJc
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -2021,5 +2046,5 @@ CREATE UNIQUE INDEX idx_25224_ux_undo_log ON public.undo_log USING btree (xid, b
 -- PostgreSQL database dump complete
 --
 
-\unrestrict mxRna34d9GBuJXhdYvbdgMGnCWUAC4KjFFRj2lyCdT77tVuhW7TI0AFvPFVG7zd
+\unrestrict SWLoQcoQPZfyItvh4WeLNGSfdlTUaTmiNDxxITdGz3fLld7GKsaRfemROgIbhJc
 

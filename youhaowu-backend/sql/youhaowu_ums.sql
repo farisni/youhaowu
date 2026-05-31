@@ -2,10 +2,35 @@
 -- PostgreSQL database dump
 --
 
-\restrict UQP5EJaNODzX2VCxNXVN2x8hdMPoNv05fQTlhyeNCQzdbnheQyGCDEWhInWFZz4
+\restrict nwErFR5w7BmXsPvzFtelG9iv20CW0inXmIMPDLc2LLfdcKBMc4mcy86NFQF1K4X
 
 -- Dumped from database version 17.10
 -- Dumped by pg_dump version 18.4
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: youhaowu_ums; Type: DATABASE; Schema: -; Owner: faris
+--
+
+CREATE DATABASE youhaowu_ums WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE_PROVIDER = libc LOCALE = 'en_US.utf8';
+
+
+ALTER DATABASE youhaowu_ums OWNER TO faris;
+
+\unrestrict nwErFR5w7BmXsPvzFtelG9iv20CW0inXmIMPDLc2LLfdcKBMc4mcy86NFQF1K4X
+\connect youhaowu_ums
+\restrict nwErFR5w7BmXsPvzFtelG9iv20CW0inXmIMPDLc2LLfdcKBMc4mcy86NFQF1K4X
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -1362,5 +1387,5 @@ CREATE UNIQUE INDEX idx_25474_ux_undo_log ON public.undo_log USING btree (xid, b
 -- PostgreSQL database dump complete
 --
 
-\unrestrict UQP5EJaNODzX2VCxNXVN2x8hdMPoNv05fQTlhyeNCQzdbnheQyGCDEWhInWFZz4
+\unrestrict nwErFR5w7BmXsPvzFtelG9iv20CW0inXmIMPDLc2LLfdcKBMc4mcy86NFQF1K4X
 
