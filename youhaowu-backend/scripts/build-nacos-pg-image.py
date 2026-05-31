@@ -27,7 +27,7 @@ PG_DRIVER_JAR = "postgresql-42.7.4.jar"
 DOCKER_IMAGE = f"nacos/nacos-server:v{NACOS_VERSION}"
 CUSTOM_IMAGE = f"nacos/nacos-server:v{NACOS_VERSION}-pg"
 
-WORK_DIR = os.path.dirname(os.path.abspath(__file__))
+WORK_DIR = "/tmp/nacos"
 
 
 # ═══════════════════════════════════════════════════════════
@@ -190,6 +190,7 @@ def build_image(force: bool):
 
 def main():
     force = "--force" in sys.argv or "-f" in sys.argv
+    os.makedirs(WORK_DIR, exist_ok=True)
     os.chdir(WORK_DIR)
 
     print("=" * 50)
