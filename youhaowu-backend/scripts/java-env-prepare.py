@@ -23,6 +23,15 @@ JAVA_PKGS = "java-21-openjdk java-21-openjdk-devel"
 JAVA_ALT = "java-21-openjdk.aarch64"
 MAVEN_VER = "3.9.9"
 MIN_MAVEN_VER = "3.9"
+
+DOCKER_REPOS = [
+    "https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo",
+    "https://download.docker.com/linux/centos/docker-ce.repo",
+]
+DOCKER_MIRRORS = [
+    "https://docker.xuanyuan.me",
+    "https://docker.m.daocloud.io",
+]
 MAVEN_URLS = [
     "https://repo.huaweicloud.com/apache/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz",
     "https://archive.apache.org/dist/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz",
@@ -86,6 +95,32 @@ def check_maven() -> tuple[bool, str]:
         ver = stdout.split("\n")[0] if stdout else "unknown"
         return True, f"Maven: {ver}"
     return False, "Maven 未安装"
+
+
+def check_docker() -> tuple[bool, str]:
+    """检查 Docker 是否已安装。"""
+    code, stdout, _ = shell("docker --version 2>&1")
+    if code == 0:
+        ver = stdout.strip()
+        return True, f"Docker: {ver}"
+    return False, "Docker 未安装"
+
+
+def check_docker_compose() -> tuple[bool, str]:
+    """检查 Docker Compose 是否可用。"""
+    code, stdout, _ = shell("docker compose version 2>&1")
+    if code == 0:
+        return True, f"Docker Compose: {stdout.strip()}"
+    return False, "Docker Compose 未安装"
+
+
+def check_docker_running() -> tuple[bool, str]:
+    """检查 Docker 是否运行中。"""
+    code, _, _ = shell("docker info 2>&1")
+    if code == 0:
+        return True, "Docker 运行中"
+    return False, "Docker 未运行，请执行: sudo systemctl start docker"
+
 
 
 def check_maven_settings() -> tuple[bool, str]:
@@ -208,6 +243,44 @@ def uninstall_maven_settings():
         print(f"  → 已删除 {path}")
 
 
+def install_docker() -> bool:
+    """安装 Docker CE + Compose。"""
+    repo_file = "/etc/yum.repos.d/docker-ce.repo"
+    if not os.path.exists(repo_file):
+        print("  → 添加 Docker CE 仓库 ...")
+        for repo_url in DOCKER_REPOS:
+            rc = shell_live(f"sudo yum-config-manager --add-repo {repo_url} 2>&1")
+            if rc == 0:
+                break
+            print(f"  → 重试下一个镜像...")
+        if rc != 0:
+            return False
+    print("  → sudo yum install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin")
+    return shell_live("sudo yum install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin 2>&1") == 0
+
+
+def configure_docker_mirror():
+    """配置 Docker 镜像加速。"""
+    daemon = "/etc/docker/daemon.json"
+    import json
+    try:
+        with open(daemon) as fh:
+            cfg = json.load(fh)
+    except Exception:
+        cfg = {}
+    cfg["registry-mirrors"] = DOCKER_MIRRORS
+    tmp = "/tmp/daemon.json"
+    with open(tmp, "w") as fh:
+        json.dump(cfg, fh, indent=2)
+    shell_live(f"sudo mkdir -p /etc/docker && sudo cp {tmp} {daemon}")
+
+
+def uninstall_docker():
+    """卸载 Docker。"""
+    print("  → sudo yum remove -y docker-ce docker-ce-cli containerd.io docker-compose-plugin")
+    shell_live("sudo yum remove -y docker-ce docker-ce-cli containerd.io docker-compose-plugin 2>&1")
+
+
 # ═══════════════════════════════════════════════════════════
 #  主流程
 # ═══════════════════════════════════════════════════════════
@@ -220,7 +293,7 @@ def main():
         # 解析卸载目标
         target = "all"
         for a in sys.argv:
-            if a in ("java", "maven", "settings", "all"):
+            if a in ("java", "maven", "docker", "settings", "all"):
                 target = a
                 break
 
@@ -233,6 +306,8 @@ def main():
             uninstall_java()
         if target in ("maven", "all"):
             uninstall_maven()
+        if target in ("docker", "all"):
+            uninstall_docker()
         if target in ("settings", "all"):
             uninstall_maven_settings()
 
@@ -284,7 +359,27 @@ def main():
         if not quiet:
             print("[✓] Maven 安装完成")
 
-    # 3️⃣ Maven settings.xml
+    # 3️⃣ Docker
+    ok, msg = check_docker()
+    if not quiet:
+        print(f"[{'✓' if ok else '✗'}] {msg}")
+    if ok:
+        if not quiet:
+            print("        (如需卸载: python3 java-env-prepare.py -u docker)")
+    if not ok:
+        if not install_docker():
+            print("[✗] Docker 安装失败")
+            sys.exit(1)
+        configure_docker_mirror()
+        shell_live("sudo systemctl enable docker 2>&1")
+        shell_live("sudo systemctl start docker 2>&1")
+        if not quiet:
+            print("[✓] Docker 安装完成（镜像加速已配置）")
+            print("        (如需卸载: python3 java-env-prepare.py -u docker)")
+            print("  → 验证: docker run hello-world ...")
+            shell_live("docker run hello-world 2>&1")
+
+    # 4️⃣ Maven settings.xml
     ok, msg = check_maven_settings()
     if not quiet:
         print(f"[{'✓' if ok else '✗'}] {msg}")
@@ -298,6 +393,7 @@ def main():
         print("=" * 40)
         print("  完成")
         print("  source ~/.bashrc 后 mvn --version 生效")
+        print("  验证 Docker: docker run hello-world")
         print("=" * 40)
 
 
