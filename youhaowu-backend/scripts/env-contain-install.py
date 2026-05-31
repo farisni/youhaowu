@@ -311,6 +311,7 @@ def generate_docker_compose(script_dir: str, cfg: dict) -> tuple[bool, str]:
               - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=true
             volumes:
               - ./{kafka_data_dir}:/bitnami/kafka
+            user: "root"
             networks:
               {net_name}:
                 ipv4_address: {kafka_ip}
@@ -658,6 +659,13 @@ def run_setup(quiet: bool, skip_existing: bool = False) -> tuple[int, int]:
     ok, msg = download_nacos_sql(script_dir, cfg)
     _print_result(quiet, ok, msg)
     passed, failed = _count(passed, failed, ok)
+
+
+    # 修复 Kafka 数据目录权限（Bitnami 镜像需要）
+    kafka_dir = os.path.join(script_dir, cfg["kafka_data_dir"])
+    subprocess.run(["chmod", "-R", "777", kafka_dir], capture_output=True)
+    _print_result(quiet, True, f"目录 {cfg["kafka_data_dir"]}/ 权限已修复")
+    passed += 1
 
     # 生成 ES 配置
     ok, msg = generate_es_config(script_dir, cfg)
