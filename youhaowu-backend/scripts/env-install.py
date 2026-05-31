@@ -27,6 +27,7 @@ def get_config() -> dict:
         "net_name": "youhaowu_net",
         "net_subnet": "172.20.0.0/16",
         "net_gateway": "172.20.0.1",
+        "host_ip": "192.168.2.129",
 
         # PostgreSQL
         "pg_image": "postgres:17-alpine",
@@ -463,6 +464,17 @@ def main():
         print("=" * 40)
         print(f"  结果: {passed}/{passed + failed} 通过")
         print("=" * 40)
+        if failed == 0:
+            cfg = get_config()
+            h = cfg["host_ip"]
+            print()
+            print("  访问方式（宿主机 IP）:")
+            print(f"  PostgreSQL: {h}:{cfg['pg_port']}  用户 {cfg['pg_user']}/{cfg['pg_password']}")
+            print(f"  Nacos:      http://{h}:8080  (nacos/nacos)")
+            print(f"  Redis:      {h}:{cfg['redis_port']}")
+            print(f"  Kafka:      {h}:{cfg['kafka_port']}")
+            print(f"  Kafka-UI:   http://{h}:{cfg['kafka_ui_port']}")
+            print(f"  ES:         http://{h}:{cfg['es_port']}")
 
     sys.exit(0 if failed == 0 else 1)
 
