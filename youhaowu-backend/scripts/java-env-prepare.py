@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-"""Java 21 + Maven 一键安装/卸载脚本（yum 版，走阿里云镜像）。
+"""Java 21 + Maven + Docker 一键安装/卸载脚本。
 
 用法:
-    python3 java-env-prepare.py               # 安装 java21 + maven
+    python3 java-env-prepare.py               # 安装 java21 + maven + docker
     python3 java-env-prepare.py -u java       # 卸载 java
     python3 java-env-prepare.py -u maven      # 卸载 maven
-    python3 java-env-prepare.py -u            # 卸载 java + maven + settings
+    python3 java-env-prepare.py -u docker     # 卸载 docker
+    python3 java-env-prepare.py -u            # 卸载全部
     python3 java-env-prepare.py -q            # 静默模式
 """
 
@@ -24,10 +25,7 @@ JAVA_ALT = "java-21-openjdk.aarch64"
 MAVEN_VER = "3.9.9"
 MIN_MAVEN_VER = "3.9"
 
-DOCKER_REPOS = [
-    "https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo",
-    "https://download.docker.com/linux/centos/docker-ce.repo",
-]
+# Docker repo config handled inline in install_docker()
 DOCKER_MIRRORS = [
     "https://docker.xuanyuan.me",
     "https://docker.m.daocloud.io",
@@ -247,12 +245,17 @@ def install_docker() -> bool:
     """安装 Docker CE + Compose。"""
     repo_file = "/etc/yum.repos.d/docker-ce.repo"
     if not os.path.exists(repo_file):
-        print("  → 添加 Docker CE 仓库 ...")
-        for repo_url in DOCKER_REPOS:
-            rc = shell_live(f"sudo yum-config-manager --add-repo {repo_url} 2>&1")
-            if rc == 0:
-                break
-            print(f"  → 重试下一个镜像...")
+        print("  → 写入阿里云 Docker CE 仓库 ...")
+        repo_content = textwrap.dedent("""\
+            [docker-ce-stable]
+            name=Docker CE Stable - Aliyun
+            baseurl=https://mirrors.aliyun.com/docker-ce/linux/centos/$releasever/$basearch/stable
+            enabled=1
+            gpgcheck=1
+            gpgkey=https://mirrors.aliyun.com/docker-ce/linux/centos/gpg
+            """)
+        # sudo write the repo file
+        rc = shell_live(f"sudo tee {repo_file} << 'REPO_EOF'\n{repo_content}\nREPO_EOF")
         if rc != 0:
             return False
     print("  → sudo yum install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin")
@@ -393,7 +396,6 @@ def main():
         print("=" * 40)
         print("  完成")
         print("  source ~/.bashrc 后 mvn --version 生效")
-        print("  验证 Docker: docker run hello-world")
         print("=" * 40)
 
 
