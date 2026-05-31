@@ -6,6 +6,7 @@
     python3 java-env-prepare.py -u java       # 卸载 java
     python3 java-env-prepare.py -u maven      # 卸载 maven
     python3 java-env-prepare.py -u docker     # 卸载 docker
+    python3 java-env-prepare.py -u sdkman    # 卸载 SDKMAN
     python3 java-env-prepare.py -u            # 卸载全部
     python3 java-env-prepare.py -q            # 静默模式
 """
@@ -174,7 +175,6 @@ def uninstall_sdkman():
 
 
 def uninstall_java():
-    uninstall_sdkman()
     sdk_dir = os.path.expanduser("~/.sdkman/candidates/java")
     if os.path.exists(sdk_dir):
         shell_live(f"rm -rf {sdk_dir}")
@@ -202,13 +202,15 @@ def main():
     if uninstall:
         target = "all"
         for a in sys.argv:
-            if a in ("java", "maven", "docker", "all"):
+            if a in ("java", "maven", "docker", "sdkman", "sdk", "all"):
                 target = a
                 break
         if not quiet:
             print("=" * 40)
             print(f"  卸载 {target}")
             print("=" * 40)
+        if target in ("sdkman", "sdk", "all"):
+            uninstall_sdkman()
         if target in ("java", "all"):
             uninstall_java()
         if target in ("maven", "all"):
@@ -233,7 +235,7 @@ def main():
             print("[✗] SDKMAN 安装失败，请检查网络")
             sys.exit(1)
         if not quiet:
-            print("[✓] SDKMAN 安装完成，新终端生效")
+            print("[✓] SDKMAN 安装完成")
 
     # 2️⃣ Java
     ok, msg = check_java()
