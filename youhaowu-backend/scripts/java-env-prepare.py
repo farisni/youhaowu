@@ -16,6 +16,23 @@ import textwrap
 
 
 # ═══════════════════════════════════════════════════════════
+#  常量
+# ═══════════════════════════════════════════════════════════
+
+JAVA_PKGS = "java-21-openjdk java-21-openjdk-devel"
+JAVA_ALT = "java-21-openjdk.aarch64"
+MAVEN_VER = "3.9.9"
+MIN_MAVEN_VER = "3.9"
+MAVEN_URLS = [
+    "https://repo.huaweicloud.com/apache/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz",
+    "https://archive.apache.org/dist/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz",
+]
+MAVEN_HOME = "/opt/maven"
+MIRROR_URL = "https://maven.aliyun.com/repository/public"
+MIRROR_NAME = "阿里云公共仓库"
+
+
+# ═══════════════════════════════════════════════════════════
 #  工具
 # ═══════════════════════════════════════════════════════════
 
@@ -85,28 +102,61 @@ def check_maven_settings() -> tuple[bool, str]:
 
 def install_java() -> bool:
     """yum 安装 Java 21。"""
-    print("  → sudo yum install -y java-21-openjdk java-21-openjdk-devel")
-    return shell_live("sudo yum install -y java-21-openjdk java-21-openjdk-devel 2>&1") == 0
+    print(f"  → sudo yum install -y {JAVA_PKGS}")
+    return shell_live(f"sudo yum install -y {JAVA_PKGS} 2>&1") == 0
 
 
 def install_maven() -> bool:
-    """yum 安装 Maven。"""
-    print("  → sudo yum install -y maven")
-    return shell_live("sudo yum install -y maven 2>&1") == 0
+    """从 Apache 下载 Maven 到 /opt/maven 并配置 PATH。"""
+    if os.path.exists(MAVEN_HOME):
+        print(f"  → Maven 已存在 {MAVEN_HOME}")
+        return True
+
+    tarball = f"/tmp/maven-{MAVEN_VER}.tar.gz"
+    print(f"  → 下载 Maven {MAVEN_VER} ...")
+    rc = 1
+    for url in MAVEN_URLS:
+        rc = shell_live(f"curl -sfL --connect-timeout 10 --max-time 60 -o {tarball} '{url}'")
+        if rc == 0:
+            break
+        print(f"  → 重试下一个镜像...")
+    if rc != 0:
+        print("  [✗] 下载失败，所有镜像不可达")
+        return False
+
+    print(f"  → 解压到 {MAVEN_HOME} ...")
+    rc = shell_live(f"sudo mkdir -p /opt && sudo tar -xzf {tarball} -C /opt && sudo mv /opt/apache-maven-{MAVEN_VER} {MAVEN_HOME}")
+    shell_live(f"rm -f {tarball}")
+    if rc != 0:
+        return False
+
+    # 配置 PATH
+    mvn_bin = f"{MAVEN_HOME}/bin"
+    profile = os.path.expanduser("~/.bashrc")
+    if not os.path.exists(profile):
+        profile = os.path.expanduser("~/.bash_profile")
+    marker = f"# MAVEN_HOME ({MAVEN_VER})"
+    with open(profile, "r") as fh:
+        if marker in fh.read():
+            return True
+    with open(profile, "a") as fh:
+        fh.write(f"\n{marker}\nexport MAVEN_HOME={MAVEN_HOME}\nexport PATH=$MAVEN_HOME/bin:$PATH\n")
+    print(f"  → PATH 已写入 {profile}")
+    return True
 
 
 def generate_maven_settings():
     """生成 ~/.m2/settings.xml（阿里云镜像）。"""
     m2_dir = os.path.expanduser("~/.m2")
     os.makedirs(m2_dir, exist_ok=True)
-    conf = textwrap.dedent("""\
+    conf = textwrap.dedent(f"""\
         <settings>
           <mirrors>
             <mirror>
               <id>aliyunmaven</id>
               <mirrorOf>*</mirrorOf>
-              <name>阿里云公共仓库</name>
-              <url>https://maven.aliyun.com/repository/public</url>
+              {MIRROR_NAME}
+              {MIRROR_URL}
             </mirror>
           </mirrors>
         </settings>
@@ -131,9 +181,23 @@ def uninstall_java():
 
 
 def uninstall_maven():
-    """卸载 Maven。"""
-    print("  → sudo yum remove -y maven")
-    shell_live("sudo yum remove -y maven 2>&1")
+    """卸载 Maven（删除 /opt/maven 和 PATH 配置）。"""
+    if os.path.exists(MAVEN_HOME):
+        print(f"  → sudo rm -rf {MAVEN_HOME}")
+        shell_live(f"sudo rm -rf {MAVEN_HOME}")
+
+    # 清理 bashrc 中的 Maven 配置
+    for prof in ["~/.bashrc", "~/.bash_profile"]:
+        prof = os.path.expanduser(prof)
+        if not os.path.exists(prof):
+            continue
+        with open(prof, "r") as fh:
+            lines = fh.readlines()
+        new_lines = [l for l in lines if "MAVEN_HOME" not in l or l.strip().startswith("#")]
+        if len(new_lines) != len(lines):
+            with open(prof, "w") as fh:
+                fh.writelines(new_lines)
+            print(f"  → 已清理 {prof}")
 
 
 def uninstall_maven_settings():
@@ -198,7 +262,7 @@ def main():
             sys.exit(1)
         jdk_ver = shell("java -version 2>&1")[1]
         if "17." in jdk_ver:
-            shell_live("sudo alternatives --set java java-21-openjdk.aarch64 2>&1")
+            shell_live(f"sudo alternatives --set java {JAVA_ALT} 2>&1")
         if not quiet:
             ok2, _ = check_java()
             print("[✓] Java 安装完成（已设 21 为默认）")
@@ -214,6 +278,9 @@ def main():
         if not install_maven():
             print("[✗] Maven 安装失败")
             sys.exit(1)
+        ver = shell("mvn --version 2>&1")[1]
+        if ver and "3.9" not in ver:
+            print(f"  [warn] Maven 版本低于 {MIN_MAVEN_VER}: {ver.split(chr(10))[0]}")
         if not quiet:
             print("[✓] Maven 安装完成")
 
@@ -230,6 +297,7 @@ def main():
         print()
         print("=" * 40)
         print("  完成")
+        print("  source ~/.bashrc 后 mvn --version 生效")
         print("=" * 40)
 
 
