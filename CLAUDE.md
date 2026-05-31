@@ -301,3 +301,14 @@ python3 -m pytest test_xxx.py -v
 
 **环境变量要求：**
 - 需在环境变量中设置 `JENKINS_TOKEN`
+
+### 8. DEV_TIMELINE 日期校验规则
+
+**规则描述：**
+每次提交前必须确保 DEV_TIMELINE.md 中的条目挂在正确的日期标题下。
+
+**具体操作：**
+- 提交前检查文件末尾日期标题是否为当天日期
+- 如果不是，先创建 `## YYYY-MM-DD` 标题再追加条目
+- 禁止将新条目追加到历史日期区块下方
+- 验证命令：`tail -5 DEV_TIMELINE.md`
