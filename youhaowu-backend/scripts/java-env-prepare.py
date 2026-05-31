@@ -24,6 +24,11 @@ import textwrap
 JAVA_CANDIDATE = "21.0.6-tem"
 MAVEN_CANDIDATE = "3.9.9"
 
+JDK_MIRROR_URLS = [
+    "https://ghproxy.net/https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.6%2B7/OpenJDK21U-jdk_aarch64_linux_hotspot_21.0.6_7.tar.gz",
+]
+JDK_ARCHIVE_NAME = "temurin-21.0.6-linux-aarch64.tar.gz"
+
 DOCKER_MIRRORS = [
     "https://docker.xuanyuan.me",
     "https://docker.m.daocloud.io",
@@ -100,6 +105,25 @@ def install_sdkman() -> bool:
         print("  重试...")
         rc = shell_live('curl -sL --http1.1 "https://get.sdkman.io" | bash')
     return rc == 0
+
+
+def _download_jdk_offline() -> bool:
+    """从国内镜像下载 JDK 到 SDKMAN 缓存，避免慢速外网下载。"""
+    archives = os.path.expanduser("~/.sdkman/archives")
+    os.makedirs(archives, exist_ok=True)
+    dest = os.path.join(archives, JDK_ARCHIVE_NAME)
+    if os.path.exists(dest) and os.path.getsize(dest) > 50_000_000:
+        return True
+    if os.path.exists(dest):
+        os.remove(dest)  # 删除损坏/不完整的缓存
+
+    for url in JDK_MIRROR_URLS:
+        print(f"  → 下载 JDK（国内镜像）...")
+        rc = shell_live(f"curl -L --http1.1 --connect-timeout 10 --max-time 300 -o {dest} '{url}'")
+        if rc == 0 and os.path.getsize(dest) > 10_000_000:
+            return True
+        print("  → 重试下一个...")
+    return False
 
 
 def install_via_sdk(candidate: str, version: str) -> bool:
@@ -237,7 +261,7 @@ def main():
         if not quiet:
             print("[✓] SDKMAN 安装完成")
 
-    # 2️⃣ Java
+    # 2️⃣ Java（优先国内镜像离线安装）
     ok, msg = check_java()
     if not quiet:
         print(f"[{'✓' if ok else '✗'}] {msg}")
@@ -245,6 +269,7 @@ def main():
         if not quiet:
             print("        (如需卸载: python3 java-env-prepare.py -u java)")
     else:
+        _download_jdk_offline()  # 失败不阻塞，回退到 sdk 在线安装
         if not install_via_sdk("java", JAVA_CANDIDATE):
             print("[✗] Java 安装失败")
             sys.exit(1)
