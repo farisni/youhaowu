@@ -106,6 +106,29 @@ mvn compile -q
 mvn spring-boot:run -pl youhaowu-product
 ```
 
+
+## 基础设施脚本
+
+### env-install.py
+服务器环境检查 + 一键启动 PostgreSQL + Nacos。
+
+```
+# 检查环境 + 自动初始化 + 启动
+python3 env-install.py
+```
+流程：检查 Java/Docker → 创建 Docker 网络 → 生成 docker-compose.yml → 下载 nacos-pg.sql → 启动容器
+
+### build-nacos-pg-image.py
+构建带 PostgreSQL 插件的 Nacos Docker 镜像（产物 `/tmp/nacos/`）。
+
+```
+# 构建镜像
+python3 build-nacos-pg-image.py
+```
+流程：下载 PG 插件 + JDBC 驱动 → 提取官方 Nacos JAR → 注入 → docker build
+
+> 两个脚本都在 `youhaowu-backend/scripts/` 下，部署到服务器的 `~/Code/`。
+
 ## 测试
 
 ```bash
