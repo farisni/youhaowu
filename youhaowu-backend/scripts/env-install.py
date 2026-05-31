@@ -96,6 +96,14 @@ def get_config() -> dict:
         "nginx_conf_dir": "data/nginx/conf",
         "nginx_log_dir": "data/nginx/logs",
 
+        # Jenkins
+        "jenkins_image": "jenkins/jenkins:lts-jdk17",
+        "jenkins_container": "jenkins",
+        "jenkins_port": "8070",
+        "jenkins_agent_port": "50000",
+        "jenkins_data_dir": "data/jenkins",
+        "jenkins_ip": "172.20.0.9",
+
         "es_ik_url": "https://release.infinilabs.com/analysis-ik/stable/elasticsearch-analysis-ik-7.17.21.zip",
         "es_ik_dir": "analysis-ik",
         "es_ik_custom_words": [
@@ -190,6 +198,23 @@ def check_nacos_image() -> tuple[bool, str]:
     if code == 0:
         return True, f"Nacos 镜像 {image} 已就绪"
     return False, f"Nacos 镜像 {image} 不存在，请先运行 build-nacos-pg-image.py 生成"
+
+
+def check_maven() -> tuple[bool, str]:
+    """检查 Maven 是否已安装。"""
+    code, stdout, _ = shell("mvn --version 2>&1")
+    if code == 0:
+        ver = stdout.split(chr(10))[0] if stdout else "unknown"
+        return True, f"Maven: {ver}"
+    return False, "Maven 未安装，请执行: sudo yum install -y maven"
+
+
+def check_docker_gid() -> tuple[bool, str]:
+    """检查 docker 组是否存在。"""
+    code, stdout, _ = shell("getent group docker 2>&1")
+    if code == 0 and stdout.strip():
+        return True, "docker 组存在"
+    return False, "docker 组不存在，请执行: sudo groupadd docker"
 
 
 # ═══════════════════════════════════════════════════════════
@@ -376,6 +401,25 @@ def generate_docker_compose(script_dir: str, cfg: dict) -> tuple[bool, str]:
               {net_name}:
                 ipv4_address: {nginx_ip}
             restart: unless-stopped
+
+          jenkins:
+            image: {jenkins_image}
+            container_name: {jenkins_container}
+            ports:
+              - "{jenkins_port}:8080"
+              - "{jenkins_agent_port}:50000"
+            volumes:
+              - ./{jenkins_data_dir}:/var/jenkins_home
+              - /home/faris/.m2/settings.xml:/var/jenkins_home/.m2/settings.xml
+              - /home/faris/.m2/repository:/var/jenkins_home/.m2/repository
+              - /var/run/docker.sock:/var/run/docker.sock
+              - /usr/bin/docker:/usr/bin/docker
+            group_add:
+              - "961"   # docker 组 GID，允许容器内调用宿主机 Docker
+            networks:
+              {net_name}:
+                ipv4_address: {jenkins_ip}
+            restart: unless-stopped
     """).format(**cfg)
 
     try:
@@ -559,7 +603,8 @@ def run_setup(quiet: bool) -> tuple[int, int]:
 
     # 创建数据目录
     for d in [cfg["pg_data_dir"], cfg["pg_init_dir"], cfg["redis_data_dir"], cfg["kafka_data_dir"], cfg["es_config_dir"], cfg["es_data_dir"], cfg["es_plugins_dir"],
-              cfg["nginx_html_dir"], cfg["nginx_conf_dir"], cfg["nginx_log_dir"]]:
+              cfg["nginx_html_dir"], cfg["nginx_conf_dir"], cfg["nginx_log_dir"],
+              cfg["jenkins_data_dir"]]:
         dir_path = os.path.join(script_dir, d)
         try:
             os.makedirs(dir_path, exist_ok=True)
@@ -618,6 +663,8 @@ def main():
         ("Docker Compose", check_docker_compose),
         ("Docker 运行中", check_docker_running),
         ("Nacos 镜像", check_nacos_image),
+        ("Maven", check_maven),
+        ("Docker 组", check_docker_gid),
     ]
 
     passed = 0
@@ -665,6 +712,7 @@ def main():
             print(f"    词典路径:  data/elasticsearch/plugins/analysis-ik/config/custom.dic")
             print(f"  Nginx:      http://{h}  (前端静态 + 反代 Gateway)")
             print(f"  Kibana:     http://{h}:{cfg['kibana_port']}")
+            print(f"  Jenkins:    http://{h}:{cfg['jenkins_port']}")
 
     sys.exit(0 if failed == 0 else 1)
 
