@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""构建带 PostgreSQL 插件的 Nacos 镜像 + 初始化数据库。
+"""构建带 PostgreSQL 插件的 Nacos 镜像 + 初始化数据库 + 启动容器。
 
 用法:
     python3 build-nacos.py           # 增量构建
@@ -8,7 +8,6 @@
 
 import os
 import sys
-import shutil
 import subprocess
 import urllib.request
 import zipfile
@@ -25,11 +24,29 @@ PLUGIN_JAR_URL = "https://repo1.maven.org/maven2/com/sinhy/nacos-postgresql-data
 PLUGIN_JAR = "nacos-postgresql-datasource-plugin-ext-3.1.1.jar"
 PG_DRIVER_URL = "https://maven.aliyun.com/repository/central/org/postgresql/postgresql/42.7.4/postgresql-42.7.4.jar"
 PG_DRIVER_JAR = "postgresql-42.7.4.jar"
+
+# PostgreSQL
 PG_CONTAINER = "postgres-17"
 PG_USER = "faris"
+PG_PASSWORD = "123456"
+PG_PORT = "5432"
+
+# Nacos 数据库
 NACOS_DB = "nacos"
+
+# Docker 网络
+NET_NAME = "youhaowu_net"
+PG_IP = "172.20.0.10"
+NACOS_IP = "172.20.0.20"
+
+# Docker 镜像
 DOCKER_IMAGE = f"nacos/nacos-server:v{NACOS_VERSION}"
 CUSTOM_IMAGE = f"nacos/nacos-server:v{NACOS_VERSION}-pg"
+
+# 认证
+AUTH_TOKEN = "VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg="
+AUTH_IDENTITY_KEY = "nacos"
+AUTH_IDENTITY_VALUE = "nacos"
 
 WORK_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -205,26 +222,23 @@ def download_sql(force: bool):
 def init_db(force: bool):
     step(7, "初始化 Nacos 数据库")
 
-    # 检查容器是否在运行
     rc, _ = run(f"docker ps -q --filter name=^{PG_CONTAINER}$")
     if rc != 0:
         fail(f"容器 {PG_CONTAINER} 未运行，请先启动 PostgreSQL")
 
-    # 检查 nacos 数据库是否已存在
     check = subprocess.run(
-        f"docker exec {PG_CONTAINER} psql -U {PG_USER} -d postgres -lqt | cut -d '|' -f1 | grep -qw {NACOS_DB}",
+        f"docker exec {PG_CONTAINER} psql -U {PG_USER} -d postgres -lqt "
+        f"| cut -d '|' -f1 | grep -qw {NACOS_DB}",
         shell=True, capture_output=True, text=True
     )
     if check.returncode == 0 and not force:
         done(f"数据库 {NACOS_DB} 已存在，跳过")
         return
 
-    # 创建 nacos 数据库（连默认 postgres 库）
     print(f"  -> 创建 {NACOS_DB} 数据库 ...")
     run(f"docker exec {PG_CONTAINER} psql -U {PG_USER} -d postgres "
         f"-c 'CREATE DATABASE {NACOS_DB};'")
 
-    # 执行初始化 SQL
     sql_path = os.path.join(WORK_DIR, NACOS_SQL)
     print("  -> 执行 nacos-pg.sql ...")
     rc, _ = run(
@@ -234,6 +248,43 @@ def init_db(force: bool):
         fail("初始化 SQL 执行失败")
 
     done("Nacos 数据库初始化完成")
+
+
+# ═══════════════════════════════════════════════════════════
+#  步骤 8: 启动 Nacos 容器
+# ═══════════════════════════════════════════════════════════
+
+def start_nacos(force: bool):
+    step(8, "启动 Nacos 容器")
+
+    check = subprocess.run(
+        "docker ps -q --filter name=^nacos$", shell=True,
+        capture_output=True, text=True
+    )
+    if check.stdout.strip() and not force:
+        done("Nacos 容器已在运行，跳过")
+        return
+
+    if force:
+        run("docker rm -f nacos 2>/dev/null || true")
+
+    rc, _ = run(
+        f"docker run -d --name nacos "
+        f"--network {NET_NAME} --ip {NACOS_IP} "
+        f"-p 8080:8080 -p 8848:8848 -p 9848:9848 "
+        f"-e MODE=standalone "
+        f"-e NACOS_AUTH_ENABLE=true "
+        f"-e NACOS_AUTH_TOKEN={AUTH_TOKEN} "
+        f"-e NACOS_AUTH_IDENTITY_KEY={AUTH_IDENTITY_KEY} "
+        f"-e NACOS_AUTH_IDENTITY_VALUE={AUTH_IDENTITY_VALUE} "
+        f"-e DB_URL=jdbc:postgresql://{PG_IP}:{PG_PORT}/{NACOS_DB} "
+        f"-e DB_USER={PG_USER} "
+        f"-e DB_PASSWORD={PG_PASSWORD} "
+        f"{CUSTOM_IMAGE}"
+    )
+    if rc != 0:
+        fail("启动 Nacos 失败")
+    done("Nacos 容器启动成功")
 
 
 # ═══════════════════════════════════════════════════════════
@@ -258,29 +309,17 @@ def main():
     build_image(force)
     download_sql(force)
     init_db(force)
+    start_nacos(force)
 
     print()
     print("=" * 50)
     print("  OK 全部完成!")
     print()
-    print("  产物:")
-    print(f"    JAR:    {WORK_DIR}/nacos-server.jar")
-    print(f"    镜像:   {CUSTOM_IMAGE}")
-    print(f"    SQL:    {WORK_DIR}/{NACOS_SQL}")
-    print(f"    数据库: {PG_CONTAINER} / {NACOS_DB} (已初始化)")
-    print()
-    print("  启动 Nacos:")
-    print(f"    docker run -d --name nacos \\")
-    print(f"      --network youhaowu_net --ip 172.20.0.20 \\")
-    print(f"      -p 8848:8848 -p 9848:9848 \\")
-    print(f"      -e MODE=standalone \\")
-    print(f"      -e SPRING_DATASOURCE_PLATFORM=postgresql \\")
-    print(f"      -e DB_URL=jdbc:postgresql://172.20.0.10:5432/{NACOS_DB} \\")
-    print(f"      -e DB_USER={PG_USER} \\")
-    print(f"      -e DB_PASSWORD=123456 \\")
-    print(f"      {CUSTOM_IMAGE}")
-    print()
-    print("  登录: http://<IP>:8848/nacos  (nacos/nacos)")
+    print(f"  产物:     {WORK_DIR}/nacos-server.jar")
+    print(f"  镜像:     {CUSTOM_IMAGE}")
+    print(f"  数据库:   {PG_CONTAINER} / {NACOS_DB}")
+    print(f"  容器:     nacos ({NACOS_IP})")
+    print(f"  登录:     http://<IP>:8848/nacos  (nacos/nacos)")
     print("=" * 50)
 
 

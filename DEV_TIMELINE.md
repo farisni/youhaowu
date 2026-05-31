@@ -178,3 +178,4 @@
 
 - feat: Nacos PostgreSQL 插件打包脚本 build-nacos.py（Maven Central 下载 + zipfile 注入 + Docker 镜像构建）
 - feat: build-nacos.py 加 SQL 下载 + Nacos 数据库初始化步骤
+- feat: build-nacos.py 配置集中化 + 加 Nacos 8080 端口 + 步骤 8 自启动容器
