@@ -8,6 +8,9 @@
     python3 java-env-prepare.py -u docker     # 卸载 docker
     python3 java-env-prepare.py -u sdkman    # 卸载 SDKMAN
     python3 java-env-prepare.py -u            # 卸载全部
+    python3 java-env-prepare.py -i java      # 仅安装 java
+    python3 java-env-prepare.py -i maven     # 仅安装 maven
+    python3 java-env-prepare.py -i docker    # 仅安装 docker
     python3 java-env-prepare.py -q            # 静默模式
 """
 
@@ -228,6 +231,7 @@ def uninstall_docker():
 def main():
     quiet = "-q" in sys.argv or "--quiet" in sys.argv
     uninstall = "-u" in sys.argv or "--uninstall" in sys.argv
+    install_only = "-i" in sys.argv or "--install" in sys.argv
 
     if uninstall:
         target = "all"
@@ -249,6 +253,86 @@ def main():
             uninstall_docker()
         if not quiet:
             print(f"\n[✓] 卸载 {target} 完成")
+        return
+
+    if install_only:
+        target = "all"
+        for a in sys.argv:
+            if a in ("java", "maven", "docker", "all"):
+                target = a
+                break
+
+        if not quiet:
+            print("=" * 40)
+            print(f"  安装 {target}")
+            print("=" * 40)
+
+        if target in ("java", "maven", "all"):
+            ok, msg = check_sdkman()
+            if not quiet:
+                print(f"[{'✓' if ok else '✗'}] {msg}")
+            if not ok:
+                if not install_sdkman():
+                    print("[✗] SDKMAN 安装失败")
+                    sys.exit(1)
+                if not quiet:
+                    print("[✓] SDKMAN 安装完成")
+
+        if target in ("java", "all"):
+            ok, msg = check_java()
+            if not quiet:
+                status = "✓" if ok else "✗"
+                print(f"[{status}] {msg}")
+            if ok:
+                if not quiet:
+                    print("        (如需卸载: python3 java-env-prepare.py -u java)")
+            else:
+                _download_jdk_offline()
+                if not install_via_sdk("java", JAVA_CANDIDATE):
+                    print("[✗] Java 安装失败")
+                    sys.exit(1)
+                if not quiet:
+                    print(f"[✓] Java {JAVA_CANDIDATE} 安装完成")
+
+        if target in ("maven", "all"):
+            ok, msg = check_maven()
+            if not quiet:
+                status = "✓" if ok else "✗"
+                print(f"[{status}] {msg}")
+            if ok:
+                if not quiet:
+                    print("        (如需卸载: python3 java-env-prepare.py -u maven)")
+            else:
+                if not install_via_sdk("maven", MAVEN_CANDIDATE):
+                    print("[✗] Maven 安装失败")
+                    sys.exit(1)
+                generate_maven_settings()
+                if not quiet:
+                    print(f"[✓] Maven {MAVEN_CANDIDATE} 安装完成")
+
+        if target in ("docker", "all"):
+            ok, msg = check_docker()
+            if not quiet:
+                status = "✓" if ok else "✗"
+                print(f"[{status}] {msg}")
+            if ok:
+                if not quiet:
+                    print("        (如需卸载: python3 java-env-prepare.py -u docker)")
+            else:
+                if not install_docker():
+                    print("[✗] Docker 安装失败")
+                    sys.exit(1)
+                configure_docker_mirror()
+                shell_live("sudo systemctl enable docker 2>&1")
+                shell_live("sudo systemctl start docker 2>&1")
+                if not quiet:
+                    print("[✓] Docker 安装完成")
+
+        if not quiet:
+            print()
+            print("=" * 40)
+            print(f"  {target} 安装完成")
+            print("=" * 40)
         return
 
     if not quiet:
