@@ -80,6 +80,8 @@ def get_config() -> dict:
         "es_data_dir": "data/elasticsearch/data",
         "es_config_dir": "data/elasticsearch/config",
         "es_plugins_dir": "data/elasticsearch/plugins",
+        "es_ik_url": "https://release.infinilabs.com/analysis-ik/stable/elasticsearch-analysis-ik-7.17.21.zip",
+        "es_ik_dir": "analysis-ik",
     }
 
 
@@ -345,6 +347,29 @@ def generate_es_config(script_dir: str, cfg: dict) -> tuple[bool, str]:
     return True, "elasticsearch.yml 已生成"
 
 
+
+def install_es_ik(script_dir: str, cfg: dict) -> tuple[bool, str]:
+    """下载并安装 IK 分词插件。"""
+    plugins_dir = os.path.join(script_dir, cfg["es_plugins_dir"])
+    ik_dir = os.path.join(plugins_dir, cfg["es_ik_dir"])
+    if os.path.exists(ik_dir):
+        return True, "IK 插件已安装，跳过"
+
+    zip_path = os.path.join(script_dir, "ik.zip")
+    try:
+        urllib.request.urlretrieve(cfg["es_ik_url"], zip_path)
+    except Exception as e:
+        return False, f"IK 下载失败: {e}"
+
+    # 解压
+    import zipfile
+    os.makedirs(ik_dir, exist_ok=True)
+    with zipfile.ZipFile(zip_path, 'r') as zf:
+        zf.extractall(ik_dir)
+    os.remove(zip_path)
+    return True, "IK 分词插件安装完成"
+
+
 def start_compose(script_dir: str, cfg: dict) -> tuple[bool, str]:
     """启动 docker compose。
 
@@ -400,6 +425,11 @@ def run_setup(quiet: bool) -> tuple[int, int]:
 
     # 生成 ES 配置
     ok, msg = generate_es_config(script_dir, cfg)
+    _print_result(quiet, ok, msg)
+    passed, failed = _count(passed, failed, ok)
+
+    # 安装 IK 分词
+    ok, msg = install_es_ik(script_dir, cfg)
     _print_result(quiet, ok, msg)
     passed, failed = _count(passed, failed, ok)
 
