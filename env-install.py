@@ -14,7 +14,6 @@ import re
 import os
 import textwrap
 import urllib.request
-import shutil
 
 
 # ═══════════════════════════════════════════════════════════
@@ -216,17 +215,17 @@ def generate_docker_compose(script_dir: str, cfg: dict) -> tuple[bool, str]:
 
 
 def download_nacos_sql(script_dir: str, cfg: dict) -> tuple[bool, str]:
-    """下载 Nacos PG 初始化 SQL 并放入 postgres-init/。"""
-    dest = os.path.join(script_dir, cfg["nacos_sql_file"])
+    """下载 Nacos PG 初始化 SQL 到 postgres-init/。"""
+    init_dir = os.path.join(script_dir, cfg["pg_init_dir"])
+    os.makedirs(init_dir, exist_ok=True)
+    dest = os.path.join(init_dir, cfg["nacos_sql_file"])
+
     if os.path.exists(dest):
         return True, f"{cfg['nacos_sql_file']} 已存在，跳过"
+
     try:
         urllib.request.urlretrieve(cfg["nacos_sql_url"], dest)
-        # 复制到 postgres-init，PG 首次启动自动执行
-        init_dir = os.path.join(script_dir, cfg["pg_init_dir"])
-        os.makedirs(init_dir, exist_ok=True)
-        shutil.copy2(dest, os.path.join(init_dir, cfg["nacos_sql_file"]))
-        return True, f"{cfg['nacos_sql_file']} 下载完成，已放入 postgres-init/"
+        return True, f"{cfg['nacos_sql_file']} 下载完成"
     except Exception as e:
         return False, f"下载失败: {e}"
 
