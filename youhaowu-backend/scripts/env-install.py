@@ -86,6 +86,16 @@ def get_config() -> dict:
         "kibana_container": "kibana-7.17",
         "kibana_ip": "172.20.0.7",
         "kibana_port": "5601",
+
+        # Nginx（前端静态 + 反代 Gateway）
+        "nginx_image": "nginx:1.13.10",
+        "nginx_container": "nginx-1.13",
+        "nginx_ip": "172.20.0.8",
+        "nginx_port": "80",
+        "nginx_html_dir": "data/nginx/html",
+        "nginx_conf_dir": "data/nginx/conf",
+        "nginx_log_dir": "data/nginx/logs",
+
         "es_ik_url": "https://release.infinilabs.com/analysis-ik/stable/elasticsearch-analysis-ik-7.17.21.zip",
         "es_ik_dir": "analysis-ik",
         "es_ik_custom_words": [
@@ -348,6 +358,24 @@ def generate_docker_compose(script_dir: str, cfg: dict) -> tuple[bool, str]:
               interval: 5s
               timeout: 3s
               retries: 5
+
+          nginx:
+            image: {nginx_image}
+            container_name: {nginx_container}
+            ports:
+              - "{nginx_port}:80"
+            volumes:
+              - ./{nginx_html_dir}:/usr/share/nginx/html
+              - ./{nginx_conf_dir}:/etc/nginx
+              - ./{nginx_log_dir}:/var/log/nginx
+            extra_hosts:
+              # host-gateway 是 Docker 内置值，自动解析为宿主机 IP，
+              # 容器内通过 host.docker.internal 即可访问宿主机上的 gateway 服务
+              - "host.docker.internal:host-gateway"
+            networks:
+              {net_name}:
+                ipv4_address: {nginx_ip}
+            restart: unless-stopped
     """).format(**cfg)
 
     try:
@@ -387,6 +415,57 @@ def generate_es_config(script_dir: str, cfg: dict) -> tuple[bool, str]:
         f.write("http.host: 0.0.0.0\n")
     return True, "elasticsearch.yml 已生成"
 
+
+
+    return True, "elasticsearch.yml 已生成"
+
+
+def generate_nginx_conf(script_dir: str, cfg: dict) -> tuple[bool, str]:
+    """首次生成默认 nginx.conf（反代 /api/ 到宿主机 gateway:8888）。"""
+    conf_dir = os.path.join(script_dir, cfg["nginx_conf_dir"])
+    os.makedirs(conf_dir, exist_ok=True)
+    conf_path = os.path.join(conf_dir, "nginx.conf")
+    if os.path.exists(conf_path):
+        return True, "nginx.conf 已存在，跳过"
+
+    _nginx_conf = textwrap.dedent("""\
+        events {{
+            worker_connections 1024;
+        }}
+
+        http {{
+            include /etc/nginx/mime.types;
+            default_type application/octet-stream;
+
+            server {{
+                listen 80;
+                server_name localhost;
+
+                # /api/ 请求反向代理到宿主机上的 gateway 服务
+                location /api/ {{
+                    proxy_pass http://host.docker.internal:8888/;
+                    proxy_set_header Host $host;
+                }}
+
+                # 其余请求走前端静态文件
+                location / {{
+                    root /usr/share/nginx/html;
+                    index index.html;
+                    try_files $uri $uri/ /index.html;
+                }}
+            }}
+        }}
+        """)
+
+    # 去掉双花括号的 escape（dedent 导致的）
+    _nginx_conf = _nginx_conf.replace("{{", "{").replace("}}", "}")
+
+    try:
+        with open(conf_path, "w", encoding="utf-8") as f:
+            f.write(_nginx_conf)
+        return True, f"nginx.conf 已生成 ({cfg['nginx_conf_dir']}/)"
+    except OSError as e:
+        return False, f"nginx.conf 写入失败: {e}"
 
 
 def install_es_ik(script_dir: str, cfg: dict) -> tuple[bool, str]:
@@ -479,7 +558,8 @@ def run_setup(quiet: bool) -> tuple[int, int]:
     passed, failed = _count(passed, failed, ok)
 
     # 创建数据目录
-    for d in [cfg["pg_data_dir"], cfg["pg_init_dir"], cfg["redis_data_dir"], cfg["kafka_data_dir"], cfg["es_config_dir"], cfg["es_data_dir"], cfg["es_plugins_dir"]]:
+    for d in [cfg["pg_data_dir"], cfg["pg_init_dir"], cfg["redis_data_dir"], cfg["kafka_data_dir"], cfg["es_config_dir"], cfg["es_data_dir"], cfg["es_plugins_dir"],
+              cfg["nginx_html_dir"], cfg["nginx_conf_dir"], cfg["nginx_log_dir"]]:
         dir_path = os.path.join(script_dir, d)
         try:
             os.makedirs(dir_path, exist_ok=True)
@@ -496,6 +576,11 @@ def run_setup(quiet: bool) -> tuple[int, int]:
 
     # 生成 ES 配置
     ok, msg = generate_es_config(script_dir, cfg)
+    _print_result(quiet, ok, msg)
+    passed, failed = _count(passed, failed, ok)
+
+    # 生成 Nginx 配置
+    ok, msg = generate_nginx_conf(script_dir, cfg)
     _print_result(quiet, ok, msg)
     passed, failed = _count(passed, failed, ok)
 
@@ -578,6 +663,7 @@ def main():
             print(f"  Kafka-UI:   http://{h}:{cfg['kafka_ui_port']}")
             print(f"  ES:         http://{h}:{cfg['es_port']}  (已装 IK 分词)")
             print(f"    词典路径:  data/elasticsearch/plugins/analysis-ik/config/custom.dic")
+            print(f"  Nginx:      http://{h}  (前端静态 + 反代 Gateway)")
             print(f"  Kibana:     http://{h}:{cfg['kibana_port']}")
 
     sys.exit(0 if failed == 0 else 1)
