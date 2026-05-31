@@ -280,7 +280,7 @@ def generate_docker_compose(script_dir: str, cfg: dict) -> tuple[bool, str]:
                 condition: service_healthy
             environment:
               - MODE=standalone
-              - JVM_XMS=256m
+              - JVM_XMS=512m
               - JVM_XMX=512m
               - NACOS_AUTH_ENABLE=false
               - NACOS_AUTH_TOKEN={nacos_auth_token}
