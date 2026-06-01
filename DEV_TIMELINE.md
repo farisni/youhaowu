@@ -197,6 +197,7 @@
 - fix: Nacos 关闭 auth，解决 Gateway 注册 401- style(env): kafka 容器名简化 kafka / kafka-ui- refactor: kafka topic wheatmall.api.log → youhaowu.api.log- fix(env): kafka 权限修复（user: root + chmod 777）- fix(env): 撤掉 kafka user: root，仅保留 chmod 777- refactor: 全部 wheatmall 标识改为 youhaowu- fix(env): kafka advertised listeners 改用 host_ip- fix(env): nacos 内存限制 768M + JVM 堆限制 512M- feat: 商品上架异步链路（PG→Kafka→ES）+ ware 远程调用落地
 
 ## 2026-06-01
+- build: JDK 17→21 升级（pom.xml + 全部 Dockerfile）
 
 - fix(product): AttrMapper 空参数 SQL 修复（attrIds 为空时跳过 selectSearchAttrIds）
 - test(product): 新增 test_product.py 商品上架集成测试
