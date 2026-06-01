@@ -7,25 +7,12 @@
             v-for="item in categories"
             :key="item.catId"
             class="cate-item"
-            @mouseenter="activeIdx = item.catId"
-            @mouseleave="activeIdx = 0"
+            @mouseenter="onEnter(item.catId)"
+            @mouseleave="onLeave"
           >
             <span class="cate-name">{{ item.name }}</span>
           </div>
         </el-scrollbar>
-        <!--  弹层在 el-scrollbar 外，避免被裁剪 -->
-        <template v-for="item in categories" :key="'pop-' + item.catId">
-          <div v-if="item.children?.length && activeIdx === item.catId" class="item-list">
-            <div class="subitem">
-              <dl v-for="sub in item.children" :key="sub.catId" :class="{ fore: sub === item.children[0] }">
-                <dt>{{ sub.name }}</dt>
-                <dd>
-                  <em v-for="child in sub.children" :key="child.catId">{{ child.name }}</em>
-                </dd>
-              </dl>
-            </div>
-          </div>
-        </template>
       </div>
       <div class="banner">
         <el-carousel height="460px">
@@ -56,6 +43,19 @@
           <img :src="sidebarBannerImg" alt="广告" />
         </div>
       </div>
+      <!--  弹层：放在 .container 直属，不被 cate overflow 裁剪 -->
+      <template v-for="item in categories" :key="'pop-' + item.catId">
+        <div v-if="item.children?.length && activeIdx === item.catId" class="item-list" @mouseenter="onEnter(item.catId)" @mouseleave="onLeave">
+          <div class="subitem">
+            <dl v-for="sub in item.children" :key="sub.catId" :class="{ fore: sub === item.children[0] }">
+              <dt>{{ sub.name }}</dt>
+              <dd>
+                <em v-for="child in sub.children" :key="child.catId">{{ child.name }}</em>
+              </dd>
+            </dl>
+          </div>
+        </div>
+      </template>
     </div>
   </div>
 </template>
@@ -81,6 +81,14 @@ const services = [
 ]
 const categories = ref([])
 const activeIdx = ref(0)
+let leaveTimer = null
+const onEnter = (id) => {
+  clearTimeout(leaveTimer)
+  activeIdx.value = id
+}
+const onLeave = () => {
+  leaveTimer = setTimeout(() => { activeIdx.value = 0 }, 100)
+}
 
 const newsList = [
   { id: 1, tag: '[特惠]', title: '备战开学季 全民半价购数码' },
@@ -106,6 +114,7 @@ onMounted(async () => {
   padding: 16px 0;
 
   .container {
+    position: relative;
     width: var(--width-content);
     margin: 0 auto;
     display: flex;
