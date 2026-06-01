@@ -15,7 +15,7 @@ spring:
         register-enabled: true
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://192.168.8.112:5432/youhaowu_pms
+    url: jdbc:postgresql://192.168.8.112:5432/youhaowu_cms
     username: faris
     password: "123456"
 
