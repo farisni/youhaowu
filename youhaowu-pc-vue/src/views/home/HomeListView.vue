@@ -227,7 +227,7 @@ onMounted(async () => {
 .item-list {
   position: absolute;
   left: 210px;
-  top: -1px;
+  top: 0px;
   width: 730px;
   min-height: 460px;
   background: var(--color-bg-page);
