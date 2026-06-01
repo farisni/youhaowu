@@ -223,3 +223,4 @@
 - feat(pc-vue): 登录页假登录（faris/123456 一键跳首页）
 - refactor(pc-vue): 抽取 ProductCard 共用组件（HomeGuess + HomeCommodityList）
 - feat(cms): 新建 youhaowu-cms 骨架模块（轮播图 + 首页快报 API）
+- feat(cms): admin-vue 内容管理页面（轮播图+快报）+ 后端 info 接口
