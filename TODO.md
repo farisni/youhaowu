@@ -128,3 +128,4 @@ gulimall 有 LoginController + OAuth2Controller，wheatmall 当前仅 DemoContro
 ### Docker / 部署
 - [ ] docker-compose.yml 补充 PostgreSQL、ES、Nacos、Kafka 完整编排
 - [ ] 各模块 Dockerfile
+- feat: 分类树接口加缓存（Redis/本地），减少 DB 查询
