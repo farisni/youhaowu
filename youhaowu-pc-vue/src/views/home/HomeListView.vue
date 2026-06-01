@@ -35,7 +35,7 @@
         </div>
         <ul class="lifeservices">
           <li v-for="s in services" :key="s.name" class="life-item">
-            <el-icon :size="24"><component :is="s.icon" /></el-icon>
+            <img :src="s.icon" class="svc-icon" />
             <span>{{ s.name }}</span>
           </li>
         </ul>
@@ -65,19 +65,32 @@ import api from '@/api/index.js'
 import { onMounted, ref } from 'vue'
 import sidebarBannerImg from '@/assets/images/sidebar-banner.png'
 
+import iconHuafei from '@/assets/icons/chahuafeitianchong.svg'
+import iconJipiao from '@/assets/icons/guojijipiao.svg'
+import iconDianying from '@/assets/icons/dianyingpiao.svg'
+import iconYouxi from '@/assets/icons/youxi.svg'
+import iconCaipiao from '@/assets/icons/caipiao.svg'
+import iconJiayou from '@/assets/icons/jiayouzhan.svg'
+import iconJiudian from '@/assets/icons/weilaijiudian.svg'
+import iconHuoche from '@/assets/icons/huochepiao.svg'
+import iconZhongchou from '@/assets/icons/zhongchou.svg'
+import iconLicai from '@/assets/icons/licai.svg'
+import iconLipinka from '@/assets/icons/lipinka.svg'
+import iconBaitiao from '@/assets/icons/baitiao.svg'
+
 const services = [
-  { name: '话费', icon: 'Iphone' },
-  { name: '机票', icon: 'Promotion' },
-  { name: '电影票', icon: 'VideoPlay' },
-  { name: '游戏', icon: 'VideoGame' },
-  { name: '彩票', icon: 'Present' },
-  { name: '加油站', icon: 'LocalGasStation' },
-  { name: '酒店', icon: 'OfficeBuilding' },
-  { name: '火车票', icon: 'Ticket' },
-  { name: '众筹', icon: 'TrendCharts' },
-  { name: '理财', icon: 'Money' },
-  { name: '礼品卡', icon: 'Gift' },
-  { name: '白条', icon: 'CreditCard' },
+  { name: '话费',   icon: iconHuafei },
+  { name: '机票',   icon: iconJipiao },
+  { name: '电影票', icon: iconDianying },
+  { name: '游戏',   icon: iconYouxi },
+  { name: '彩票',   icon: iconCaipiao },
+  { name: '加油站', icon: iconJiayou },
+  { name: '酒店',   icon: iconJiudian },
+  { name: '火车票', icon: iconHuoche },
+  { name: '众筹',   icon: iconZhongchou },
+  { name: '理财',   icon: iconLicai },
+  { name: '礼品卡', icon: iconLipinka },
+  { name: '白条',   icon: iconBaitiao },
 ]
 const categories = ref([])
 const activeIdx = ref(0)
@@ -226,7 +239,8 @@ onMounted(async () => {
           font-size: 12px;
           &:hover { color: var(--color-primary); }
           &:nth-child(4n) { border-right: none; }
-          span { margin-top: 4px; }
+          .svc-icon { width: 24px; height: 24px; }
+          span { margin-top: 8px; font-size: 12px; }
         }
       }
     }
