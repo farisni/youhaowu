@@ -11,7 +11,7 @@ export default defineConfig({
   server: {
     port: 8633,
     proxy: {
-      '/api': { target: 'http://localhost:8091', changeOrigin: true },
+      '/api': { target: 'http://192.168.8.112:8888', changeOrigin: true },
     },
   },
   plugins: [
