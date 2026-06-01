@@ -175,12 +175,12 @@ onMounted(async () => {
           padding: 5px 8px;
           margin: 2px 3px 0;
           border-bottom: 1px solid #e4e4e4;
+          line-height: 24px;
           font-size: 14px;
-          font-weight: 400;
         }
         .news-list {
-          padding: 1px 8px;
-          line-height: 22px;
+          padding: 5px 15px;
+          line-height: 26px;
           font-size: 12px;
           color: var(--color-text);
           list-style: none;
@@ -189,11 +189,11 @@ onMounted(async () => {
       }
 
       .ads {
-        margin-top: 5px;
+        margin-top: 10px;
         img { width: 100%; display: block; }
       }
       .lifeservices {
-        height: 195px;
+        height: 196px;
         margin: 0;
         
         display: grid;
