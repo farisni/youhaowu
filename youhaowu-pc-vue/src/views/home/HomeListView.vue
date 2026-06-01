@@ -159,14 +159,15 @@ onMounted(async () => {
       flex-shrink: 0;
       height: 100%;
       overflow: hidden;
-      background: var(--color-bg-page);
+      
       display: flex;
       flex-direction: column;
-      padding: 5px;
+      padding: 0;
 
       .news {
         background: #fff;
         border: 1px solid #e4e4e4;
+        border-bottom: 1px solid #e4e4e4;
 
         h4 {
           display: flex;
@@ -193,16 +194,17 @@ onMounted(async () => {
         img { width: 100%; display: block; }
       }
       .lifeservices {
-        margin-top: 5px;
+        margin-top: 0;
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         list-style: none;
         padding: 0;
-        border-top: 1px solid #e4e4e4;
         border-left: 1px solid #e4e4e4;
+        border-right: 1px solid #e4e4e4;
 
         .life-item {
           aspect-ratio: 1;
+          min-height: 62px;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -213,6 +215,7 @@ onMounted(async () => {
           color: var(--color-text);
           font-size: 12px;
           &:hover { color: var(--color-primary); }
+          &:nth-child(4n) { border-right: none; }
           span { margin-top: 4px; }
         }
       }
