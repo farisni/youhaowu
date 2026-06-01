@@ -30,6 +30,8 @@ public class RouteConfig {
                         .uri("lb://youhaowu-thirdparty"))
                 .route("search_route", r -> r.path("/api/search/**")
                         .uri("lb://youhaowu-search"))
+                .route("cms_route", r -> r.path("/api/cms/**")
+                        .uri("lb://youhaowu-cms"))
                 .route("auth_route", r -> r.path("/api/user/**")
                         .uri("lb://youhaowu-auth"))
                 .build();
