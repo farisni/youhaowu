@@ -2,9 +2,30 @@
   <div class="list-view">
     <div class="container">
       <div class="cate">
-        <div v-for="item in categories" :key="item.catId" class="cate-item">
-          <span class="cate-name">{{ item.name }}</span>
-        </div>
+        <el-scrollbar height="460px">
+          <div
+            v-for="item in categories"
+            :key="item.catId"
+            class="cate-item"
+            @mouseenter="activeIdx = item.catId"
+            @mouseleave="activeIdx = 0"
+          >
+            <span class="cate-name">{{ item.name }}</span>
+          </div>
+        </el-scrollbar>
+        <!--  弹层在 el-scrollbar 外，避免被裁剪 -->
+        <template v-for="item in categories" :key="'pop-' + item.catId">
+          <div v-if="item.children?.length && activeIdx === item.catId" class="item-list">
+            <div class="subitem">
+              <dl v-for="sub in item.children" :key="sub.catId" :class="{ fore: sub === item.children[0] }">
+                <dt>{{ sub.name }}</dt>
+                <dd>
+                  <em v-for="child in sub.children" :key="child.catId">{{ child.name }}</em>
+                </dd>
+              </dl>
+            </div>
+          </div>
+        </template>
       </div>
       <div class="banner">
         <el-carousel height="460px">
@@ -42,11 +63,12 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
 import api from '@/api/index.js'
+import { onMounted, ref } from 'vue'
 
 const services = ['话费', '机票', '酒店', '游戏', '企业购', '加油卡', '电影票', '火车票']
 const categories = ref([])
+const activeIdx = ref(0)
 
 onMounted(async () => {
   try {
@@ -70,13 +92,14 @@ onMounted(async () => {
     height: 460px;
 
     .cate {
+      position: relative;
       width: 210px;
       flex-shrink: 0;
       height: 100%;
-      overflow-y: auto;
+      
       background: var(--color-bg-page);
-      border: 1px solid var(--color-border);
-      border-top: none;
+      /* border: 1px solid var(--color-border); */
+      /* border-top: none; */
       padding: 4px 0;
 
       .cate-item {
@@ -85,7 +108,7 @@ onMounted(async () => {
         line-height: 28px;
         cursor: pointer;
         &:hover {
-          background: #fff;
+          background: var(--color-bg-page);
           .cate-name { color: var(--color-primary); }
         }
         .cate-name {
@@ -166,7 +189,7 @@ onMounted(async () => {
       }
 
       .news {
-        background: #fff;
+        background: var(--color-bg-page);
         padding: 8px 12px;
 
         .news-tabs {
@@ -199,7 +222,7 @@ onMounted(async () => {
           flex-direction: column;
           align-items: center;
           padding: 6px;
-          background: #fff;
+          background: var(--color-bg-page);
           font-size: 11px;
           color: var(--color-text);
 
@@ -217,5 +240,50 @@ onMounted(async () => {
       }
     }
   }
+}
+
+/* 子分类弹层 — 绝对定位覆盖 banner */
+.item-list {
+  position: absolute;
+  left: 210px;
+  top: -1px;
+  width: 730px;
+  min-height: 460px;
+  background: var(--color-bg-page);
+  border: 1px solid #ddd;
+  z-index: 9999;
+  padding: 16px;
+}
+.subitem dl {
+  border-top: 1px solid #eee;
+  padding: 6px 0;
+  overflow: hidden;
+}
+.subitem dl.fore { border-top: 0; }
+.subitem dl dt {
+  float: left;
+  width: 60px;
+  line-height: 22px;
+  text-align: right;
+  padding: 3px 6px 0 0;
+  font-weight: 700;
+  font-size: 13px;
+}
+.subitem dl dd {
+  margin-left: 66px;
+}
+.subitem dl dd em {
+  display: inline-block;
+  height: 14px;
+  line-height: 14px;
+  padding: 0 8px;
+  margin-top: 5px;
+  border-left: 1px solid #ccc;
+  font-size: 12px;
+  cursor: pointer;
+  color: #999;
+}
+.subitem dl dd em:hover {
+  color: var(--color-primary);
 }
 </style>
