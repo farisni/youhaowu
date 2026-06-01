@@ -10,7 +10,7 @@ import java.util.List;
 public interface NewsService {
     List<NewsVO> listEnabled();
     PageData<NewsVO> page(NewsQueryDTO query);
-    void save(NewsSaveDTO dto);
-    void update(Long id, NewsSaveDTO dto);
-    void deleteBatch(List<Long> ids);
+    Integer save(NewsSaveDTO dto);
+    Integer update(Long id, NewsSaveDTO dto);
+    Integer deleteBatch(List<Long> ids);
 }

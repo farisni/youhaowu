@@ -10,7 +10,7 @@ import java.util.List;
 public interface BannerService {
     List<BannerVO> listEnabled();
     PageData<BannerVO> page(BannerQueryDTO query);
-    void save(BannerSaveDTO dto);
-    void update(Long id, BannerSaveDTO dto);
-    void deleteBatch(List<Long> ids);
+    Integer save(BannerSaveDTO dto);
+    Integer update(Long id, BannerSaveDTO dto);
+    Integer deleteBatch(List<Long> ids);
 }
