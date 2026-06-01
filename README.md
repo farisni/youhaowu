@@ -7,7 +7,7 @@
 - **Spring Boot**: 3.4.2
 - **Spring Cloud**: 2025.0.1
 - **Spring Cloud Alibaba**: 2025.0.0.0
-- **Java**: 17
+- **Java**: 21
 - **Nacos**: 服务注册发现
 - **PostgreSQL 17**: 数据库
 - **Kafka**: 消息队列
