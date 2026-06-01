@@ -5,22 +5,29 @@ import com.youhaowu.common.utils.PageData;
 import com.youhaowu.product.utils.PageUtils;
 import com.youhaowu.common.dto.BaseQueryDTO;
 import com.youhaowu.product.constant.ProductConstant;
+import com.youhaowu.common.constant.KafkaTopicConstants;
 import com.youhaowu.product.entity.*;
 import com.youhaowu.product.mapper.*;
+import com.youhaowu.product.entity.BrandEntity;
+import com.youhaowu.product.entity.CategoryEntity;
 import com.youhaowu.product.remote.CouponRemoteService;
-import com.youhaowu.product.remote.SearchRemoteService;
-import com.youhaowu.product.remote.WareRemoteService;
+import com.youhaowu.common.remote.WareClient;
 import com.youhaowu.product.service.*;
 import com.youhaowu.product.vo.*;
+import com.youhaowu.common.vo.SkuEsModel;
+import com.youhaowu.common.vo.SkuHasStockVO;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import cn.hutool.core.bean.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import cn.hutool.core.util.StrUtil;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -47,9 +54,13 @@ public class SpuInfoServiceImpl implements SpuInfoService {
     @Autowired
     private CouponRemoteService couponRemoteService;
     @Autowired
-    private WareRemoteService wareRemoteService;
+    private BrandMapper brandMapper;
     @Autowired
-    private SearchRemoteService searchRemoteService;
+    private CategoryMapper categoryMapper;
+    @Autowired
+    private WareClient wareClient;
+    @Autowired
+    private KafkaTemplate<String, String> kafkaTemplate;
 
     @Override
     public PageData<SpuInfoVO> page(BaseQueryDTO query) {
@@ -167,11 +178,78 @@ public class SpuInfoServiceImpl implements SpuInfoService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public Integer up(Long spuId) {
-        List<SkuInfoVO> skus = skuInfoService.getSkusBySpuId(spuId);
+        //  1. 查询 SPU 下所有 SKU
+        List<SkuInfoVO> skuVOs = skuInfoService.getSkusBySpuId(spuId);
+
+        //  2. 查询 SPU 关联的基本属性，筛选可检索属性
         List<ProductAttrValueEntity> baseAttrs = productAttrValueService.baseAttrListforspu(spuId);
-        List<Long> skuIds = skus.stream().map(SkuInfoVO::getSkuId).collect(Collectors.toList());
-        try { wareRemoteService.getSkuHasStock(skuIds); } catch (Exception ex) { log.error("库存查询异常: {}", ex.getMessage()); }
-        try { searchRemoteService.productStatusUp(skus); } catch (Exception ex) { log.error("搜索上架异常: {}", ex.getMessage()); }
-        return spuInfoMapper.updaSpuStatus(spuId, ProductConstant.ProductStatusEnum.SPU_UP.getCode());
+        List<Long> attrIds = baseAttrs.stream().map(ProductAttrValueEntity::getAttrId).collect(Collectors.toList());
+        List<Long> searchAttrIds = attrService.selectSearchAttrIds(attrIds);
+        List<SkuEsModel.Attrs> attrEsModels = baseAttrs.stream()
+                .filter(a -> searchAttrIds.contains(a.getAttrId()))
+                .map(a -> {
+                    SkuEsModel.Attrs m = new SkuEsModel.Attrs();
+                    m.setAttrId(a.getAttrId());
+                    m.setAttrName(a.getAttrName());
+                    m.setAttrValue(a.getAttrValue());
+                    return m;
+                }).collect(Collectors.toList());
+
+        //  3. 查询库存
+        List<Long> skuIds = skuVOs.stream().map(SkuInfoVO::getSkuId).collect(Collectors.toList());
+        Map<Long, Boolean> stockMap = null;
+        try {
+            stockMap = wareClient.hasStock(skuIds).getData().stream()
+                    .collect(Collectors.toMap(SkuHasStockVO::getSkuId, SkuHasStockVO::getHasStock));
+        } catch (Exception ex) {
+            log.error("库存查询异常: {}", ex.getMessage());
+        }
+        Map<Long, Boolean> finalStockMap = stockMap;
+
+        //  4. 组装 SkuEsModel 列表
+        List<SkuEsModel> esModels = skuVOs.stream().map(sku -> {
+            SkuEsModel m = new SkuEsModel();
+            m.setSkuId(sku.getSkuId());
+            m.setSpuId(sku.getSpuId());
+            m.setSkuTitle(sku.getSkuTitle());
+            m.setSkuPrice(sku.getPrice());
+            m.setSkuImg(sku.getSkuDefaultImg());
+            m.setSaleCount(sku.getSaleCount());
+            m.setHasStock(finalStockMap == null || finalStockMap.getOrDefault(sku.getSkuId(), true));
+            m.setHotScore(0L);
+            m.setBrandId(sku.getBrandId());
+            m.setCatalogId(sku.getCatalogId());
+            //  品牌名
+            try {
+                BrandEntity brand = brandMapper.selectById(sku.getBrandId());
+                m.setBrandName(brand.getName());
+                m.setBrandImg(brand.getLogo());
+            } catch (Exception e) {
+                log.error("品牌查询异常: {}", e.getMessage());
+            }
+            //  分类名
+            try {
+                CategoryEntity category = categoryMapper.selectById(sku.getCatalogId());
+                m.setCatalogName(category.getName());
+            } catch (Exception e) {
+                log.error("分类查询异常: {}", e.getMessage());
+            }
+            m.setAttrs(attrEsModels);
+            return m;
+        }).collect(Collectors.toList());
+
+        //  5. 更新 SPU 状态为上架
+        int rows = spuInfoMapper.updaSpuStatus(spuId, ProductConstant.ProductStatusEnum.SPU_UP.getCode());
+
+        //  6. 发送 Kafka 消息（异步通知搜索服务构建索引）
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            String json = mapper.writeValueAsString(esModels);
+            kafkaTemplate.send(KafkaTopicConstants.TOPIC_PRODUCT_UP, json);
+            log.info("SPU[{}] 上架消息已发送至 Kafka topic: {}", spuId, KafkaTopicConstants.TOPIC_PRODUCT_UP);
+        } catch (Exception ex) {
+            log.error("Kafka 发送异常: {}", ex.getMessage());
+        }
+        return rows;
     }
 }

@@ -286,4 +286,9 @@ public class AttrServiceImpl implements AttrService {
         result[result.length - 1] = catelogId;
         return result;
     }
+
+    @Override
+    public List<Long> selectSearchAttrIds(List<Long> attrIds) {
+        return attrMapper.selectSearchAttrIds(attrIds);
+    }
 }

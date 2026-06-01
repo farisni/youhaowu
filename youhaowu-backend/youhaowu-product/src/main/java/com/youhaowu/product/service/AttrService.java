@@ -23,6 +23,8 @@ public interface AttrService {
     Integer removeByIds(List<Long> ids);
     Integer updateAttrById(Long id, AttrVO attr);
 
+    List<Long> selectSearchAttrIds(List<Long> attrIds);
+
     List<AttrRespVO> getRelationAttr(Long attrgroupId);
     PageData<?> getNoRelationAttr(AttrQueryDTO query, Long attrgroupId);
 }
