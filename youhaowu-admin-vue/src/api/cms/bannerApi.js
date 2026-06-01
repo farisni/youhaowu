@@ -5,7 +5,7 @@ export default {
     const params = { pageNum: page, pageSize: limit }
     if (searchObj.title) params.title = searchObj.title
     if (searchObj.status !== undefined && searchObj.status !== '') params.status = searchObj.status
-    return http.get('/api/cms/banner/page', { params })
+    return http.post('/api/cms/banner/page', params)
   },
   getById(id) {
     return http.get(`/api/cms/banner/info/${id}`)
