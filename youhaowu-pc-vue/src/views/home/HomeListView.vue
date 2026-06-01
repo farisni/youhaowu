@@ -2,8 +2,8 @@
   <div class="list-view">
     <div class="container">
       <div class="cate">
-        <div v-for="i in 15" class="cate-item">
-          <span class="cate-name">分类名称 {{ i }}</span>
+        <div v-for="item in categories" :key="item.catId" class="cate-item">
+          <span class="cate-name">{{ item.name }}</span>
         </div>
       </div>
       <div class="banner">
@@ -42,7 +42,20 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from 'vue'
+import api from '@/api/index.js'
+
 const services = ['话费', '机票', '酒店', '游戏', '企业购', '加油卡', '电影票', '火车票']
+const categories = ref([])
+
+onMounted(async () => {
+  try {
+    const res = await api.getCategoryList()
+    categories.value = res.data || []
+  } catch {
+    //  静默失败
+  }
+})
 </script>
 
 <style lang="scss" scoped>

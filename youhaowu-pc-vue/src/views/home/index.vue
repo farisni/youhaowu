@@ -30,6 +30,6 @@ const floorList = ref([])
 
 onMounted(async () => {
   const res = await api.getFloorList()
-  if (res.code === 200) floorList.value = res.data
+  if (res.code === 0) floorList.value = res.data
 })
 </script>

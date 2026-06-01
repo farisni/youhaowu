@@ -2,10 +2,10 @@
 -- PostgreSQL database dump
 --
 
-\restrict OkTN5brdqdKMRtVV9qMIfI226WvjFyuJcixz1bspxp6peYVDWjszYwJpPh8PWVM
+\restrict AsDFP0BJIT8BPUZX5U2fZTqBSFijZf6QaViuDtHoXq52UXiA4mLS4SkW2oH773Y
 
 -- Dumped from database version 17.10
--- Dumped by pg_dump version 18.4
+-- Dumped by pg_dump version 17.10
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -20,17 +20,15 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- Name: youhaowu_pms; Type: DATABASE; Schema: -; Owner: faris
+-- Name: youhaowu_pms; Type: DATABASE; Schema: -; Owner: -
 --
 
 CREATE DATABASE youhaowu_pms WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE_PROVIDER = libc LOCALE = 'en_US.utf8';
 
 
-ALTER DATABASE youhaowu_pms OWNER TO faris;
-
-\unrestrict OkTN5brdqdKMRtVV9qMIfI226WvjFyuJcixz1bspxp6peYVDWjszYwJpPh8PWVM
+\unrestrict AsDFP0BJIT8BPUZX5U2fZTqBSFijZf6QaViuDtHoXq52UXiA4mLS4SkW2oH773Y
 \connect youhaowu_pms
-\restrict OkTN5brdqdKMRtVV9qMIfI226WvjFyuJcixz1bspxp6peYVDWjszYwJpPh8PWVM
+\restrict AsDFP0BJIT8BPUZX5U2fZTqBSFijZf6QaViuDtHoXq52UXiA4mLS4SkW2oH773Y
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -49,7 +47,7 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- Name: pms_attr; Type: TABLE; Schema: public; Owner: faris
+-- Name: pms_attr; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.pms_attr (
@@ -66,87 +64,85 @@ CREATE TABLE public.pms_attr (
 );
 
 
-ALTER TABLE public.pms_attr OWNER TO faris;
-
 --
--- Name: TABLE pms_attr; Type: COMMENT; Schema: public; Owner: faris
+-- Name: TABLE pms_attr; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.pms_attr IS '商品属性';
 
 
 --
--- Name: COLUMN pms_attr.attr_id; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_attr.attr_id; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_attr.attr_id IS '属性id';
 
 
 --
--- Name: COLUMN pms_attr.attr_name; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_attr.attr_name; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_attr.attr_name IS '属性名';
 
 
 --
--- Name: COLUMN pms_attr.search_type; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_attr.search_type; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_attr.search_type IS '是否需要检索[0-不需要，1-需要]';
 
 
 --
--- Name: COLUMN pms_attr.value_type; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_attr.value_type; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_attr.value_type IS '值类型[0-为单个值，1-可以选择多个值]';
 
 
 --
--- Name: COLUMN pms_attr.icon; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_attr.icon; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_attr.icon IS '属性图标';
 
 
 --
--- Name: COLUMN pms_attr.value_select; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_attr.value_select; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_attr.value_select IS '可选值列表[用逗号分隔]';
 
 
 --
--- Name: COLUMN pms_attr.attr_type; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_attr.attr_type; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_attr.attr_type IS '属性类型[0-销售属性，1-基本属性';
 
 
 --
--- Name: COLUMN pms_attr.enable; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_attr.enable; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_attr.enable IS '启用状态[0 - 禁用，1 - 启用]';
 
 
 --
--- Name: COLUMN pms_attr.catelog_id; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_attr.catelog_id; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_attr.catelog_id IS '所属分类';
 
 
 --
--- Name: COLUMN pms_attr.show_desc; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_attr.show_desc; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_attr.show_desc IS '快速展示【是否展示在介绍上；0-否 1-是】，在sku中仍然可以调整';
 
 
 --
--- Name: pms_attr_attr_id_seq; Type: SEQUENCE; Schema: public; Owner: faris
+-- Name: pms_attr_attr_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.pms_attr_attr_id_seq
@@ -157,17 +153,15 @@ CREATE SEQUENCE public.pms_attr_attr_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.pms_attr_attr_id_seq OWNER TO faris;
-
 --
--- Name: pms_attr_attr_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: faris
+-- Name: pms_attr_attr_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.pms_attr_attr_id_seq OWNED BY public.pms_attr.attr_id;
 
 
 --
--- Name: pms_attr_attrgroup_relation; Type: TABLE; Schema: public; Owner: faris
+-- Name: pms_attr_attrgroup_relation; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.pms_attr_attrgroup_relation (
@@ -178,45 +172,43 @@ CREATE TABLE public.pms_attr_attrgroup_relation (
 );
 
 
-ALTER TABLE public.pms_attr_attrgroup_relation OWNER TO faris;
-
 --
--- Name: TABLE pms_attr_attrgroup_relation; Type: COMMENT; Schema: public; Owner: faris
+-- Name: TABLE pms_attr_attrgroup_relation; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.pms_attr_attrgroup_relation IS '属性&属性分组关联';
 
 
 --
--- Name: COLUMN pms_attr_attrgroup_relation.id; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_attr_attrgroup_relation.id; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_attr_attrgroup_relation.id IS 'id';
 
 
 --
--- Name: COLUMN pms_attr_attrgroup_relation.attr_id; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_attr_attrgroup_relation.attr_id; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_attr_attrgroup_relation.attr_id IS '属性id';
 
 
 --
--- Name: COLUMN pms_attr_attrgroup_relation.attr_group_id; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_attr_attrgroup_relation.attr_group_id; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_attr_attrgroup_relation.attr_group_id IS '属性分组id';
 
 
 --
--- Name: COLUMN pms_attr_attrgroup_relation.attr_sort; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_attr_attrgroup_relation.attr_sort; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_attr_attrgroup_relation.attr_sort IS '属性组内排序';
 
 
 --
--- Name: pms_attr_attrgroup_relation_id_seq; Type: SEQUENCE; Schema: public; Owner: faris
+-- Name: pms_attr_attrgroup_relation_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.pms_attr_attrgroup_relation_id_seq
@@ -227,17 +219,15 @@ CREATE SEQUENCE public.pms_attr_attrgroup_relation_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.pms_attr_attrgroup_relation_id_seq OWNER TO faris;
-
 --
--- Name: pms_attr_attrgroup_relation_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: faris
+-- Name: pms_attr_attrgroup_relation_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.pms_attr_attrgroup_relation_id_seq OWNED BY public.pms_attr_attrgroup_relation.id;
 
 
 --
--- Name: pms_attr_group; Type: TABLE; Schema: public; Owner: faris
+-- Name: pms_attr_group; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.pms_attr_group (
@@ -250,59 +240,57 @@ CREATE TABLE public.pms_attr_group (
 );
 
 
-ALTER TABLE public.pms_attr_group OWNER TO faris;
-
 --
--- Name: TABLE pms_attr_group; Type: COMMENT; Schema: public; Owner: faris
+-- Name: TABLE pms_attr_group; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.pms_attr_group IS '属性分组';
 
 
 --
--- Name: COLUMN pms_attr_group.attr_group_id; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_attr_group.attr_group_id; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_attr_group.attr_group_id IS '分组id';
 
 
 --
--- Name: COLUMN pms_attr_group.attr_group_name; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_attr_group.attr_group_name; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_attr_group.attr_group_name IS '组名';
 
 
 --
--- Name: COLUMN pms_attr_group.sort; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_attr_group.sort; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_attr_group.sort IS '排序';
 
 
 --
--- Name: COLUMN pms_attr_group.descript; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_attr_group.descript; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_attr_group.descript IS '描述';
 
 
 --
--- Name: COLUMN pms_attr_group.icon; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_attr_group.icon; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_attr_group.icon IS '组图标';
 
 
 --
--- Name: COLUMN pms_attr_group.catelog_id; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_attr_group.catelog_id; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_attr_group.catelog_id IS '所属分类id';
 
 
 --
--- Name: pms_attr_group_attr_group_id_seq; Type: SEQUENCE; Schema: public; Owner: faris
+-- Name: pms_attr_group_attr_group_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.pms_attr_group_attr_group_id_seq
@@ -313,17 +301,15 @@ CREATE SEQUENCE public.pms_attr_group_attr_group_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.pms_attr_group_attr_group_id_seq OWNER TO faris;
-
 --
--- Name: pms_attr_group_attr_group_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: faris
+-- Name: pms_attr_group_attr_group_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.pms_attr_group_attr_group_id_seq OWNED BY public.pms_attr_group.attr_group_id;
 
 
 --
--- Name: pms_brand; Type: TABLE; Schema: public; Owner: faris
+-- Name: pms_brand; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.pms_brand (
@@ -337,66 +323,64 @@ CREATE TABLE public.pms_brand (
 );
 
 
-ALTER TABLE public.pms_brand OWNER TO faris;
-
 --
--- Name: TABLE pms_brand; Type: COMMENT; Schema: public; Owner: faris
+-- Name: TABLE pms_brand; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.pms_brand IS '品牌';
 
 
 --
--- Name: COLUMN pms_brand.brand_id; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_brand.brand_id; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_brand.brand_id IS '品牌id';
 
 
 --
--- Name: COLUMN pms_brand.name; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_brand.name; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_brand.name IS '品牌名';
 
 
 --
--- Name: COLUMN pms_brand.logo; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_brand.logo; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_brand.logo IS '品牌logo地址';
 
 
 --
--- Name: COLUMN pms_brand.descript; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_brand.descript; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_brand.descript IS '介绍';
 
 
 --
--- Name: COLUMN pms_brand.show_status; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_brand.show_status; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_brand.show_status IS '显示状态[0-不显示；1-显示]';
 
 
 --
--- Name: COLUMN pms_brand.first_letter; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_brand.first_letter; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_brand.first_letter IS '检索首字母';
 
 
 --
--- Name: COLUMN pms_brand.sort; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_brand.sort; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_brand.sort IS '排序';
 
 
 --
--- Name: pms_brand_brand_id_seq; Type: SEQUENCE; Schema: public; Owner: faris
+-- Name: pms_brand_brand_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.pms_brand_brand_id_seq
@@ -407,17 +391,15 @@ CREATE SEQUENCE public.pms_brand_brand_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.pms_brand_brand_id_seq OWNER TO faris;
-
 --
--- Name: pms_brand_brand_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: faris
+-- Name: pms_brand_brand_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.pms_brand_brand_id_seq OWNED BY public.pms_brand.brand_id;
 
 
 --
--- Name: pms_category; Type: TABLE; Schema: public; Owner: faris
+-- Name: pms_category; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.pms_category (
@@ -433,80 +415,78 @@ CREATE TABLE public.pms_category (
 );
 
 
-ALTER TABLE public.pms_category OWNER TO faris;
-
 --
--- Name: TABLE pms_category; Type: COMMENT; Schema: public; Owner: faris
+-- Name: TABLE pms_category; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.pms_category IS '商品三级分类';
 
 
 --
--- Name: COLUMN pms_category.cat_id; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_category.cat_id; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_category.cat_id IS '分类id';
 
 
 --
--- Name: COLUMN pms_category.name; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_category.name; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_category.name IS '分类名称';
 
 
 --
--- Name: COLUMN pms_category.parent_cid; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_category.parent_cid; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_category.parent_cid IS '父分类id';
 
 
 --
--- Name: COLUMN pms_category.cat_level; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_category.cat_level; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_category.cat_level IS '层级';
 
 
 --
--- Name: COLUMN pms_category.show_status; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_category.show_status; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_category.show_status IS '是否显示[0-不显示，1显示]';
 
 
 --
--- Name: COLUMN pms_category.sort; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_category.sort; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_category.sort IS '排序';
 
 
 --
--- Name: COLUMN pms_category.icon; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_category.icon; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_category.icon IS '图标地址';
 
 
 --
--- Name: COLUMN pms_category.product_unit; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_category.product_unit; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_category.product_unit IS '计量单位';
 
 
 --
--- Name: COLUMN pms_category.product_count; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_category.product_count; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_category.product_count IS '商品数量';
 
 
 --
--- Name: pms_category_brand_relation; Type: TABLE; Schema: public; Owner: faris
+-- Name: pms_category_brand_relation; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.pms_category_brand_relation (
@@ -518,31 +498,29 @@ CREATE TABLE public.pms_category_brand_relation (
 );
 
 
-ALTER TABLE public.pms_category_brand_relation OWNER TO faris;
-
 --
--- Name: TABLE pms_category_brand_relation; Type: COMMENT; Schema: public; Owner: faris
+-- Name: TABLE pms_category_brand_relation; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.pms_category_brand_relation IS '品牌分类关联';
 
 
 --
--- Name: COLUMN pms_category_brand_relation.brand_id; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_category_brand_relation.brand_id; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_category_brand_relation.brand_id IS '品牌id';
 
 
 --
--- Name: COLUMN pms_category_brand_relation.catelog_id; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_category_brand_relation.catelog_id; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_category_brand_relation.catelog_id IS '分类id';
 
 
 --
--- Name: pms_category_brand_relation_id_seq; Type: SEQUENCE; Schema: public; Owner: faris
+-- Name: pms_category_brand_relation_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.pms_category_brand_relation_id_seq
@@ -553,17 +531,15 @@ CREATE SEQUENCE public.pms_category_brand_relation_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.pms_category_brand_relation_id_seq OWNER TO faris;
-
 --
--- Name: pms_category_brand_relation_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: faris
+-- Name: pms_category_brand_relation_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.pms_category_brand_relation_id_seq OWNED BY public.pms_category_brand_relation.id;
 
 
 --
--- Name: pms_category_cat_id_seq; Type: SEQUENCE; Schema: public; Owner: faris
+-- Name: pms_category_cat_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.pms_category_cat_id_seq
@@ -574,17 +550,15 @@ CREATE SEQUENCE public.pms_category_cat_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.pms_category_cat_id_seq OWNER TO faris;
-
 --
--- Name: pms_category_cat_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: faris
+-- Name: pms_category_cat_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.pms_category_cat_id_seq OWNED BY public.pms_category.cat_id;
 
 
 --
--- Name: pms_comment_replay; Type: TABLE; Schema: public; Owner: faris
+-- Name: pms_comment_replay; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.pms_comment_replay (
@@ -594,38 +568,36 @@ CREATE TABLE public.pms_comment_replay (
 );
 
 
-ALTER TABLE public.pms_comment_replay OWNER TO faris;
-
 --
--- Name: TABLE pms_comment_replay; Type: COMMENT; Schema: public; Owner: faris
+-- Name: TABLE pms_comment_replay; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.pms_comment_replay IS '商品评价回复关系';
 
 
 --
--- Name: COLUMN pms_comment_replay.id; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_comment_replay.id; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_comment_replay.id IS 'id';
 
 
 --
--- Name: COLUMN pms_comment_replay.comment_id; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_comment_replay.comment_id; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_comment_replay.comment_id IS '评论id';
 
 
 --
--- Name: COLUMN pms_comment_replay.reply_id; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_comment_replay.reply_id; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_comment_replay.reply_id IS '回复id';
 
 
 --
--- Name: pms_comment_replay_id_seq; Type: SEQUENCE; Schema: public; Owner: faris
+-- Name: pms_comment_replay_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.pms_comment_replay_id_seq
@@ -636,17 +608,15 @@ CREATE SEQUENCE public.pms_comment_replay_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.pms_comment_replay_id_seq OWNER TO faris;
-
 --
--- Name: pms_comment_replay_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: faris
+-- Name: pms_comment_replay_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.pms_comment_replay_id_seq OWNED BY public.pms_comment_replay.id;
 
 
 --
--- Name: pms_product_attr_value; Type: TABLE; Schema: public; Owner: faris
+-- Name: pms_product_attr_value; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.pms_product_attr_value (
@@ -660,66 +630,64 @@ CREATE TABLE public.pms_product_attr_value (
 );
 
 
-ALTER TABLE public.pms_product_attr_value OWNER TO faris;
-
 --
--- Name: TABLE pms_product_attr_value; Type: COMMENT; Schema: public; Owner: faris
+-- Name: TABLE pms_product_attr_value; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.pms_product_attr_value IS 'spu属性值';
 
 
 --
--- Name: COLUMN pms_product_attr_value.id; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_product_attr_value.id; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_product_attr_value.id IS 'id';
 
 
 --
--- Name: COLUMN pms_product_attr_value.spu_id; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_product_attr_value.spu_id; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_product_attr_value.spu_id IS '商品id';
 
 
 --
--- Name: COLUMN pms_product_attr_value.attr_id; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_product_attr_value.attr_id; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_product_attr_value.attr_id IS '属性id';
 
 
 --
--- Name: COLUMN pms_product_attr_value.attr_name; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_product_attr_value.attr_name; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_product_attr_value.attr_name IS '属性名';
 
 
 --
--- Name: COLUMN pms_product_attr_value.attr_value; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_product_attr_value.attr_value; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_product_attr_value.attr_value IS '属性值';
 
 
 --
--- Name: COLUMN pms_product_attr_value.attr_sort; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_product_attr_value.attr_sort; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_product_attr_value.attr_sort IS '顺序';
 
 
 --
--- Name: COLUMN pms_product_attr_value.quick_show; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_product_attr_value.quick_show; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_product_attr_value.quick_show IS '快速展示【是否展示在介绍上；0-否 1-是】';
 
 
 --
--- Name: pms_product_attr_value_id_seq; Type: SEQUENCE; Schema: public; Owner: faris
+-- Name: pms_product_attr_value_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.pms_product_attr_value_id_seq
@@ -730,17 +698,15 @@ CREATE SEQUENCE public.pms_product_attr_value_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.pms_product_attr_value_id_seq OWNER TO faris;
-
 --
--- Name: pms_product_attr_value_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: faris
+-- Name: pms_product_attr_value_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.pms_product_attr_value_id_seq OWNED BY public.pms_product_attr_value.id;
 
 
 --
--- Name: pms_sku_images; Type: TABLE; Schema: public; Owner: faris
+-- Name: pms_sku_images; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.pms_sku_images (
@@ -752,52 +718,50 @@ CREATE TABLE public.pms_sku_images (
 );
 
 
-ALTER TABLE public.pms_sku_images OWNER TO faris;
-
 --
--- Name: TABLE pms_sku_images; Type: COMMENT; Schema: public; Owner: faris
+-- Name: TABLE pms_sku_images; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.pms_sku_images IS 'sku图片';
 
 
 --
--- Name: COLUMN pms_sku_images.id; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_sku_images.id; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_sku_images.id IS 'id';
 
 
 --
--- Name: COLUMN pms_sku_images.sku_id; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_sku_images.sku_id; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_sku_images.sku_id IS 'sku_id';
 
 
 --
--- Name: COLUMN pms_sku_images.img_url; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_sku_images.img_url; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_sku_images.img_url IS '图片地址';
 
 
 --
--- Name: COLUMN pms_sku_images.img_sort; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_sku_images.img_sort; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_sku_images.img_sort IS '排序';
 
 
 --
--- Name: COLUMN pms_sku_images.default_img; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_sku_images.default_img; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_sku_images.default_img IS '默认图[0 - 不是默认图，1 - 是默认图]';
 
 
 --
--- Name: pms_sku_images_id_seq; Type: SEQUENCE; Schema: public; Owner: faris
+-- Name: pms_sku_images_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.pms_sku_images_id_seq
@@ -808,17 +772,15 @@ CREATE SEQUENCE public.pms_sku_images_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.pms_sku_images_id_seq OWNER TO faris;
-
 --
--- Name: pms_sku_images_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: faris
+-- Name: pms_sku_images_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.pms_sku_images_id_seq OWNED BY public.pms_sku_images.id;
 
 
 --
--- Name: pms_sku_info; Type: TABLE; Schema: public; Owner: faris
+-- Name: pms_sku_info; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.pms_sku_info (
@@ -836,94 +798,92 @@ CREATE TABLE public.pms_sku_info (
 );
 
 
-ALTER TABLE public.pms_sku_info OWNER TO faris;
-
 --
--- Name: TABLE pms_sku_info; Type: COMMENT; Schema: public; Owner: faris
+-- Name: TABLE pms_sku_info; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.pms_sku_info IS 'sku信息';
 
 
 --
--- Name: COLUMN pms_sku_info.sku_id; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_sku_info.sku_id; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_sku_info.sku_id IS 'skuId';
 
 
 --
--- Name: COLUMN pms_sku_info.spu_id; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_sku_info.spu_id; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_sku_info.spu_id IS 'spuId';
 
 
 --
--- Name: COLUMN pms_sku_info.sku_name; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_sku_info.sku_name; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_sku_info.sku_name IS 'sku名称';
 
 
 --
--- Name: COLUMN pms_sku_info.sku_desc; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_sku_info.sku_desc; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_sku_info.sku_desc IS 'sku介绍描述';
 
 
 --
--- Name: COLUMN pms_sku_info.catalog_id; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_sku_info.catalog_id; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_sku_info.catalog_id IS '所属分类id';
 
 
 --
--- Name: COLUMN pms_sku_info.brand_id; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_sku_info.brand_id; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_sku_info.brand_id IS '品牌id';
 
 
 --
--- Name: COLUMN pms_sku_info.sku_default_img; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_sku_info.sku_default_img; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_sku_info.sku_default_img IS '默认图片';
 
 
 --
--- Name: COLUMN pms_sku_info.sku_title; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_sku_info.sku_title; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_sku_info.sku_title IS '标题';
 
 
 --
--- Name: COLUMN pms_sku_info.sku_subtitle; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_sku_info.sku_subtitle; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_sku_info.sku_subtitle IS '副标题';
 
 
 --
--- Name: COLUMN pms_sku_info.price; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_sku_info.price; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_sku_info.price IS '价格';
 
 
 --
--- Name: COLUMN pms_sku_info.sale_count; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_sku_info.sale_count; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_sku_info.sale_count IS '销量';
 
 
 --
--- Name: pms_sku_info_sku_id_seq; Type: SEQUENCE; Schema: public; Owner: faris
+-- Name: pms_sku_info_sku_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.pms_sku_info_sku_id_seq
@@ -934,17 +894,15 @@ CREATE SEQUENCE public.pms_sku_info_sku_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.pms_sku_info_sku_id_seq OWNER TO faris;
-
 --
--- Name: pms_sku_info_sku_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: faris
+-- Name: pms_sku_info_sku_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.pms_sku_info_sku_id_seq OWNED BY public.pms_sku_info.sku_id;
 
 
 --
--- Name: pms_sku_sale_attr_value; Type: TABLE; Schema: public; Owner: faris
+-- Name: pms_sku_sale_attr_value; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.pms_sku_sale_attr_value (
@@ -957,59 +915,57 @@ CREATE TABLE public.pms_sku_sale_attr_value (
 );
 
 
-ALTER TABLE public.pms_sku_sale_attr_value OWNER TO faris;
-
 --
--- Name: TABLE pms_sku_sale_attr_value; Type: COMMENT; Schema: public; Owner: faris
+-- Name: TABLE pms_sku_sale_attr_value; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.pms_sku_sale_attr_value IS 'sku销售属性&值';
 
 
 --
--- Name: COLUMN pms_sku_sale_attr_value.id; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_sku_sale_attr_value.id; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_sku_sale_attr_value.id IS 'id';
 
 
 --
--- Name: COLUMN pms_sku_sale_attr_value.sku_id; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_sku_sale_attr_value.sku_id; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_sku_sale_attr_value.sku_id IS 'sku_id';
 
 
 --
--- Name: COLUMN pms_sku_sale_attr_value.attr_id; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_sku_sale_attr_value.attr_id; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_sku_sale_attr_value.attr_id IS 'attr_id';
 
 
 --
--- Name: COLUMN pms_sku_sale_attr_value.attr_name; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_sku_sale_attr_value.attr_name; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_sku_sale_attr_value.attr_name IS '销售属性名';
 
 
 --
--- Name: COLUMN pms_sku_sale_attr_value.attr_value; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_sku_sale_attr_value.attr_value; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_sku_sale_attr_value.attr_value IS '销售属性值';
 
 
 --
--- Name: COLUMN pms_sku_sale_attr_value.attr_sort; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_sku_sale_attr_value.attr_sort; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_sku_sale_attr_value.attr_sort IS '顺序';
 
 
 --
--- Name: pms_sku_sale_attr_value_id_seq; Type: SEQUENCE; Schema: public; Owner: faris
+-- Name: pms_sku_sale_attr_value_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.pms_sku_sale_attr_value_id_seq
@@ -1020,17 +976,15 @@ CREATE SEQUENCE public.pms_sku_sale_attr_value_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.pms_sku_sale_attr_value_id_seq OWNER TO faris;
-
 --
--- Name: pms_sku_sale_attr_value_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: faris
+-- Name: pms_sku_sale_attr_value_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.pms_sku_sale_attr_value_id_seq OWNED BY public.pms_sku_sale_attr_value.id;
 
 
 --
--- Name: pms_spu_comment; Type: TABLE; Schema: public; Owner: faris
+-- Name: pms_spu_comment; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.pms_spu_comment (
@@ -1053,129 +1007,127 @@ CREATE TABLE public.pms_spu_comment (
 );
 
 
-ALTER TABLE public.pms_spu_comment OWNER TO faris;
-
 --
--- Name: TABLE pms_spu_comment; Type: COMMENT; Schema: public; Owner: faris
+-- Name: TABLE pms_spu_comment; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.pms_spu_comment IS '商品评价';
 
 
 --
--- Name: COLUMN pms_spu_comment.id; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_spu_comment.id; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_spu_comment.id IS 'id';
 
 
 --
--- Name: COLUMN pms_spu_comment.sku_id; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_spu_comment.sku_id; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_spu_comment.sku_id IS 'sku_id';
 
 
 --
--- Name: COLUMN pms_spu_comment.spu_id; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_spu_comment.spu_id; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_spu_comment.spu_id IS 'spu_id';
 
 
 --
--- Name: COLUMN pms_spu_comment.spu_name; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_spu_comment.spu_name; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_spu_comment.spu_name IS '商品名字';
 
 
 --
--- Name: COLUMN pms_spu_comment.member_nick_name; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_spu_comment.member_nick_name; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_spu_comment.member_nick_name IS '会员昵称';
 
 
 --
--- Name: COLUMN pms_spu_comment.star; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_spu_comment.star; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_spu_comment.star IS '星级';
 
 
 --
--- Name: COLUMN pms_spu_comment.member_ip; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_spu_comment.member_ip; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_spu_comment.member_ip IS '会员ip';
 
 
 --
--- Name: COLUMN pms_spu_comment.create_time; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_spu_comment.create_time; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_spu_comment.create_time IS '创建时间';
 
 
 --
--- Name: COLUMN pms_spu_comment.show_status; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_spu_comment.show_status; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_spu_comment.show_status IS '显示状态[0-不显示，1-显示]';
 
 
 --
--- Name: COLUMN pms_spu_comment.spu_attributes; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_spu_comment.spu_attributes; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_spu_comment.spu_attributes IS '购买时属性组合';
 
 
 --
--- Name: COLUMN pms_spu_comment.likes_count; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_spu_comment.likes_count; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_spu_comment.likes_count IS '点赞数';
 
 
 --
--- Name: COLUMN pms_spu_comment.reply_count; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_spu_comment.reply_count; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_spu_comment.reply_count IS '回复数';
 
 
 --
--- Name: COLUMN pms_spu_comment.resources; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_spu_comment.resources; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_spu_comment.resources IS '评论图片/视频[json数据；[{type:文件类型,url:资源路径}]]';
 
 
 --
--- Name: COLUMN pms_spu_comment.content; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_spu_comment.content; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_spu_comment.content IS '内容';
 
 
 --
--- Name: COLUMN pms_spu_comment.member_icon; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_spu_comment.member_icon; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_spu_comment.member_icon IS '用户头像';
 
 
 --
--- Name: COLUMN pms_spu_comment.comment_type; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_spu_comment.comment_type; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_spu_comment.comment_type IS '评论类型[0 - 对商品的直接评论，1 - 对评论的回复]';
 
 
 --
--- Name: pms_spu_comment_id_seq; Type: SEQUENCE; Schema: public; Owner: faris
+-- Name: pms_spu_comment_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.pms_spu_comment_id_seq
@@ -1186,17 +1138,15 @@ CREATE SEQUENCE public.pms_spu_comment_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.pms_spu_comment_id_seq OWNER TO faris;
-
 --
--- Name: pms_spu_comment_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: faris
+-- Name: pms_spu_comment_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.pms_spu_comment_id_seq OWNED BY public.pms_spu_comment.id;
 
 
 --
--- Name: pms_spu_images; Type: TABLE; Schema: public; Owner: faris
+-- Name: pms_spu_images; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.pms_spu_images (
@@ -1209,59 +1159,57 @@ CREATE TABLE public.pms_spu_images (
 );
 
 
-ALTER TABLE public.pms_spu_images OWNER TO faris;
-
 --
--- Name: TABLE pms_spu_images; Type: COMMENT; Schema: public; Owner: faris
+-- Name: TABLE pms_spu_images; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.pms_spu_images IS 'spu图片';
 
 
 --
--- Name: COLUMN pms_spu_images.id; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_spu_images.id; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_spu_images.id IS 'id';
 
 
 --
--- Name: COLUMN pms_spu_images.spu_id; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_spu_images.spu_id; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_spu_images.spu_id IS 'spu_id';
 
 
 --
--- Name: COLUMN pms_spu_images.img_name; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_spu_images.img_name; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_spu_images.img_name IS '图片名';
 
 
 --
--- Name: COLUMN pms_spu_images.img_url; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_spu_images.img_url; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_spu_images.img_url IS '图片地址';
 
 
 --
--- Name: COLUMN pms_spu_images.img_sort; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_spu_images.img_sort; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_spu_images.img_sort IS '顺序';
 
 
 --
--- Name: COLUMN pms_spu_images.default_img; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_spu_images.default_img; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_spu_images.default_img IS '是否默认图';
 
 
 --
--- Name: pms_spu_images_id_seq; Type: SEQUENCE; Schema: public; Owner: faris
+-- Name: pms_spu_images_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.pms_spu_images_id_seq
@@ -1272,17 +1220,15 @@ CREATE SEQUENCE public.pms_spu_images_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.pms_spu_images_id_seq OWNER TO faris;
-
 --
--- Name: pms_spu_images_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: faris
+-- Name: pms_spu_images_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.pms_spu_images_id_seq OWNED BY public.pms_spu_images.id;
 
 
 --
--- Name: pms_spu_info; Type: TABLE; Schema: public; Owner: faris
+-- Name: pms_spu_info; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.pms_spu_info (
@@ -1298,59 +1244,57 @@ CREATE TABLE public.pms_spu_info (
 );
 
 
-ALTER TABLE public.pms_spu_info OWNER TO faris;
-
 --
--- Name: TABLE pms_spu_info; Type: COMMENT; Schema: public; Owner: faris
+-- Name: TABLE pms_spu_info; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.pms_spu_info IS 'spu信息';
 
 
 --
--- Name: COLUMN pms_spu_info.id; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_spu_info.id; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_spu_info.id IS '商品id';
 
 
 --
--- Name: COLUMN pms_spu_info.spu_name; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_spu_info.spu_name; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_spu_info.spu_name IS '商品名称';
 
 
 --
--- Name: COLUMN pms_spu_info.spu_description; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_spu_info.spu_description; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_spu_info.spu_description IS '商品描述';
 
 
 --
--- Name: COLUMN pms_spu_info.catalog_id; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_spu_info.catalog_id; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_spu_info.catalog_id IS '所属分类id';
 
 
 --
--- Name: COLUMN pms_spu_info.brand_id; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_spu_info.brand_id; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_spu_info.brand_id IS '品牌id';
 
 
 --
--- Name: COLUMN pms_spu_info.publish_status; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_spu_info.publish_status; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_spu_info.publish_status IS '上架状态[0 - 下架，1 - 上架]';
 
 
 --
--- Name: pms_spu_info_desc; Type: TABLE; Schema: public; Owner: faris
+-- Name: pms_spu_info_desc; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.pms_spu_info_desc (
@@ -1359,31 +1303,29 @@ CREATE TABLE public.pms_spu_info_desc (
 );
 
 
-ALTER TABLE public.pms_spu_info_desc OWNER TO faris;
-
 --
--- Name: TABLE pms_spu_info_desc; Type: COMMENT; Schema: public; Owner: faris
+-- Name: TABLE pms_spu_info_desc; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.pms_spu_info_desc IS 'spu信息介绍';
 
 
 --
--- Name: COLUMN pms_spu_info_desc.spu_id; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_spu_info_desc.spu_id; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_spu_info_desc.spu_id IS '商品id';
 
 
 --
--- Name: COLUMN pms_spu_info_desc.decript; Type: COMMENT; Schema: public; Owner: faris
+-- Name: COLUMN pms_spu_info_desc.decript; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.pms_spu_info_desc.decript IS '商品介绍';
 
 
 --
--- Name: pms_spu_info_id_seq; Type: SEQUENCE; Schema: public; Owner: faris
+-- Name: pms_spu_info_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.pms_spu_info_id_seq
@@ -1394,17 +1336,15 @@ CREATE SEQUENCE public.pms_spu_info_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.pms_spu_info_id_seq OWNER TO faris;
-
 --
--- Name: pms_spu_info_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: faris
+-- Name: pms_spu_info_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.pms_spu_info_id_seq OWNED BY public.pms_spu_info.id;
 
 
 --
--- Name: undo_log; Type: TABLE; Schema: public; Owner: faris
+-- Name: undo_log; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.undo_log (
@@ -1420,10 +1360,8 @@ CREATE TABLE public.undo_log (
 );
 
 
-ALTER TABLE public.undo_log OWNER TO faris;
-
 --
--- Name: undo_log_id_seq; Type: SEQUENCE; Schema: public; Owner: faris
+-- Name: undo_log_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.undo_log_id_seq
@@ -1434,122 +1372,120 @@ CREATE SEQUENCE public.undo_log_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.undo_log_id_seq OWNER TO faris;
-
 --
--- Name: undo_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: faris
+-- Name: undo_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.undo_log_id_seq OWNED BY public.undo_log.id;
 
 
 --
--- Name: pms_attr attr_id; Type: DEFAULT; Schema: public; Owner: faris
+-- Name: pms_attr attr_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.pms_attr ALTER COLUMN attr_id SET DEFAULT nextval('public.pms_attr_attr_id_seq'::regclass);
 
 
 --
--- Name: pms_attr_attrgroup_relation id; Type: DEFAULT; Schema: public; Owner: faris
+-- Name: pms_attr_attrgroup_relation id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.pms_attr_attrgroup_relation ALTER COLUMN id SET DEFAULT nextval('public.pms_attr_attrgroup_relation_id_seq'::regclass);
 
 
 --
--- Name: pms_attr_group attr_group_id; Type: DEFAULT; Schema: public; Owner: faris
+-- Name: pms_attr_group attr_group_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.pms_attr_group ALTER COLUMN attr_group_id SET DEFAULT nextval('public.pms_attr_group_attr_group_id_seq'::regclass);
 
 
 --
--- Name: pms_brand brand_id; Type: DEFAULT; Schema: public; Owner: faris
+-- Name: pms_brand brand_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.pms_brand ALTER COLUMN brand_id SET DEFAULT nextval('public.pms_brand_brand_id_seq'::regclass);
 
 
 --
--- Name: pms_category cat_id; Type: DEFAULT; Schema: public; Owner: faris
+-- Name: pms_category cat_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.pms_category ALTER COLUMN cat_id SET DEFAULT nextval('public.pms_category_cat_id_seq'::regclass);
 
 
 --
--- Name: pms_category_brand_relation id; Type: DEFAULT; Schema: public; Owner: faris
+-- Name: pms_category_brand_relation id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.pms_category_brand_relation ALTER COLUMN id SET DEFAULT nextval('public.pms_category_brand_relation_id_seq'::regclass);
 
 
 --
--- Name: pms_comment_replay id; Type: DEFAULT; Schema: public; Owner: faris
+-- Name: pms_comment_replay id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.pms_comment_replay ALTER COLUMN id SET DEFAULT nextval('public.pms_comment_replay_id_seq'::regclass);
 
 
 --
--- Name: pms_product_attr_value id; Type: DEFAULT; Schema: public; Owner: faris
+-- Name: pms_product_attr_value id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.pms_product_attr_value ALTER COLUMN id SET DEFAULT nextval('public.pms_product_attr_value_id_seq'::regclass);
 
 
 --
--- Name: pms_sku_images id; Type: DEFAULT; Schema: public; Owner: faris
+-- Name: pms_sku_images id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.pms_sku_images ALTER COLUMN id SET DEFAULT nextval('public.pms_sku_images_id_seq'::regclass);
 
 
 --
--- Name: pms_sku_info sku_id; Type: DEFAULT; Schema: public; Owner: faris
+-- Name: pms_sku_info sku_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.pms_sku_info ALTER COLUMN sku_id SET DEFAULT nextval('public.pms_sku_info_sku_id_seq'::regclass);
 
 
 --
--- Name: pms_sku_sale_attr_value id; Type: DEFAULT; Schema: public; Owner: faris
+-- Name: pms_sku_sale_attr_value id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.pms_sku_sale_attr_value ALTER COLUMN id SET DEFAULT nextval('public.pms_sku_sale_attr_value_id_seq'::regclass);
 
 
 --
--- Name: pms_spu_comment id; Type: DEFAULT; Schema: public; Owner: faris
+-- Name: pms_spu_comment id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.pms_spu_comment ALTER COLUMN id SET DEFAULT nextval('public.pms_spu_comment_id_seq'::regclass);
 
 
 --
--- Name: pms_spu_images id; Type: DEFAULT; Schema: public; Owner: faris
+-- Name: pms_spu_images id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.pms_spu_images ALTER COLUMN id SET DEFAULT nextval('public.pms_spu_images_id_seq'::regclass);
 
 
 --
--- Name: pms_spu_info id; Type: DEFAULT; Schema: public; Owner: faris
+-- Name: pms_spu_info id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.pms_spu_info ALTER COLUMN id SET DEFAULT nextval('public.pms_spu_info_id_seq'::regclass);
 
 
 --
--- Name: undo_log id; Type: DEFAULT; Schema: public; Owner: faris
+-- Name: undo_log id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.undo_log ALTER COLUMN id SET DEFAULT nextval('public.undo_log_id_seq'::regclass);
 
 
 --
--- Data for Name: pms_attr; Type: TABLE DATA; Schema: public; Owner: faris
+-- Data for Name: pms_attr; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.pms_attr (attr_id, attr_name, search_type, value_type, icon, value_select, attr_type, enable, catelog_id, show_desc) FROM stdin;
@@ -1567,7 +1503,7 @@ COPY public.pms_attr (attr_id, attr_name, search_type, value_type, icon, value_s
 
 
 --
--- Data for Name: pms_attr_attrgroup_relation; Type: TABLE DATA; Schema: public; Owner: faris
+-- Data for Name: pms_attr_attrgroup_relation; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.pms_attr_attrgroup_relation (id, attr_id, attr_group_id, attr_sort) FROM stdin;
@@ -1582,7 +1518,7 @@ COPY public.pms_attr_attrgroup_relation (id, attr_id, attr_group_id, attr_sort) 
 
 
 --
--- Data for Name: pms_attr_group; Type: TABLE DATA; Schema: public; Owner: faris
+-- Data for Name: pms_attr_group; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.pms_attr_group (attr_group_id, attr_group_name, sort, descript, icon, catelog_id) FROM stdin;
@@ -1594,7 +1530,7 @@ COPY public.pms_attr_group (attr_group_id, attr_group_name, sort, descript, icon
 
 
 --
--- Data for Name: pms_brand; Type: TABLE DATA; Schema: public; Owner: faris
+-- Data for Name: pms_brand; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.pms_brand (brand_id, name, logo, descript, show_status, first_letter, sort) FROM stdin;
@@ -1617,7 +1553,7 @@ COPY public.pms_brand (brand_id, name, logo, descript, show_status, first_letter
 
 
 --
--- Data for Name: pms_category; Type: TABLE DATA; Schema: public; Owner: faris
+-- Data for Name: pms_category; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.pms_category (cat_id, name, parent_cid, cat_level, show_status, sort, icon, product_unit, product_count) FROM stdin;
@@ -1673,22 +1609,18 @@ COPY public.pms_category (cat_id, name, parent_cid, cat_level, show_status, sort
 66	餐具	7	2	1	0	\N	\N	0
 67	酒店用品	7	2	1	0	\N	\N	0
 68	茶具/咖啡具	7	2	1	0	\N	\N	0
-69	清洁用品21	8	2	1	0	\N	\N	0
 70	面部护肤	8	2	1	0	\N	\N	0
 71	身体护理	8	2	1	0	\N	\N	0
 72	口腔护理	8	2	1	0	\N	\N	0
 73	女性护理	8	2	1	0	\N	\N	0
 74	洗发护发	8	2	1	0	\N	\N	0
 75	香水彩妆	8	2	1	0	\N	\N	0
-76	女装1	9	2	1	0	\N	\N	0
 77	男装	9	2	1	0	\N	\N	0
 78	内衣	9	2	1	0	\N	\N	0
 79	洗衣服务	9	2	1	0	\N	\N	0
 80	服饰配件	9	2	1	0	\N	\N	0
 81	钟表	10	2	1	0	\N	\N	0
-82	流行男鞋1	11	2	1	0	1	1	0
 83	时尚女鞋	11	2	1	0	\N	\N	0
-84	奶粉2	12	12	1	0	\N	\N	0
 85	营养辅食	12	2	1	0	\N	\N	0
 86	尿裤湿巾	12	2	1	0	\N	\N	0
 87	喂养用品	12	2	1	0	\N	\N	0
@@ -1703,19 +1635,6 @@ COPY public.pms_category (cat_id, name, parent_cid, cat_level, show_status, sort
 96	功能箱包	13	2	1	0	\N	\N	0
 97	礼品	13	2	1	0	\N	\N	0
 98	奢侈品	13	2	1	0	\N	\N	0
-3	测试更新名称	0	1	1	99	aaa	\N	0
-4	测试更新名称	0	1	1	99	aaa	\N	0
-5	测试更新名称	0	1	1	99	\N	\N	0
-7	测试更新名称	0	1	1	99	\N	\N	0
-8	测试更新名称	0	1	1	99	\N	\N	0
-9	测试更新名称	0	1	1	99	\N	\N	0
-10	测试更新名称	0	1	1	99	\N	\N	0
-11	测试更新名称	0	1	1	99	\N	\N	0
-13	测试更新名称	0	1	1	99	\N	\N	0
-14	测试更新名称	0	1	1	99	\N	\N	0
-15	测试更新名称	0	1	1	99	\N	\N	0
-16	测试更新名称	0	1	1	99	\N	\N	0
-17	测试更新名称	0	1	1	99	\N	\N	0
 99	婚庆	13	2	1	0	\N	\N	0
 100	进口食品	14	2	1	0	\N	\N	0
 101	地方特产	14	2	1	0	\N	\N	0
@@ -1736,7 +1655,6 @@ COPY public.pms_category (cat_id, name, parent_cid, cat_level, show_status, sort
 116	铂金	15	2	1	0	\N	\N	0
 117	木手串/把件	15	2	1	0	\N	\N	0
 118	珍珠	15	2	1	0	\N	\N	0
-119	维修保养1	16	2	1	0	2	3	0
 120	车载电器	16	2	1	0	\N	\N	0
 121	美容清洗	16	2	1	0	\N	\N	0
 122	汽车装饰	16	2	1	0	\N	\N	0
@@ -3048,14 +2966,32 @@ COPY public.pms_category (cat_id, name, parent_cid, cat_level, show_status, sort
 1435	13232	37	3	1	0			\N
 1436	2	69	3	1	0			\N
 1437	21	69	3	1	0			\N
-2	测试更新名称	0	1	1	99	111q	\N	0
-6	测试更新名称	0	1	1	99	\N	\N	0
-12	测试更新名称	0	1	1	99	\N	\N	0
+2	手机	0	1	1	99	111q	\N	0
+3	家用电器	0	1	1	99	aaa	\N	0
+4	数码	0	1	1	99	aaa	\N	0
+5	家居家装	0	1	1	99	\N	\N	0
+6	电脑办公	0	1	1	99	\N	\N	0
+7	厨具	0	1	1	99	\N	\N	0
+8	个护化妆	0	1	1	99	\N	\N	0
+9	服饰内衣	0	1	1	99	\N	\N	0
+10	钟表	0	1	1	99	\N	\N	0
+11	鞋靴	0	1	1	99	\N	\N	0
+12	母婴	0	1	1	99	\N	\N	0
+13	礼品箱包	0	1	1	99	\N	\N	0
+14	食品饮料	0	1	1	99	\N	\N	0
+15	珠宝	0	1	1	99	\N	\N	0
+16	汽车用品	0	1	1	99	\N	\N	0
+17	运动户外	0	1	1	99	\N	\N	0
+69	清洁用品	8	2	1	0	\N	\N	0
+76	女装	9	2	1	0	\N	\N	0
+82	流行男鞋	11	2	1	0	1	1	0
+119	维修保养	16	2	1	0	2	3	0
+84	奶粉	12	2	1	0	\N	\N	0
 \.
 
 
 --
--- Data for Name: pms_category_brand_relation; Type: TABLE DATA; Schema: public; Owner: faris
+-- Data for Name: pms_category_brand_relation; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.pms_category_brand_relation (id, brand_id, catelog_id, brand_name, catelog_name) FROM stdin;
@@ -3077,7 +3013,7 @@ COPY public.pms_category_brand_relation (id, brand_id, catelog_id, brand_name, c
 
 
 --
--- Data for Name: pms_comment_replay; Type: TABLE DATA; Schema: public; Owner: faris
+-- Data for Name: pms_comment_replay; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.pms_comment_replay (id, comment_id, reply_id) FROM stdin;
@@ -3085,7 +3021,7 @@ COPY public.pms_comment_replay (id, comment_id, reply_id) FROM stdin;
 
 
 --
--- Data for Name: pms_product_attr_value; Type: TABLE DATA; Schema: public; Owner: faris
+-- Data for Name: pms_product_attr_value; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.pms_product_attr_value (id, spu_id, attr_id, attr_name, attr_value, attr_sort, quick_show) FROM stdin;
@@ -3106,7 +3042,7 @@ COPY public.pms_product_attr_value (id, spu_id, attr_id, attr_name, attr_value, 
 
 
 --
--- Data for Name: pms_sku_images; Type: TABLE DATA; Schema: public; Owner: faris
+-- Data for Name: pms_sku_images; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.pms_sku_images (id, sku_id, img_url, img_sort, default_img) FROM stdin;
@@ -3224,7 +3160,7 @@ COPY public.pms_sku_images (id, sku_id, img_url, img_sort, default_img) FROM std
 
 
 --
--- Data for Name: pms_sku_info; Type: TABLE DATA; Schema: public; Owner: faris
+-- Data for Name: pms_sku_info; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.pms_sku_info (sku_id, spu_id, sku_name, sku_desc, catalog_id, brand_id, sku_default_img, sku_title, sku_subtitle, price, sale_count) FROM stdin;
@@ -3254,11 +3190,13 @@ COPY public.pms_sku_info (sku_id, spu_id, sku_name, sku_desc, catalog_id, brand_
 24	13	 Apple iPhone 11 (A2223)  紫色 128GB 	\N	225	12	https://gulimall-hello.oss-cn-beijing.aliyuncs.com/2019-11-27/299481e9-4704-4824-8b18-60c7d268353c_7ae0120ec27dc3a7.jpg	 Apple iPhone 11 (A2223)  紫色 128GB  移动联通电信4G手机 双卡双待	iPhoneXS系列性能强劲，样样出色，现特惠来袭，低至5399元！详情请点击！	5999.0000	0
 25	13	 Apple iPhone 11 (A2223)  紫色 256GB	\N	225	12	https://gulimall-hello.oss-cn-beijing.aliyuncs.com/2019-11-27/299481e9-4704-4824-8b18-60c7d268353c_7ae0120ec27dc3a7.jpg	 Apple iPhone 11 (A2223)  紫色 256GB  移动联通电信4G手机 双卡双待	iPhoneXS系列性能强劲，样样出色，现特惠来袭，低至5399元！详情请点击！	6799.0000	0
 26	13	 Apple iPhone 11 (A2223)  紫色 64GB	\N	225	12	https://gulimall-hello.oss-cn-beijing.aliyuncs.com/2019-11-27/299481e9-4704-4824-8b18-60c7d268353c_7ae0120ec27dc3a7.jpg	 Apple iPhone 11 (A2223)  紫色 64GB  移动联通电信4G手机 双卡双待	iPhoneXS系列性能强劲，样样出色，现特惠来袭，低至5399元！详情请点击！	5499.0000	0
+200	100	小度音箱 白色	\N	1	1	https://img.youhaowu.com/default.png	小度智能音箱 白色标准版	\N	299.0000	0
+27	14	测试SKU-银色	测试SKU描述	1	9	https://example.com/test.jpg	测试商品银色款	高品质测试商品	99.0000	0
 \.
 
 
 --
--- Data for Name: pms_sku_sale_attr_value; Type: TABLE DATA; Schema: public; Owner: faris
+-- Data for Name: pms_sku_sale_attr_value; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.pms_sku_sale_attr_value (id, sku_id, attr_id, attr_name, attr_value, attr_sort) FROM stdin;
@@ -3318,7 +3256,7 @@ COPY public.pms_sku_sale_attr_value (id, sku_id, attr_id, attr_name, attr_value,
 
 
 --
--- Data for Name: pms_spu_comment; Type: TABLE DATA; Schema: public; Owner: faris
+-- Data for Name: pms_spu_comment; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.pms_spu_comment (id, sku_id, spu_id, spu_name, member_nick_name, star, member_ip, create_time, show_status, spu_attributes, likes_count, reply_count, resources, content, member_icon, comment_type) FROM stdin;
@@ -3326,7 +3264,7 @@ COPY public.pms_spu_comment (id, sku_id, spu_id, spu_name, member_nick_name, sta
 
 
 --
--- Data for Name: pms_spu_images; Type: TABLE DATA; Schema: public; Owner: faris
+-- Data for Name: pms_spu_images; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.pms_spu_images (id, spu_id, img_name, img_url, img_sort, default_img) FROM stdin;
@@ -3351,17 +3289,19 @@ COPY public.pms_spu_images (id, spu_id, img_name, img_url, img_sort, default_img
 
 
 --
--- Data for Name: pms_spu_info; Type: TABLE DATA; Schema: public; Owner: faris
+-- Data for Name: pms_spu_info; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.pms_spu_info (id, spu_name, spu_description, catalog_id, brand_id, weight, publish_status, create_time, update_time) FROM stdin;
-11	华为 HUAWEI Mate 30 Pro	华为 HUAWEI Mate 30 Pro	225	9	0.1980	1	2019-11-26 10:10:57+00	2019-12-15 23:04:16+00
 13	 Apple iPhone 11 (A2223) 	 Apple iPhone 11 (A2223) 	225	12	0.1940	1	2019-11-27 05:37:30+00	2019-12-15 23:25:19+00
+11	华为 HUAWEI Mate 30 Pro	华为 HUAWEI Mate 30 Pro	225	9	0.1980	1	2019-11-26 10:10:57+00	2026-06-01 05:42:07.018749+00
+100	小度智能音箱	\N	1	1	\N	0	2026-06-01 05:45:50.750879+00	2026-06-01 05:45:50.750879+00
+14	测试商品-从0上架	这是一个从零上架的测试商品	1	9	0.5000	0	2026-06-01 05:51:41.541177+00	2026-06-01 05:52:04.140273+00
 \.
 
 
 --
--- Data for Name: pms_spu_info_desc; Type: TABLE DATA; Schema: public; Owner: faris
+-- Data for Name: pms_spu_info_desc; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.pms_spu_info_desc (spu_id, decript) FROM stdin;
@@ -3371,7 +3311,7 @@ COPY public.pms_spu_info_desc (spu_id, decript) FROM stdin;
 
 
 --
--- Data for Name: undo_log; Type: TABLE DATA; Schema: public; Owner: faris
+-- Data for Name: undo_log; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.undo_log (id, branch_id, xid, context, rollback_info, log_status, log_created, log_modified, ext) FROM stdin;
@@ -3379,112 +3319,112 @@ COPY public.undo_log (id, branch_id, xid, context, rollback_info, log_status, lo
 
 
 --
--- Name: pms_attr_attr_id_seq; Type: SEQUENCE SET; Schema: public; Owner: faris
+-- Name: pms_attr_attr_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.pms_attr_attr_id_seq', 16, true);
 
 
 --
--- Name: pms_attr_attrgroup_relation_id_seq; Type: SEQUENCE SET; Schema: public; Owner: faris
+-- Name: pms_attr_attrgroup_relation_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.pms_attr_attrgroup_relation_id_seq', 30, true);
 
 
 --
--- Name: pms_attr_group_attr_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: faris
+-- Name: pms_attr_group_attr_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.pms_attr_group_attr_group_id_seq', 7, true);
 
 
 --
--- Name: pms_brand_brand_id_seq; Type: SEQUENCE SET; Schema: public; Owner: faris
+-- Name: pms_brand_brand_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.pms_brand_brand_id_seq', 14, true);
 
 
 --
--- Name: pms_category_brand_relation_id_seq; Type: SEQUENCE SET; Schema: public; Owner: faris
+-- Name: pms_category_brand_relation_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.pms_category_brand_relation_id_seq', 27, true);
 
 
 --
--- Name: pms_category_cat_id_seq; Type: SEQUENCE SET; Schema: public; Owner: faris
+-- Name: pms_category_cat_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.pms_category_cat_id_seq', 1437, true);
 
 
 --
--- Name: pms_comment_replay_id_seq; Type: SEQUENCE SET; Schema: public; Owner: faris
+-- Name: pms_comment_replay_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.pms_comment_replay_id_seq', 1, true);
 
 
 --
--- Name: pms_product_attr_value_id_seq; Type: SEQUENCE SET; Schema: public; Owner: faris
+-- Name: pms_product_attr_value_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.pms_product_attr_value_id_seq', 67, true);
 
 
 --
--- Name: pms_sku_images_id_seq; Type: SEQUENCE SET; Schema: public; Owner: faris
+-- Name: pms_sku_images_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.pms_sku_images_id_seq', 110, true);
 
 
 --
--- Name: pms_sku_info_sku_id_seq; Type: SEQUENCE SET; Schema: public; Owner: faris
+-- Name: pms_sku_info_sku_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.pms_sku_info_sku_id_seq', 26, true);
+SELECT pg_catalog.setval('public.pms_sku_info_sku_id_seq', 27, true);
 
 
 --
--- Name: pms_sku_sale_attr_value_id_seq; Type: SEQUENCE SET; Schema: public; Owner: faris
+-- Name: pms_sku_sale_attr_value_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.pms_sku_sale_attr_value_id_seq', 52, true);
 
 
 --
--- Name: pms_spu_comment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: faris
+-- Name: pms_spu_comment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.pms_spu_comment_id_seq', 1, true);
 
 
 --
--- Name: pms_spu_images_id_seq; Type: SEQUENCE SET; Schema: public; Owner: faris
+-- Name: pms_spu_images_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.pms_spu_images_id_seq', 94, true);
 
 
 --
--- Name: pms_spu_info_id_seq; Type: SEQUENCE SET; Schema: public; Owner: faris
+-- Name: pms_spu_info_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.pms_spu_info_id_seq', 13, true);
+SELECT pg_catalog.setval('public.pms_spu_info_id_seq', 14, true);
 
 
 --
--- Name: undo_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: faris
+-- Name: undo_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.undo_log_id_seq', 1, true);
 
 
 --
--- Name: pms_attr idx_24668_primary; Type: CONSTRAINT; Schema: public; Owner: faris
+-- Name: pms_attr idx_24668_primary; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.pms_attr
@@ -3492,7 +3432,7 @@ ALTER TABLE ONLY public.pms_attr
 
 
 --
--- Name: pms_attr_attrgroup_relation idx_24675_primary; Type: CONSTRAINT; Schema: public; Owner: faris
+-- Name: pms_attr_attrgroup_relation idx_24675_primary; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.pms_attr_attrgroup_relation
@@ -3500,7 +3440,7 @@ ALTER TABLE ONLY public.pms_attr_attrgroup_relation
 
 
 --
--- Name: pms_attr_group idx_24680_primary; Type: CONSTRAINT; Schema: public; Owner: faris
+-- Name: pms_attr_group idx_24680_primary; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.pms_attr_group
@@ -3508,7 +3448,7 @@ ALTER TABLE ONLY public.pms_attr_group
 
 
 --
--- Name: pms_brand idx_24687_primary; Type: CONSTRAINT; Schema: public; Owner: faris
+-- Name: pms_brand idx_24687_primary; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.pms_brand
@@ -3516,7 +3456,7 @@ ALTER TABLE ONLY public.pms_brand
 
 
 --
--- Name: pms_category idx_24694_primary; Type: CONSTRAINT; Schema: public; Owner: faris
+-- Name: pms_category idx_24694_primary; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.pms_category
@@ -3524,7 +3464,7 @@ ALTER TABLE ONLY public.pms_category
 
 
 --
--- Name: pms_category_brand_relation idx_24699_primary; Type: CONSTRAINT; Schema: public; Owner: faris
+-- Name: pms_category_brand_relation idx_24699_primary; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.pms_category_brand_relation
@@ -3532,7 +3472,7 @@ ALTER TABLE ONLY public.pms_category_brand_relation
 
 
 --
--- Name: pms_comment_replay idx_24706_primary; Type: CONSTRAINT; Schema: public; Owner: faris
+-- Name: pms_comment_replay idx_24706_primary; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.pms_comment_replay
@@ -3540,7 +3480,7 @@ ALTER TABLE ONLY public.pms_comment_replay
 
 
 --
--- Name: pms_product_attr_value idx_24711_primary; Type: CONSTRAINT; Schema: public; Owner: faris
+-- Name: pms_product_attr_value idx_24711_primary; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.pms_product_attr_value
@@ -3548,7 +3488,7 @@ ALTER TABLE ONLY public.pms_product_attr_value
 
 
 --
--- Name: pms_sku_images idx_24716_primary; Type: CONSTRAINT; Schema: public; Owner: faris
+-- Name: pms_sku_images idx_24716_primary; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.pms_sku_images
@@ -3556,7 +3496,7 @@ ALTER TABLE ONLY public.pms_sku_images
 
 
 --
--- Name: pms_sku_info idx_24721_primary; Type: CONSTRAINT; Schema: public; Owner: faris
+-- Name: pms_sku_info idx_24721_primary; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.pms_sku_info
@@ -3564,7 +3504,7 @@ ALTER TABLE ONLY public.pms_sku_info
 
 
 --
--- Name: pms_sku_sale_attr_value idx_24728_primary; Type: CONSTRAINT; Schema: public; Owner: faris
+-- Name: pms_sku_sale_attr_value idx_24728_primary; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.pms_sku_sale_attr_value
@@ -3572,7 +3512,7 @@ ALTER TABLE ONLY public.pms_sku_sale_attr_value
 
 
 --
--- Name: pms_spu_comment idx_24733_primary; Type: CONSTRAINT; Schema: public; Owner: faris
+-- Name: pms_spu_comment idx_24733_primary; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.pms_spu_comment
@@ -3580,7 +3520,7 @@ ALTER TABLE ONLY public.pms_spu_comment
 
 
 --
--- Name: pms_spu_images idx_24740_primary; Type: CONSTRAINT; Schema: public; Owner: faris
+-- Name: pms_spu_images idx_24740_primary; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.pms_spu_images
@@ -3588,7 +3528,7 @@ ALTER TABLE ONLY public.pms_spu_images
 
 
 --
--- Name: pms_spu_info idx_24745_primary; Type: CONSTRAINT; Schema: public; Owner: faris
+-- Name: pms_spu_info idx_24745_primary; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.pms_spu_info
@@ -3596,7 +3536,7 @@ ALTER TABLE ONLY public.pms_spu_info
 
 
 --
--- Name: pms_spu_info_desc idx_24751_primary; Type: CONSTRAINT; Schema: public; Owner: faris
+-- Name: pms_spu_info_desc idx_24751_primary; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.pms_spu_info_desc
@@ -3604,7 +3544,7 @@ ALTER TABLE ONLY public.pms_spu_info_desc
 
 
 --
--- Name: undo_log idx_24757_primary; Type: CONSTRAINT; Schema: public; Owner: faris
+-- Name: undo_log idx_24757_primary; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.undo_log
@@ -3612,14 +3552,14 @@ ALTER TABLE ONLY public.undo_log
 
 
 --
--- Name: idx_24694_parent_cid; Type: INDEX; Schema: public; Owner: faris
+-- Name: idx_24694_parent_cid; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_24694_parent_cid ON public.pms_category USING btree (parent_cid);
 
 
 --
--- Name: idx_24757_ux_undo_log; Type: INDEX; Schema: public; Owner: faris
+-- Name: idx_24757_ux_undo_log; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX idx_24757_ux_undo_log ON public.undo_log USING btree (xid, branch_id);
@@ -3629,5 +3569,5 @@ CREATE UNIQUE INDEX idx_24757_ux_undo_log ON public.undo_log USING btree (xid, b
 -- PostgreSQL database dump complete
 --
 
-\unrestrict OkTN5brdqdKMRtVV9qMIfI226WvjFyuJcixz1bspxp6peYVDWjszYwJpPh8PWVM
+\unrestrict AsDFP0BJIT8BPUZX5U2fZTqBSFijZf6QaViuDtHoXq52UXiA4mLS4SkW2oH773Y
 
