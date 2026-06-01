@@ -221,3 +221,4 @@
 - feat(pc-vue): 今日推荐时钟替换为 SVG 图标
 - refactor(pc-vue): 精简 Login.vue（398→271 行）
 - feat(pc-vue): 登录页假登录（faris/123456 一键跳首页）
+- refactor(pc-vue): 抽取 ProductCard 共用组件（HomeGuess + HomeCommodityList）
