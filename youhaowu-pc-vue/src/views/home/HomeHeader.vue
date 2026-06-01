@@ -84,12 +84,14 @@ const onSearch = () => {
     .search {
       display: flex;
       flex: 1;
+      border: 2px solid var(--color-primary);
 
       .search-input {
         flex: 1;
         :deep(.el-input__wrapper) {
-          border: 2px solid var(--color-primary);
+          border: none;
           border-radius: 0;
+          box-shadow: none;
         }
       }
 
