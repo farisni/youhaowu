@@ -5,16 +5,29 @@
       <div class="nav-list">
         <span v-for="n in navs" class="nav-item">{{ n }}</span>
       </div>
+      <!--  一级分类弹层 -->
       <div v-show="showPopup" class="popup" @mouseenter="showPopup = true" @mouseleave="showPopup = false">
-        <div v-for="i in 8" class="popup-item" @mouseenter="activeIdx = i" @mouseleave="activeIdx = 0">
-          一级分类 {{ i }}
+        <div
+          v-for="item in categories"
+          :key="item.catId"
+          class="popup-item"
+          @mouseenter="activeCat = item"
+          @mouseleave="activeCat = null"
+        >
+          {{ item.name }}
         </div>
       </div>
-      <div v-show="showPopup && activeIdx" class="sub-popup" @mouseenter="showPopup = true" @mouseleave="showPopup = false">
-        <div v-for="j in 4" class="sub-block">
-          <span class="sub-title">二级分类 {{ activeIdx }}-{{ j }}</span>
+      <!--  二级 + 三级子分类 -->
+      <div
+        v-if="showPopup && activeCat && activeCat.children?.length"
+        class="sub-popup"
+        @mouseenter="showPopup = true"
+        @mouseleave="showPopup = false"
+      >
+        <div v-for="sub in activeCat.children" :key="sub.catId" class="sub-block">
+          <span class="sub-title">{{ sub.name }}</span>
           <div class="sub-tags">
-            <span v-for="k in 6">三级 {{ k }}</span>
+            <span v-for="child in sub.children" :key="child.catId">{{ child.name }}</span>
           </div>
         </div>
       </div>
@@ -23,10 +36,22 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import api from '@/api/index.js'
+
 const navs = ['服装城', '美妆馆', '超市', '全球购', '闪购', '团购', '有趣', '秒杀']
 const showPopup = ref(false)
-const activeIdx = ref(0)
+const activeCat = ref(null)
+const categories = ref([])
+
+onMounted(async () => {
+  try {
+    const res = await api.getCategoryList()
+    categories.value = res.data || []
+  } catch {
+    //  静默失败，弹层为空
+  }
+})
 </script>
 
 <style lang="scss" scoped>

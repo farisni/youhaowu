@@ -1,7 +1,7 @@
 import http from '@/utils/http.js'
 import bannerData from '@/mock/banner.json'
 import floorData from '@/mock/floor.json'
-import categoryData from '@/mock/category.json'
+// import categoryData from '@/mock/category.json'
 
 const isMock = import.meta.env.DEV
 
@@ -18,7 +18,6 @@ export default {
   },
   // 分类数据
   getCategoryList() {
-    if (isMock) return Promise.resolve({ code: 200, data: categoryData })
     return http.get('/api/product/category/list/tree')
   },
 }
