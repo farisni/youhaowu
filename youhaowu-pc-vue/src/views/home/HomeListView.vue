@@ -53,7 +53,7 @@
           </li>
         </ul>
         <div class="ads">
-          <img src="/ad1.png" alt="广告" />
+          <img :src="sidebarBannerImg" alt="广告" />
         </div>
       </div>
     </div>
@@ -63,6 +63,7 @@
 <script setup>
 import api from '@/api/index.js'
 import { onMounted, ref } from 'vue'
+import sidebarBannerImg from '@/assets/images/sidebar-banner.png'
 
 const services = [
   { name: '话费', icon: 'Iphone' },
