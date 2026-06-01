@@ -5,18 +5,13 @@ import com.youhaowu.common.utils.PageData;
 import com.youhaowu.common.utils.R;
 import com.youhaowu.cms.dto.BannerQueryDTO;
 import com.youhaowu.cms.dto.BannerSaveDTO;
-import com.youhaowu.cms.service.BannerService;
 import com.youhaowu.cms.vo.BannerVO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 public class BannerController {
-
-    @Autowired
-    private BannerService bannerService;
 
     @GetMapping(CmsServiceUris.CmsBanner.LIST)
     public R<List<BannerVO>> list() {

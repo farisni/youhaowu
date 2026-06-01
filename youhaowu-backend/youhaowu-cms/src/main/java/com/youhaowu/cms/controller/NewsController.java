@@ -5,18 +5,13 @@ import com.youhaowu.common.utils.PageData;
 import com.youhaowu.common.utils.R;
 import com.youhaowu.cms.dto.NewsQueryDTO;
 import com.youhaowu.cms.dto.NewsSaveDTO;
-import com.youhaowu.cms.service.NewsService;
 import com.youhaowu.cms.vo.NewsVO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 public class NewsController {
-
-    @Autowired
-    private NewsService newsService;
 
     @GetMapping(CmsServiceUris.CmsNews.LIST)
     public R<List<NewsVO>> list() {
