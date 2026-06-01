@@ -2,13 +2,17 @@
   <div class="recommend">
     <div class="container">
       <div class="clock">
-        <div class="clock-icon">🕐</div>
+        <img :src="iconClock" class="clock-icon" />
         <span>今日推荐</span>
       </div>
       <div v-for="i in 4" class="rec-item">推荐图 {{ i }}</div>
     </div>
   </div>
 </template>
+
+<script setup>
+import iconClock from '@/assets/icons/shizhong.svg'
+</script>
 
 <style lang="scss" scoped>
 .recommend {
@@ -35,7 +39,7 @@
       font-weight: bold;
       gap: 8px;
 
-      .clock-icon { font-size: 32px; }
+      .clock-icon { width: 60px; height: 60px; }
     }
 
     .rec-item {

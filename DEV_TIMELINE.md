@@ -213,3 +213,7 @@
 
 - fix(product): AttrMapper 空参数 SQL 修复（attrIds 为空时跳过 selectSearchAttrIds）
 - test(product): 新增 test_product.py 商品上架集成测试
+
+## 2026-06-01
+
+- feat(pc-vue): 今日推荐时钟替换为 SVG 图标
