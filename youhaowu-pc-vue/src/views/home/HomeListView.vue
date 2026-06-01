@@ -35,27 +35,25 @@
         </el-carousel>
       </div>
       <div class="side">
-        <div class="user-panel">
-          <div class="user-info">
-            <div class="avatar">头像</div>
-            <div class="user-text">Hi, 欢迎来到有好物<br><a href="/login">登录</a> <a href="/login">注册</a></div>
-          </div>
-          <div class="user-links">
-            <a href="#">新人福利</a>
-            <a href="#">PLUS会员</a>
-          </div>
+<div class="news">
+          <h4>
+            <span>有好物快报</span>
+            <el-link type="info">更多</el-link>
+          </h4>
+          <ul class="news-list">
+            <li v-for="item in newsList" :key="item.id">
+              <span class="tag">{{ item.tag }}</span>{{ item.title }}
+            </li>
+          </ul>
         </div>
-        <div class="news">
-          <div class="news-tabs"><span class="active">促销</span><span>公告</span></div>
-          <div class="news-list">
-            <div v-for="i in 4">促销信息 {{ i }}</div>
-          </div>
-        </div>
-        <div class="services">
-          <div v-for="s in services" class="service-item">
-            <div class="service-icon">IC</div>
-            <span>{{ s }}</span>
-          </div>
+        <ul class="lifeservices">
+          <li v-for="s in services" :key="s.name" class="life-item">
+            <el-icon :size="24"><component :is="s.icon" /></el-icon>
+            <span>{{ s.name }}</span>
+          </li>
+        </ul>
+        <div class="ads">
+          <img src="/ad1.png" alt="广告" />
         </div>
       </div>
     </div>
@@ -66,9 +64,30 @@
 import api from '@/api/index.js'
 import { onMounted, ref } from 'vue'
 
-const services = ['话费', '机票', '酒店', '游戏', '企业购', '加油卡', '电影票', '火车票']
+const services = [
+  { name: '话费', icon: 'Iphone' },
+  { name: '机票', icon: 'Promotion' },
+  { name: '电影票', icon: 'VideoPlay' },
+  { name: '游戏', icon: 'VideoGame' },
+  { name: '彩票', icon: 'Present' },
+  { name: '加油站', icon: 'LocalGasStation' },
+  { name: '酒店', icon: 'OfficeBuilding' },
+  { name: '火车票', icon: 'Ticket' },
+  { name: '众筹', icon: 'TrendCharts' },
+  { name: '理财', icon: 'Money' },
+  { name: '礼品卡', icon: 'Gift' },
+  { name: '白条', icon: 'CreditCard' },
+]
 const categories = ref([])
 const activeIdx = ref(0)
+
+const newsList = [
+  { id: 1, tag: '[特惠]', title: '备战开学季 全民半价购数码' },
+  { id: 2, tag: '[公告]', title: '有好物APP新版本上线' },
+  { id: 3, tag: '[特惠]', title: '端午节 粽情回馈' },
+  { id: 4, tag: '[公告]', title: '有好物618年中大促' },
+  { id: 5, tag: '[特惠]', title: '会员日 全场8折' },
+]
 
 onMounted(async () => {
   try {
@@ -139,103 +158,62 @@ onMounted(async () => {
       width: 250px;
       flex-shrink: 0;
       height: 100%;
+      overflow: hidden;
       background: var(--color-bg-page);
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      padding: 8px;
-
-      .user-panel {
-        background: var(--color-bg-light);
-        padding: 12px;
-
-        .user-info {
-          display: flex;
-          gap: 10px;
-          align-items: center;
-          margin-bottom: 8px;
-
-          .avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: #ddd;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 10px;
-            color: var(--color-text-light);
-          }
-          .user-text {
-            font-size: 12px;
-            color: var(--color-text);
-            a { color: var(--color-primary); }
-          }
-        }
-
-        .user-links {
-          display: flex;
-          gap: 8px;
-          a {
-            flex: 1;
-            text-align: center;
-            background: var(--color-primary);
-            color: #fff;
-            font-size: 12px;
-            padding: 4px 0;
-            text-decoration: none;
-          }
-        }
-      }
+      padding: 5px;
 
       .news {
-        background: var(--color-bg-page);
-        padding: 8px 12px;
+        background: #fff;
+        border: 1px solid #e4e4e4;
 
-        .news-tabs {
+        h4 {
           display: flex;
-          gap: 12px;
-          margin-bottom: 6px;
-          font-size: 13px;
-          span {
-            cursor: pointer;
-            color: var(--color-text-light);
-            &.active { color: var(--color-primary); font-weight: bold; }
-          }
+          justify-content: space-between;
+          align-items: center;
+          padding: 3px 8px;
+          margin: 3px 3px 0;
+          border-bottom: 1px solid #e4e4e4;
+          font-size: 14px;
+          font-weight: 400;
         }
         .news-list {
+          padding: 2px 8px;
+          line-height: 24px;
           font-size: 12px;
           color: var(--color-text);
-          line-height: 22px;
+          list-style: none;
+          .tag { font-weight: 700; color: var(--color-primary); margin-right: 2px; }
         }
       }
 
-      .services {
-        flex: 1;
+      .ads {
+        margin-top: 2px;
+        img { width: 100%; display: block; }
+      }
+      .lifeservices {
+        margin-top: 5px;
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 4px;
-        align-content: start;
+        grid-template-columns: repeat(4, 1fr);
+        list-style: none;
+        padding: 0;
+        border-top: 1px solid #e4e4e4;
+        border-left: 1px solid #e4e4e4;
 
-        .service-item {
+        .life-item {
+          aspect-ratio: 1;
           display: flex;
           flex-direction: column;
           align-items: center;
-          padding: 6px;
-          background: var(--color-bg-page);
-          font-size: 11px;
+          justify-content: center;
+          border-right: 1px solid #e4e4e4;
+          border-bottom: 1px solid #e4e4e4;
+          cursor: pointer;
           color: var(--color-text);
-
-          .service-icon {
-            width: 24px;
-            height: 24px;
-            background: #ddd;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 9px;
-            margin-bottom: 2px;
-          }
+          font-size: 12px;
+          &:hover { color: var(--color-primary); }
+          span { margin-top: 4px; }
         }
       }
     }
