@@ -98,7 +98,7 @@ def get_config() -> dict:
         "nginx_log_dir": "data/nginx/logs",
 
         # Jenkins
-        "jenkins_image": "jenkins/jenkins:lts-jdk17",
+        "jenkins_image": "jenkins/jenkins:lts-jdk21",
         "jenkins_container": "jenkins",
         "jenkins_port": "8070",
         "jenkins_agent_port": "50000",
