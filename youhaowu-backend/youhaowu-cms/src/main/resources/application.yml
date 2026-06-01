@@ -1,0 +1,26 @@
+server:
+  port: 8095
+
+spring:
+  application:
+    name: youhaowu-cms
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.8.112:8848
+        username: nacos
+        password: nacos
+        namespace: public
+        group: DEFAULT_GROUP
+        register-enabled: true
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://192.168.8.112:5432/youhaowu_pms
+    username: faris
+    password: "123456"
+
+logging:
+  file:
+    path: /tmp
+  level:
+    com.youhaowu.cms: debug

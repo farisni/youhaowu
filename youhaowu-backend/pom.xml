@@ -45,7 +45,7 @@
         <module>youhaowu-gateway</module>
         <module>youhaowu-cart</module>
         <module>youhaowu-seckill</module>
-    </modules>
+        <module>youhaowu-cms</module>    </modules>
 
     <!-- 依赖版本统一管理（不实际引入依赖） -->
     <dependencyManagement>
