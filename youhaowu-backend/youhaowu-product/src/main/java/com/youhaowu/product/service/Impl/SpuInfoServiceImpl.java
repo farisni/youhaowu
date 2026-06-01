@@ -184,16 +184,21 @@ public class SpuInfoServiceImpl implements SpuInfoService {
         //  2. 查询 SPU 关联的基本属性，筛选可检索属性
         List<ProductAttrValueEntity> baseAttrs = productAttrValueService.baseAttrListforspu(spuId);
         List<Long> attrIds = baseAttrs.stream().map(ProductAttrValueEntity::getAttrId).collect(Collectors.toList());
-        List<Long> searchAttrIds = attrService.selectSearchAttrIds(attrIds);
-        List<SkuEsModel.Attrs> attrEsModels = baseAttrs.stream()
-                .filter(a -> searchAttrIds.contains(a.getAttrId()))
-                .map(a -> {
-                    SkuEsModel.Attrs m = new SkuEsModel.Attrs();
-                    m.setAttrId(a.getAttrId());
-                    m.setAttrName(a.getAttrName());
-                    m.setAttrValue(a.getAttrValue());
-                    return m;
-                }).collect(Collectors.toList());
+        List<SkuEsModel.Attrs> attrEsModels;
+        if (attrIds.isEmpty()) {
+            attrEsModels = List.of();
+        } else {
+            List<Long> searchAttrIds = attrService.selectSearchAttrIds(attrIds);
+            attrEsModels = baseAttrs.stream()
+                    .filter(a -> searchAttrIds.contains(a.getAttrId()))
+                    .map(a -> {
+                        SkuEsModel.Attrs m = new SkuEsModel.Attrs();
+                        m.setAttrId(a.getAttrId());
+                        m.setAttrName(a.getAttrName());
+                        m.setAttrValue(a.getAttrValue());
+                        return m;
+                    }).collect(Collectors.toList());
+        }
 
         //  3. 查询库存
         List<Long> skuIds = skuVOs.stream().map(SkuInfoVO::getSkuId).collect(Collectors.toList());
