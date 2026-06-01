@@ -33,7 +33,8 @@ const columns = [
 
   .container {
     width: var(--width-content);
-    margin: 0 auto;
+    margin-left: auto !important;
+    margin-right: auto !important;
 
     .columns {
       display: grid;
@@ -42,6 +43,7 @@ const columns = [
       margin-bottom: 24px;
 
       .col {
+        text-align: center;
         h4 { color: #fff; font-weight: bold; font-size: 14px; margin-bottom: 12px; }
         ul { list-style: none; padding: 0; margin: 0; }
         li { color: var(--color-text-light); font-size: 12px; line-height: 24px; cursor: pointer; }
