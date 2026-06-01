@@ -35,6 +35,15 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
+    public NewsVO getById(Long id) {
+        NewsEntity e = newsMapper.selectById(id);
+        if (e == null) return null;
+        NewsVO vo = new NewsVO();
+        BeanUtil.copyProperties(e, vo);
+        return vo;
+    }
+
+    @Override
     public PageData<NewsVO> page(NewsQueryDTO query) {
         LambdaQueryWrapper<NewsEntity> qw = new LambdaQueryWrapper<>();
         if (query.getTitle() != null) qw.like(NewsEntity::getTitle, query.getTitle());

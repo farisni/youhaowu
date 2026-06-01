@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface BannerService {
     List<BannerVO> listEnabled();
+    BannerVO getById(Long id);
     PageData<BannerVO> page(BannerQueryDTO query);
     Integer save(BannerSaveDTO dto);
     Integer update(Long id, BannerSaveDTO dto);

@@ -23,26 +23,28 @@ public class BannerController {
         return R.ok(bannerService.listEnabled());
     }
 
+    @GetMapping(CmsServiceUris.CmsBanner.INFO)
+    public R<BannerVO> info(@PathVariable Long id) {
+        return R.ok(bannerService.getById(id));
+    }
+
     @PostMapping(CmsServiceUris.CmsBanner.PAGE)
     public R<PageData<BannerVO>> page(@RequestBody BannerQueryDTO query) {
         return R.ok(bannerService.page(query));
     }
 
     @PostMapping(CmsServiceUris.CmsBanner.SAVE)
-    public R<Void> save(@RequestBody BannerSaveDTO dto) {
-        bannerService.save(dto);
-        return R.ok();
+    public R<Integer> save(@RequestBody BannerSaveDTO dto) {
+        return R.ok(bannerService.save(dto));
     }
 
     @PostMapping(CmsServiceUris.CmsBanner.UPDATE)
-    public R<Void> update(@PathVariable Long id, @RequestBody BannerSaveDTO dto) {
-        bannerService.update(id, dto);
-        return R.ok();
+    public R<Integer> update(@PathVariable Long id, @RequestBody BannerSaveDTO dto) {
+        return R.ok(bannerService.update(id, dto));
     }
 
     @PostMapping(CmsServiceUris.CmsBanner.DELETE)
-    public R<Void> delete(@RequestBody List<Long> ids) {
-        bannerService.deleteBatch(ids);
-        return R.ok();
+    public R<Integer> delete(@RequestBody List<Long> ids) {
+        return R.ok(bannerService.deleteBatch(ids));
     }
 }

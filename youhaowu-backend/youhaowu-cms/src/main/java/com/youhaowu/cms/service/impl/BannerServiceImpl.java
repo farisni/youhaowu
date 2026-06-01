@@ -35,6 +35,15 @@ public class BannerServiceImpl implements BannerService {
     }
 
     @Override
+    public BannerVO getById(Long id) {
+        BannerEntity e = bannerMapper.selectById(id);
+        if (e == null) return null;
+        BannerVO vo = new BannerVO();
+        BeanUtil.copyProperties(e, vo);
+        return vo;
+    }
+
+    @Override
     public PageData<BannerVO> page(BannerQueryDTO query) {
         LambdaQueryWrapper<BannerEntity> qw = new LambdaQueryWrapper<>();
         if (query.getTitle() != null) qw.like(BannerEntity::getTitle, query.getTitle());

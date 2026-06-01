@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface NewsService {
     List<NewsVO> listEnabled();
+    NewsVO getById(Long id);
     PageData<NewsVO> page(NewsQueryDTO query);
     Integer save(NewsSaveDTO dto);
     Integer update(Long id, NewsSaveDTO dto);

@@ -23,26 +23,28 @@ public class NewsController {
         return R.ok(newsService.listEnabled());
     }
 
+    @GetMapping(CmsServiceUris.CmsNews.INFO)
+    public R<NewsVO> info(@PathVariable Long id) {
+        return R.ok(newsService.getById(id));
+    }
+
     @PostMapping(CmsServiceUris.CmsNews.PAGE)
     public R<PageData<NewsVO>> page(@RequestBody NewsQueryDTO query) {
         return R.ok(newsService.page(query));
     }
 
     @PostMapping(CmsServiceUris.CmsNews.SAVE)
-    public R<Void> save(@RequestBody NewsSaveDTO dto) {
-        newsService.save(dto);
-        return R.ok();
+    public R<Integer> save(@RequestBody NewsSaveDTO dto) {
+        return R.ok(newsService.save(dto));
     }
 
     @PostMapping(CmsServiceUris.CmsNews.UPDATE)
-    public R<Void> update(@PathVariable Long id, @RequestBody NewsSaveDTO dto) {
-        newsService.update(id, dto);
-        return R.ok();
+    public R<Integer> update(@PathVariable Long id, @RequestBody NewsSaveDTO dto) {
+        return R.ok(newsService.update(id, dto));
     }
 
     @PostMapping(CmsServiceUris.CmsNews.DELETE)
-    public R<Void> delete(@RequestBody List<Long> ids) {
-        newsService.deleteBatch(ids);
-        return R.ok();
+    public R<Integer> delete(@RequestBody List<Long> ids) {
+        return R.ok(newsService.deleteBatch(ids));
     }
 }

@@ -18,6 +18,10 @@ const mockMenu = [
     { id: '32', name: '角色管理', path: '/system/role' },
     { id: '33', name: '菜单管理', path: '/system/menu' },
   ]},
+  { id: '4', name: '内容管理', path: '/cms', icon: 'Document', children: [
+    { id: '41', name: '轮播图管理', path: '/cms/banner' },
+    { id: '42', name: '首页快报', path: '/cms/news' },
+  ]},
 ]
 
 const mockUserInfo = {

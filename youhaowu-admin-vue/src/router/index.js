@@ -34,6 +34,8 @@ const componentMap = {
   '/system/user': () => import('@/views/system/userList.vue'),
   '/system/role': () => import('@/views/system/roleList.vue'),
   '/system/menu': () => import('@/views/system/menuList.vue'),
+  '/cms/banner': () => import('@/views/cms/banner.vue'),
+  '/cms/news': () => import('@/views/cms/news.vue'),
 }
 
 export const addDynamicFLatRoutes = (menuArr) => {
