@@ -273,15 +273,18 @@ onMounted(async () => {
   margin-left: 66px;
 }
 .subitem dl dd em {
+  font-style: normal;
   display: inline-block;
-  height: 14px;
-  line-height: 14px;
-  padding: 0 8px;
-  margin-top: 5px;
-  border-left: 1px solid #ccc;
+  padding: 0 6px;
+  margin: 2px 0;
   font-size: 12px;
   cursor: pointer;
-  color: #999;
+  color: #666;
+}
+.subitem dl dd em + em::before {
+  content: "|";
+  margin-right: 6px;
+  color: #ddd;
 }
 .subitem dl dd em:hover {
   color: var(--color-primary);
