@@ -15,6 +15,13 @@ spring:
     cache: false
   session:
     store-type: redis
+  kafka:
+    bootstrap-servers: 192.168.8.112:9092
+    consumer:
+      group-id: youhaowu-search-up
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      auto-offset-reset: latest
 
 ES:
   host: 192.168.8.112
@@ -25,11 +32,3 @@ logging:
     path: /tmp
   level:
     com.youhaowu.search: debug
-
-  kafka:
-    bootstrap-servers: 192.168.8.112:9092
-    consumer:
-      group-id: youhaowu-search-up
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      auto-offset-reset: latest
