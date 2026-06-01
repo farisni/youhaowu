@@ -7,10 +7,10 @@
           <div :class="{ current: activeTab === 'account' }" @click="activeTab = 'account'">账户登录</div>
         </div>
         <div class="content">
-          <el-form ref="formRef" :model="form" :rules="rules">
+          <el-form ref="formRef" :model="form">
             <div class="input-group">
               <span class="input-icon"><el-icon><User /></el-icon></span>
-              <el-input v-model="form.phone" placeholder="手机号" class="login-input" maxlength="11" />
+              <el-input v-model="form.phone" placeholder="手机号" class="login-input" />
             </div>
             <div class="input-group">
               <span class="input-icon"><el-icon><Lock /></el-icon></span>
@@ -23,9 +23,7 @@
               </label>
               <span class="forget">忘记密码？</span>
             </div>
-            <button class="btn" :disabled="loading" @click.prevent="doLogin">
-              {{ loading ? '登录中...' : '登\u00a0\u00a0录' }}
-            </button>
+            <button class="btn" @click.prevent="doLogin">登&nbsp;&nbsp;录</button>
           </el-form>
           <div class="call">
             <ul>
@@ -50,66 +48,38 @@
 </template>
 
 <script setup>
-import { reactive, ref, computed, onMounted } from 'vue'
+import { reactive, ref, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { User, Lock } from '@element-plus/icons-vue'
 import { useUserStore } from '@/stores/user.js'
 import { ElMessage } from 'element-plus'
-import authApi from '@/api/auth.js'
 
 const router = useRouter()
 const route = useRoute()
 const userStore = useUserStore()
 
-const loading = ref(false)
-const formRef = ref(null)
 const activeTab = ref('account')
 const isKeepSecret = ref(false)
+const form = reactive({ phone: 'faris', password: '123456' })
 
-const form = reactive({ phone: '', password: '' })
-
-const rules = {
-  phone: [
-    { required: true, message: '请输入手机号', trigger: 'blur' },
-    { pattern: /^1\d{10}$/, message: '手机号格式不正确', trigger: 'blur' },
-  ],
-  password: [
-    { required: true, message: '请输入密码', trigger: 'blur' },
-    { min: 6, message: '密码至少6位', trigger: 'blur' },
-  ],
-}
-
-const doLogin = async () => {
-  if (!formRef.value) return
-  try { await formRef.value.validate() } catch { return }
-  loading.value = true
-  try {
-    const { phone, password } = form
-    const res = await authApi.login({ username: phone, password })
-    userStore.setToken(res.data.token)
-    userStore.setUserInfo(res.data.userInfo)
-    sessionStorage[isKeepSecret.value ? 'setItem' : 'removeItem']('AUTOLOGIN',
-      isKeepSecret.value ? JSON.stringify({ phone, password }) : undefined)
-    ElMessage.success('登录成功')
-    router.push(route.query.redirect || '/')
-  } catch (err) {
-    if (err?.message) ElMessage.error(err.message)
-  } finally {
-    loading.value = false
+const doLogin = () => {
+  userStore.setToken('mock-token')
+  userStore.setUserInfo({ username: form.phone, avatar: '' })
+  if (isKeepSecret.value) {
+    sessionStorage.setItem('AUTOLOGIN', JSON.stringify({ phone: form.phone, password: form.password }))
   }
+  ElMessage.success('登录成功')
+  router.push(route.query.redirect || '/')
 }
 
-const autoLogin = async () => {
+const autoLogin = () => {
   const cached = sessionStorage.getItem('AUTOLOGIN')
   if (!cached) return
-  try {
-    const { phone, password } = JSON.parse(cached)
-    const res = await authApi.login({ username: phone, password })
-    userStore.setToken(res.data.token)
-    userStore.setUserInfo(res.data.userInfo)
-    ElMessage.success('自动登录成功')
-    router.replace(route.query.redirect || '/')
-  } catch { sessionStorage.removeItem('AUTOLOGIN') }
+  const { phone, password } = JSON.parse(cached)
+  userStore.setToken('mock-token')
+  userStore.setUserInfo({ username: phone, avatar: '' })
+  ElMessage.success('自动登录成功')
+  router.replace(route.query.redirect || '/')
 }
 
 onMounted(autoLogin)
@@ -172,7 +142,7 @@ onMounted(autoLogin)
     margin-bottom: 16px;
     .input-icon {
       width: 37px;
-      height: 32px;
+      height: 40px;
       border: 1px solid #ccc;
       border-right: none;
       border-radius: 2px 0 0 2px;
@@ -189,7 +159,7 @@ onMounted(autoLogin)
         border: 1px solid #ccc;
         border-left: none;
         box-shadow: none;
-        height: 32px;
+        height: 40px;
       }
     }
   }
@@ -215,12 +185,11 @@ onMounted(autoLogin)
     border: 1px solid var(--color-primary);
     color: #fff;
     width: 100%;
-    height: 36px;
+    height: 40px;
     margin-top: 20px;
     font-size: 16px;
     cursor: pointer;
-    &:disabled { opacity: .7; cursor: not-allowed; }
-    &:hover:not(:disabled) { background: var(--color-primary-dark); }
+    &:hover { background: var(--color-primary-dark); }
   }
 
   .call {

@@ -220,3 +220,4 @@
 - feat(pc-vue): 登录页模板风格改造（背景 + 表单验证 + 自动登录 + 社交图标）
 - feat(pc-vue): 今日推荐时钟替换为 SVG 图标
 - refactor(pc-vue): 精简 Login.vue（398→271 行）
+- feat(pc-vue): 登录页假登录（faris/123456 一键跳首页）
