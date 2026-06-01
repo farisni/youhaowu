@@ -158,9 +158,7 @@ onMounted(async () => {
     .side {
       width: 250px;
       flex-shrink: 0;
-      height: 100%;
-      overflow: hidden;
-      
+
       display: flex;
       flex-direction: column;
       padding: 0;
@@ -174,15 +172,15 @@ onMounted(async () => {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          padding: 3px 8px;
-          margin: 3px 3px 0;
+          padding: 5px 8px;
+          margin: 2px 3px 0;
           border-bottom: 1px solid #e4e4e4;
           font-size: 14px;
           font-weight: 400;
         }
         .news-list {
-          padding: 2px 8px;
-          line-height: 24px;
+          padding: 1px 8px;
+          line-height: 22px;
           font-size: 12px;
           color: var(--color-text);
           list-style: none;
@@ -191,21 +189,23 @@ onMounted(async () => {
       }
 
       .ads {
-        margin-top: 2px;
+        margin-top: 5px;
         img { width: 100%; display: block; }
       }
       .lifeservices {
-        margin-top: 0;
+        height: 195px;
+        margin: 0;
+        
         display: grid;
         grid-template-columns: repeat(4, 1fr);
+        grid-auto-rows: 1fr;
         list-style: none;
         padding: 0;
         border-left: 1px solid #e4e4e4;
         border-right: 1px solid #e4e4e4;
 
         .life-item {
-          aspect-ratio: 1;
-          min-height: 62px;
+          box-sizing: border-box;
           display: flex;
           flex-direction: column;
           align-items: center;
