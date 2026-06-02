@@ -44,25 +44,30 @@
           <el-input v-model="form.title" placeholder="轮播图标题" />
         </el-form-item>
         <el-form-item label="图片">
-          <div style="display:flex;align-items:center;gap:8px">
-            <el-input v-model="form.imgUrl" placeholder="上传后自动填入" readonly style="flex:1" />
-            <el-upload
-              :auto-upload="false"
-              :show-file-list="false"
-              :on-change="handleFileChange"
-              accept="image/*"
-            >
-              <el-button type="primary" :loading="uploading">
-                {{ uploading ? '上传中...' : '选择图片' }}
-              </el-button>
-            </el-upload>
+          <el-upload
+            drag
+            :auto-upload="false"
+            :show-file-list="false"
+            :on-change="handleFileChange"
+            accept="image/*"
+            style="width:100%"
+          >
+            <template v-if="form.imgUrl">
+              <img :src="form.imgUrl" style="width:100%;max-height:180px;object-fit:contain;border-radius:4px" />
+              <div style="margin-top:8px;color:#999;font-size:13px">拖拽或点击更换图片</div>
+            </template>
+            <template v-else>
+              <el-icon style="font-size:48px;color:#c0c4cc"><UploadFilled /></el-icon>
+              <div style="margin-top:12px;color:#999">拖拽图片到此处或点击上传</div>
+            </template>
+          </el-upload>
+          <div v-if="form.imgUrl" style="margin-top:6px">
+            <el-input v-model="form.imgUrl" readonly size="small" placeholder="上传后自动填入" />
           </div>
-          <img v-if="form.imgUrl" :src="form.imgUrl"
-            style="width:200px;height:100px;object-fit:cover;border-radius:4px;margin-top:8px" />
         </el-form-item>
         <el-form-item label="跳转链接">
           <el-input v-model="form.linkUrl" placeholder="如 /product/123 或 https://..." />
-        <span style="font-size:12px;color:#999">用户点击轮播图后跳转的目标地址（商品页、活动页等）</span>
+          <span style="font-size:12px;color:#999">用户点击轮播图后跳转的目标地址（商品页、活动页等）</span>
         </el-form-item>
         <el-form-item label="排序">
           <el-input-number v-model="form.sort" :min="0" controls-position="right" />
@@ -85,7 +90,7 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { Search, Refresh, Plus, Edit, Delete } from '@element-plus/icons-vue'
+import { Search, Refresh, Plus, Edit, Delete, UploadFilled } from '@element-plus/icons-vue'
 import CommonTable from '@/components/CommonTable.vue'
 import api from '@/api/cms/bannerApi.js'
 import ossApi from '@/api/thirdparty/ossApi.js'
