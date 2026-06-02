@@ -54,8 +54,27 @@
         <el-form-item label="品牌名称">
           <el-input v-model="form.name" placeholder="请输入品牌名称" />
         </el-form-item>
-        <el-form-item label="Logo URL">
-          <el-input v-model="form.logo" placeholder="请输入 Logo 图片地址" />
+        <el-form-item label="Logo">
+          <el-upload
+            drag
+            :auto-upload="false"
+            :show-file-list="false"
+            :on-change="handleFileChange"
+            accept="image/*"
+            style="width:100%"
+          >
+            <template v-if="form.logo">
+              <img :src="form.logo" style="width:100%;max-height:120px;object-fit:contain;border-radius:4px" />
+              <div style="margin-top:8px;color:#999;font-size:13px">拖拽或点击更换 Logo</div>
+            </template>
+            <template v-else>
+              <el-icon style="font-size:48px;color:#c0c4cc"><UploadFilled /></el-icon>
+              <div style="margin-top:12px;color:#999">拖拽 Logo 到此处或点击上传</div>
+            </template>
+          </el-upload>
+          <div v-if="form.logo" style="margin-top:6px">
+            <el-input v-model="form.logo" readonly size="small" placeholder="上传后自动填入" />
+          </div>
         </el-form-item>
         <el-form-item label="品牌介绍">
           <el-input v-model="form.descript" type="textarea" :rows="3" placeholder="请输入品牌介绍" />
@@ -84,9 +103,10 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { Search, Refresh, Plus, Edit, Delete } from '@element-plus/icons-vue'
+import { Search, Refresh, Plus, Edit, Delete, UploadFilled } from '@element-plus/icons-vue'
 import CommonTable from '@/components/CommonTable.vue'
 import api from '@/api/product/brandApi.js'
+import ossApi from '@/api/thirdparty/ossApi.js'
 
 const tableRef = ref(null)
 const dialogVisible = ref(false)
@@ -94,6 +114,7 @@ const dialogTitle = ref('')
 const isEdit = ref(false)
 const editId = ref(null)
 const searchObj = reactive({ key: '', showStatus: '' })
+const uploading = ref(false)
 
 const initForm = { name: '', logo: '', descript: '', firstLetter: '', sort: 0, showStatus: 1 }
 const form = reactive({ ...initForm })
@@ -123,6 +144,25 @@ const edit = async (id) => {
   const res = await api.getById(id)
   if (res.data) Object.assign(form, res.data)
   dialogVisible.value = true
+}
+
+const handleFileChange = async (file) => {
+  uploading.value = true
+  try {
+    const policyRes = await ossApi.getPolicy(file.name)
+    const { url, accessUrl } = policyRes.data
+    await fetch(url, {
+      method: 'PUT',
+      body: file.raw,
+      headers: { 'Content-Type': file.raw.type || 'application/octet-stream' }
+    })
+    form.logo = accessUrl
+    ElMessage.success('上传成功')
+  } catch (e) {
+    ElMessage.error('上传失败: ' + (e.message || '网络错误'))
+  } finally {
+    uploading.value = false
+  }
 }
 
 const submitForm = async () => {
