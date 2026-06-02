@@ -136,3 +136,4 @@ gulimall 有 LoginController + OAuth2Controller，wheatmall 当前仅 DemoContro
 - feat: PostgreSQL 数据库定时备份（pg_dump + cron）
 - feat: 全链路日志追踪（TraceId 贯穿 Gateway → 各微服务 → DB）
 - refactor: 后端 save 方法统一改名为 saveOrUpdate，语义更明确（id 空=新增，id 非空=更新）
+- feat: 前端首页内容缓存优化（banner/news/recommend/rank 列表加 Redis 缓存，减少 DB 查询）

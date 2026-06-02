@@ -3,8 +3,8 @@
     <HomeListView />
     <HomeRecommend />
     <HomeRank />
-    <HomeCommodityList />
     <HomeGuess />
+    <HomeCommodityList />
     <HomeFloor
       v-for="floor in floorList"
       :key="floor.id"
