@@ -236,3 +236,4 @@
 - feat(cms): 今日推荐全套接口（RecommendController + Entity + 前端管理页 + pc-vue 接真实数据）
 - refactor(cms): 图片 URL 统一存相对路径 /youhaowu/...，Service 层 fullUrl 拼接
 - style(admin): 编辑弹窗按回车提交 + 图片 hover 预览
+- style(pc-vue): 今日推荐区域移除标题文字，仅显示图片

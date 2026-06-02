@@ -18,7 +18,6 @@
       <div v-else-if="error" v-for="i in 4" class="rec-item rec-placeholder">—</div>
       <a v-else v-for="item in list" :key="item.id" class="rec-item" :href="item.linkUrl || '#'" target="_blank">
         <img :src="item.imgUrl" :alt="item.title" />
-        <span class="rec-title">{{ item.title }}</span>
       </a>
     </div>
   </div>
@@ -55,10 +54,10 @@ onMounted(async () => {
     width: var(--width-content);
     margin: 0 auto;
     display: flex;
-    height: 160px;
+    height: 165px;
     background: #eaeaea;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    //margin-top: 5px;
+    //margin-bottom: 5px;
 
     .clock {
       width: 200px;
@@ -94,11 +93,6 @@ onMounted(async () => {
         object-fit: cover;
       }
 
-      .rec-title {
-        font-size: 12px;
-        color: #666;
-        margin-top: 4px;
-      }
     }
 
     .rec-placeholder {
