@@ -112,7 +112,7 @@ const fetchData = async (page) => {
   try {
     const res = await props.api[props.apiMethod](currentPage.value, pageSize.value, _searchObj)
     tableData.value = res.data?.list ?? res.data?.records ?? []
-    total.value = res.data?.total ?? 0
+    total.value = Number(res.data?.total ?? 0)
     emit('loaded', { list: tableData.value, total: total.value })
   } finally {
     loading.value = false
