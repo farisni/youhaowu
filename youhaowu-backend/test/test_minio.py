@@ -9,7 +9,7 @@ import requests
 import urllib.parse
 from datetime import datetime
 
-THIRDPARTY_BASE = "http://192.168.8.112:8096/thirdparty/oss"
+THIRDPARTY_BASE = "http://192.168.8.112:8096/api/thirdparty/oss"
 MINIO_ENDPOINT = "http://192.168.8.112:9002"
 
 

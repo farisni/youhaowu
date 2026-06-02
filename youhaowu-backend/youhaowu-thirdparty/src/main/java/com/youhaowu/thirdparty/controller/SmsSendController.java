@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
-@RequestMapping("thirdparty/sms")
+@RequestMapping("/api/thirdparty/sms")
 public class SmsSendController {
 
 

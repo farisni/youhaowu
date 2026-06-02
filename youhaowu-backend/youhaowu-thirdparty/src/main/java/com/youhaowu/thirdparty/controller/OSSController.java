@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @RestController
-@RequestMapping("thirdparty/oss")
+@RequestMapping("/api/thirdparty/oss")
 public class OSSController {
 
     @Autowired
