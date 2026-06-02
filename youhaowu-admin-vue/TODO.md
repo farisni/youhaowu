@@ -2,6 +2,8 @@
 
 ## 已知问题
 
+- [ ] **品牌管理行内编辑双向干扰**：排序双击会触发名称列进入编辑态，.prevent.stop + pointer-events:none 均无效，疑似 el-table DOM 切换导致双击第二击误触，需排查根本原因
+
 - [x] **F5 刷新后动态路由丢失**：已采用业内标准做法——每次刷新调 `authApi.getUserInfo()` 重新获取菜单，不用 localStorage 恢复
 - [x] **动态路由恢复后需重导航**：`addDynamicFLatRoutes` 后已加 `next({ ...to, replace: true })`
 - [x] **componentMap 路径**：已用全路径做 key（如 `/product/category`）

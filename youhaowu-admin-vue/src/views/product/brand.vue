@@ -34,8 +34,35 @@
         </div>
       </template>
       <template #operation-buttons>
-        <el-button type="danger" @click="batchDelete" :disabled="selectedIds.length===0"><el-icon><Delete /></el-icon>批量删除</el-button>
         <el-button type="success" @click="add"><el-icon><Plus /></el-icon>新建</el-button>
+        <el-button type="danger" @click="batchDelete" :disabled="selectedIds.length===0"><el-icon><Delete /></el-icon>批量删除</el-button>
+      </template>
+      <template #name="{ row }">
+        <template v-if="editingId === row.brandId || editingSortId === row.brandId">
+          <el-input
+            ref="nameInputRef"
+            v-model="editingName"
+            style="width:100%"
+            @keyup.enter='editingId = null; row.name = editingName; api.updateById(row.brandId, { name: editingName }); ElMessage.success("已更新")'
+            @keyup.escape="cancelNameEdit"
+            @blur="handleNameBlur(row)"
+          />
+        </template>
+        <div v-else class="editable-cell" :style="editingSortId ? { pointerEvents: 'none' } : {}" @dblclick.prevent.stop="editingSortId || startNameEdit(row)">{{ row.name }}</div>
+      </template>
+      <template #sort="{ row }">
+        <template v-if="editingSortId === row.brandId">
+          <el-input
+            v-model="editingSortVal"
+            type="number"
+            size="small"
+            style="width:100%"
+            @keyup.enter="editingSortId = null; row.sort = Number(editingSortVal); api.updateById(row.brandId, { sort: Number(editingSortVal) })"
+            @keyup.escape="editingSortId = null"
+            @blur="editingSortVal === String(row.sort) ? editingSortId = null : undefined"
+          />
+        </template>
+        <div v-else class="editable-cell" @dblclick.prevent.stop="startSortEdit(row)">{{ row.sort }}</div>
       </template>
       <template #urlText="{ row }">
         <span style="font-size:12px;color:#666;word-break:break-all">{{ row.logo }}</span>
@@ -49,8 +76,14 @@
           style="--el-switch-off-color:gray" @change="handleStatusChange(row)" />
       </template>
       <template #actions="{ row }">
-        <el-button type="primary" size="small" link :icon="Edit" @click="edit(row.brandId)">编辑</el-button>
-        <el-button type="danger" size="small" link :icon="Delete" @click="remove(row)">删除</el-button>
+        <template v-if="editingId === row.brandId || editingSortId === row.brandId">
+          <el-button type="success" size="small" link :icon="Check" @click="editingId = null; row.name = editingName; api.updateById(row.brandId, { name: editingName }); ElMessage.success('已更新')">保存</el-button>
+          <el-button type="info" size="small" link :icon="Close" @click="cancelNameEdit">取消</el-button>
+        </template>
+        <template v-else>
+          <el-button type="primary" size="small" link :icon="Edit" @click="edit(row.brandId)">编辑</el-button>
+          <el-button type="danger" size="small" link :icon="Delete" @click="remove(row)">删除</el-button>
+        </template>
       </template>
     </CommonTable>
 
@@ -117,7 +150,7 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { Search, Refresh, Plus, Edit, Delete, UploadFilled } from '@element-plus/icons-vue'
+import { Search, Refresh, Plus, Edit, Delete, UploadFilled, Check, Close } from '@element-plus/icons-vue'
 import CommonTable from '@/components/CommonTable.vue'
 import api from '@/api/product/brandApi.js'
 import ossApi from '@/api/thirdparty/ossApi.js'
@@ -130,6 +163,11 @@ const editId = ref(null)
 const searchObj = reactive({ key: '', showStatus: '' })
 const selectedIds = ref([])
 const deleteDialogVisible = ref(false)
+const editingId = ref(null)
+const editingName = ref('')
+const nameInputRef = ref(null)
+const editingSortId = ref(null)
+const editingSortVal = ref('')
 const uploading = ref(false)
 
 const initForm = { name: '', logo: '', descript: '', firstLetter: '', sort: 0, showStatus: 1 }
@@ -142,7 +180,7 @@ const columns = [
   { label: 'Logo', width: 80, prop: 'logo' },
   { prop: 'urlText', label: 'Logo URL', minWidth: 180 },
   { prop: 'firstLetter', label: '首字母', minWidth: 80 },
-  { prop: 'sort', label: '排序', minWidth: 80 },
+  { prop: 'sort', label: '排序', width: 80 },
   { label: '状态', width: 90, prop: 'showStatus' },
 ]
 
@@ -218,6 +256,34 @@ const confirmBatchDelete = async () => {
   tableRef.value?.refresh()
 }
 
+const startSortEdit = (row) => {
+  editingSortId.value = row.brandId
+  editingSortVal.value = String(row.sort)
+  setTimeout(() => {
+    const el = document.querySelector('.brand-page input[type=number]')
+    if (el) el.focus()
+  }, 50)
+}
+
+const startNameEdit = (row) => {
+  if (editingSortId.value) return
+  editingId.value = row.brandId
+  editingName.value = row.name
+  setTimeout(() => {
+    if (nameInputRef.value) nameInputRef.value.focus()
+  }, 50)
+}
+
+const handleNameBlur = (row) => {
+  if (editingName.value.trim() === row.name) {
+    editingId.value = null
+  }
+}
+
+const cancelNameEdit = () => {
+  editingId.value = null
+}
+
 const handleStatusChange = async (row) => {
   row.showStatus = row.showStatus === 1 ? 0 : 1
   await api.updateById(row.brandId, { showStatus: row.showStatus })
@@ -231,4 +297,5 @@ const handleStatusChange = async (row) => {
 .no-logo { color: #ccc; font-size: 14px; }
 
 
+.editable-cell { cursor: pointer; display: block; width: 100%; height: 100%; &:hover { color: var(--el-color-primary); } }
 </style>

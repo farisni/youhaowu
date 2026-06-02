@@ -20,7 +20,12 @@ Controller 层测试统一使用 `backend/intergre-py-test/` 下的 pytest + req
 ### 2. Git 提交规则
 
 **规则描述：**
-**严禁在用户验收前提交代码！** 必须等用户明确说「提交」「commit」后，方可执行。
+**严禁擅自 commit！** Agent 在任何情况下都不得主动执行 `git commit`，包括但不限于：
+- 完成代码修改后
+- 修复 bug 后
+- 任何认为"改动已完成"的时刻
+**只有用户明确说「提交」「commit」「提交代码」后，方可执行 `git add` + `git commit`。**
+违反此规则直接打断回退。
 
 **具体操作：**
 - **用户未要求「提交」时，禁止 `git commit`，只允许 `git add`**
