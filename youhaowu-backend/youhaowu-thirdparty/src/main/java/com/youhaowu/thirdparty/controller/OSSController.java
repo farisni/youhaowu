@@ -60,6 +60,8 @@ public class OSSController {
             respMap.put("url", url);
             respMap.put("dir", dir);
             respMap.put("host", endpoint);
+            String accessUrl = endpoint + "/" + bucket + "/" + objectName;
+            respMap.put("accessUrl", accessUrl);
             respMap.put("expire", String.valueOf(expireEndTime / 1000));
         } catch (Exception e) {
             log.error("生成 MinIO presigned URL 失败", e);
