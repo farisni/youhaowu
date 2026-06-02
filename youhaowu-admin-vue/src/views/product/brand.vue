@@ -35,6 +35,9 @@
       <template #operation-buttons>
         <el-button type="success" @click="add"><el-icon><Plus /></el-icon>新建</el-button>
       </template>
+      <template #urlText="{ row }">
+        <span style="font-size:12px;color:#666;word-break:break-all">{{ row.logo }}</span>
+      </template>
       <template #logo="{ row }">
         <img v-if="row.logo" :src="row.logo" style="width:40px;height:40px;object-fit:contain" />
         <span v-else class="no-logo">—</span>
@@ -123,6 +126,7 @@ const columns = [
   { prop: 'brandId', label: '品牌ID', width: 80 },
   { prop: 'name', label: '品牌名称', minWidth: 150 },
   { label: 'Logo', width: 80, prop: 'logo' },
+  { prop: 'urlText', label: 'Logo URL', minWidth: 180 },
   { prop: 'firstLetter', label: '首字母', minWidth: 80 },
   { prop: 'sort', label: '排序', minWidth: 80 },
   { label: '状态', width: 90, prop: 'showStatus' },
