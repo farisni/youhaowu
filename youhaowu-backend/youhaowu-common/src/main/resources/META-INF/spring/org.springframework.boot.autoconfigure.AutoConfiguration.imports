@@ -1,1 +1,2 @@
 com.youhaowu.common.config.MyBatisPlusConfig
+com.youhaowu.common.config.JacksonConfig
