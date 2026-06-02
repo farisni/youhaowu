@@ -54,6 +54,15 @@
       </template>
     </CommonTable>
 
+    <!-- 批量删除确认 -->
+    <el-dialog v-model="deleteDialogVisible" title="提示" width="400px" :close-on-click-modal="false">
+      <p>确定删除选中的 {{ selectedIds.length }} 个品牌？</p>
+      <template #footer>
+        <el-button @click="deleteDialogVisible=false">取消</el-button>
+        <el-button type="danger" @click="confirmBatchDelete">确定</el-button>
+      </template>
+    </el-dialog>
+
     <el-dialog v-model="dialogVisible" :title="dialogTitle" width="500px" :close-on-click-modal="false">
       <el-form :model="form" label-width="100px">
         <el-form-item label="品牌名称">
@@ -120,6 +129,7 @@ const isEdit = ref(false)
 const editId = ref(null)
 const searchObj = reactive({ key: '', showStatus: '' })
 const selectedIds = ref([])
+const deleteDialogVisible = ref(false)
 const uploading = ref(false)
 
 const initForm = { name: '', logo: '', descript: '', firstLetter: '', sort: 0, showStatus: 1 }
@@ -197,14 +207,15 @@ const remove = (row) => {
 }
 
 const batchDelete = () => {
-  ElMessageBox.confirm(`确定删除选中的 ${selectedIds.value.length} 个品牌？`, '提示', {
-    confirmButtonText: '确定', cancelButtonText: '取消', type: 'warning',
-  }).then(async () => {
-    await api.deleteBatch(selectedIds.value)
-    ElMessage.success('批量删除成功')
-    selectedIds.value = []
-    tableRef.value?.refresh()
-  }).catch(() => {})
+  deleteDialogVisible.value = true
+}
+
+const confirmBatchDelete = async () => {
+  deleteDialogVisible.value = false
+  await api.deleteBatch(selectedIds.value)
+  ElMessage.success('批量删除成功')
+  selectedIds.value = []
+  tableRef.value?.refresh()
 }
 
 const handleStatusChange = async (row) => {
@@ -219,7 +230,5 @@ const handleStatusChange = async (row) => {
 .search-area { .el-form-item { margin: 0; } .el-row { padding: 5px 0; } .btn-col { display: flex; justify-content: flex-end; align-items: center; gap: 8px; } }
 .no-logo { color: #ccc; font-size: 14px; }
 
-/* 修复 Element Plus MessageBox 定位异常 */
-:deep(.el-overlay) { position: fixed !important; inset: 0 !important; }
-:deep(.el-message-box) { position: fixed !important; top: 50% !important; left: 50% !important; transform: translate(-50%, -50%) !important; margin: 0 !important; }
+
 </style>
