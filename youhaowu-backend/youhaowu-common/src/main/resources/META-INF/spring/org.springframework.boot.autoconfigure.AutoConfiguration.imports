@@ -1,2 +1,3 @@
 com.youhaowu.common.config.MyBatisPlusConfig
 com.youhaowu.common.config.JacksonConfig
+com.youhaowu.common.config.MinioProperties

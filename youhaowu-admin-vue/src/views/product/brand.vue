@@ -68,7 +68,12 @@
         <span style="font-size:12px;color:#666;word-break:break-all">{{ row.logo }}</span>
       </template>
       <template #logo="{ row }">
-        <img v-if="row.logo" :src="row.logo" style="width:40px;height:40px;object-fit:contain" />
+        <el-popover v-if="row.logo" placement="top" :width="300" trigger="hover">
+          <template #reference>
+            <img :src="row.logo" style="width:40px;height:40px;object-fit:contain;cursor:pointer" />
+          </template>
+          <img :src="row.logo" style="width:100%" />
+        </el-popover>
         <span v-else class="no-logo">—</span>
       </template>
       <template #showStatus="{ row }">
@@ -110,8 +115,8 @@
             accept="image/*"
             style="width:100%"
           >
-            <template v-if="form.logo">
-              <img :src="form.logo" style="width:100%;max-height:120px;object-fit:contain;border-radius:4px" />
+            <template v-if="previewLogo">
+              <img :src="previewLogo" style="width:100%;max-height:120px;object-fit:contain;border-radius:4px" />
               <div style="margin-top:8px;color:#999;font-size:13px">拖拽或点击更换 Logo</div>
             </template>
             <template v-else>
@@ -119,9 +124,7 @@
               <div style="margin-top:12px;color:#999">拖拽 Logo 到此处或点击上传</div>
             </template>
           </el-upload>
-          <div v-if="form.logo" style="margin-top:6px">
-            <el-input v-model="form.logo" readonly size="small" placeholder="上传后自动填入" />
-          </div>
+          <el-input v-model="form.logo" placeholder="Logo 图片 URL，或拖拽上传" style="margin-top:6px" />
         </el-form-item>
         <el-form-item label="品牌介绍">
           <el-input v-model="form.descript" type="textarea" :rows="3" placeholder="请输入品牌介绍" />
@@ -144,6 +147,8 @@
         <el-button type="primary" @click="submitForm">确定</el-button>
       </template>
     </el-dialog>
+
+    
   </div>
 </template>
 
@@ -168,9 +173,10 @@ const editingName = ref('')
 const nameInputRef = ref(null)
 const editingSortId = ref(null)
 const editingSortVal = ref('')
+const previewLogo = ref('')
 const uploading = ref(false)
 
-const initForm = { name: '', logo: '', descript: '', firstLetter: '', sort: 0, showStatus: 1 }
+const initForm = { name: '', logo: '', fileName: '', descript: '', firstLetter: '', sort: 0, showStatus: 1 }
 const form = reactive({ ...initForm })
 
 const columns = [
@@ -179,6 +185,7 @@ const columns = [
   { prop: 'name', label: '品牌名称', minWidth: 150 },
   { label: 'Logo', width: 80, prop: 'logo' },
   { prop: 'urlText', label: 'Logo URL', minWidth: 180 },
+  { prop: 'fileName', label: '原始文件名', minWidth: 140 },
   { prop: 'firstLetter', label: '首字母', minWidth: 80 },
   { prop: 'sort', label: '排序', width: 80 },
   { label: '状态', width: 90, prop: 'showStatus' },
@@ -190,7 +197,7 @@ const resetSearch = () => { searchObj.key = ''; searchObj.showStatus = ''; handl
 const add = () => {
   isEdit.value = false; editId.value = null
   dialogTitle.value = '新建品牌'
-  Object.assign(form, initForm)
+  Object.assign(form, { brandId: undefined }, initForm)
   dialogVisible.value = true
 }
 
@@ -213,6 +220,8 @@ const handleFileChange = async (file) => {
       headers: { 'Content-Type': file.raw.type || 'application/octet-stream' }
     })
     form.logo = accessUrl
+    form.fileName = file.name
+    previewLogo = policyRes.data.host + '/' + accessUrl
     ElMessage.success('上传成功')
   } catch (e) {
     ElMessage.error('上传失败: ' + (e.message || '网络错误'))

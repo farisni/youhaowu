@@ -13,6 +13,7 @@ public class BrandVO {
     private String name;
 
     private String logo;
+    private String fileName;
 
     private String descript;
 

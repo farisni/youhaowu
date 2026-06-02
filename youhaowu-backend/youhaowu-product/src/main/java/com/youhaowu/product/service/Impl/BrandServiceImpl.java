@@ -1,6 +1,7 @@
 package com.youhaowu.product.service.Impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.youhaowu.common.config.MinioProperties;
 import com.youhaowu.common.utils.PageData;
 import com.youhaowu.product.entity.BrandEntity;
 import com.youhaowu.product.mapper.BrandMapper;
@@ -29,13 +30,27 @@ public class BrandServiceImpl implements BrandService {
     @Autowired
     private CategoryBrandRelationService categoryBrandRelationService;
 
+    @Autowired
+    private MinioProperties minioProperties;
+
+    /**
+     * 将相对路径拼成完整 MinIO URL
+     */
+    private String fullUrl(String path) {
+        if (StrUtil.isBlank(path)) return path;
+        if (path.startsWith("http")) return path;
+        return minioProperties.getEndpoint() + "/" + path;
+    }
+
     @Override
     public PageData<BrandVO> page(BrandQueryDTO query) {
-        return PageUtils.selectPage(brandMapper, new LambdaQueryWrapper<>(), query, e -> {
+        PageData<BrandVO> page = PageUtils.selectPage(brandMapper, new LambdaQueryWrapper<>(), query, e -> {
             BrandVO v = new BrandVO();
             BeanUtil.copyProperties(e, v);
+            v.setLogo(fullUrl(v.getLogo()));
             return v;
         });
+        return page;
     }
 
     @Override
@@ -43,6 +58,7 @@ public class BrandServiceImpl implements BrandService {
         BrandEntity e = brandMapper.selectById(id);
         BrandVO v = new BrandVO();
         BeanUtil.copyProperties(e, v);
+        v.setLogo(fullUrl(v.getLogo()));
         return v;
     }
 

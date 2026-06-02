@@ -36,3 +36,8 @@ logging:
   level:
     com.youhaowu.product: debug
 
+minio:
+  endpoint: http://192.168.8.112:9002
+  access-key: minioadmin
+  secret-key: minioadmin
+  bucket: youhaowu

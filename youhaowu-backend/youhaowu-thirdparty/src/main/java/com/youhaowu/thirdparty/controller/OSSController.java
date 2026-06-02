@@ -7,13 +7,13 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.youhaowu.common.utils.R;
+import com.youhaowu.common.config.MinioProperties;
 
 import io.minio.GetPresignedObjectUrlArgs;
 import io.minio.MinioClient;
@@ -31,17 +31,14 @@ public class OSSController {
     @Autowired
     private MinioClient minioClient;
 
-    @Value("${minio.endpoint}")
-    private String endpoint;
-    @Value("${minio.bucket}")
-    private String bucket;
+    @Autowired
+    private MinioProperties minioProperties;
 
     @GetMapping("/policy")
     public R policy(@RequestParam String fileName) {
         String format = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         String dir = format + "/";
 
-        //  解析原始文件名，生成 原始名_时间戳.扩展名
         int dotIdx = fileName.lastIndexOf('.');
         String baseName, ext;
         if (dotIdx > 0) {
@@ -58,11 +55,10 @@ public class OSSController {
             int expireTime = 30;
             long expireEndTime = System.currentTimeMillis() + expireTime * 1000;
 
-            //  生成 MinIO presigned PUT URL
             String url = minioClient.getPresignedObjectUrl(
                 GetPresignedObjectUrlArgs.builder()
                     .method(Method.PUT)
-                    .bucket(bucket)
+                    .bucket(minioProperties.getBucket())
                     .object(objectName)
                     .expiry(expireTime, TimeUnit.SECONDS)
                     .build()
@@ -70,9 +66,9 @@ public class OSSController {
 
             respMap.put("url", url);
             respMap.put("dir", dir);
-            respMap.put("host", endpoint);
-            String accessUrl = endpoint + "/" + bucket + "/" + objectName;
-            respMap.put("accessUrl", accessUrl);
+            respMap.put("host", minioProperties.getEndpoint());
+            //  数据库存相对路径，展示时拼完整 URL
+            respMap.put("accessUrl", minioProperties.getBucket() + "/" + objectName);
             respMap.put("expire", String.valueOf(expireEndTime / 1000));
         } catch (Exception e) {
             log.error("生成 MinIO presigned URL 失败", e);

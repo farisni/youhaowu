@@ -1,5 +1,6 @@
 package com.youhaowu.product.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -35,7 +36,7 @@ public class BrandEntity implements Serializable {
 	 */
 	@NotNull(message = "修改必须指定品牌id",groups = {UpdateGroup.class})
 	@Null(message = "新增不能指定id",groups = {AddGroup.class})
-	@TableId
+	@TableId(type = IdType.AUTO)
 	private Long brandId;
 	/**
 	 * 品牌名
@@ -48,6 +49,7 @@ public class BrandEntity implements Serializable {
 	@NotBlank(groups = {AddGroup.class})
 	@URL(message = "logo必须是一个合法的url地址",groups={AddGroup.class,UpdateGroup.class})
 	private String logo;
+	private String fileName;
 	/**
 	 * 介绍
 	 */

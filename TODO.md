@@ -129,3 +129,7 @@ gulimall 有 LoginController + OAuth2Controller，wheatmall 当前仅 DemoContro
 - [ ] docker-compose.yml 补充 PostgreSQL、ES、Nacos、Kafka 完整编排
 - [ ] 各模块 Dockerfile
 - feat: 分类树接口加缓存（Redis/本地），减少 DB 查询
+- refactor: 后端统一走 save 接口，id 空=新增，id 非空=更新，去除冗余 update 接口
+- fix: 排查各 Entity @TableId 策略，统一改为 AUTO 自增（避免 Snowflake 与序列冲突）
+- feat: MinIO 上传加 MD5 去重，避免重复文件占用存储
+- refactor: Banner/News 图片 URL 存相对路径，返回时拼完整 URL（同品牌模块）
