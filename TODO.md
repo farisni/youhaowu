@@ -133,3 +133,4 @@ gulimall 有 LoginController + OAuth2Controller，wheatmall 当前仅 DemoContro
 - fix: 排查各 Entity @TableId 策略，统一改为 AUTO 自增（避免 Snowflake 与序列冲突）
 - feat: MinIO 上传加 MD5 去重，避免重复文件占用存储
 - refactor: Banner/News 图片 URL 存相对路径，返回时拼完整 URL（同品牌模块）
+- feat: PostgreSQL 数据库定时备份（pg_dump + cron）

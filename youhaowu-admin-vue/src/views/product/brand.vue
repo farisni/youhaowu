@@ -48,7 +48,7 @@
             @blur="handleNameBlur(row)"
           />
         </template>
-        <div v-else class="editable-cell" :style="editingSortId ? { pointerEvents: 'none' } : {}" @dblclick.prevent.stop="editingSortId || startNameEdit(row)">{{ row.name }}</div>
+        <div v-else class="editable-cell" :style="editingSortId ? { pointerEvents: 'none' } : {}" @dblclick.stop="editingSortId || startNameEdit(row)">{{ row.name }}</div>
       </template>
       <template #sort="{ row }">
         <template v-if="editingSortId === row.brandId">
@@ -62,7 +62,7 @@
             @blur="editingSortVal === String(row.sort) ? editingSortId = null : undefined"
           />
         </template>
-        <div v-else class="editable-cell" @dblclick.prevent.stop="startSortEdit(row)">{{ row.sort }}</div>
+        <div v-else class="editable-cell" @dblclick.stop="startSortEdit(row)">{{ row.sort }}</div>
       </template>
       <template #urlText="{ row }">
         <span style="font-size:12px;color:#666;word-break:break-all">{{ row.logo }}</span>
