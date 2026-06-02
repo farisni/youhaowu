@@ -123,7 +123,7 @@ const initForm = { name: '', logo: '', descript: '', firstLetter: '', sort: 0, s
 const form = reactive({ ...initForm })
 
 const columns = [
-  { prop: 'brandId', label: '品牌ID', width: 80 },
+  { type: 'index', label: '序号', width: 60 },
   { prop: 'name', label: '品牌名称', minWidth: 150 },
   { label: 'Logo', width: 80, prop: 'logo' },
   { prop: 'urlText', label: 'Logo URL', minWidth: 180 },
