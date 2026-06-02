@@ -21,6 +21,9 @@
       <template #operation-buttons>
         <el-button type="success" @click="add"><el-icon><Plus /></el-icon>新建</el-button>
       </template>
+      <template #urlText="{ row }">
+        <span style="font-size:12px;color:#666;word-break:break-all">{{ row.imgUrl }}</span>
+      </template>
       <template #imgUrl="{ row }">
         <img v-if="row.imgUrl" :src="row.imgUrl" style="width:80px;height:40px;object-fit:cover;border-radius:4px" />
         <span v-else style="color:#ccc">—</span>
@@ -101,7 +104,7 @@ const columns = [
   { prop: 'id', label: 'ID', width: 60 },
   { prop: 'title', label: '标题', minWidth: 120 },
   { label: '图片', width: 100, prop: 'imgUrl' },
-  { prop: 'imgUrl', label: 'MinIO URL', minWidth: 200 },
+  { prop: 'urlText', label: 'MinIO URL', minWidth: 200 },
   { prop: 'fileName', label: '原始文件名', minWidth: 140 },
   { prop: 'sort', label: '排序', width: 70 },
   { label: '状态', width: 90, prop: 'status' },
