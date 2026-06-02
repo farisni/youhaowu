@@ -4,13 +4,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.youhaowu.common.utils.R;
@@ -37,10 +37,21 @@ public class OSSController {
     private String bucket;
 
     @GetMapping("/policy")
-    public R policy() {
+    public R policy(@RequestParam String fileName) {
         String format = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         String dir = format + "/";
-        String objectName = dir + UUID.randomUUID().toString().replace("-", "");
+
+        //  解析原始文件名，生成 原始名_时间戳.扩展名
+        int dotIdx = fileName.lastIndexOf('.');
+        String baseName, ext;
+        if (dotIdx > 0) {
+            baseName = fileName.substring(0, dotIdx);
+            ext = fileName.substring(dotIdx);
+        } else {
+            baseName = fileName;
+            ext = "";
+        }
+        String objectName = dir + baseName + "_" + (System.currentTimeMillis() / 1000) + ext;
 
         Map<String, String> respMap = new LinkedHashMap<>();
         try {

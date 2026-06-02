@@ -127,7 +127,7 @@ const handleFileChange = async (file) => {
   uploading.value = true
   try {
     //  1. 获取 MinIO presigned PUT URL
-    const policyRes = await ossApi.getPolicy()
+    const policyRes = await ossApi.getPolicy(file.name)
     const { url, accessUrl } = policyRes.data
 
     //  2. PUT 直传 MinIO
