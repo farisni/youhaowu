@@ -232,3 +232,4 @@
 - refactor(brand): 统一删除接口（移除单独 DELETE 端点，统一走批量删除）
 - fix(brand): ProductServiceUris 补全 ProductAttr/ProductAttrGroup DELETE 常量
 - fix(thirdparty): OssConfig 补上 MinioProperties import
+- style(brand): Logo 图片列调整为 60x60 + 编辑时预览已有图片

@@ -70,7 +70,7 @@
       <template #logo="{ row }">
         <el-popover v-if="row.logo" placement="top" :width="300" trigger="hover">
           <template #reference>
-            <img :src="row.logo" style="width:40px;height:40px;object-fit:contain;cursor:pointer" />
+            <img :src="row.logo" style="width:60px;height:60px;object-fit:contain;cursor:pointer" />
           </template>
           <img :src="row.logo" style="width:100%" />
         </el-popover>
@@ -198,6 +198,7 @@ const add = () => {
   isEdit.value = false; editId.value = null
   dialogTitle.value = '新建品牌'
   Object.assign(form, { brandId: undefined }, initForm)
+  previewLogo.value = null
   dialogVisible.value = true
 }
 
@@ -206,6 +207,7 @@ const edit = async (id) => {
   dialogTitle.value = '编辑品牌'
   const res = await api.getById(id)
   if (res.data) Object.assign(form, res.data)
+  previewLogo.value = res.data.logo || null
   dialogVisible.value = true
 }
 
