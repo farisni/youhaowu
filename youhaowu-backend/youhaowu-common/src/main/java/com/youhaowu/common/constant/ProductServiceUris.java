@@ -30,6 +30,7 @@ public final class ProductServiceUris {
         public static final String SAVE = BASE_URL + "/save";
         public static final String UPDATE = BASE_URL + "/update/{id}";
         public static final String DELETE = BASE_URL + "/delete/{id}";
+        public static final String DELETE_BATCH = BASE_URL + "/delete/batch";
     }
 
     // ==================== 属性管理 ====================

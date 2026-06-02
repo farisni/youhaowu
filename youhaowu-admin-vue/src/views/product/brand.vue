@@ -2,6 +2,7 @@
   <div class="brand-page">
     <CommonTable
       ref="tableRef"
+      @selection-change="(val) => selectedIds = val.map(r => r.brandId)"
       :api="api"
       :columns="columns"
       row-key="brandId"
@@ -33,6 +34,7 @@
         </div>
       </template>
       <template #operation-buttons>
+        <el-button type="danger" @click="batchDelete" :disabled="selectedIds.length===0"><el-icon><Delete /></el-icon>批量删除</el-button>
         <el-button type="success" @click="add"><el-icon><Plus /></el-icon>新建</el-button>
       </template>
       <template #urlText="{ row }">
@@ -117,12 +119,14 @@ const dialogTitle = ref('')
 const isEdit = ref(false)
 const editId = ref(null)
 const searchObj = reactive({ key: '', showStatus: '' })
+const selectedIds = ref([])
 const uploading = ref(false)
 
 const initForm = { name: '', logo: '', descript: '', firstLetter: '', sort: 0, showStatus: 1 }
 const form = reactive({ ...initForm })
 
 const columns = [
+  { type: 'selection', width: 40 },
   { type: 'index', label: '序号', width: 60 },
   { prop: 'name', label: '品牌名称', minWidth: 150 },
   { label: 'Logo', width: 80, prop: 'logo' },
@@ -188,6 +192,17 @@ const remove = (row) => {
   }).then(async () => {
     await api.deleteById(row.brandId)
     ElMessage.success('删除成功')
+    tableRef.value?.refresh()
+  }).catch(() => {})
+}
+
+const batchDelete = () => {
+  ElMessageBox.confirm(`确定删除选中的 ${selectedIds.value.length} 个品牌？`, '提示', {
+    confirmButtonText: '确定', cancelButtonText: '取消', type: 'warning',
+  }).then(async () => {
+    await api.deleteBatch(selectedIds.value)
+    ElMessage.success('批量删除成功')
+    selectedIds.value = []
     tableRef.value?.refresh()
   }).catch(() => {})
 }

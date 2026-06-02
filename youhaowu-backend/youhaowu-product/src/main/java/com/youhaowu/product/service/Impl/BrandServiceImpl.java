@@ -82,6 +82,11 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
+    public Integer removeByIds(List<Long> ids) {
+        return brandMapper.deleteByIds(ids);
+    }
+
+    @Override
     public void updateDetail(Long id, BrandVO vo) {
         BrandEntity entity = new BrandEntity();
         BeanUtil.copyProperties(vo, entity);

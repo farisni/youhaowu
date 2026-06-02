@@ -9,6 +9,8 @@ import com.youhaowu.product.vo.BrandVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * 品牌管理控制器
  */
@@ -57,5 +59,13 @@ public class BrandController {
     @PostMapping(ProductServiceUris.ProductBrand.DELETE)
     public R<Integer> delete(@PathVariable Long id) {
         return R.ok(brandService.removeById(id));
+    }
+
+    /**
+     * 批量删除品牌
+     */
+    @PostMapping(ProductServiceUris.ProductBrand.DELETE_BATCH)
+    public R<Integer> deleteBatch(@RequestBody List<Long> ids) {
+        return R.ok(brandService.removeByIds(ids));
     }
 }

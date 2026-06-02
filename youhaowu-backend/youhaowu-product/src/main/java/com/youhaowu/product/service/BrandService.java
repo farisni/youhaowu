@@ -17,5 +17,6 @@ public interface BrandService {
     Integer saveBatch(List<BrandVO> list);
     Integer updateById(Long id, BrandVO vo);
     Integer removeById(Long id);
+    Integer removeByIds(List<Long> ids);
     void updateDetail(Long id, BrandVO vo);
 }

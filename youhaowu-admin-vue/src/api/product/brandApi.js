@@ -24,6 +24,11 @@ export default {
     return http.post(`/api/product/brand/update/${id}`, data)
   },
 
+  /** 批量删除 */
+  deleteBatch(ids) {
+    return http.post('/api/product/brand/delete/batch', ids)
+  },
+
   /** 删除 */
   deleteById(id) {
     return http.post(`/api/product/brand/delete/${id}`)
