@@ -15,11 +15,15 @@
         </el-scrollbar>
       </div>
       <div class="banner">
-        <el-carousel height="460px">
-          <el-carousel-item v-for="i in 4" :key="i">
-            <div class="banner-placeholder">Banner {{ i }}</div>
+        <el-carousel height="460px" v-if="bannerList.length">
+          <el-carousel-item v-for="item in bannerList" :key="item.id">
+            <a v-if="item.linkUrl" :href="item.linkUrl" target="_blank">
+              <img :src="item.imgUrl" class="banner-img" />
+            </a>
+            <img v-else :src="item.imgUrl" class="banner-img" />
           </el-carousel-item>
         </el-carousel>
+        <div v-else class="banner-placeholder" style="height:460px">加载中...</div>
       </div>
       <div class="side">
 <div class="news">
@@ -92,6 +96,7 @@ const services = [
   { name: '礼品卡', icon: iconLipinka },
   { name: '白条',   icon: iconBaitiao },
 ]
+const bannerList = ref([])
 const categories = ref([])
 const activeIdx = ref(0)
 let leaveTimer = null
@@ -113,8 +118,12 @@ const newsList = [
 
 onMounted(async () => {
   try {
-    const res = await api.getCategoryList()
-    categories.value = res.data || []
+    const [bannerRes, cateRes] = await Promise.all([
+      api.getBannerList(),
+      api.getCategoryList()
+    ])
+    if (bannerRes.code === 0) bannerList.value = bannerRes.data || []
+    categories.value = cateRes.data || []
   } catch {
     //  静默失败
   }
@@ -174,6 +183,11 @@ onMounted(async () => {
         justify-content: center;
         font-size: 18px;
         color: var(--color-text-light);
+      }
+      .banner-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
       }
     }
 

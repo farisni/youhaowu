@@ -1,15 +1,12 @@
 import http from '@/utils/http.js'
-import bannerData from '@/mock/banner.json'
 import floorData from '@/mock/floor.json'
-// import categoryData from '@/mock/category.json'
 
 const isMock = import.meta.env.DEV
 
 export default {
-  // Banner 轮播数据
+  // Banner 轮播数据（从 CMS 获取）
   getBannerList() {
-    if (isMock) return Promise.resolve({ code: 200, data: bannerData })
-    return http.get('/api/home/banner')
+    return http.get('/api/cms/banner/list')
   },
   // 楼层数据
   getFloorList() {
