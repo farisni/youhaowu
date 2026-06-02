@@ -61,7 +61,8 @@
             style="width:200px;height:100px;object-fit:cover;border-radius:4px;margin-top:8px" />
         </el-form-item>
         <el-form-item label="跳转链接">
-          <el-input v-model="form.linkUrl" placeholder="点击跳转地址" />
+          <el-input v-model="form.linkUrl" placeholder="如 /product/123 或 https://..." />
+        <span style="font-size:12px;color:#999">用户点击轮播图后跳转的目标地址（商品页、活动页等）</span>
         </el-form-item>
         <el-form-item label="排序">
           <el-input-number v-model="form.sort" :min="0" controls-position="right" />
