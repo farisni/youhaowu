@@ -56,14 +56,6 @@ public class BrandController {
     }
 
     /**
-     * 删除品牌
-     */
-    @PostMapping(ProductServiceUris.ProductBrand.DELETE)
-    public R<Integer> delete(@PathVariable Long id) {
-        return R.ok(brandService.removeById(id));
-    }
-
-    /**
      * 批量删除品牌
      */
     @PostMapping(ProductServiceUris.ProductBrand.DELETE_BATCH)

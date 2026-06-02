@@ -93,11 +93,6 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public Integer removeById(Long id) {
-        return brandMapper.deleteById(id);
-    }
-
-    @Override
     public Integer removeByIds(List<Long> ids) {
         return brandMapper.deleteByIds(ids);
     }

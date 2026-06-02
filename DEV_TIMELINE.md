@@ -229,3 +229,6 @@
 
 - feat(thirdparty): OSS 替换为 MinIO（Docker 部署 + presigned PUT URL）
 - test: 新增 MinIO 集成测试（test_minio.py）
+- refactor(brand): 统一删除接口（移除单独 DELETE 端点，统一走批量删除）
+- fix(brand): ProductServiceUris 补全 ProductAttr/ProductAttrGroup DELETE 常量
+- fix(thirdparty): OssConfig 补上 MinioProperties import

@@ -3,7 +3,7 @@ import http from '@/utils/http.js'
 export default {
   /** 分页列表 */
   page(page, limit, searchObj = {}) {
-    const params = { pageNum: page, pageSize: limit }
+    const params = { pageNum: page, pageSize: limit, sortField: 'sort', sortAsc: true }
     if (searchObj.key) params.keyword = searchObj.key
     if (searchObj.showStatus !== undefined && searchObj.showStatus !== '') params.showStatus = searchObj.showStatus
     return http.get('/api/product/brand/list', { params })
@@ -29,8 +29,8 @@ export default {
     return http.post('/api/product/brand/delete/batch', ids)
   },
 
-  /** 删除 */
+  /** 删除（统一走批量） */
   deleteById(id) {
-    return http.post(`/api/product/brand/delete/${id}`)
+    return http.post('/api/product/brand/delete/batch', [id])
   },
 }
