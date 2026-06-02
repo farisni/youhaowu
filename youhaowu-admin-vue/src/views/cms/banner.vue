@@ -101,6 +101,7 @@ const columns = [
   { prop: 'id', label: 'ID', width: 60 },
   { prop: 'title', label: '标题', minWidth: 120 },
   { label: '图片', width: 100, prop: 'imgUrl' },
+  { prop: 'imgUrl', label: 'MinIO URL', minWidth: 200 },
   { prop: 'fileName', label: '原始文件名', minWidth: 140 },
   { prop: 'sort', label: '排序', width: 70 },
   { label: '状态', width: 90, prop: 'status' },
