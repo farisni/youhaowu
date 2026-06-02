@@ -17,6 +17,10 @@ export default {
   getNewsList() {
     return http.get('/api/cms/news/list')
   },
+  // 品牌 TOP
+  getBrandTop(limit = 10) {
+    return http.get('/api/product/brand/list', { params: { pageNum: 1, pageSize: limit, sortField: 'sort', sortAsc: true } })
+  },
   // 分类数据
   getCategoryList() {
     return http.get('/api/product/category/list/tree')
