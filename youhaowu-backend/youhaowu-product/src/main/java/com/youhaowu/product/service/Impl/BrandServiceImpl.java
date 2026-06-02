@@ -83,7 +83,7 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public Integer removeByIds(List<Long> ids) {
-        return brandMapper.deleteBatchIds(ids);
+        return brandMapper.deleteByIds(ids);
     }
 
     @Override
