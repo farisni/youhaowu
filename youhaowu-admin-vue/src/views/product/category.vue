@@ -79,7 +79,7 @@ const category = reactive({
 
 // 加载分类树
 const getMenus = async () => {
-  const res = await http.get('/product/category/list/tree')
+  const res = await http.get('/api/product/category/list/tree')
   if (res.data) menus.value = res.data
 }
 
@@ -96,7 +96,7 @@ const batchDelete = () => {
     type: 'warning',
   }).then(async () => {
     const ids = checkedNodes.map(n => n.catId)
-    await http.post('/product/category/delete', ids)
+    await http.post('/api/product/category/delete', ids)
     ElMessage.success('批量删除成功')
     getMenus()
   }).catch(() => {})
@@ -130,7 +130,7 @@ const batchSave = async () => {
     ElMessage.warning('没有需要保存的排序变更')
     return
   }
-  await http.post('/product/category/update/sort', updateNodes.value)
+  await http.post('/api/product/category/update/sort', updateNodes.value)
   ElMessage.success('排序保存成功')
   updateNodes.value = []
   maxLevel.value = 0
@@ -192,7 +192,7 @@ const remove = (node, data) => {
     cancelButtonText: '取消',
     type: 'warning',
   }).then(async () => {
-    await http.post('/product/category/delete', [data.catId])
+    await http.post('/api/product/category/delete', [data.catId])
     ElMessage.success('删除成功')
     getMenus()
     expandedKey.value = [node.parent?.data?.catId]
@@ -205,7 +205,7 @@ const submitData = async () => {
   const payload = { catId, name, icon, productUnit, parentCid, catLevel, showStatus, sort }
 
   if (dialogType.value === 'add') {
-    await http.post('/product/category/save', payload)
+    await http.post('/api/product/category/save', payload)
     ElMessage.success('添加成功')
   } else {
     await http.post(`/product/category/update/${catId}`, payload)

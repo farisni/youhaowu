@@ -36,7 +36,7 @@ export default {
         msg: 'ok',
       })
     }
-    return http.get('/product/brand/list', { params: { page, limit, ...toParams(searchObj) } })
+    return http.get('/api/product/brand/list', { params: { page, limit, ...toParams(searchObj) } })
   },
 
   /** 详情 */
@@ -55,7 +55,7 @@ export default {
       _mockList.unshift(item)
       return Promise.resolve({ code: 200, data: item, msg: '新增成功' })
     }
-    return http.post('/product/brand/save', data)
+    return http.post('/api/product/brand/save', data)
   },
 
   /** 更新 */
