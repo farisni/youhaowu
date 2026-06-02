@@ -4,23 +4,25 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.aliyun.oss.OSS;
-import com.aliyun.oss.OSSClientBuilder;
+import io.minio.MinioClient;
 
 @Configuration
 public class OssConfig {
 
-    @Value("${spring.cloud.alicloud.access-key}")
-    private String accessKeyId;
-
-    @Value("${spring.cloud.alicloud.secret-key}")
-    private String accessKeySecret;
-
-    @Value("${spring.cloud.alicloud.oss.endpoint}")
+    @Value("${minio.endpoint}")
     private String endpoint;
 
+    @Value("${minio.access-key}")
+    private String accessKey;
+
+    @Value("${minio.secret-key}")
+    private String secretKey;
+
     @Bean
-    public OSS ossClient() {
-        return new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
+    public MinioClient minioClient() {
+        return MinioClient.builder()
+                .endpoint(endpoint)
+                .credentials(accessKey, secretKey)
+                .build();
     }
 }

@@ -14,14 +14,17 @@ spring:
     alicloud:
       access-key: your-access-key
       secret-key: your-secret-key
-      oss:
-        endpoint: oss-cn-hangzhou.aliyuncs.com
-        bucket: youhaowu
       sms:
         region: cn-hangzhou
         endpoint: dysmsapi.aliyuncs.com
         signName: 小麦商城
         templateCode: SMS_123456789
+
+minio:
+  endpoint: http://192.168.8.112:9002
+  access-key: minioadmin
+  secret-key: minioadmin
+  bucket: youhaowu
 
 logging:
   file:
