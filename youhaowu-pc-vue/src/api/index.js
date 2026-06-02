@@ -13,6 +13,10 @@ export default {
     if (isMock) return Promise.resolve({ code: 200, data: floorData })
     return http.get('/api/home/floor')
   },
+  // 好物快报
+  getNewsList() {
+    return http.get('/api/cms/news/list')
+  },
   // 分类数据
   getCategoryList() {
     return http.get('/api/product/category/list/tree')

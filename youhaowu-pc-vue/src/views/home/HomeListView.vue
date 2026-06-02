@@ -108,21 +108,17 @@ const onLeave = () => {
   leaveTimer = setTimeout(() => { activeIdx.value = 0 }, 100)
 }
 
-const newsList = [
-  { id: 1, tag: '[特惠]', title: '备战开学季 全民半价购数码' },
-  { id: 2, tag: '[公告]', title: '有好物APP新版本上线' },
-  { id: 3, tag: '[特惠]', title: '端午节 粽情回馈' },
-  { id: 4, tag: '[公告]', title: '有好物618年中大促' },
-  { id: 5, tag: '[特惠]', title: '会员日 全场8折' },
-]
+const newsList = ref([])
 
 onMounted(async () => {
   try {
-    const [bannerRes, cateRes] = await Promise.all([
+    const [bannerRes, newsRes, cateRes] = await Promise.all([
       api.getBannerList(),
+      api.getNewsList(),
       api.getCategoryList()
     ])
     if (bannerRes.code === 0) bannerList.value = bannerRes.data || []
+    if (newsRes.code === 0) newsList.value = newsRes.data || []
     categories.value = cateRes.data || []
   } catch {
     //  静默失败
