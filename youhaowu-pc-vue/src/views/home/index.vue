@@ -2,6 +2,7 @@
   <div class="home">
     <HomeListView />
     <HomeRecommend />
+    <HomeRank />
     <HomeCommodityList />
     <HomeGuess />
     <HomeFloor
@@ -20,6 +21,7 @@
 import { ref, onMounted } from 'vue'
 import HomeListView from './HomeListView.vue'
 import HomeRecommend from './HomeRecommend.vue'
+import HomeRank from './HomeRank.vue'
 import HomeCommodityList from './HomeCommodityList.vue'
 import HomeGuess from './HomeGuess.vue'
 import HomeFloor from './HomeFloor.vue'
