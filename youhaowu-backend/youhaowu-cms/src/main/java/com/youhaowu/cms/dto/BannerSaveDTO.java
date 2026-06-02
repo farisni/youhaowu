@@ -6,6 +6,7 @@ import lombok.Data;
 public class BannerSaveDTO {
     private String title;
     private String imgUrl;
+    private String fileName;
     private String linkUrl;
     private Integer sort;
     private Integer status;

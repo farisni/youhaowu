@@ -94,13 +94,14 @@ const editId = ref(null)
 const searchObj = reactive({ title: '', status: '' })
 const uploading = ref(false)
 
-const initForm = { title: '', imgUrl: '', linkUrl: '', sort: 0, status: 1 }
+const initForm = { title: '', imgUrl: '', fileName: '', linkUrl: '', sort: 0, status: 1 }
 const form = reactive({ ...initForm })
 
 const columns = [
   { prop: 'id', label: 'ID', width: 60 },
   { prop: 'title', label: '标题', minWidth: 120 },
-  { label: '图片', width: 300, prop: 'imgUrl' },
+  { label: '图片', width: 100, prop: 'imgUrl' },
+  { prop: 'fileName', label: '原始文件名', minWidth: 140 },
   { prop: 'sort', label: '排序', width: 70 },
   { label: '状态', width: 90, prop: 'status' },
 ]
@@ -137,8 +138,9 @@ const handleFileChange = async (file) => {
       headers: { 'Content-Type': file.raw.type || 'application/octet-stream' }
     })
 
-    //  3. 填入公开访问 URL
+    //  3. 填入 URL 和原始文件名
     form.imgUrl = accessUrl
+    form.fileName = file.name
     ElMessage.success('上传成功')
   } catch (e) {
     ElMessage.error('上传失败: ' + (e.message || '网络错误'))
