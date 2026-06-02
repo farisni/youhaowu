@@ -27,6 +27,8 @@
         <mockito.version>5.14.2</mockito.version>
         <mybatis-plus.version>3.5.11</mybatis-plus.version>
         <hutool.version>5.8.34</hutool.version>
+        <minio.version>8.5.10</minio.version>
+        <aliyun-sms.version>2.0.22</aliyun-sms.version>
     </properties>
 
     <!-- 子模块声明 -->
@@ -111,6 +113,18 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-jsqlparser</artifactId>
                 <version>${mybatis-plus.version}</version>
+            </dependency>
+            <!-- MinIO -->
+            <dependency>
+                <groupId>io.minio</groupId>
+                <artifactId>minio</artifactId>
+                <version>${minio.version}</version>
+            </dependency>
+            <!-- 阿里云短信 -->
+            <dependency>
+                <groupId>com.aliyun</groupId>
+                <artifactId>alibabacloud-dysmsapi20170525</artifactId>
+                <version>${aliyun-sms.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
