@@ -199,7 +199,6 @@ const remove = (row) => {
 const batchDelete = () => {
   ElMessageBox.confirm(`确定删除选中的 ${selectedIds.value.length} 个品牌？`, '提示', {
     confirmButtonText: '确定', cancelButtonText: '取消', type: 'warning',
-    appendTo: document.body,
   }).then(async () => {
     await api.deleteBatch(selectedIds.value)
     ElMessage.success('批量删除成功')
@@ -219,4 +218,8 @@ const handleStatusChange = async (row) => {
 .brand-page { display: flex; flex-direction: column; height: calc(100vh - 90px); padding: 12px 0 0 0; }
 .search-area { .el-form-item { margin: 0; } .el-row { padding: 5px 0; } .btn-col { display: flex; justify-content: flex-end; align-items: center; gap: 8px; } }
 .no-logo { color: #ccc; font-size: 14px; }
+
+/* 修复 Element Plus MessageBox 定位异常 */
+:deep(.el-overlay) { position: fixed !important; inset: 0 !important; }
+:deep(.el-message-box) { position: fixed !important; top: 50% !important; left: 50% !important; transform: translate(-50%, -50%) !important; margin: 0 !important; }
 </style>
