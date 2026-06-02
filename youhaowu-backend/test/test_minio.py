@@ -9,7 +9,7 @@ import requests
 import urllib.parse
 from datetime import datetime
 
-THIRDPARTY_BASE = "http://192.168.8.112:8095/thirdparty/oss"
+THIRDPARTY_BASE = "http://192.168.8.112:8096/thirdparty/oss"
 MINIO_ENDPOINT = "http://192.168.8.112:9002"
 
 
@@ -19,7 +19,7 @@ def thirdparty_url():
     try:
         r = requests.get(f"{THIRDPARTY_BASE}/policy", timeout=3)
     except (requests.ConnectionError, requests.Timeout):
-        pytest.skip("thirdparty 服务未启动 (192.168.8.112:8095)")
+        pytest.skip("thirdparty 服务未启动 (192.168.8.112:8096)")
     return THIRDPARTY_BASE
 
 
