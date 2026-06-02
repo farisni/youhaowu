@@ -21,6 +21,7 @@ const mockMenu = [
   { id: '4', name: '内容管理', path: '/cms', icon: 'Document', children: [
     { id: '41', name: '轮播图管理', path: '/cms/banner' },
     { id: '42', name: '首页快报', path: '/cms/news' },
+    { id: '43', name: '今日推荐', path: '/cms/recommend' },
   ]},
 ]
 

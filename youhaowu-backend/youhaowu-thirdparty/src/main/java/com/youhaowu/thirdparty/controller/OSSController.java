@@ -68,7 +68,7 @@ public class OSSController {
             respMap.put("dir", dir);
             respMap.put("host", minioProperties.getEndpoint());
             //  数据库存相对路径，展示时拼完整 URL
-            respMap.put("accessUrl", minioProperties.getBucket() + "/" + objectName);
+            respMap.put("accessUrl", "/" + minioProperties.getBucket() + "/" + objectName);
             respMap.put("expire", String.valueOf(expireEndTime / 1000));
         } catch (Exception e) {
             log.error("生成 MinIO presigned URL 失败", e);

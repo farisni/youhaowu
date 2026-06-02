@@ -25,7 +25,12 @@
         <span style="font-size:12px;color:#666;word-break:break-all">{{ row.imgUrl }}</span>
       </template>
       <template #imgUrl="{ row }">
-        <img v-if="row.imgUrl" :src="row.imgUrl" style="width:80px;height:40px;object-fit:cover;border-radius:4px" />
+        <el-popover v-if="row.imgUrl" placement="top" :width="300" trigger="hover">
+          <template #reference>
+            <img :src="row.imgUrl" style="width:80px;height:40px;object-fit:cover;border-radius:4px;cursor:pointer" />
+          </template>
+          <img :src="row.imgUrl" style="width:100%" />
+        </el-popover>
         <span v-else style="color:#ccc">—</span>
       </template>
       <template #status="{ row }">
@@ -38,7 +43,7 @@
       </template>
     </CommonTable>
 
-    <el-dialog v-model="dialogVisible" :title="dialogTitle" width="500px" :close-on-click-modal="false">
+    <el-dialog v-model="dialogVisible" @keyup.enter="submitForm" :title="dialogTitle" width="500px" :close-on-click-modal="false">
       <el-form :model="form" label-width="100px">
         <el-form-item label="标题">
           <el-input v-model="form.title" placeholder="轮播图标题" />

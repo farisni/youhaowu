@@ -134,3 +134,5 @@ gulimall 有 LoginController + OAuth2Controller，wheatmall 当前仅 DemoContro
 - feat: MinIO 上传加 MD5 去重，避免重复文件占用存储
 - refactor: Banner/News 图片 URL 存相对路径，返回时拼完整 URL（同品牌模块）
 - feat: PostgreSQL 数据库定时备份（pg_dump + cron）
+- feat: 全链路日志追踪（TraceId 贯穿 Gateway → 各微服务 → DB）
+- refactor: 后端 save 方法统一改名为 saveOrUpdate，语义更明确（id 空=新增，id 非空=更新）

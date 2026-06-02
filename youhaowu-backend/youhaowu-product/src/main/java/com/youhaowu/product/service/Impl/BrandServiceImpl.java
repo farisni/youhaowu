@@ -39,7 +39,7 @@ public class BrandServiceImpl implements BrandService {
     private String fullUrl(String path) {
         if (StrUtil.isBlank(path)) return path;
         if (path.startsWith("http")) return path;
-        return minioProperties.getEndpoint() + "/" + path;
+        return minioProperties.getEndpoint() + path;
     }
 
     @Override

@@ -36,7 +36,7 @@ const componentMap = {
   '/system/menu': () => import('@/views/system/menuList.vue'),
   '/cms/banner': () => import('@/views/cms/banner.vue'),
   '/cms/news': () => import('@/views/cms/news.vue'),
-}
+  '/cms/recommend': () => import('@/views/cms/recommend.vue'),}
 
 export const addDynamicFLatRoutes = (menuArr) => {
   const flatten = (items) => {

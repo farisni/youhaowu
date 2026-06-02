@@ -101,7 +101,7 @@
       </template>
     </el-dialog>
 
-    <el-dialog v-model="dialogVisible" :title="dialogTitle" width="500px" :close-on-click-modal="false">
+    <el-dialog v-model="dialogVisible" @keyup.enter="submitForm" :title="dialogTitle" width="500px" :close-on-click-modal="false">
       <el-form :model="form" label-width="100px">
         <el-form-item label="品牌名称">
           <el-input v-model="form.name" placeholder="请输入品牌名称" />

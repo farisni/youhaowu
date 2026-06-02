@@ -233,3 +233,6 @@
 - fix(brand): ProductServiceUris 补全 ProductAttr/ProductAttrGroup DELETE 常量
 - fix(thirdparty): OssConfig 补上 MinioProperties import
 - style(brand): Logo 图片列调整为 60x60 + 编辑时预览已有图片
+- feat(cms): 今日推荐全套接口（RecommendController + Entity + 前端管理页 + pc-vue 接真实数据）
+- refactor(cms): 图片 URL 统一存相对路径 /youhaowu/...，Service 层 fullUrl 拼接
+- style(admin): 编辑弹窗按回车提交 + 图片 hover 预览
