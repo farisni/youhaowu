@@ -40,8 +40,22 @@
         <el-form-item label="标题">
           <el-input v-model="form.title" placeholder="轮播图标题" />
         </el-form-item>
-        <el-form-item label="图片URL">
-          <el-input v-model="form.imgUrl" placeholder="https://..." />
+        <el-form-item label="图片">
+          <div style="display:flex;align-items:center;gap:8px">
+            <el-input v-model="form.imgUrl" placeholder="上传后自动填入" readonly style="flex:1" />
+            <el-upload
+              :auto-upload="false"
+              :show-file-list="false"
+              :on-change="handleFileChange"
+              accept="image/*"
+            >
+              <el-button type="primary" :loading="uploading">
+                {{ uploading ? '上传中...' : '选择图片' }}
+              </el-button>
+            </el-upload>
+          </div>
+          <img v-if="form.imgUrl" :src="form.imgUrl"
+            style="width:200px;height:100px;object-fit:cover;border-radius:4px;margin-top:8px" />
         </el-form-item>
         <el-form-item label="跳转链接">
           <el-input v-model="form.linkUrl" placeholder="点击跳转地址" />
@@ -70,6 +84,7 @@ import { ElMessage, ElMessageBox } from 'element-plus'
 import { Search, Refresh, Plus, Edit, Delete } from '@element-plus/icons-vue'
 import CommonTable from '@/components/CommonTable.vue'
 import api from '@/api/cms/bannerApi.js'
+import ossApi from '@/api/thirdparty/ossApi.js'
 
 const tableRef = ref(null)
 const dialogVisible = ref(false)
@@ -77,6 +92,7 @@ const dialogTitle = ref('')
 const isEdit = ref(false)
 const editId = ref(null)
 const searchObj = reactive({ title: '', status: '' })
+const uploading = ref(false)
 
 const initForm = { title: '', imgUrl: '', linkUrl: '', sort: 0, status: 1 }
 const form = reactive({ ...initForm })
@@ -84,7 +100,7 @@ const form = reactive({ ...initForm })
 const columns = [
   { prop: 'id', label: 'ID', width: 60 },
   { prop: 'title', label: '标题', minWidth: 120 },
-  { label: '图片', width: 100, prop: 'imgUrl' },
+  { label: '图片', width: 300, prop: 'imgUrl' },
   { prop: 'sort', label: '排序', width: 70 },
   { label: '状态', width: 90, prop: 'status' },
 ]
@@ -105,6 +121,30 @@ const edit = async (id) => {
   const res = await api.getById(id)
   if (res.data) Object.assign(form, res.data)
   dialogVisible.value = true
+}
+
+const handleFileChange = async (file) => {
+  uploading.value = true
+  try {
+    //  1. 获取 MinIO presigned PUT URL
+    const policyRes = await ossApi.getPolicy()
+    const { url, accessUrl } = policyRes.data
+
+    //  2. PUT 直传 MinIO
+    await fetch(url, {
+      method: 'PUT',
+      body: file.raw,
+      headers: { 'Content-Type': file.raw.type || 'application/octet-stream' }
+    })
+
+    //  3. 填入公开访问 URL
+    form.imgUrl = accessUrl
+    ElMessage.success('上传成功')
+  } catch (e) {
+    ElMessage.error('上传失败: ' + (e.message || '网络错误'))
+  } finally {
+    uploading.value = false
+  }
 }
 
 const submitForm = async () => {
