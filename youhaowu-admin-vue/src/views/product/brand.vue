@@ -199,6 +199,7 @@ const remove = (row) => {
 const batchDelete = () => {
   ElMessageBox.confirm(`确定删除选中的 ${selectedIds.value.length} 个品牌？`, '提示', {
     confirmButtonText: '确定', cancelButtonText: '取消', type: 'warning',
+    appendTo: document.body,
   }).then(async () => {
     await api.deleteBatch(selectedIds.value)
     ElMessage.success('批量删除成功')
