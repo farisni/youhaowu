@@ -2,7 +2,6 @@ package com.youhaowu.order.controller;
 
 import com.youhaowu.common.constant.OrderServiceUris;
 import com.youhaowu.common.utils.PageData;
-import com.youhaowu.common.utils.R;
 import com.youhaowu.order.dto.OrderReturnReasonQueryDTO;
 import com.youhaowu.order.service.OrderReturnReasonService;
 import com.youhaowu.order.vo.OrderReturnReasonVO;
@@ -24,39 +23,39 @@ public class OrderReturnReasonController {
      * 分页查询
      */
     @GetMapping(OrderServiceUris.OrderReturnReason.PAGE)
-    public R<PageData<OrderReturnReasonVO>> list(OrderReturnReasonQueryDTO query) {
-        return R.ok(orderReturnReasonService.page(query));
+    public PageData<OrderReturnReasonVO> list(OrderReturnReasonQueryDTO query) {
+        return orderReturnReasonService.page(query);
     }
 
     /**
      * 根据ID查询
      */
     @GetMapping(OrderServiceUris.OrderReturnReason.INFO)
-    public R<OrderReturnReasonVO> info(@PathVariable Long id) {
-        return R.ok(orderReturnReasonService.getById(id));
+    public OrderReturnReasonVO info(@PathVariable Long id) {
+        return orderReturnReasonService.getById(id);
     }
 
     /**
      * 保存
      */
     @PostMapping(OrderServiceUris.OrderReturnReason.SAVE)
-    public R<Integer> save(@RequestBody OrderReturnReasonVO vo) {
-        return R.ok(orderReturnReasonService.save(vo));
+    public Integer save(@RequestBody OrderReturnReasonVO vo) {
+        return orderReturnReasonService.save(vo);
     }
 
     /**
      * 更新
      */
     @PostMapping(OrderServiceUris.OrderReturnReason.UPDATE)
-    public R<Integer> update(@PathVariable Long id, @RequestBody OrderReturnReasonVO vo) {
-        return R.ok(orderReturnReasonService.updateById(id, vo));
+    public Integer update(@PathVariable Long id, @RequestBody OrderReturnReasonVO vo) {
+        return orderReturnReasonService.updateById(id, vo);
     }
 
     /**
      * 删除
      */
     @PostMapping(OrderServiceUris.OrderReturnReason.DELETE)
-    public R<Integer> delete(@RequestBody List<Long> ids) {
-        return R.ok(orderReturnReasonService.removeByIds(ids));
+    public Integer delete(@RequestBody List<Long> ids) {
+        return orderReturnReasonService.removeByIds(ids);
     }
 }

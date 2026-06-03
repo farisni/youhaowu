@@ -35,6 +35,5 @@ public class AttrAttrgroupRelationController {
     public Object saveRelation(@RequestBody List<AttrGroupRelationVO> vos) {
         relationService.saveRelationBatch(vos);
         return null;
-        
     }
 }

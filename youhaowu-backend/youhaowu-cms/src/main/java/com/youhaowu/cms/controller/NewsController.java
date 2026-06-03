@@ -2,7 +2,6 @@ package com.youhaowu.cms.controller;
 
 import com.youhaowu.common.constant.CmsServiceUris;
 import com.youhaowu.common.utils.PageData;
-import com.youhaowu.common.utils.R;
 import com.youhaowu.cms.dto.NewsQueryDTO;
 import com.youhaowu.cms.dto.NewsSaveDTO;
 import com.youhaowu.cms.service.NewsService;
@@ -19,32 +18,32 @@ public class NewsController {
     private NewsService newsService;
 
     @GetMapping(CmsServiceUris.CmsNews.LIST)
-    public R<List<NewsVO>> list() {
-        return R.ok(newsService.listEnabled());
+    public List<NewsVO> list() {
+        return newsService.listEnabled();
     }
 
     @GetMapping(CmsServiceUris.CmsNews.INFO)
-    public R<NewsVO> info(@PathVariable Long id) {
-        return R.ok(newsService.getById(id));
+    public NewsVO info(@PathVariable Long id) {
+        return newsService.getById(id);
     }
 
     @PostMapping(CmsServiceUris.CmsNews.PAGE)
-    public R<PageData<NewsVO>> page(@RequestBody NewsQueryDTO query) {
-        return R.ok(newsService.page(query));
+    public PageData<NewsVO> page(@RequestBody NewsQueryDTO query) {
+        return newsService.page(query);
     }
 
     @PostMapping(CmsServiceUris.CmsNews.SAVE)
-    public R<Integer> save(@RequestBody NewsSaveDTO dto) {
-        return R.ok(newsService.save(dto));
+    public Integer save(@RequestBody NewsSaveDTO dto) {
+        return newsService.save(dto);
     }
 
     @PostMapping(CmsServiceUris.CmsNews.UPDATE)
-    public R<Integer> update(@PathVariable Long id, @RequestBody NewsSaveDTO dto) {
-        return R.ok(newsService.update(id, dto));
+    public Integer update(@PathVariable Long id, @RequestBody NewsSaveDTO dto) {
+        return newsService.update(id, dto);
     }
 
     @PostMapping(CmsServiceUris.CmsNews.DELETE)
-    public R<Integer> delete(@RequestBody List<Long> ids) {
-        return R.ok(newsService.deleteBatch(ids));
+    public Integer delete(@RequestBody List<Long> ids) {
+        return newsService.deleteBatch(ids);
     }
 }

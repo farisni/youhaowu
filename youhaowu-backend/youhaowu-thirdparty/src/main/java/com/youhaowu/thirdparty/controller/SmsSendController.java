@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.aliyun.sdk.service.dysmsapi20170525.models.SendSmsResponse;
 import com.youhaowu.thirdparty.component.SmsComponent;
-import com.youhaowu.common.utils.R;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -17,17 +16,13 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/api/thirdparty/sms")
 public class SmsSendController {
 
-
     @Autowired
     SmsComponent smsComponent;
+
     @GetMapping("/sendCode")
-    public R sendCode(@RequestParam("phone") String phone, @RequestParam("code") String code) {
+    public Boolean sendCode(@RequestParam("phone") String phone, @RequestParam("code") String code) {
         log.info("调用aliyun短信服务，Code: {}", code);
         SendSmsResponse sendSmsResponse = smsComponent.sendSmsCode(phone, code);
-        if ("OK".equals(sendSmsResponse.getBody().getCode())) {
-            return R.ok();
-        } else {
-            return R.fail(sendSmsResponse.getBody().getMessage());
-        }
+        return "OK".equals(sendSmsResponse.getBody().getCode());
     }
 }

@@ -2,7 +2,6 @@ package com.youhaowu.ware.controller;
 
 import com.youhaowu.common.constant.WareServiceUris;
 import com.youhaowu.common.utils.PageData;
-import com.youhaowu.common.utils.R;
 import com.youhaowu.ware.dto.WareOrderTaskQueryDTO;
 import com.youhaowu.ware.service.WareOrderTaskService;
 import com.youhaowu.ware.vo.WareOrderTaskVO;
@@ -21,27 +20,27 @@ public class WareOrderTaskController {
     private WareOrderTaskService wareOrderTaskService;
 
     @GetMapping(WareServiceUris.WareOrderTask.PAGE)
-    public R<PageData<WareOrderTaskVO>> list(WareOrderTaskQueryDTO query) {
-        return R.ok(wareOrderTaskService.page(query));
+    public PageData<WareOrderTaskVO> list(WareOrderTaskQueryDTO query) {
+        return wareOrderTaskService.page(query);
     }
 
     @GetMapping(WareServiceUris.WareOrderTask.INFO)
-    public R<WareOrderTaskVO> info(@PathVariable Long id) {
-        return R.ok(wareOrderTaskService.getById(id));
+    public WareOrderTaskVO info(@PathVariable Long id) {
+        return wareOrderTaskService.getById(id);
     }
 
     @GetMapping(WareServiceUris.WareOrderTask.SAVE)
-    public R<Integer> save(@RequestBody WareOrderTaskVO vo) {
-        return R.ok(wareOrderTaskService.save(vo));
+    public Integer save(@RequestBody WareOrderTaskVO vo) {
+        return wareOrderTaskService.save(vo);
     }
 
     @GetMapping(WareServiceUris.WareOrderTask.UPDATE)
-    public R<Integer> update(@PathVariable Long id, @RequestBody WareOrderTaskVO vo) {
-        return R.ok(wareOrderTaskService.updateById(id, vo));
+    public Integer update(@PathVariable Long id, @RequestBody WareOrderTaskVO vo) {
+        return wareOrderTaskService.updateById(id, vo);
     }
 
     @GetMapping(WareServiceUris.WareOrderTask.DELETE)
-    public R<Integer> delete(@RequestBody List<Long> ids) {
-        return R.ok(wareOrderTaskService.removeByIds(ids));
+    public Integer delete(@RequestBody List<Long> ids) {
+        return wareOrderTaskService.removeByIds(ids);
     }
 }

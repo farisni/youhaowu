@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.youhaowu.common.utils.R;
 import com.youhaowu.common.config.MinioProperties;
 
 import io.minio.GetPresignedObjectUrlArgs;
@@ -35,7 +34,7 @@ public class OSSController {
     private MinioProperties minioProperties;
 
     @GetMapping("/policy")
-    public R policy(@RequestParam String fileName) {
+    public Map<String, String> policy(@RequestParam String fileName) {
         String format = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         String dir = format + "/";
 
@@ -72,8 +71,8 @@ public class OSSController {
             respMap.put("expire", String.valueOf(expireEndTime / 1000));
         } catch (Exception e) {
             log.error("生成 MinIO presigned URL 失败", e);
-            return R.fail("生成上传签名失败");
+            throw new RuntimeException("生成上传签名失败");
         }
-        return R.ok(respMap);
+        return respMap;
     }
 }

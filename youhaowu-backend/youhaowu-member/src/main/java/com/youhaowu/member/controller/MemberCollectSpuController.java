@@ -2,7 +2,6 @@ package com.youhaowu.member.controller;
 
 import com.youhaowu.common.constant.MemberServiceUris;
 import com.youhaowu.common.utils.PageData;
-import com.youhaowu.common.utils.R;
 import com.youhaowu.member.dto.MemberCollectSpuQueryDTO;
 import com.youhaowu.member.service.MemberCollectSpuService;
 import com.youhaowu.member.vo.MemberCollectSpuVO;
@@ -18,37 +17,37 @@ public class MemberCollectSpuController {
     private MemberCollectSpuService memberCollectSpuService;
 
     @GetMapping(MemberServiceUris.MemberCollectSpu.PAGE)
-    public R<PageData<MemberCollectSpuVO>> page(MemberCollectSpuQueryDTO query) {
-        return R.ok(memberCollectSpuService.page(query));
+    public PageData<MemberCollectSpuVO> page(MemberCollectSpuQueryDTO query) {
+        return memberCollectSpuService.page(query);
     }
 
     @GetMapping(MemberServiceUris.MemberCollectSpu.INFO)
-    public R<MemberCollectSpuVO> info(@PathVariable Long id) {
-        return R.ok(memberCollectSpuService.getById(id));
+    public MemberCollectSpuVO info(@PathVariable Long id) {
+        return memberCollectSpuService.getById(id);
     }
 
     @PostMapping(MemberServiceUris.MemberCollectSpu.SAVE)
-    public R<Integer> save(@RequestBody MemberCollectSpuVO vo) {
-        return R.ok(memberCollectSpuService.save(vo));
+    public Integer save(@RequestBody MemberCollectSpuVO vo) {
+        return memberCollectSpuService.save(vo);
     }
 
     @PostMapping(MemberServiceUris.MemberCollectSpu.SAVE_BATCH)
-    public R<Integer> saveBatch(@RequestBody List<MemberCollectSpuVO> list) {
-        return R.ok(memberCollectSpuService.saveBatch(list));
+    public Integer saveBatch(@RequestBody List<MemberCollectSpuVO> list) {
+        return memberCollectSpuService.saveBatch(list);
     }
 
     @PutMapping(MemberServiceUris.MemberCollectSpu.UPDATE)
-    public R<Integer> update(@PathVariable Long id, @RequestBody MemberCollectSpuVO vo) {
-        return R.ok(memberCollectSpuService.updateById(id, vo));
+    public Integer update(@PathVariable Long id, @RequestBody MemberCollectSpuVO vo) {
+        return memberCollectSpuService.updateById(id, vo);
     }
 
     @DeleteMapping(MemberServiceUris.MemberCollectSpu.DELETE)
-    public R<Integer> delete(@PathVariable Long id) {
-        return R.ok(memberCollectSpuService.removeById(id));
+    public Integer delete(@PathVariable Long id) {
+        return memberCollectSpuService.removeById(id);
     }
 
     @DeleteMapping(MemberServiceUris.MemberCollectSpu.DELETE_BATCH)
-    public R<Integer> deleteBatch(@RequestBody List<Long> ids) {
-        return R.ok(memberCollectSpuService.removeByIds(ids));
+    public Integer deleteBatch(@RequestBody List<Long> ids) {
+        return memberCollectSpuService.removeByIds(ids);
     }
 }

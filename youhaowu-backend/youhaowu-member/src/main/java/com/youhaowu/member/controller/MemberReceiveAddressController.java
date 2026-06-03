@@ -2,7 +2,6 @@ package com.youhaowu.member.controller;
 
 import com.youhaowu.common.constant.MemberServiceUris;
 import com.youhaowu.common.utils.PageData;
-import com.youhaowu.common.utils.R;
 import com.youhaowu.member.dto.MemberReceiveAddressQueryDTO;
 import com.youhaowu.member.service.MemberReceiveAddressService;
 import com.youhaowu.member.vo.MemberReceiveAddressVO;
@@ -18,37 +17,37 @@ public class MemberReceiveAddressController {
     private MemberReceiveAddressService memberReceiveAddressService;
 
     @GetMapping(MemberServiceUris.MemberReceiveAddress.PAGE)
-    public R<PageData<MemberReceiveAddressVO>> page(MemberReceiveAddressQueryDTO query) {
-        return R.ok(memberReceiveAddressService.page(query));
+    public PageData<MemberReceiveAddressVO> page(MemberReceiveAddressQueryDTO query) {
+        return memberReceiveAddressService.page(query);
     }
 
     @GetMapping(MemberServiceUris.MemberReceiveAddress.INFO)
-    public R<MemberReceiveAddressVO> info(@PathVariable Long id) {
-        return R.ok(memberReceiveAddressService.getById(id));
+    public MemberReceiveAddressVO info(@PathVariable Long id) {
+        return memberReceiveAddressService.getById(id);
     }
 
     @PostMapping(MemberServiceUris.MemberReceiveAddress.SAVE)
-    public R<Integer> save(@RequestBody MemberReceiveAddressVO vo) {
-        return R.ok(memberReceiveAddressService.save(vo));
+    public Integer save(@RequestBody MemberReceiveAddressVO vo) {
+        return memberReceiveAddressService.save(vo);
     }
 
     @PostMapping(MemberServiceUris.MemberReceiveAddress.SAVE_BATCH)
-    public R<Integer> saveBatch(@RequestBody List<MemberReceiveAddressVO> list) {
-        return R.ok(memberReceiveAddressService.saveBatch(list));
+    public Integer saveBatch(@RequestBody List<MemberReceiveAddressVO> list) {
+        return memberReceiveAddressService.saveBatch(list);
     }
 
     @PutMapping(MemberServiceUris.MemberReceiveAddress.UPDATE)
-    public R<Integer> update(@PathVariable Long id, @RequestBody MemberReceiveAddressVO vo) {
-        return R.ok(memberReceiveAddressService.updateById(id, vo));
+    public Integer update(@PathVariable Long id, @RequestBody MemberReceiveAddressVO vo) {
+        return memberReceiveAddressService.updateById(id, vo);
     }
 
     @DeleteMapping(MemberServiceUris.MemberReceiveAddress.DELETE)
-    public R<Integer> delete(@PathVariable Long id) {
-        return R.ok(memberReceiveAddressService.removeById(id));
+    public Integer delete(@PathVariable Long id) {
+        return memberReceiveAddressService.removeById(id);
     }
 
     @DeleteMapping(MemberServiceUris.MemberReceiveAddress.DELETE_BATCH)
-    public R<Integer> deleteBatch(@RequestBody List<Long> ids) {
-        return R.ok(memberReceiveAddressService.removeByIds(ids));
+    public Integer deleteBatch(@RequestBody List<Long> ids) {
+        return memberReceiveAddressService.removeByIds(ids);
     }
 }

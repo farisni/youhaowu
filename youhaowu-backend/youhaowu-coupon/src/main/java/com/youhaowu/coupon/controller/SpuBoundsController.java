@@ -2,7 +2,6 @@ package com.youhaowu.coupon.controller;
 
 import com.youhaowu.common.constant.CouponServiceUris;
 import com.youhaowu.common.utils.PageData;
-import com.youhaowu.common.utils.R;
 import com.youhaowu.coupon.dto.SpuBoundsQueryDTO;
 import com.youhaowu.coupon.service.SpuBoundsService;
 import com.youhaowu.coupon.vo.SpuBoundsVO;
@@ -21,37 +20,37 @@ public class SpuBoundsController {
     private SpuBoundsService spuBoundsService;
 
     @GetMapping(CouponServiceUris.SpuBounds.PAGE)
-    public R<PageData<SpuBoundsVO>> page(SpuBoundsQueryDTO query) {
-        return R.ok(spuBoundsService.page(query));
+    public PageData<SpuBoundsVO> page(SpuBoundsQueryDTO query) {
+        return spuBoundsService.page(query);
     }
 
     @GetMapping(CouponServiceUris.SpuBounds.INFO)
-    public R<SpuBoundsVO> info(@PathVariable Long id) {
-        return R.ok(spuBoundsService.getById(id));
+    public SpuBoundsVO info(@PathVariable Long id) {
+        return spuBoundsService.getById(id);
     }
 
     @PostMapping(CouponServiceUris.SpuBounds.SAVE)
-    public R<Integer> save(@RequestBody SpuBoundsVO vo) {
-        return R.ok(spuBoundsService.save(vo));
+    public Integer save(@RequestBody SpuBoundsVO vo) {
+        return spuBoundsService.save(vo);
     }
 
     @PostMapping(CouponServiceUris.SpuBounds.SAVE_BATCH)
-    public R<Integer> saveBatch(@RequestBody List<SpuBoundsVO> list) {
-        return R.ok(spuBoundsService.saveBatch(list));
+    public Integer saveBatch(@RequestBody List<SpuBoundsVO> list) {
+        return spuBoundsService.saveBatch(list);
     }
 
     @PutMapping(CouponServiceUris.SpuBounds.UPDATE)
-    public R<Integer> update(@PathVariable Long id, @RequestBody SpuBoundsVO vo) {
-        return R.ok(spuBoundsService.updateById(id, vo));
+    public Integer update(@PathVariable Long id, @RequestBody SpuBoundsVO vo) {
+        return spuBoundsService.updateById(id, vo);
     }
 
     @DeleteMapping(CouponServiceUris.SpuBounds.DELETE)
-    public R<Integer> delete(@PathVariable Long id) {
-        return R.ok(spuBoundsService.removeById(id));
+    public Integer delete(@PathVariable Long id) {
+        return spuBoundsService.removeById(id);
     }
 
     @DeleteMapping(CouponServiceUris.SpuBounds.DELETE_BATCH)
-    public R<Integer> deleteBatch(@RequestBody List<Long> ids) {
-        return R.ok(spuBoundsService.removeByIds(ids));
+    public Integer deleteBatch(@RequestBody List<Long> ids) {
+        return spuBoundsService.removeByIds(ids);
     }
 }

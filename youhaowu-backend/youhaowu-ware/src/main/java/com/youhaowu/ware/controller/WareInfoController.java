@@ -2,7 +2,6 @@ package com.youhaowu.ware.controller;
 
 import com.youhaowu.common.constant.WareServiceUris;
 import com.youhaowu.common.utils.PageData;
-import com.youhaowu.common.utils.R;
 import com.youhaowu.ware.dto.WareInfoQueryDTO;
 import com.youhaowu.ware.service.WareInfoService;
 import com.youhaowu.ware.vo.WareInfoVO;
@@ -21,27 +20,27 @@ public class WareInfoController {
     private WareInfoService wareInfoService;
 
     @GetMapping(WareServiceUris.WareInfo.PAGE)
-    public R<PageData<WareInfoVO>> list(WareInfoQueryDTO query) {
-        return R.ok(wareInfoService.page(query));
+    public PageData<WareInfoVO> list(WareInfoQueryDTO query) {
+        return wareInfoService.page(query);
     }
 
     @GetMapping(WareServiceUris.WareInfo.INFO)
-    public R<WareInfoVO> info(@PathVariable Long id) {
-        return R.ok(wareInfoService.getById(id));
+    public WareInfoVO info(@PathVariable Long id) {
+        return wareInfoService.getById(id);
     }
 
     @GetMapping(WareServiceUris.WareInfo.SAVE)
-    public R<Integer> save(@RequestBody WareInfoVO vo) {
-        return R.ok(wareInfoService.save(vo));
+    public Integer save(@RequestBody WareInfoVO vo) {
+        return wareInfoService.save(vo);
     }
 
     @GetMapping(WareServiceUris.WareInfo.UPDATE)
-    public R<Integer> update(@PathVariable Long id, @RequestBody WareInfoVO vo) {
-        return R.ok(wareInfoService.updateById(id, vo));
+    public Integer update(@PathVariable Long id, @RequestBody WareInfoVO vo) {
+        return wareInfoService.updateById(id, vo);
     }
 
     @GetMapping(WareServiceUris.WareInfo.DELETE)
-    public R<Integer> delete(@RequestBody List<Long> ids) {
-        return R.ok(wareInfoService.removeByIds(ids));
+    public Integer delete(@RequestBody List<Long> ids) {
+        return wareInfoService.removeByIds(ids);
     }
 }

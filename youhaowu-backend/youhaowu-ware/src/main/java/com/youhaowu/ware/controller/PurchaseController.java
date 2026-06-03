@@ -2,7 +2,6 @@ package com.youhaowu.ware.controller;
 
 import com.youhaowu.common.constant.WareServiceUris;
 import com.youhaowu.common.utils.PageData;
-import com.youhaowu.common.utils.R;
 import com.youhaowu.ware.dto.PurchaseQueryDTO;
 import com.youhaowu.ware.service.PurchaseService;
 import com.youhaowu.ware.vo.MergeVo;
@@ -26,74 +25,77 @@ public class PurchaseController {
      * 分页查询
      */
     @GetMapping(WareServiceUris.Purchase.PAGE)
-    public R<PageData<PurchaseVO>> list(PurchaseQueryDTO query) {
-        return R.ok(purchaseService.page(query));
+    public PageData<PurchaseVO> list(PurchaseQueryDTO query) {
+        return purchaseService.page(query);
     }
 
     /**
      * 根据ID查询
      */
     @GetMapping(WareServiceUris.Purchase.INFO)
-    public R<PurchaseVO> info(@PathVariable Long id) {
-        return R.ok(purchaseService.getById(id));
+    public PurchaseVO info(@PathVariable Long id) {
+        return purchaseService.getById(id);
     }
 
     /**
      * 保存
      */
     @PostMapping(WareServiceUris.Purchase.SAVE)
-    public R<Integer> save(@RequestBody PurchaseVO vo) {
-        return R.ok(purchaseService.save(vo));
+    public Integer save(@RequestBody PurchaseVO vo) {
+        return purchaseService.save(vo);
     }
 
     /**
      * 更新
      */
     @PostMapping(WareServiceUris.Purchase.UPDATE)
-    public R<Integer> update(@PathVariable Long id, @RequestBody PurchaseVO vo) {
-        return R.ok(purchaseService.updateById(id, vo));
+    public Integer update(@PathVariable Long id, @RequestBody PurchaseVO vo) {
+        return purchaseService.updateById(id, vo);
     }
 
     /**
      * 删除
      */
     @PostMapping(WareServiceUris.Purchase.DELETE)
-    public R<Integer> delete(@RequestBody List<Long> ids) {
-        return R.ok(purchaseService.removeByIds(ids));
+    public Integer delete(@RequestBody List<Long> ids) {
+        return purchaseService.removeByIds(ids);
     }
 
     /**
      * 查询未领取的采购单
      */
     @GetMapping(WareServiceUris.Purchase.UNRECEIVE_LIST)
-    public R<PageData<PurchaseVO>> unreceiveList(PurchaseQueryDTO query) {
-        return R.ok(purchaseService.queryPageUnreceive(query));
+    public PageData<PurchaseVO> unreceiveList(PurchaseQueryDTO query) {
+        return purchaseService.queryPageUnreceive(query);
     }
 
     /**
      * 合并整单
      */
     @PostMapping(WareServiceUris.Purchase.MERGE)
-    public R<Void> merge(@RequestBody MergeVo mergeVo) {
+    public Object merge(@RequestBody MergeVo mergeVo) {
         purchaseService.mergePurchase(mergeVo);
-        return R.ok();
+        
+        return null;
     }
 
     /**
      * 领取采购单
      */
     @PostMapping(WareServiceUris.Purchase.RECEIVED)
-    public R<Void> received(@RequestBody List<Long> ids) {
+    public Object received(@RequestBody List<Long> ids) {
         purchaseService.received(ids);
-        return R.ok();
+        
+        return null;
     }
 
     /**
      * 完成采购单
      */
     @PostMapping(WareServiceUris.Purchase.DONE)
-    public R<Void> done(@RequestBody PurchaseDoneVo doneVo) {
+    public Object done(@RequestBody PurchaseDoneVo doneVo) {
         purchaseService.done(doneVo);
-        return R.ok();
+        
+        return null;
     }
 }

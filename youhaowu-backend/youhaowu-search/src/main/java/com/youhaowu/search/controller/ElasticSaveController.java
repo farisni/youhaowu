@@ -12,11 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.youhaowu.common.enums.BizCodeEnum;
 import com.youhaowu.search.service.ProductSaveService;
 import com.youhaowu.common.vo.SkuEsModel;
-import com.youhaowu.common.utils.R;
 
 import lombok.extern.slf4j.Slf4j;
 
-
+/**
+ * ES 保存控制器
+ */
 @Slf4j
 @RequestMapping(value = "/search/save")
 @RestController
@@ -25,29 +26,18 @@ public class ElasticSaveController {
     @Autowired
     private ProductSaveService productSaveService;
 
-
     /**
      * 上架商品
-     * @param skuEsModels
-     * @return
      */
     @PostMapping(value = "/product")
-    public R productStatusUp(@RequestBody List<SkuEsModel> skuEsModels) {
-
-        boolean status=false;
+    public Boolean productStatusUp(@RequestBody List<SkuEsModel> skuEsModels) {
+        boolean status = false;
         try {
             status = productSaveService.productStatusUp(skuEsModels);
         } catch (IOException e) {
-            //log.error("商品上架错误{}",e);
-
-            return R.fail(BizCodeEnum.PRODUCT_UP_EXCEPTION.getCode(),BizCodeEnum.PRODUCT_UP_EXCEPTION.getMessage());
+            log.error("商品上架错误", e);
+            return false;
         }
-
-        if(status){
-            return R.fail(BizCodeEnum.PRODUCT_UP_EXCEPTION.getCode(),BizCodeEnum.PRODUCT_UP_EXCEPTION.getMessage());
-        }else {
-            return R.ok();
-        }
-
+        return !status;
     }
 }

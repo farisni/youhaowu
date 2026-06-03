@@ -2,7 +2,6 @@ package com.youhaowu.coupon.controller;
 
 import com.youhaowu.common.constant.CouponServiceUris;
 import com.youhaowu.common.utils.PageData;
-import com.youhaowu.common.utils.R;
 import com.youhaowu.coupon.dto.CouponQueryDTO;
 import com.youhaowu.coupon.service.CouponService;
 import com.youhaowu.coupon.vo.CouponVO;
@@ -21,37 +20,37 @@ public class CouponController {
     private CouponService couponService;
 
     @GetMapping(CouponServiceUris.Coupon.PAGE)
-    public R<PageData<CouponVO>> page(CouponQueryDTO query) {
-        return R.ok(couponService.page(query));
+    public PageData<CouponVO> page(CouponQueryDTO query) {
+        return couponService.page(query);
     }
 
     @GetMapping(CouponServiceUris.Coupon.INFO)
-    public R<CouponVO> info(@PathVariable Long id) {
-        return R.ok(couponService.getById(id));
+    public CouponVO info(@PathVariable Long id) {
+        return couponService.getById(id);
     }
 
     @PostMapping(CouponServiceUris.Coupon.SAVE)
-    public R<Integer> save(@RequestBody CouponVO vo) {
-        return R.ok(couponService.save(vo));
+    public Integer save(@RequestBody CouponVO vo) {
+        return couponService.save(vo);
     }
 
     @PostMapping(CouponServiceUris.Coupon.SAVE_BATCH)
-    public R<Integer> saveBatch(@RequestBody List<CouponVO> list) {
-        return R.ok(couponService.saveBatch(list));
+    public Integer saveBatch(@RequestBody List<CouponVO> list) {
+        return couponService.saveBatch(list);
     }
 
     @PutMapping(CouponServiceUris.Coupon.UPDATE)
-    public R<Integer> update(@PathVariable Long id, @RequestBody CouponVO vo) {
-        return R.ok(couponService.updateById(id, vo));
+    public Integer update(@PathVariable Long id, @RequestBody CouponVO vo) {
+        return couponService.updateById(id, vo);
     }
 
     @DeleteMapping(CouponServiceUris.Coupon.DELETE)
-    public R<Integer> delete(@PathVariable Long id) {
-        return R.ok(couponService.removeById(id));
+    public Integer delete(@PathVariable Long id) {
+        return couponService.removeById(id);
     }
 
     @DeleteMapping(CouponServiceUris.Coupon.DELETE_BATCH)
-    public R<Integer> deleteBatch(@RequestBody List<Long> ids) {
-        return R.ok(couponService.removeByIds(ids));
+    public Integer deleteBatch(@RequestBody List<Long> ids) {
+        return couponService.removeByIds(ids);
     }
 }
