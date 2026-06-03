@@ -1,6 +1,6 @@
 package com.youhaowu.common.utils;
 
-import com.alibaba.fastjson.TypeReference;
+import com.alibaba.fastjson2.TypeReference;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;

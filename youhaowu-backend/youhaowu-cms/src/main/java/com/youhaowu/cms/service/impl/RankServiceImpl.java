@@ -75,10 +75,10 @@ public class RankServiceImpl implements RankService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Integer save(RankSaveDTO dto) {
-        if (dto.getId() != null) {
-            RankEntity existing = rankMapper.selectById(dto.getId());
+        if (dto.id() != null) {
+            RankEntity existing = rankMapper.selectById(dto.id());
             if (existing == null) {
-                throw new RuntimeException("排行记录不存在: " + dto.getId());
+                throw new RuntimeException("排行记录不存在: " + dto.id());
             }
             BeanUtil.copyProperties(dto, existing);
             return rankMapper.updateById(existing);

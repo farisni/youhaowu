@@ -1,7 +1,7 @@
 package com.youhaowu.seckill.service.impl;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.TypeReference;
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.TypeReference;
 import com.youhaowu.common.constant.seckill.SeckillConstant;
 import com.youhaowu.common.to.seckill.SeckillOrderTO;
 import com.youhaowu.common.utils.R;
@@ -80,15 +80,15 @@ public class SeckillServiceImpl implements SeckillService {
         if (CollectionUtils.isEmpty(sessions)) return;
 
         sessions.forEach(session -> {
-            long startTime = session.getStartTime().getTime();
-            long endTime = session.getEndTime().getTime();
+            long startTime = session.startTime().toEpochMilli();
+            long endTime = session.endTime().toEpochMilli();
             String key = SeckillConstant.SESSION_CACHE_PREFIX + startTime + "_" + endTime;
 
             //  幂等性：已上架则跳过
             Boolean hasKey = redisTemplate.hasKey(key);
             if (!hasKey) {
-                List<String> skuIds = session.getRelationSkus().stream()
-                        .map(item -> item.getPromotionSessionId() + "_" + item.getSkuId().toString())
+                List<String> skuIds = session.relationSkus().stream()
+                        .map(item -> item.promotionSessionId() + "_" + item.skuId().toString())
                         .collect(Collectors.toList());
                 redisTemplate.opsForList().leftPushAll(key, skuIds);
             }
@@ -106,8 +106,8 @@ public class SeckillServiceImpl implements SeckillService {
         //  收集所有 SKU ID
         List<Long> skuIds = new ArrayList<>();
         sessions.forEach(session -> {
-            List<Long> ids = session.getRelationSkus().stream()
-                    .map(SeckillSkuVO::getSkuId).collect(Collectors.toList());
+            List<Long> ids = session.relationSkus().stream()
+                    .map(SeckillSkuVO::skuId).collect(Collectors.toList());
             skuIds.addAll(ids);
         });
 
@@ -118,34 +118,34 @@ public class SeckillServiceImpl implements SeckillService {
             @SuppressWarnings("unchecked")
             List<SkuInfoTO> skuInfoList = (List<SkuInfoTO>) info.getData(new TypeReference<List<SkuInfoTO>>() {});
             Map<Long, SkuInfoTO> skuMap = skuInfoList
-                    .stream().collect(Collectors.toMap(SkuInfoTO::getSkuId, v -> v));
+                    .stream().collect(Collectors.toMap(SkuInfoTO::skuId, v -> v));
 
             BoundHashOperations<String, Object, Object> ops = redisTemplate.boundHashOps(SECKILL_CHARE_KEY);
 
             //  遍历场次，组装并写入秒杀商品信息
             sessions.forEach(session -> {
-                session.getRelationSkus().forEach(seckillSku -> {
+                session.relationSkus().forEach(seckillSku -> {
                     //  判断是否已上架（幂等性）
-                    String redisKey = seckillSku.getPromotionSessionId() + "_" + seckillSku.getSkuId();
+                    String redisKey = seckillSku.promotionSessionId() + "_" + seckillSku.skuId();
                     if (!ops.hasKey(redisKey)) {
                         //  组装 SeckillSkuRedisTO
                         SeckillSkuRedisTO redisTO = new SeckillSkuRedisTO();
-                        redisTO.setPromotionId(seckillSku.getPromotionId());
-                        redisTO.setPromotionSessionId(seckillSku.getPromotionSessionId());
-                        redisTO.setSkuId(seckillSku.getSkuId());
-                        redisTO.setSeckillPrice(seckillSku.getSeckillPrice());
-                        redisTO.setSeckillCount(seckillSku.getSeckillCount());
-                        redisTO.setSeckillLimit(seckillSku.getSeckillLimit());
-                        redisTO.setSeckillSort(seckillSku.getSeckillSort());
-                        redisTO.setStartTime(session.getStartTime().getTime());
-                        redisTO.setEndTime(session.getEndTime().getTime());
+                        redisTO.setPromotionId(seckillSku.promotionId());
+                        redisTO.setPromotionSessionId(seckillSku.promotionSessionId());
+                        redisTO.setSkuId(seckillSku.skuId());
+                        redisTO.setSeckillPrice(seckillSku.seckillPrice());
+                        redisTO.setSeckillCount(seckillSku.seckillCount());
+                        redisTO.setSeckillLimit(seckillSku.seckillLimit());
+                        redisTO.setSeckillSort(seckillSku.seckillSort());
+                        redisTO.setStartTime(session.startTime().toEpochMilli());
+                        redisTO.setEndTime(session.endTime().toEpochMilli());
 
                         //  随机码（防刷）
                         String randomCode = UUID.randomUUID().toString().replace("-", "");
                         redisTO.setRandomCode(randomCode);
 
                         //  填充 SKU 基本信息
-                        SkuInfoTO skuInfo = skuMap.get(seckillSku.getSkuId());
+                        SkuInfoTO skuInfo = skuMap.get(seckillSku.skuId());
                         if (skuInfo != null) {
                             redisTO.setSkuInfo(skuInfo);
                         }
@@ -153,7 +153,7 @@ public class SeckillServiceImpl implements SeckillService {
                         //  信号量（库存）
                         RSemaphore semaphore = redissonClient.getSemaphore(
                                 SeckillConstant.SKU_STOCK_SEMAPHORE + randomCode);
-                        semaphore.trySetPermits(seckillSku.getSeckillCount());
+                        semaphore.trySetPermits(seckillSku.seckillCount());
 
                         //  写入 Redis Hash
                         ops.put(redisKey, JSON.toJSONString(redisTO));

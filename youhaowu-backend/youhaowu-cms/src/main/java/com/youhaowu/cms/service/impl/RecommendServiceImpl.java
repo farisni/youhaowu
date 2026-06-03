@@ -76,10 +76,10 @@ public class RecommendServiceImpl implements RecommendService {
     @Transactional(rollbackFor = Exception.class)
     public Integer save(RecommendSaveDTO dto) {
         //  id 非空：更新；id 空：新增
-        if (dto.getId() != null) {
-            RecommendEntity existing = recommendMapper.selectById(dto.getId());
+        if (dto.id() != null) {
+            RecommendEntity existing = recommendMapper.selectById(dto.id());
             if (existing == null) {
-                throw new RuntimeException("推荐记录不存在: " + dto.getId());
+                throw new RuntimeException("推荐记录不存在: " + dto.id());
             }
             BeanUtil.copyProperties(dto, existing);
             return recommendMapper.updateById(existing);

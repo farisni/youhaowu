@@ -1,6 +1,6 @@
 package com.youhaowu.member.service.Impl;
 
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.youhaowu.common.utils.PageData;
 import com.youhaowu.common.utils.HttpUtils;
@@ -146,8 +146,8 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public MemberVO login(UserLoginVO user) {
-        String loginacct = user.getLoginacct();
-        String password = user.getPassword();
+        String loginacct = user.loginacct();
+        String password = user.password();
 
         MemberEntity entity = memberMapper.selectOne(
                 new LambdaQueryWrapper<MemberEntity>()

@@ -1,13 +1,11 @@
 package com.youhaowu.cms.dto;
 
-import lombok.Data;
 
-@Data
-public class BannerSaveDTO {
-    private String title;
-    private String imgUrl;
-    private String fileName;
-    private String linkUrl;
-    private Integer sort;
-    private Integer status;
-}
+public record BannerSaveDTO(
+    String title,
+    String imgUrl,
+    String fileName,
+    String linkUrl,
+    Integer sort,
+    Integer status
+) {}

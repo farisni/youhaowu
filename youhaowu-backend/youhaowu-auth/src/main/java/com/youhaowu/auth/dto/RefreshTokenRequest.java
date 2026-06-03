@@ -1,11 +1,6 @@
 package com.youhaowu.auth.dto;
 
-import lombok.Data;
 
-/**
- * 刷新 Token 请求 DTO
- */
-@Data
-public class RefreshTokenRequest {
-    private String refreshToken;
-}
+public record RefreshTokenRequest(
+    String refreshToken
+) {}

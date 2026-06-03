@@ -247,3 +247,4 @@
 - feat(common): 自动装配 CommonAutoConfiguration（scanBasePackages 零配置）
 - fix: 修复 youhaowu-member 和 youhaowu-seckill 编译错误
 - feat: 服务间调用去 R 包装（GlobalResponseAdvice 按 X-Internal 请求头条件包装）
+- refactor: fastjson→fastjson2 迁移 + 9个纯数据类 @Data→record

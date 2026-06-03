@@ -1,9 +1,7 @@
 package com.youhaowu.common.vo.auth;
 
-import lombok.Data;
 
-@Data
-public class UserLoginVO {
-    private String loginacct;
-    private String password;
-}
+public record UserLoginVO(
+    String loginacct,
+    String password
+) {}
