@@ -208,7 +208,7 @@ public class SpuInfoServiceImpl implements SpuInfoService {
         List<Long> skuIds = skuVOs.stream().map(SkuInfoVO::getSkuId).collect(Collectors.toList());
         Map<Long, Boolean> stockMap = null;
         try {
-            stockMap = wareClient.hasStock(skuIds).block().getData().stream()
+            stockMap = wareClient.hasStock(skuIds).block().stream()
                     .collect(Collectors.toMap(SkuHasStockVO::getSkuId, SkuHasStockVO::getHasStock));
         } catch (Exception ex) {
             log.error("库存查询异常: {}", ex.getMessage());

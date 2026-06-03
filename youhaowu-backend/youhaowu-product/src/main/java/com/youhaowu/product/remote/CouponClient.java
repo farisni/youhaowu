@@ -1,7 +1,6 @@
 package com.youhaowu.product.remote;
 
 import com.youhaowu.common.constant.CouponServiceUris;
-import com.youhaowu.common.utils.R;
 import reactor.core.publisher.Mono;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.service.annotation.PostExchange;
@@ -12,8 +11,8 @@ import org.springframework.web.service.annotation.PostExchange;
 public interface CouponClient {
 
     @PostExchange(CouponServiceUris.SpuBounds.SAVE)
-    Mono<R> saveSpuBounds(@RequestBody Object spuBoundTo);
+    Mono<Integer> saveSpuBounds(@RequestBody Object spuBoundTo);
 
     @PostExchange(CouponServiceUris.SkuFullReduction.SAVE)
-    Mono<R> saveSkuReduction(@RequestBody Object skuReductionTo);
+    Mono<Integer> saveSkuReduction(@RequestBody Object skuReductionTo);
 }

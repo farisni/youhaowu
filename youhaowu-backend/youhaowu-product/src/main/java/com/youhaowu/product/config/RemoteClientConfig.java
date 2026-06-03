@@ -28,7 +28,8 @@ public class RemoteClientConfig {
     @Bean
     public WareClient wareClient(WebClient.Builder builder) {
         return HttpServiceProxyFactory
-                .builderFor(WebClientAdapter.create(builder.baseUrl(wareUrl).build()))
+                .builderFor(WebClientAdapter.create(
+                        builder.baseUrl(wareUrl).defaultHeader("X-Internal", "true").build()))
                 .build()
                 .createClient(WareClient.class);
     }
@@ -36,7 +37,8 @@ public class RemoteClientConfig {
     @Bean
     public CouponClient couponClient(WebClient.Builder builder) {
         return HttpServiceProxyFactory
-                .builderFor(WebClientAdapter.create(builder.baseUrl(couponUrl).build()))
+                .builderFor(WebClientAdapter.create(
+                        builder.baseUrl(couponUrl).defaultHeader("X-Internal", "true").build()))
                 .build()
                 .createClient(CouponClient.class);
     }
@@ -44,7 +46,8 @@ public class RemoteClientConfig {
     @Bean
     public SearchClient searchClient(WebClient.Builder builder) {
         return HttpServiceProxyFactory
-                .builderFor(WebClientAdapter.create(builder.baseUrl(searchUrl).build()))
+                .builderFor(WebClientAdapter.create(
+                        builder.baseUrl(searchUrl).defaultHeader("X-Internal", "true").build()))
                 .build()
                 .createClient(SearchClient.class);
     }

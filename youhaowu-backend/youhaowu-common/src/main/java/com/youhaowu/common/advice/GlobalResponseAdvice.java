@@ -31,6 +31,11 @@ public class GlobalResponseAdvice implements ResponseBodyAdvice<Object> {
                                   Class<? extends HttpMessageConverter<?>> selectedConverterType,
                                   ServerHttpRequest request,
                                   ServerHttpResponse response) {
+        //  服务间调用（X-Internal: true）跳过包装，直接返回业务对象
+        String internal = request.getHeaders().getFirst("X-Internal");
+        if ("true".equals(internal)) {
+            return body;
+        }
         return R.ok(body);
     }
 }

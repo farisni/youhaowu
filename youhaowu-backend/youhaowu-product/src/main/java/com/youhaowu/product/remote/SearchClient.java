@@ -1,7 +1,6 @@
 package com.youhaowu.product.remote;
 
 import com.youhaowu.common.constant.SearchServiceUris;
-import com.youhaowu.common.utils.R;
 import reactor.core.publisher.Mono;
 import com.youhaowu.common.vo.SkuEsModel;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,5 +14,5 @@ import java.util.List;
 public interface SearchClient {
 
     @PostExchange(SearchServiceUris.SearchSave.PRODUCT_UP)
-    Mono<R> productStatusUp(@RequestBody List<SkuEsModel> skuEsModels);
+    Mono<Boolean> productStatusUp(@RequestBody List<SkuEsModel> skuEsModels);
 }
