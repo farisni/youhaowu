@@ -2,7 +2,6 @@ package com.youhaowu.product.controller;
 
 import com.youhaowu.common.constant.ProductServiceUris;
 import com.youhaowu.common.utils.PageData;
-import com.youhaowu.common.utils.R;
 import com.youhaowu.product.service.ProductAttrValueService;
 import com.youhaowu.product.query.ProductAttrValueQueryDTO;
 import com.youhaowu.product.vo.ProductAttrValueVO;
@@ -24,15 +23,15 @@ public class ProductAttrValueController {
      * 分页查询属性值
      */
     @GetMapping(ProductServiceUris.ProductAttrValue.PAGE)
-    public R<PageData<ProductAttrValueVO>> list(ProductAttrValueQueryDTO query) {
-        return R.ok(productAttrValueService.page(query));
+    public PageData<ProductAttrValueVO> list(ProductAttrValueQueryDTO query) {
+        return productAttrValueService.page(query);
     }
 
     /**
      * 根据SPU ID查询属性值列表
      */
     @GetMapping(ProductServiceUris.ProductAttrValue.LIST_BY_SPU)
-    public R<List<ProductAttrValueVO>> listBySpuId(@PathVariable Long spuId) {
-        return R.ok(productAttrValueService.listBySpuId(spuId));
+    public List<ProductAttrValueVO> listBySpuId(@PathVariable Long spuId) {
+        return productAttrValueService.listBySpuId(spuId);
     }
 }

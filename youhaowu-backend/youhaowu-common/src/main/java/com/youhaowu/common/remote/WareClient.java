@@ -2,6 +2,7 @@ package com.youhaowu.common.remote;
 
 import com.youhaowu.common.constant.WareServiceUris;
 import com.youhaowu.common.utils.R;
+import reactor.core.publisher.Mono;
 import com.youhaowu.common.vo.SkuHasStockVO;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.service.annotation.PostExchange;
@@ -14,5 +15,5 @@ import java.util.List;
 public interface WareClient {
 
     @PostExchange(WareServiceUris.WareSku.HAS_STOCK)
-    R<List<SkuHasStockVO>> hasStock(@RequestBody List<Long> skuIds);
+    Mono<R<List<SkuHasStockVO>>> hasStock(@RequestBody List<Long> skuIds);
 }

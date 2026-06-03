@@ -137,3 +137,5 @@ gulimall 有 LoginController + OAuth2Controller，wheatmall 当前仅 DemoContro
 - feat: 全链路日志追踪（TraceId 贯穿 Gateway → 各微服务 → DB）
 - refactor: 后端 save 方法统一改名为 saveOrUpdate，语义更明确（id 空=新增，id 非空=更新）
 - feat: 前端首页内容缓存优化（banner/news/recommend/rank 列表加 Redis 缓存，减少 DB 查询）
+- refactor: Controller 统一返回对象（去除 R<?> 裸返回，全部显式指定泛型类型）
+- refactor: 商品上架流程改为 WebFlux 非阻塞写法（Mono 链式编排，去除 .block()）

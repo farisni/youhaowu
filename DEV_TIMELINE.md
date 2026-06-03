@@ -239,3 +239,9 @@
 - style(pc-vue): 今日推荐区域移除标题文字，仅显示图片
 - feat(cms): 商品排行接口 + 管理页面 + pc-vue 排行组件（热卖/特价/新品）
 - style(pc-vue): 猜你喜欢加换一换按钮 + Refresh 图标
+
+## 2026-06-03
+
+- refactor(product): 远程调用改为 WebClient + @HttpExchange 声明式（CouponClient/SearchClient）
+- feat(product): 全局 @RestControllerAdvice 统一响应包装，Controller 去 R.ok()
+- feat(common): 自动装配 CommonAutoConfiguration（scanBasePackages 零配置）

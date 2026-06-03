@@ -2,7 +2,6 @@ package com.youhaowu.product.controller;
 
 import com.youhaowu.common.constant.ProductServiceUris;
 import com.youhaowu.common.utils.PageData;
-import com.youhaowu.common.utils.R;
 import com.youhaowu.product.dto.CategoryQueryDTO;
 import com.youhaowu.product.dto.CategorySortUpdateDTO;
 import com.youhaowu.product.dto.CategoryUpdateDTO;
@@ -33,8 +32,8 @@ public class CategoryController {
      * 返回三级分类树形结构，一级分类包含子分类，子分类嵌套孙分类
      */
     @GetMapping(ProductServiceUris.ProductCategory.LIST_TREE)
-    public R<List<CategoryVO>> list() {
-        return R.ok(categoryService.listWithTree());
+    public List<CategoryVO> list() {
+        return categoryService.listWithTree();
     }
 
     /**
@@ -42,8 +41,8 @@ public class CategoryController {
      * 支持按名称模糊查询和关键字搜索
      */
     @PostMapping(ProductServiceUris.ProductCategory.PAGE)
-    public R<PageData<CategoryVO>> page(@Valid CategoryQueryDTO query) {
-        return R.ok(categoryService.page(query));
+    public PageData<CategoryVO> page(@Valid CategoryQueryDTO query) {
+        return categoryService.page(query);
     }
 
     /**
@@ -51,8 +50,8 @@ public class CategoryController {
      * 返回指定父分类下的直接子分类列表，按排序字段升序
      */
     @GetMapping(ProductServiceUris.ProductCategory.PARENT_BY_ID)
-    public R<List<CategoryVO>> children(@PathVariable Long parentId) {
-        return R.ok(categoryService.getChildrenByParentId(parentId));
+    public List<CategoryVO> children(@PathVariable Long parentId) {
+        return categoryService.getChildrenByParentId(parentId);
     }
 
     /**
@@ -60,9 +59,10 @@ public class CategoryController {
      * 接收分类ID列表，执行逻辑删除
      */
     @PostMapping(ProductServiceUris.ProductCategory.DELETE)
-    public R<Void> delete(@RequestBody List<Long> ids) {
+    public Object delete(@RequestBody List<Long> ids) {
         categoryService.deleteBatch(ids);
-        return R.ok();
+        
+        return null;
     }
 
     /**
@@ -70,9 +70,10 @@ public class CategoryController {
      * 更新分类的名称、图标、排序、显示状态等信息
      */
     @PostMapping(ProductServiceUris.ProductCategory.UPDATE)
-    public R<Void> update(@Valid @RequestBody CategoryUpdateDTO dto) {
+    public Object update(@Valid @RequestBody CategoryUpdateDTO dto) {
         categoryService.update(dto);
-        return R.ok();
+        
+        return null;
     }
 
     /**
@@ -80,9 +81,9 @@ public class CategoryController {
      * 在指定父分类下创建子分类
      */
     @PostMapping(ProductServiceUris.ProductCategory.SAVE)
-    public R<Void> save(@Valid @RequestBody CategoryUpdateDTO dto) {
+    public Object save(@Valid @RequestBody CategoryUpdateDTO dto) {
         categoryService.save(dto);
-        return R.ok();
+        return null;
     }
 
     /**
@@ -90,8 +91,9 @@ public class CategoryController {
      * 拖拽排序后批量更新分类的排序值和父分类ID
      */
     @PostMapping(ProductServiceUris.ProductCategory.BATCH_UPDATE_SORT)
-    public R<Void> batchUpdateSort(@RequestBody List<CategorySortUpdateDTO> list) {
+    public Object batchUpdateSort(@RequestBody List<CategorySortUpdateDTO> list) {
         categoryService.batchUpdateSort(list);
-        return R.ok();
+        
+        return null;
     }
 }

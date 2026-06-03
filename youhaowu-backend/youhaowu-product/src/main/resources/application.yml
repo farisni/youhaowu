@@ -29,6 +29,8 @@ spring:
 app:
   service:
     ware: http://youhaowu-ware
+    coupon: http://youhaowu-coupon
+    search: http://youhaowu-search
 
 logging:
   file:

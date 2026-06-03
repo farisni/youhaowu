@@ -2,7 +2,6 @@ package com.youhaowu.product.controller;
 
 import com.youhaowu.common.constant.ProductServiceUris;
 import com.youhaowu.common.utils.PageData;
-import com.youhaowu.common.utils.R;
 import com.youhaowu.product.query.SkuQueryDTO;
 import com.youhaowu.product.service.SkuInfoService;
 import com.youhaowu.product.vo.SkuInfoVO;
@@ -22,24 +21,25 @@ public class SkuInfoController {
      * 分页条件查询SKU
      */
     @GetMapping(ProductServiceUris.ProductSku.PAGE)
-    public R<PageData<SkuInfoVO>> list(SkuQueryDTO query) {
-        return R.ok(skuInfoService.page(query));
+    public PageData<SkuInfoVO> list(SkuQueryDTO query) {
+        return skuInfoService.page(query);
     }
 
     /**
      * 根据ID查询SKU信息
      */
     @GetMapping(ProductServiceUris.ProductSku.INFO)
-    public R<SkuInfoVO> info(@PathVariable Long skuId) {
-        return R.ok(skuInfoService.getVOById(skuId));
+    public SkuInfoVO info(@PathVariable Long skuId) {
+        return skuInfoService.getVOById(skuId);
     }
 
     /**
      * 保存SKU信息
      */
     @PostMapping(ProductServiceUris.ProductSku.SAVE)
-    public R<Void> save(@RequestBody SkuInfoVO vo) {
+    public Object save(@RequestBody SkuInfoVO vo) {
         skuInfoService.saveSkuInfo(vo);
-        return R.ok();
+        
+        return null;
     }
 }

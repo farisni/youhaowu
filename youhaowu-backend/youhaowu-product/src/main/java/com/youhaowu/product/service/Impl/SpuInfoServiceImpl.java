@@ -10,7 +10,8 @@ import com.youhaowu.product.entity.*;
 import com.youhaowu.product.mapper.*;
 import com.youhaowu.product.entity.BrandEntity;
 import com.youhaowu.product.entity.CategoryEntity;
-import com.youhaowu.product.remote.CouponRemoteService;
+import com.youhaowu.product.remote.CouponClient;
+import com.youhaowu.product.remote.SearchClient;
 import com.youhaowu.common.remote.WareClient;
 import com.youhaowu.product.service.*;
 import com.youhaowu.product.vo.*;
@@ -52,7 +53,10 @@ public class SpuInfoServiceImpl implements SpuInfoService {
     @Autowired
     private SkuSaleAttrValueMapper skuSaleAttrValueMapper;
     @Autowired
-    private CouponRemoteService couponRemoteService;
+    private CouponClient couponClient;
+
+    @Autowired
+    private SearchClient searchClient;
     @Autowired
     private BrandMapper brandMapper;
     @Autowired
@@ -125,7 +129,7 @@ public class SpuInfoServiceImpl implements SpuInfoService {
         }
 
         //  5. 保存积分信息（远程调用）
-        if (vo.getBounds() != null) couponRemoteService.saveSpuBounds(vo.getBounds());
+        if (vo.getBounds() != null) couponClient.saveSpuBounds(vo.getBounds()).subscribe();
 
         //  6. 遍历保存SKU信息
         List<Skus> skus = vo.getSkus();
@@ -169,7 +173,7 @@ public class SpuInfoServiceImpl implements SpuInfoService {
                 }
 
                 //  6d. 保存SKU会员价格（远程调用）
-                if (item.getMemberPrice() != null) couponRemoteService.saveSkuReduction(item);
+                if (item.getMemberPrice() != null) couponClient.saveSkuReduction(item).subscribe();
             });
         }
         return affected;
@@ -204,7 +208,7 @@ public class SpuInfoServiceImpl implements SpuInfoService {
         List<Long> skuIds = skuVOs.stream().map(SkuInfoVO::getSkuId).collect(Collectors.toList());
         Map<Long, Boolean> stockMap = null;
         try {
-            stockMap = wareClient.hasStock(skuIds).getData().stream()
+            stockMap = wareClient.hasStock(skuIds).block().getData().stream()
                     .collect(Collectors.toMap(SkuHasStockVO::getSkuId, SkuHasStockVO::getHasStock));
         } catch (Exception ex) {
             log.error("库存查询异常: {}", ex.getMessage());
