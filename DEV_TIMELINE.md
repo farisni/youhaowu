@@ -245,3 +245,4 @@
 - refactor(product): 远程调用改为 WebClient + @HttpExchange 声明式（CouponClient/SearchClient）
 - feat(product): 全局 @RestControllerAdvice 统一响应包装，Controller 去 R.ok()
 - feat(common): 自动装配 CommonAutoConfiguration（scanBasePackages 零配置）
+- fix: 修复 youhaowu-member 和 youhaowu-seckill 编译错误

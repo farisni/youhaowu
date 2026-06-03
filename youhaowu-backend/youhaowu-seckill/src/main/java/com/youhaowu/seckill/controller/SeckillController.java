@@ -1,6 +1,5 @@
 package com.youhaowu.seckill.controller;
 
-import com.youhaowu.common.utils.R;
 import com.youhaowu.common.vo.seckill.SeckillSkuRedisTO;
 import com.youhaowu.seckill.service.SeckillService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,18 +22,18 @@ public class SeckillController {
      * 查询当前时间可参与的秒杀商品列表
      */
     @GetMapping("/current")
-    public R<List<SeckillSkuRedisTO>> getCurrentSeckillSkus() {
+    public List<SeckillSkuRedisTO> getCurrentSeckillSkus() {
         List<SeckillSkuRedisTO> results = seckillService.getCurrentSeckillSkus();
-        return R.ok(results);
+        return results;
     }
 
     /**
      * 根据 skuId 查询商品当前时间秒杀信息
      */
     @GetMapping("/sku/{skuId}")
-    public R<SeckillSkuRedisTO> getSkuSeckilInfo(@PathVariable("skuId") Long skuId) {
+    public SeckillSkuRedisTO getSkuSeckilInfo(@PathVariable("skuId") Long skuId) {
         SeckillSkuRedisTO to = seckillService.getSkuSeckilInfo(skuId);
-        return R.ok(to);
+        return to;
     }
 
     /**
@@ -44,17 +43,17 @@ public class SeckillController {
      * @param num    购买数量
      */
     @GetMapping("/kill")
-    public R<String> kill(@RequestParam("killId") String killId,
+    public String kill(@RequestParam("killId") String killId,
                            @RequestParam("key") String key,
                            @RequestParam("num") Integer num) {
         try {
             String orderSn = seckillService.kill(killId, key, num);
             if (orderSn != null) {
-                return R.ok(orderSn);
+                return orderSn;
             }
-            return R.fail("秒杀失败");
+            throw new RuntimeException("秒杀失败");
         } catch (Exception e) {
-            return R.fail(e.getMessage());
+            throw new RuntimeException(e.getMessage());
         }
     }
 }

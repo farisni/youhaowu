@@ -3,7 +3,6 @@ package com.youhaowu.member.controller;
 import com.youhaowu.common.constant.MemberServiceUris;
 import com.youhaowu.common.enums.BizCodeEnum;
 import com.youhaowu.common.utils.PageData;
-import com.youhaowu.common.utils.R;
 import com.youhaowu.member.dto.MemberQueryDTO;
 import com.youhaowu.member.exception.PhoneException;
 import com.youhaowu.member.exception.UsernameException;
@@ -34,56 +33,56 @@ public class MemberController {
      * 分页查询
      */
     @GetMapping(MemberServiceUris.Member.PAGE)
-    public R<PageData<MemberVO>> page(MemberQueryDTO query) {
-        return R.ok(memberService.page(query));
+    public PageData<MemberVO> page(MemberQueryDTO query) {
+        return memberService.page(query);
     }
 
     /**
      * 根据ID查询
      */
     @GetMapping(MemberServiceUris.Member.INFO)
-    public R<MemberVO> info(@PathVariable Long id) {
-        return R.ok(memberService.getById(id));
+    public MemberVO info(@PathVariable Long id) {
+        return memberService.getById(id);
     }
 
     /**
      * 保存
      */
     @PostMapping(MemberServiceUris.Member.SAVE)
-    public R<Integer> save(@RequestBody MemberVO vo) {
-        return R.ok(memberService.save(vo));
+    public Integer save(@RequestBody MemberVO vo) {
+        return memberService.save(vo);
     }
 
     /**
      * 批量保存
      */
     @PostMapping(MemberServiceUris.Member.SAVE_BATCH)
-    public R<Integer> saveBatch(@RequestBody List<MemberVO> list) {
-        return R.ok(memberService.saveBatch(list));
+    public Integer saveBatch(@RequestBody List<MemberVO> list) {
+        return memberService.saveBatch(list);
     }
 
     /**
      * 更新
      */
     @PutMapping(MemberServiceUris.Member.UPDATE)
-    public R<Integer> update(@PathVariable Long id, @RequestBody MemberVO vo) {
-        return R.ok(memberService.updateById(id, vo));
+    public Integer update(@PathVariable Long id, @RequestBody MemberVO vo) {
+        return memberService.updateById(id, vo);
     }
 
     /**
      * 删除
      */
     @DeleteMapping(MemberServiceUris.Member.DELETE)
-    public R<Integer> delete(@PathVariable Long id) {
-        return R.ok(memberService.removeById(id));
+    public Integer delete(@PathVariable Long id) {
+        return memberService.removeById(id);
     }
 
     /**
      * 批量删除
      */
     @DeleteMapping(MemberServiceUris.Member.DELETE_BATCH)
-    public R<Integer> deleteBatch(@RequestBody List<Long> ids) {
-        return R.ok(memberService.removeByIds(ids));
+    public Integer deleteBatch(@RequestBody List<Long> ids) {
+        return memberService.removeByIds(ids);
     }
 
     //  ==================== 会员业务 ====================
@@ -92,18 +91,17 @@ public class MemberController {
      * 注册
      */
     @PostMapping(MemberServiceUris.Member.REGISTER)
-    public R<String> register(@RequestBody MemberUserRegisterVO user) {
+    public Integer register(@RequestBody MemberUserRegisterVO user) {
         try {
-            memberService.register(user);
-            return R.ok();
+            return memberService.register(user);
+
+            
         } catch (PhoneException ex) {
-            return R.fail(BizCodeEnum.PHONE_EXIST_EXCEPTION.getCode(),
-                    BizCodeEnum.PHONE_EXIST_EXCEPTION.getMessage());
+            throw new RuntimeException(BizCodeEnum.PHONE_EXIST_EXCEPTION.getMessage());
         } catch (UsernameException ex) {
-            return R.fail(BizCodeEnum.USER_EXIST_EXCEPTION.getCode(),
-                    BizCodeEnum.USER_EXIST_EXCEPTION.getMessage());
+            throw new RuntimeException(BizCodeEnum.USER_EXIST_EXCEPTION.getMessage());
         } catch (Exception ex) {
-            return R.fail(ex.getMessage());
+            throw new RuntimeException(ex.getMessage());
         }
     }
 
@@ -111,13 +109,12 @@ public class MemberController {
      * 登录
      */
     @PostMapping(MemberServiceUris.Member.LOGIN)
-    public R<MemberVO> login(@RequestBody UserLoginVO userLoginVO) {
+    public MemberVO login(@RequestBody UserLoginVO userLoginVO) {
         MemberVO vo = memberService.login(userLoginVO);
         if (vo != null) {
-            return R.ok(vo);
+            return vo;
         } else {
-            return R.fail(BizCodeEnum.LOGINACCT_PASSWORD_EXCEPTION.getCode(),
-                    BizCodeEnum.LOGINACCT_PASSWORD_EXCEPTION.getMessage());
+            throw new RuntimeException(BizCodeEnum.LOGINACCT_PASSWORD_EXCEPTION.getMessage());
         }
     }
 
@@ -125,13 +122,12 @@ public class MemberController {
      * Gitee OAuth 登录
      */
     @PostMapping(MemberServiceUris.Member.OAUTH_LOGIN)
-    public R<MemberVO> oauthLogin(@RequestBody SocialUser socialUser) throws Exception {
+    public MemberVO oauthLogin(@RequestBody SocialUser socialUser) throws Exception {
         MemberVO vo = memberService.login(socialUser);
         if (vo != null) {
-            return R.ok(vo);
+            return vo;
         } else {
-            return R.fail(BizCodeEnum.LOGINACCT_PASSWORD_EXCEPTION.getCode(),
-                    BizCodeEnum.LOGINACCT_PASSWORD_EXCEPTION.getMessage());
+            throw new RuntimeException(BizCodeEnum.LOGINACCT_PASSWORD_EXCEPTION.getMessage());
         }
     }
 
@@ -139,8 +135,7 @@ public class MemberController {
      * Feign 联调测试（Coupon 远程调用）
      */
     @GetMapping(MemberServiceUris.Member.COUPONS)
-    public R<?> testCoupon() {
-        R coupons = couponRemoteService.memberCoupons();
-        return R.ok(coupons);
+    public Object testCoupon() {
+        return couponRemoteService.memberCoupons();
     }
 }
