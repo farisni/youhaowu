@@ -1,13 +1,15 @@
-package com.youhaowu.common.config;
+package com.youhaowu.common.config.plugin.db;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 
 @AutoConfiguration
-public class MyBatisPlusConfig {
+@ConditionalOnProperty(name = "spring.datasource.url")
+public class MyBatisPlusPlugin {
 
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {

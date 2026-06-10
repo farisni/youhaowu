@@ -1,6 +1,5 @@
 package com.youhaowu.ware.config;
 
-import com.youhaowu.common.config.KafkaConfig;
 import com.youhaowu.common.interceptor.ApiLogInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,7 +8,6 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-@Import(KafkaConfig.class)
 public class InfraConfig implements WebMvcConfigurer {
 
     @Bean

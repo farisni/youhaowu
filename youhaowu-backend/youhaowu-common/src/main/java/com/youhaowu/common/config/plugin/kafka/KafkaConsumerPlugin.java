@@ -1,10 +1,11 @@
-package com.youhaowu.search.config;
+package com.youhaowu.common.config.plugin.kafka;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
@@ -12,11 +13,10 @@ import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Kafka Consumer 配置
- */
-@Configuration
-public class KafkaConsumerConfig {
+@AutoConfiguration
+@ConditionalOnProperty(prefix = "spring.kafka", name = "bootstrap-servers")
+@ConditionalOnProperty(prefix = "spring.kafka.consumer", name = "group-id")
+public class KafkaConsumerPlugin {
 
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;

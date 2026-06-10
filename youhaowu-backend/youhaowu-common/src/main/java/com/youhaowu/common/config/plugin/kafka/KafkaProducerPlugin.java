@@ -1,10 +1,10 @@
-package com.youhaowu.common.config;
+package com.youhaowu.common.config.plugin.kafka;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
@@ -12,14 +12,9 @@ import org.springframework.kafka.core.ProducerFactory;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Kafka Producer 配置（按需激活）
- * <p>模块不含此包扫描范围，需在自身 Config 中用 @Import 显式引入。</p>
- */
-@Configuration
+@AutoConfiguration
 @ConditionalOnProperty(prefix = "spring.kafka", name = "bootstrap-servers")
-@ConditionalOnProperty(prefix = "spring.kafka", name = "bootstrap-servers")
-public class KafkaConfig {
+public class KafkaProducerPlugin {
 
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;

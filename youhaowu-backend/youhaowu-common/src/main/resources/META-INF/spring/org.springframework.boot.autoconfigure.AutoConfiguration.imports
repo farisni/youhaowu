@@ -1,1 +1,5 @@
 com.youhaowu.common.config.CommonAutoConfiguration
+com.youhaowu.common.config.plugin.db.MyBatisPlusPlugin
+com.youhaowu.common.config.plugin.kafka.KafkaProducerPlugin
+com.youhaowu.common.config.plugin.kafka.KafkaConsumerPlugin
+com.youhaowu.common.config.plugin.redis.RedissonPlugin
