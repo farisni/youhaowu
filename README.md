@@ -13,6 +13,42 @@
 - **Kafka**: 消息队列
 - **MyBatis-Plus**: ORM
 
+
+
+## 插件化架构（按需加载）
+
+中间件依赖统一收敛在 `youhaowu-common/config/plugin/`，通过 `@ConditionalOnProperty` 按配置激活。
+
+```
+common/config/plugin/
+├── db/MyBatisPlusPlugin.java         # spring.datasource.url 存在时激活
+├── kafka/KafkaProducerPlugin.java    # spring.kafka.bootstrap-servers 存在时激活
+├── kafka/KafkaConsumerPlugin.java    # 同上 + consumer.group-id 存在时激活
+└── redis/RedissonPlugin.java         # spring.data.redis.host 存在时激活
+```
+
+### 核心机制
+
+- **条件注入**：每个 Plugin 检查配置键是否存在，不存在则不注入 Bean
+- **依赖隔离**：common 的 pom 中中间件依赖全部标记 `optional`，子模块按需显式声明
+- **自动排除**：`PluginEnvironmentPostProcessor` 在启动时检测，无 `spring.datasource.url` 时自动排除 `DataSourceAutoConfiguration`，避免启动报错
+
+### 模块依赖矩阵
+
+| 模块 | MyBatis-Plus | Kafka | Redis |
+|------|:---:|:---:|:---:|
+| cms / coupon / member / order / product / ware | ✓ | - | - |
+| product | ✓ | ✓（生产者） | - |
+| seckill | - | ✓（生产者） | ✓ |
+| search | - | ✓（消费者） | - |
+| auth / cart / thirdparty / gateway | - | - | - |
+
+### 工作原理
+
+1. **配了就激活**：`application.yml` 中有 `spring.datasource.url` → 自动创建 MyBatis-Plus 拦截器
+2. **没配就跳过**：模块无 DB 配置 → 不注入分页插件，启动不报 `DataSource` 异常
+3. **服务间调用去 R**：`GlobalResponseAdvice` 检测 `X-Internal: true` 请求头跳过 `R` 包装，远程 Client 直接返回业务对象
+
 ## 项目结构
 
 ```
